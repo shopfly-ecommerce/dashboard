@@ -10,21 +10,20 @@ let env = process.server
   ? process.env
   : (global.window && window.__NUXT__.state ? window.__NUXT__.state.env : {})
 
-module.exports = {
-  // 开发环境
-  dev: {
-    base  : 'https://api-b2c-v710.javamall.com.cn/base',
-    buyer : 'http://localhost:8080',
-    seller: 'https://api-b2c-v710.javamall.com.cn/seller',
-    live  : 'https://api-b2c-v710.javamall.com.cn/live',
-    im    : 'https://api-b2c-v710.javamall.com.cn/im'
-  },
-  // 生产环境
-  pro: {
-    base  : env.API_BASE || 'https://api-b2c-v710.javamall.com.cn/base',
-    buyer : env.API_BUYER || 'https://api-b2c-v710.javamall.com.cn/buyer',
-    seller: env.API_SELLER || 'https://api-b2c-v710.javamall.com.cn/seller',
-    live  : env.API_LIVE || 'https://api-b2c-v710.javamall.com.cn/live',
-    im    : env.API_IM || 'https://api-b2c-v710.javamall.com.cn/im'
-  }
+// 开发环境
+export const dev = {
+  base: 'https://api-b2c-v710.javamall.com.cn/base',
+  buyer: 'http://localhost:8080',
+  seller: 'https://api-b2c-v710.javamall.com.cn/seller',
+  live: 'https://api-b2c-v710.javamall.com.cn/live',
+  im: 'https://api-b2c-v710.javamall.com.cn/im'
+}
+
+// 生产环境
+export const pro = {
+  base: env.API_BASE || 'https://api-b2c-v710.javamall.com.cn/base',
+  buyer: env.API_BUYER || 'https://api-b2c-v710.javamall.com.cn/buyer',
+  seller: env.API_SELLER || 'https://api-b2c-v710.javamall.com.cn/seller',
+  live: env.API_LIVE || 'https://api-b2c-v710.javamall.com.cn/live',
+  im: env.API_IM || 'https://api-b2c-v710.javamall.com.cn/im'
 }

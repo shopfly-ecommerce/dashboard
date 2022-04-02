@@ -14,8 +14,8 @@
  * @param format 转换格式
  * @returns {*|string}
  */
-let unixToDate = function unixToDate(unix, format) {
-  RegExp = window.RegExp
+export function unixToDate(unix, format) {
+  const RegExp = window.RegExp
   if (!unix) return unix
   let _format = format || 'yyyy-MM-dd hh:mm:ss'
   let d = new Date(unix * 1000)
@@ -38,7 +38,7 @@ let unixToDate = function unixToDate(unix, format) {
  * @param date
  * @returns {number} 【秒】
  */
-let dateToUnix = function dateToUnix(date) {
+export function dateToUnix(date) {
   let newStr = date.replace(/:/g, '-')
   newStr = newStr.replace(/ /g, '-')
   let arr = newStr.split('-')
@@ -58,7 +58,7 @@ let dateToUnix = function dateToUnix(date) {
  * @param object
  * @returns {*}
  */
-let deepClone = function deepClone(object) {
+export function deepClone(object) {
   let str
   let newobj = object.constructor === Array ? [] : {}
   if (typeof object !== 'object') {
@@ -81,7 +81,7 @@ let deepClone = function deepClone(object) {
  * @param price
  * @returns {string}
  */
-let formatPrice = function formatPrice(price) {
+export function formatPrice(price) {
   if (typeof price !== 'number') return price
   return String(Number(price).toFixed(2)).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
@@ -92,7 +92,7 @@ let formatPrice = function formatPrice(price) {
  * @param mobile
  * @returns {*}
  */
-let secrecyMobile = function secrecyMobile(mobile) {
+export function secrecyMobile(mobile) {
   mobile = String(mobile)
   if (!/\d{11}/.test(mobile)) {
     return mobile
@@ -105,7 +105,7 @@ let secrecyMobile = function secrecyMobile(mobile) {
  * @param length
  * @returns {string}
  */
-let randomString = function randomString(length) {
+export function randomString(length) {
   if (!length) length = 32
   let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
   let maxPos = chars.length
@@ -121,7 +121,7 @@ let randomString = function randomString(length) {
  * @param seconds
  * @returns {{day : *, hours : *, minutes : *, seconds : *}}
  */
-let countTimeDown = function countTimeDown(seconds) {
+export function countTimeDown(seconds) {
   let leftTime = function(time) {
     if (time < 10) time = '0' + time
     return time + ''
@@ -138,19 +138,8 @@ let countTimeDown = function countTimeDown(seconds) {
  * 计算当前时间到第二天0点的倒计时[秒]
  * @returns {number}
  */
-let theNextDayTime = function theNextDayTime() {
+export function theNextDayTime() {
   let nowDate = new Date()
   let time = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate() + 1, 0, 0, 0).getTime() - nowDate.getTime()
   return parseInt(time / 1000)
-}
-
-module.exports = {
-  unixToDate: unixToDate,
-  dateToUnix: dateToUnix,
-  deepClone: deepClone,
-  formatPrice: formatPrice,
-  secrecyMobile: secrecyMobile,
-  randomString: randomString,
-  countTimeDown: countTimeDown,
-  theNextDayTime: theNextDayTime
 }

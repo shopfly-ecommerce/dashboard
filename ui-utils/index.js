@@ -1,7 +1,5 @@
-let Foundation = require('./Foundation')
-let RegExp = require('./RegExp')
+import * as _foundation from './Foundation'
+import * as _regExp from './RegExp'
 
-module.exports = {
-  Foundation: Foundation,
-  RegExp: RegExp
-}
+export const Foundation = _foundation
+export const RegExp = _regExp
