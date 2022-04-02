@@ -12,9 +12,9 @@ let env = process.server
 
 // 开发环境
 export const dev = {
-  base: 'https://api-b2c-v710.javamall.com.cn/base',
+  base: 'http://localhost:8080',
   buyer: 'http://localhost:8080',
-  seller: 'https://api-b2c-v710.javamall.com.cn/seller',
+  seller: 'http://localhost:8080',
   live: 'https://api-b2c-v710.javamall.com.cn/live',
   im: 'https://api-b2c-v710.javamall.com.cn/im'
 }
