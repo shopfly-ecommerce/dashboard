@@ -1,0 +1,7 @@
+/*可以在这里添加你自己的css*/
+p {
+  margin: 0;
+}
+p > img {
+  display: block;
+}

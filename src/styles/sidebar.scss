@@ -1,0 +1,183 @@
+@import "./variables";
+#app {
+  // 主体区域
+  .main-container {
+    min-height: 100%;
+    transition: margin-left .28s;
+    margin-left: 180px;
+  }
+  // 侧边栏
+  .sidebar-container {
+    .horizontal-collapse-transition {
+      transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
+    }
+    transition: width 0.28s;
+    width: 180px !important;
+    height: 100%;
+    position: fixed;
+    font-size: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1001;
+    overflow: hidden;
+    background-color: $menu_bg !important;
+    //reset element-ui css
+    .horizontal-collapse-transition {
+      transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
+    }
+    .el-scrollbar {
+      height: calc(100vh - 80px);
+      margin-top: 80px;
+    }
+    .is-horizontal {
+      display: none;
+    }
+    a {
+      display: inline-block;
+      width: 100%;
+      overflow: hidden;
+    }
+    .svg-icon {
+      margin-right: 16px;
+    }
+    .logo-container {
+      position: absolute;
+      z-index: 99;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background-color: $menu_logo_bg !important;
+      .logo-tip {
+        position: absolute;
+        z-index: 0;
+        top: 10px;
+        right: 30px;
+        padding: 2px 5px;
+        border-radius: 3px;
+        background-color: #fff;
+        font-size: 12px;
+        color: $menu_logo_tip_text !important;
+        font-weight: 600;
+      }
+      .logo-img {
+        width: 140px;
+        height: 36px;
+        margin-top: 26px;
+        margin-left: 20px;
+      }
+      &.collapse {
+        .logo-tip { display: none }
+        .logo-img {
+          margin-left: 5px;
+        }
+      }
+    }
+    .el-menu {
+      border: none;
+      width: 100% !important;
+      background-color: $menu_bg !important;
+    }
+  }
+  .hideSidebar {
+    .sidebar-container {
+      width: 36px !important;
+    }
+    .main-container {
+      margin-left: 36px;
+    }
+    .submenu-title-noDropdown {
+      padding-left: 10px !important;
+      position: relative;
+      .el-tooltip {
+        padding: 0 10px !important;
+      }
+    }
+    .el-submenu {
+      overflow: hidden;
+      &>.el-submenu__title {
+        padding-left: 10px !important;
+        .el-submenu__icon-arrow {
+          display: none;
+        }
+      }
+    }
+    .el-menu--collapse {
+      .el-submenu {
+        &>.el-submenu__title {
+          &>span {
+            height: 0;
+            width: 0;
+            overflow: hidden;
+            visibility: hidden;
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+  .sidebar-container .menu-wrapper:not(.nest-menu) > a .el-menu-item {
+    background-color: $menu_bg !important;
+    &:hover {
+      background-color: $menu_item_hover_bg !important;
+    }
+  }
+  .sidebar-container .el-submenu>.el-submenu__title {
+    color: $menu_text !important;
+    background-color: $menu_item_bg !important;
+    &:hover {
+      background-color: $menu_item_hover_bg !important;
+    }
+  }
+  .sidebar-container .nest-menu .el-submenu>.el-submenu__title,
+  .sidebar-container .el-menu-item {
+    color: $menu_text !important;
+    min-width: 180px !important;
+    background-color: $menu_sub_item_bg !important;
+    &:hover {
+      background-color: $menu_item_hover_bg !important;
+    }
+    &.is-active {
+      color: $menu_text_active !important;
+    }
+  }
+  .el-menu--collapse .el-menu .el-submenu {
+    min-width: 180px !important;
+  }
+
+  //适配移动端
+  .mobile {
+    .main-container {
+      margin-left: 0px;
+    }
+    .sidebar-container {
+      transition: transform .28s;
+      width: 180px !important;
+    }
+    &.hideSidebar {
+      .sidebar-container {
+        transition-duration: 0.3s;
+        transform: translate3d(-180px, 0, 0);
+      }
+    }
+  }
+  .withoutAnimation {
+    .main-container,
+    .sidebar-container {
+      transition: none;
+    }
+  }
+}
+
+.el-menu--vertical .el-menu .el-submenu__title,
+.el-menu--vertical .el-menu .el-menu-item {
+  background-color: $menu_item_bg !important;
+  color: $menu_text !important;
+  &:hover {
+    background-color: $menu_item_hover_bg !important;
+  }
+  &.is-active {
+    color: $menu_text_active !important;
+  }
+}

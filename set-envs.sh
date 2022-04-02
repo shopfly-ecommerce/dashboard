@@ -1,0 +1,11 @@
+echo "window.__NUXT__ = { state: { env: {\
+API_MODEL: '${API_MODEL}',\
+API_BASE: '${API_BASE}',\
+API_BUYER: '${API_BUYER}',\
+API_SELLER: '${API_SELLER}',\
+API_ADMIN: '${API_ADMIN}',\
+DOMAIN_BUYER_PC: '${DOMAIN_BUYER_PC}',\
+DOMAIN_BUYER_WAP: '${DOMAIN_BUYER_WAP}',\
+DOMAIN_SELLER: '${DOMAIN_SELLER}',\
+DOMAIN_ADMIN: '${DOMAIN_ADMIN}'\
+} } }" > /app/static/js/envs.js
