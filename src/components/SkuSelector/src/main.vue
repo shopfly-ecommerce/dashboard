@@ -212,7 +212,7 @@
           const _result_sim = cloneObj(result[i])
           _result_sim[_result_sim.length - 1].spec_value_id = _arr.join('|')
 
-          if (this.isEditModel === 0 || !this.goodsSkuInfo || (Array.isArray(this.goodsSkuInfo) && this.goodsSkuInfo.length === 0)) { // 发布商品 || goodsSkuInfo规格本来就不存在
+          if (this.isEditModel === 0 || !this.goodsSkuInfo || (Array.isArray(this.goodsSkuInfo) && this.goodsSkuInfo.length === 0)) { // 发布商品 或  goodsSkuInfo规格本来就不存在
             result[i] = Object.assign({ }, ..._result_sim, this.origin)
           } else {
             const value_ids = result[i].map(key => {
