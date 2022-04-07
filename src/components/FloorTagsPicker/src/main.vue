@@ -39,7 +39,7 @@
         <div class="tags-opt">
           <el-form :model="tagsForm" :rules="tagsRules" ref="tagsForm" label-width="80px">
             <el-form-item label="标签文本" prop="block_value">
-              <el-input v-model="tagsForm.block_value" :maxlength="15" placeholder="15个字以内"></el-input>
+              <el-input v-model="tagsForm.block_value" :maxlength="30" placeholder="30个字以内"></el-input>
             </el-form-item>
             <el-form-item label="操作" prop="block_opt.opt_value">
               <el-select v-model="tagsForm.block_opt.opt_type" placeholder="请选择" style="width: 175px">
