@@ -4,11 +4,11 @@
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     append-to-body
-    width="420px">
+    width="520px">
     <div slot="title" class="text-picker-title">楼层标题编辑</div>
     <div class="text-picker-body">
       <div class="text-picker-content">
-        <el-form :model="textForm" :rules="textRules" ref="textForm" label-width="110px" style="width: 350px">
+        <el-form :model="textForm" :rules="textRules" ref="textForm" label-width="200px" style="width: 350px">
           <el-form-item label="标题文字" prop="text">
             <el-input
               :minlength="2"
