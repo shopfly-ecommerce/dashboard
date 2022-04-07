@@ -12,8 +12,8 @@
           <el-form-item label="标题文字" prop="text">
             <el-input
               :minlength="2"
-              :maxlength="4"
-              placeholder="请输入标题文字，长度2-4"
+              :maxlength="16"
+              placeholder="文字"
               v-model="textForm.text">
             </el-input>
           </el-form-item>
