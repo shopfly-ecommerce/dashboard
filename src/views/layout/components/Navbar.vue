@@ -6,17 +6,17 @@
     </div>
 
     <div class="right-menu">
-      <el-tooltip v-if="MixinIsIM && permission_chat" effect="dark" content="客服系统">
+      <el-tooltip v-if="MixinIsIM && permission_chat" effect="dark" content="The system of the service">
         <chat-entry class="right-menu-item" />
       </el-tooltip>
 
-      <el-tooltip effect="dark" content="全屏" placement="bottom">
+      <el-tooltip effect="dark" content="Full screen" placement="bottom">
         <screenfull class="screenfull right-menu-item"></screenfull>
       </el-tooltip>
 
-      <lang-select class="international right-menu-item"></lang-select>
+<!--      <lang-select class="international right-menu-item"></lang-select>-->
 
-      <!--<el-tooltip effect="dark" content="换肤" placement="bottom">-->
+      <!--<el-tooltip effect="dark" content="In the skin" placement="bottom">-->
         <!--<theme-picker class="theme-switch right-menu-item"></theme-picker>-->
       <!--</el-tooltip>-->
 
@@ -29,11 +29,11 @@
         <el-dropdown-menu slot="dropdown">
           <router-link to="/">
             <el-dropdown-item>
-              首页
+              Home
             </el-dropdown-item>
           </router-link>
           <span @click="logout">
-            <el-dropdown-item divided>退出登录</el-dropdown-item>
+            <el-dropdown-item divided>Log out</el-dropdown-item>
           </span>
         </el-dropdown-menu>
       </el-dropdown>
@@ -72,9 +72,9 @@ export default {
       this.$store.dispatch('toggleSideBar')
     },
     logout() {
-      this.$confirm('确定退出吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Are you sure about quitting?？', 'prompt', {
+        confirmButtonText: 'save',
+        cancelButtonText: 'cancel',
         type: 'warning'
       }).then(() => {
         this.$store.dispatch('logoutAction').then(() => {
