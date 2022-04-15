@@ -21,7 +21,7 @@ export const constantRouterMap = [
   }
 ]
 
-// 直播管理
+// On the management
 const liveRouterMap = {
   path: '/live-video',
   component: Layout,
@@ -36,7 +36,7 @@ const liveRouterMap = {
 }
 
 export const asyncRouterMap = [
-  // 商品管理
+  // Commodity management
   {
     path: '/goods',
     component: Layout,
@@ -64,14 +64,13 @@ export const asyncRouterMap = [
           { path: 'category-params/:id', component: () => import('@/views/goods/goods-setting/categoryParams'), name: 'categoryParams', hidden: true, meta: { title: 'categoryParams', noCache: true }},
           { path: 'brandList', component: () => import('@/views/goods/goods-setting/brandList'), name: 'brandList', meta: { title: 'brandList' }},
           { path: 'specList', component: () => import('@/views/goods/goods-setting/specList'), name: 'specList', meta: { title: 'specList' }},
-          { path: 'goodsIndex', component: () => import('@/views/setting/shop-settings/goodsIndex'), name: 'goodsIndex', meta: { title: 'goodsIndex' }},
-
+          { path: 'goodsIndex', component: () => import('@/views/setting/shop-settings/goodsIndex'), name: 'goodsIndex', meta: { title: 'goodsIndex' }}
         ]
       },
       { path: 'good-publish/:goodsid?/:isdraft?', component: () => import('@/views/goods/goodsPublish'), name: 'goodPublish', meta: { title: 'goodPublish', noCache: true }, hidden: true }
     ]
   },
-  // 订单管理
+  // The order management
   {
     path: '/order',
     component: Layout,
@@ -87,7 +86,7 @@ export const asyncRouterMap = [
       { path: 'receiptHistory', component: () => import('@/views/order/receiptHistory'), name: 'receiptHistory', meta: { title: 'receiptHistory' }}
     ]
   },
-  // 会员管理
+  // Member management
   {
     path: '/member',
     component: Layout,
@@ -130,7 +129,7 @@ export const asyncRouterMap = [
       }
     ]
   },
-  // 促销管理
+  // Sales management
   {
     path: '/promotions',
     component: Layout,
@@ -174,7 +173,7 @@ export const asyncRouterMap = [
       { path: 'group-buy-goods/:goods_id?', component: () => import('@/views/promotions/groupBuyManage/groupBuyGoods'), name: 'groupBuyGoods', meta: { title: 'groupBuyGoods' }, hidden: true }
     ]
   },
-  // 页面管理
+  // Page management
   {
     path: '/page',
     component: Layout,
@@ -222,7 +221,7 @@ export const asyncRouterMap = [
       }
     ]
   },
-  // 统计
+  // statistical
   {
     path: '/statistics',
     component: Layout,
@@ -285,7 +284,7 @@ export const asyncRouterMap = [
     ]
   },
 
-  // 设置
+  // Set up the
   {
     path: '/setting',
     component: Layout,
@@ -301,10 +300,10 @@ export const asyncRouterMap = [
       { path: 'storageSolution', component: () => import('@/views/setting/shop-settings/storageSolution'), name: 'storageSolution', meta: { title: 'storageSolution' }},
       { path: 'member', component: () => import('@/views/setting/message-settings/memberMessage'), name: 'memberMessageSettings', meta: { title: 'memberMessage' }},
       { path: 'administratorManage', component: () => import('@/views/setting/auth-settings/administratorManage'), name: 'administratorManage', meta: { title: 'administratorManage' }},
-      { path: 'roleManage', component: () => import('@/views/setting/auth-settings/roleManage'), name: 'roleManage', meta: { title: 'roleManage' }},
+      { path: 'roleManage', component: () => import('@/views/setting/auth-settings/roleManage'), name: 'roleManage', meta: { title: 'roleManage' }}
     ]
   },
-  // 开发
+  // The development of
   {
     path: '/development',
     component: Layout,
@@ -339,7 +338,7 @@ export const asyncRouterMap = [
       }
     ]
   },
-  // 分销
+  // distribution
   {
     path: '/distribution',
     component: Layout,
@@ -403,7 +402,7 @@ export default new Router({
   routes: constantRouterMap
 })
 
-// 如果开启了IM
+// If you turn it onIM
 const chatRouter = { path: '/chat', component: () => import('@/views/chat/chat'), name: 'chat' }
 if (process.env.IM) {
   asyncRouterMap.push(chatRouter)
