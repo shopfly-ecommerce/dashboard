@@ -40,6 +40,11 @@
     <el-form-item label="站点是否开启" prop="siteon">
       <el-radio v-model="siteForm.siteon" :label="1">开启</el-radio>
       <el-radio v-model="siteForm.siteon" :label="0">关闭</el-radio>
+      <el-alert
+        title="If closed, the stroefront cannot be accessed"
+        type="info"
+        :closable="false">
+      </el-alert>
     </el-form-item>
     <el-form-item v-if="siteForm.siteon === 0" label="关闭原因" prop="close_reson">
       <el-input
@@ -48,15 +53,6 @@
         placeholder="请输入关闭原因"
         v-model="siteForm.close_reson"
         :maxlength="100"
-      >
-      </el-input>
-    </el-form-item>
-    <el-form-item label="加密密匙" prop="global_auth_key">
-      <el-input
-        type="textarea"
-        :autosize="{ minRows: 2, maxRows: 4}"
-        placeholder="请输入加密密匙"
-        v-model="siteForm.global_auth_key"
       >
       </el-input>
     </el-form-item>
@@ -85,6 +81,11 @@
     <el-form-item label="测试模式" prop="test_mode">
       <el-radio v-model="siteForm.test_mode" :label="1">开启</el-radio>
       <el-radio v-model="siteForm.test_mode" :label="0">关闭</el-radio>
+      <el-alert
+        title="The verification code is no longer generated randomly when the test mode is turned on"
+        type="info"
+        :closable="false">
+      </el-alert>
     </el-form-item>
     <el-form-item label="">
       <el-button type="primary" @click="submitForm">保存设置</el-button>
