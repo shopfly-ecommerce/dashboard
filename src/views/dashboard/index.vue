@@ -1,37 +1,5 @@
 <template>
   <div class="dashboard-container" v-loading="loading">
-    <!--商家基本信息-->
-    <el-row :gutter="20" type="flex" justify="space-around" v-if="shop_info">
-      <el-col  :span="24">
-        <div class="grid-content bg-purple-light">
-          <!--logo-->
-          <div class="logo">
-            <div class="shop-img-icon">
-              <img v-if="shop_info.logo" :src="shop_info.logo">
-              <img v-if="!shop_info.logo" src="../../assets/logo_images/icon-no-shop-logo.png">
-            </div>
-            <el-upload
-              class="upload-demo"
-              style="display: none;"
-              :action="`${MixinUploadApi}?scene=shop`"
-              :limit="1"
-              :file-list="fileList"
-              :before-upload="handleShopLogoBefore"
-              :on-success="uploaded">
-              <button style="visibility: hidden;" ref="uploadBtn"></button>
-            </el-upload>
-          </div>
-          <!--文字信息-->
-          <div class="shop-info">
-            <div class="shop-info-basic">
-              <span>{{ shop_info.site_name }}</span>
-            </div>
-            <div class="shop-info-credit">
-            </div>
-          </div>
-        </div>
-      </el-col>
-    </el-row>
     <el-row :gutter="20" type="flex" justify="space-around">
       <!--店铺 商品提示-->
       <el-col  :span="12">
