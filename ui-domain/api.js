@@ -12,18 +12,10 @@ let env = process.server
 
 // 开发环境
 export const dev = {
-  base: 'http://localhost:8080',
-  buyer: 'http://localhost:8080',
-  seller: 'http://localhost:8080',
-  live: 'https://api-b2c-v710.javamall.com.cn/live',
-  im: 'https://api-b2c-v710.javamall.com.cn/im'
+  address: 'http://52.53.155.58'
 }
 
 // 生产环境
 export const pro = {
-  base: env.API_BASE || 'https://api-b2c-v710.javamall.com.cn/base',
-  buyer: env.API_BUYER || 'https://api-b2c-v710.javamall.com.cn/buyer',
-  seller: env.API_SELLER || 'https://api-b2c-v710.javamall.com.cn/seller',
-  live: env.API_LIVE || 'https://api-b2c-v710.javamall.com.cn/live',
-  im: env.API_IM || 'https://api-b2c-v710.javamall.com.cn/im'
+  address: env.API_ADDRESS || 'http://52.53.155.58'
 }

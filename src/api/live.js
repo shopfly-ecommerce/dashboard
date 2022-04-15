@@ -126,7 +126,7 @@ export function getLiveVideoGoods(room_id, params) {
  */
 export function getLiveVideoMedia(media_id) {
   return request({
-    url: `${api.base}/seller/live-video/media/download`,
+    url: `${api.address}/seller/live-video/media/download`,
     method: 'get',
     responseType: 'blob',
     loading: false,

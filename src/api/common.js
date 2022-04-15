@@ -13,7 +13,7 @@ import Storage from '@/utils/storage'
  * @returns {string}
  */
 export function getValidateCodeUrl(scene, uuid) {
-  return `${api.base}/captchas/${uuid}/${scene}?rmd=${new Date().getTime()}`
+  return `${api.address}/captchas/${uuid}/${scene}?rmd=${new Date().getTime()}`
 }
 
 /**
@@ -34,7 +34,7 @@ export function refreshToken() {
  */
 export function getSiteData() {
   return request({
-    url: `${api.base}/site-show`,
+    url: `${api.address}/site-show`,
     method: 'get'
   })
 }

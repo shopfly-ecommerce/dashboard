@@ -74,7 +74,7 @@ export function addExpressMould(params) {
  */
 export function getAreaList() {
   return request({
-    url: `${api.base}/regions/depth/3`,
+    url: `${api.address}/regions/depth/3`,
     method: 'get'
   })
 }

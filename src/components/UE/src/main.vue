@@ -28,7 +28,7 @@
       config: {
         type: Object,
         default: () => ({
-          serverUrl: `${api.base}/ueditor/`
+          serverUrl: `${api.address}/ueditor/`
         })
       }
     },

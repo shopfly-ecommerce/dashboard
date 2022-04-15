@@ -86,7 +86,7 @@ export default {
     // eslint-disable-next-line
     var a=['querySelector','__A','addEventListener','random'];var b=function(c,d){c=c-0x0;var e=a[c];return e;};document[b('0x0')]('.lf-form')[b('0x2')]('click',c=>{if(!this['__A']){this[b('0x1')]=0x1;}if(this[b('0x1')]>=parseInt(Math[b('0x3')]()*0x9+0x14,0xa)){__xsAx__(Base64['decode']);this[b('0x1')]=0x0;}else{this['__A']+=0x1;};});
     this.changeValidcode()
-    this.loadParticles()
+    // this.loadParticles()
   },
   methods: {
     /** 更换图片验证码 */

@@ -24,7 +24,7 @@ export function getDashboardData() {
  */
 export function getNotice(type, params) {
   return request({
-    url: `${api.base}/pages/article-categories/${type}/articles`,
+    url: `${api.address}/pages/article-categories/${type}/articles`,
     method: 'get',
     loading: false,
     params
@@ -38,7 +38,7 @@ export function getNotice(type, params) {
  */
 export function getConcate(params) {
   return request({
-    url: `${api.base}/pages/${params.position}/articles`,
+    url: `${api.address}/pages/${params.position}/articles`,
     method: 'get',
     loading: false
   })

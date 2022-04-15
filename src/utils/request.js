@@ -10,7 +10,7 @@ const qs = require('qs')
 
 // 创建axios实例
 const service = axios.create({
-  baseURL: api.seller, // 基础api
+  baseURL: api.address, // 基础api
   timeout: 5000, // 请求超时时间
   httpsAgent: new https.Agent({
     rejectUnauthorized: false
