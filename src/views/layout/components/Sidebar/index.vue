@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="logo-container" @click="linkIndex" :class="[isCollapse && 'collapse']">
-      <span class="logo-tip">管理中心</span>
       <img src="../../../../assets/logo_images/logo.png" class="logo-img">
     </div>
     <el-scrollbar wrapClass="scrollbar-wrapper">
