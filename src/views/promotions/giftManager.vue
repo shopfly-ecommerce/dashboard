@@ -7,40 +7,40 @@
       :loading="loading">
       <div slot="toolbar" class="inner-toolbar">
         <div class="toolbar-btns">
-          <el-button type="primary" @click="handelAddGifts">新增</el-button>
+          <el-button type="primary" @click="handelAddGifts">new</el-button>
         </div>
         <div class="toolbar-search">
           <en-table-search @search="searchEvent" />
         </div>
       </div>
       <template slot="table-columns">
-        <el-table-column prop="gift_name" label="赠品名称" />
-        <el-table-column label="赠品图片" width="120">
+        <el-table-column prop="gift_name" label="Name of gift" />
+        <el-table-column label="Gifts pictures" width="120">
           <template slot-scope="scope">
             <img :src="scope.row.gift_img" class="goods-image" alt="">
           </template>
         </el-table-column>
-        <el-table-column  label="赠品价格" width="120">
+        <el-table-column  label="Present price" width="120">
           <template slot-scope="scope">
             {{ scope.row.gift_price | unitPrice('￥') }}
           </template>
         </el-table-column>
-        <el-table-column prop="actual_store" label="实际库存" width="120"/>
-        <el-table-column prop="enable_store" label="可用库存" width="120"/>
-        <el-table-column label="创建时间" width="150">
+        <el-table-column prop="actual_store" label="The actual inventory" width="120"/>
+        <el-table-column prop="enable_store" label="Available" width="120"/>
+        <el-table-column label="Last update" width="150">
           <template slot-scope="scope">
             {{ scope.row.create_time | unixToDate }}
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="180">
+        <el-table-column label="Operation" width="180">
           <template slot-scope="scope">
             <el-button
               type="success"
-              @click="handleEditGifts(scope.row)">修改
+              @click="handleEditGifts(scope.row)">edit
             </el-button>
             <el-button
               type="danger"
-              @click="handleDeleteGifts(scope.row)">删除
+              @click="handleDeleteGifts(scope.row)">delete
             </el-button>
           </template>
         </el-table-column>
@@ -78,47 +78,47 @@
     },
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
 
-        /** 赠品弹框显示*/
+        /** Giveaway cartridge display*/
         giftModelShow: false,
 
-        /** 赠品编辑表单*/
+        /** Giveaway editing form*/
         giftForm: {
 
-          /** 赠品名称 */
+          /** Name of gift*/
           gift_name: '',
 
-          /** 赠品图片 */
+          /** Gifts pictures*/
           gift_img: '',
 
-          /** 赠品价格 */
+          /** Present price*/
           gift_price: 2,
 
-          /** 实际库存 */
+          /** The actual inventory*/
           actual_store: 8,
 
-          /** 可用库存 */
+          /** Available*/
           enable_store: 2,
 
-          /** 创建时间 */
+          /** Last update*/
           create_time: ''
         },
 
-        /** 列表数据 */
+        /** The list of data*/
         tableData: null,
 
-        /** 列表分页数据 */
+        /** List paging data*/
         pageData: null,
 
-        /** 当前赠品id */
+        /** The current giftid */
         currentGiftId: ''
       }
     },
@@ -127,19 +127,19 @@
     },
     methods: {
 
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_GiftsList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_GiftsList()
       },
 
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       searchEvent(data) {
         this.params = {
           ...this.params,
@@ -148,7 +148,7 @@
         this.GET_GiftsList()
       },
 
-      /** 获取赠品列表*/
+      /** Get a list of freebies*/
       GET_GiftsList() {
         this.loading = true
         API_Gift.getGiftsList(this.params).then(response => {
@@ -162,29 +162,29 @@
         })
       },
 
-      /** 删除赠品 */
+      /** Delete the gifts*/
       handleDeleteGifts(row) {
-        this.$confirm('确认删除此赠品, 是否继续?', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Confirm to delete this gift, Whether or not to continue?', 'prompt', { type: 'warning' }).then(() => {
           API_Gift.deleteGifts(row.gift_id).then(() => {
             this.GET_GiftsList()
-            this.$message.success('删除赠品成功！')
+            this.$message.success('Delete gift successfully！')
           })
         })
       },
 
-      /** 修改*/
+      /** edit*/
       handleEditGifts(row) {
         this.giftModelShow = true
         this.currentGiftId = row.gift_id
       },
 
-      /** 新增赠品*/
+      /** New gift*/
       handelAddGifts() {
         this.giftModelShow = true
         this.currentGiftId = ''
       },
 
-      /** 保存结果 */
+      /** Save the result*/
       saveGift(target) {
         this.giftModelShow = false
         this.currentGiftId = ''

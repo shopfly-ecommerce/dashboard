@@ -5,12 +5,12 @@
 /** mixin */
 export default {
   props: {
-    /** 数据 */
+    /** data*/
     data: {
       type: Object,
       default: () => ({})
     },
-    /** 是否为编辑模式 */
+    /** Is it in edit mode*/
     isEdit: {
       type: Boolean,
       default: false
@@ -24,7 +24,7 @@ export default {
                      <div class="mask-floor" @click="$emit('handle-edit')">
                        <div class="mask-bg-floor">
                          <button type="button" class="mask-btn-floor">
-                           <svg-icon icon-class="pen-leather"></svg-icon>编辑
+                           <svg-icon icon-class="pen-leather"></svg-icon>edit
                          </button>
                        </div>
                      </div>
@@ -40,7 +40,7 @@ export default {
     }
   },
   methods: {
-    /** 获取颜色相关信息 */
+    /** Get color-related information*/
     colors(columnIndex = 0) {
       const _colors = this.data.columnList[columnIndex].titleColors
       return {
@@ -48,24 +48,24 @@ export default {
         color: (colorIndex = 0) => `color: ${_colors[colorIndex]}`
       }
     },
-    /** 获取区块链接 */
+    /** Get a block link*/
     blockHref(block) {
       const { opt_type, opt_value } = block.block_opt
       switch (opt_type) {
-        // 链接地址
+        // The link address
         case 'URL': return opt_value
-        // 商品
+        // goods
         case 'GOODS': return `/goods/${opt_value}`
-        // 关键字
+        // keyword
         case 'KEYWORD': return `/goods?keyword=${encodeURIComponent(opt_value)}`
-        // 店铺
+        // The store
         case 'SHOP': return `/shop/${opt_value}`
-        // 分类
+        // Categories
         case 'CATEGORY': return `/goods?category=${opt_value}`
         default: return '/'
       }
     },
-    /** 构建空的block */
+    /** Build the emptyblock */
     emptyBlock(num = 3, type) {
       return [...new Array(num)].map(() => ({
         block_type: type,
@@ -76,15 +76,15 @@ export default {
         }
       }))
     },
-    /** 编辑区块 */
+    /** Edit block*/
     handleEditBlock(columnIndex, blockIndex) {
       this.$emit('edit-block', JSON.parse(JSON.stringify(this.data)), columnIndex, blockIndex)
     },
-    /** 编辑标题 */
+    /** Edit the title*/
     handleEditTitle(columnIndex) {
       this.$emit('edit-title', JSON.parse(JSON.stringify(this.data)), columnIndex)
     },
-    /** 编辑标签 */
+    /** Edit the label*/
     handleEditTags(columnIndex) {
       this.$emit('edit-tags', JSON.parse(JSON.stringify(this.data)), columnIndex)
     }

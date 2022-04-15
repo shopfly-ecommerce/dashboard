@@ -10,9 +10,9 @@
 			</div>
 		</div>
 		<template slot="table-columns">
-			<el-table-column prop="keyword" label="提示词"/>
-			<el-table-column prop="count" label="搜索次数"/>
-			<el-table-column label="最后搜索时间">
+			<el-table-column prop="keyword" label="prompt"/>
+			<el-table-column prop="count" label="Search the number"/>
+			<el-table-column label="Last search time">
 				<template slot-scope="scope">
 					{{ scope.row.modify_time | unixToDate }}
 				</template>
@@ -39,16 +39,16 @@
     name: 'searchHistory',
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
 
-        /** 搜索列表数据 */
+        /** Search for list data*/
         tableData: ''
       }
     },
@@ -60,19 +60,19 @@
     },
     methods: {
 
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_SearchHistoryList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_SearchHistoryList()
       },
 
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       searchEvent(data) {
         this.params = {
           ...this.params,
@@ -82,7 +82,7 @@
         this.GET_SearchHistoryList()
       },
 
-      /** 获取关键词列表 */
+      /** Get a list of keywords*/
       GET_SearchHistoryList() {
         this.loading = true
         API_search.getSearchHistoryList(this.params).then(response => {

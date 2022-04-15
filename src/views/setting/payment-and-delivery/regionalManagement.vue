@@ -2,7 +2,7 @@
   <div>
     <en-grade-editor
       ref="regionEditor"
-      type-text="地区"
+      type-text="region"
       :api="MixinRegionApi"
       :btns="btns"
       :maxLevel="4"
@@ -10,29 +10,29 @@
       @add-click="handleAdd"
     />
     <el-dialog
-      :title="regionForm.id ? '编辑地区' : '添加地区'"
+      :title="regionForm.id ? 'Edit area' : 'Add region'"
       width="500px"
       :visible.sync="dialogRegionVisible"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
       <el-form :model="regionForm" :rules="regionRules" ref="regionForm" label-width="130px">
-        <el-form-item label="地区名称" prop="local_name">
+        <el-form-item label="In the name of the" prop="local_name">
           <el-input v-model="regionForm.local_name"></el-input>
         </el-form-item>
-        <el-form-item label="邮政编号">
+        <el-form-item label="The postal code">
           <el-input v-model="regionForm.zipcode" :maxlength="6"></el-input>
         </el-form-item>
-        <el-form-item label="是否支持货到付款" prop="cod">
+        <el-form-item label="Do you support CASH on delivery" prop="cod">
           <el-radio-group v-model="regionForm.cod">
-            <el-radio :label="1">支持</el-radio>
-            <el-radio :label="0">不支持</el-radio>
+            <el-radio :label="1">support</el-radio>
+            <el-radio :label="0">Does not support</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogRegionVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitRegionForm('regionForm')">确 定</el-button>
+        <el-button @click="dialogRegionVisible = false">cancel</el-button>
+        <el-button type="primary" @click="submitRegionForm('regionForm')">save</el-button>
       </span>
     </el-dialog>
   </div>
@@ -50,35 +50,35 @@
     data() {
       return {
         btns: [
-          { text: '编辑', onClick: this.handleEdit },
-          { text: '删除', onClick: this.handleDelete, color: 'red' }
+          { text: 'edit', onClick: this.handleEdit },
+          { text: 'delete', onClick: this.handleDelete, color: 'red' }
         ],
-        /** 地区 表单 */
+        /** In the form*/
         regionForm: {},
-        /** 地区 表单规则 */
+        /** Local form rules*/
         regionRules: {
-          local_name: [this.MixinRequired('请输入地区名称！')]
+          local_name: [this.MixinRequired('Please enter a locale name！')]
         },
-        /** 地区表单 dialog */
+        /** In the formdialog */
         dialogRegionVisible: false
       }
     },
     methods: {
-      /** 编辑地区 */
+      /** Edit area*/
       handleEdit(region) {
         this.regionForm = this.MixinClone(region)
         this.dialogRegionVisible = true
       },
-      /** 删除地区 */
+      /** Delete the region*/
       handleDelete(region) {
-        this.$confirm('确认要删除这个地区吗？').then(() => {
+        this.$confirm('Are you sure you want to delete this area？').then(() => {
           API_Region.deleteRegion(region.id).then(() => {
-            this.$message.success('删除成功！')
+            this.$message.success('Delete the success！')
             this.$refs['regionEditor'].refresh('delete')
           })
         }).catch(() => {})
       },
-      /** 添加地区 */
+      /** Add region*/
       handleAdd(level, parent, parentArray) {
         this.regionForm = {
           parent_id: parent ? parent.id : 0,
@@ -86,7 +86,7 @@
         }
         this.dialogRegionVisible = true
       },
-      /** 提交地区表单 */
+      /** Submit the locale form*/
       submitRegionForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -94,13 +94,13 @@
             if (!id) {
               API_Region.addRegion(this.regionForm).then(response => {
                 this.dialogRegionVisible = false
-                this.$message.success('添加成功！')
+                this.$message.success('Add a success！')
                 this.$refs['regionEditor'].refresh('add')
               })
             } else {
               API_Region.editRegion(id, this.regionForm).then(response => {
                 this.dialogRegionVisible = false
-                this.$message.success('保存成功！')
+                this.$message.success('Save success！')
                 this.$refs['regionEditor'].refresh('edit', {
                   ...this.regionForm,
                   id: this.regionForm.id,
@@ -109,7 +109,7 @@
               })
             }
           } else {
-            this.$message.error('表单填写有误，请检查！')
+            this.$message.error('The form is filled incorrectly, please check！')
             return false
           }
         })

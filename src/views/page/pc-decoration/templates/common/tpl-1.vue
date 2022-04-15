@@ -5,12 +5,12 @@
         <template v-if="isEdit">
           <div class="edit-mask title" @click="handleEditTitle(columnIndex)">
             <button type="button" class="mask-btn-floor">
-              <svg-icon icon-class="pen-leather"></svg-icon>编辑
+              <svg-icon icon-class="pen-leather"></svg-icon>edit
             </button>
           </div>
           <div class="edit-mask tag" @click="handleEditTags(columnIndex)">
             <button type="button" class="mask-btn-floor">
-              <svg-icon icon-class="pen-leather"></svg-icon>编辑
+              <svg-icon icon-class="pen-leather"></svg-icon>edit
             </button>
           </div>
         </template>
@@ -90,13 +90,13 @@
   export default {
     name: 'tpl-1',
     mixins: [mixin],
-    title: '模块1',
+    title: 'The module1',
     dataTpl: {
       tpl_id: 1,
       tpl_type: 'ADV',
       columnList: [
         {
-          title: '标题',
+          title: ' title',
           titleColors: ['#333377', '#488bad'],
           tagList: mixin.methods.emptyBlock(0, 'TEXT'),
           blockList: mixin.methods.emptyBlock(15, 'IMAGE')

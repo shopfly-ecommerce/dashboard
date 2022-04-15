@@ -1,11 +1,11 @@
 /**
- * 地区管理相关API
+ * Regional managementAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 添加地区
+ * Add region
  * @param params
  */
 export function addRegion(params) {
@@ -17,7 +17,7 @@ export function addRegion(params) {
 }
 
 /**
- * 编辑地区
+ * Edit area
  * @param id
  * @param params
  */
@@ -30,7 +30,7 @@ export function editRegion(id, params) {
 }
 
 /**
- * 删除地区
+ * Delete the region
  * @param id
  */
 export function deleteRegion(id) {

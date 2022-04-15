@@ -3,25 +3,25 @@
     <div class="login-bg" id="login-bg"></div>
     <div class="login-form">
       <div class="lf-content">
-        <h3 class="lf-title">管理端登录</h3>
+        <h3 class="lf-title">Login</h3>
         <div class="lf-form" @keyup.enter="submitLoginForm">
           <el-form :model="loginForm" :rules="loginRules" ref="loginForm" size="large" label-width="80px">
-            <el-form-item label="管理账号" prop="username">
-              <el-input v-model="loginForm.username" clearable placeholder="用户名/邮箱/手机号"></el-input>
+            <el-form-item label="Username" prop="username">
+              <el-input v-model="loginForm.username" clearable placeholder="username/email/Mobile phone no."></el-input>
             </el-form-item>
-            <el-form-item label="登录密码" prop="password">
-              <el-input v-model="loginForm.password" type="password" clearable placeholder="请输入密码" maxlength="20"></el-input>
+            <el-form-item label="Password" prop="password">
+              <el-input v-model="loginForm.password" type="password" clearable placeholder="Please enter your password." maxlength="20"></el-input>
             </el-form-item>
             <el-form-item prop="captcha" class="img-code">
-              <span slot="label">验&ensp;证&ensp;码</span>
-              <el-input v-model="loginForm.captcha" clearable placeholder="验证码" maxlength="4">
+              <span slot="label">captcha</span>
+              <el-input v-model="loginForm.captcha" clearable placeholder="captcha" maxlength="4">
                 <template slot="append">
                   <img :src="validcodeImg" @click="changeValidcode" class="verification-code">
                 </template>
               </el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" :loading="loading" @click="submitLoginForm" class="login-btn">确认登录</el-button>
+              <el-button type="primary" :loading="loading" @click="submitLoginForm" class="login-btn">login</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -41,21 +41,21 @@ export default {
   name: 'login',
   data() {
     return {
-      // 登录loading状态
+      // Login loading status
       loading: false,
-      // 登录表单 表单
+      // Login form Form
       loginForm: {
         username: '',
         password: '',
         captcha: ''
       },
-      // 登陆表单 规则
+      // Login form rules
       loginRules: {
-        username: [this.MixinRequired('请输入用户名/邮箱/手机号')],
-        password: [this.MixinRequired('请输入密码！')],
-        captcha: [this.MixinRequired('请输入图片验证码！')]
+        username: [this.MixinRequired('Please enter the user name/email/Mobile phone no.')],
+        password: [this.MixinRequired('Please enter your password.！')],
+        captcha: [this.MixinRequired('Please enter the image verification code！')]
       },
-      // 轮播配置
+      // By the configuration
       swiperOption: {
         loop: true,
         effect: 'fade',
@@ -70,7 +70,7 @@ export default {
         },
         simulateTouch: false
       },
-      // 图片验证码
+      // Image captcha
       validcodeImg: ''
     }
   },
@@ -89,15 +89,15 @@ export default {
     // this.loadParticles()
   },
   methods: {
-    /** 更换图片验证码 */
+    /** Replace the image verification code*/
     changeValidcode() {
       this.validcodeImg = API_Common.getValidateCodeUrl('LOGIN', this.uuid)
     },
-    /** 加载背景插件 */
+    /** Load the background plug-in*/
     loadParticles() {
       window.particlesJS('login-bg', particlesjsConfig)
     },
-    /** 提交登录表单 */
+    /** Submit login form*/
     submitLoginForm() {
       Storage.removeItem('seller_shop')
       this.$refs['loginForm'].validate((valid) => {
@@ -114,7 +114,7 @@ export default {
             this.changeValidcode()
           })
         } else {
-          this.$message.error('表单填写有误，请核对！')
+          this.$message.error('There is an error in the form. Please check it！')
         }
       })
     }

@@ -8,8 +8,8 @@
     type="seller"
   />
   <div v-else class="no-login">
-    <span v-if="loading">加载中...</span>
-    <span v-else>请先<a :href="`/login?forward=${$route.fullPath}`" class="login-btn">登录</a></span>
+    <span v-if="loading">In the load...</span>
+    <span v-else>Please first<a :href="`/login?forward=${$route.fullPath}`" class="login-btn">Sign in</a></span>
   </div>
 </template>
 
@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     /**
-     * 获取站点信息
+     * Get site information
      * @returns {Promise<void>}
      */
     async getSiteInfo() {

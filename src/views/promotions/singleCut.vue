@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-tabs v-model="activeName" @tab-click="handleToggleClick">
-      <el-tab-pane label="单品立减列表" name="singleCutList">
+      <el-tab-pane label="A short list of items" name="singleCutList">
         <en-table-layout
           toolbar
           pagination
@@ -9,43 +9,43 @@
           :loading="loading">
           <div slot="toolbar" class="inner-toolbar">
             <div class="toolbar-btns">
-              <el-button type="primary" @click="handleAddSingleCut">新增</el-button>
+              <el-button type="primary" @click="handleAddSingleCut">new</el-button>
             </div>
             <div class="toolbar-search">
               <en-table-search @search="searchEvent"/>
             </div>
           </div>
           <template slot="table-columns">
-            <!--活动名称-->
-            <el-table-column prop="title" label="活动名称"/>
-            <!--开始时间-->
-            <el-table-column label="开始时间" width="150">
+            <!--The name of the event-->
+            <el-table-column prop="title" label="The name of the event"/>
+            <!--The start time-->
+            <el-table-column label="The start time" width="150">
               <template slot-scope="scope">
                 <span>{{ scope.row.start_time | unixToDate }}</span>
               </template>
             </el-table-column>
-            <!--结束时间-->
-            <el-table-column label="结束时间" width="150">
+            <!--The end of time-->
+            <el-table-column label="The end of time" width="150">
               <template slot-scope="scope">
                 <span>{{ scope.row.end_time | unixToDate }}</span>
               </template>
             </el-table-column>
-            <!--活动类型-->
-            <el-table-column prop="activity_type" label="活动类型" :formatter="activityType" width="120"/>
-            <!--活动状态-->
-            <el-table-column label="活动状态" prop="status_text" width="120"/>
-            <!--操作-->
-            <el-table-column label="操作" width="180">
+            <!--The activity type-->
+            <el-table-column prop="activity_type" label="The activity type" :formatter="activityType" width="120"/>
+            <!--Active state-->
+            <el-table-column label="Active state" prop="status_text" width="120"/>
+            <!--Operation-->
+            <el-table-column label="Operation" width="180">
               <template slot-scope="scope">
                 <el-button
-                  v-html="(scope.row.status === 'END' || scope.row.status === 'UNDERWAY') ? '查看' : '编辑'"
+                  v-html="(scope.row.status === 'END' || scope.row.status === 'UNDERWAY') ? 'To view' : 'edit'"
                   type="success"
                   @click="handleEditMould(scope.row)">
                 </el-button>
                 <el-button
                   :disabled="scope.row.status === 'UNDERWAY'"
                   type="danger"
-                  @click="handleDeleteFullCut(scope.row)">删除
+                  @click="handleDeleteFullCut(scope.row)">delete
                 </el-button>
               </template>
             </el-table-column>
@@ -73,54 +73,54 @@
             ref="activityForm"
             label-width="120px"
             class="demo-ruleForm">
-            <!--活动信息-->
+            <!--Activity information-->
             <div class="base-info-item">
-              <h4>活动信息</h4>
+              <h4>Activity information</h4>
               <div>
-                <el-form-item  label="活动名称：" prop="title">
+                <el-form-item  label="The name of the event：" prop="title">
                   <el-input
                     v-model="activityForm.title"
                     style="width: 300px"
                     @change="activityForm.title  = activityForm.title.trim()"
-                    placeholder="不超过50个字符"
+                    placeholder="No more than50A character"
                     maxLength="50"/>
                 </el-form-item>
-                <el-form-item label="生效时间：" prop="take_effect_time">
+                <el-form-item label="Effect of time：" prop="take_effect_time">
                   <el-date-picker
                     v-model="activityForm.take_effect_time"
                     type="datetimerange"
                     value-format="timestamp"
                     range-separator="-"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期"
+                    start-placeholder="Start date"
+                    end-placeholder="End date"
                     :default-time="[MixinDefaultTime, MixinDefaultTime]"
                     :picker-options="{disabledDate(time) { return time.getTime() < Date.now() - 8.64E7 }}">
                   </el-date-picker>
                 </el-form-item>
-                <el-form-item label="活动描述：">
+                <el-form-item label="Activity description：">
                   <UE ref="UE" :defaultMsg="activityForm.description"></UE>
                 </el-form-item>
               </div>
             </div>
-            <!--优惠方式-->
+            <!--Preferential way-->
             <div class="base-info-item">
-              <h4>优惠方式</h4>
+              <h4>Preferential way</h4>
               <div>
-                <el-form-item label="优惠方式：" prop="single_reduction_value">
-                  单品立减 <el-input v-model="activityForm.single_reduction_value" style="width: 150px;"></el-input> 元
+                <el-form-item label="Preferential way：" prop="single_reduction_value">
+                  Item set<el-input v-model="activityForm.single_reduction_value" style="width: 150px;"></el-input> USD
                 </el-form-item>
               </div>
             </div>
-            <!--活动商品-->
+            <!--Activities of goods-->
             <div class="base-info-item">
-              <h4>活动商品</h4>
+              <h4>Activities of goods</h4>
               <div>
-                <el-form-item label="活动商品：" prop="range_type">
+                <el-form-item label="Activities of goods：" prop="range_type">
                   <el-radio-group v-model="activityForm.range_type" @change="changeJoinGoods">
-                    <el-radio :label="1">全部商品参与</el-radio>
-                    <el-radio :label="2">部分商品参与</el-radio>
+                    <el-radio :label="1">Participation of all commodities</el-radio>
+                    <el-radio :label="2">Partial commodity participation</el-radio>
                   </el-radio-group>
-                  <!--商品表格-->
+                  <!--Commodity form-->
                   <div v-show="!goodsShow" class="goods-table">
                     <en-table-layout
                       toolbar
@@ -129,14 +129,14 @@
                       :selectionChange="selectionChange">
                       <div slot="toolbar" class="inner-toolbar">
                         <div class="toolbar-btns">
-                          <el-button type="primary" @click="showGoodsSelector">选择商品</el-button>
-                          <el-button type="danger" @click="cancelall">批量取消</el-button>
+                          <el-button type="primary" @click="showGoodsSelector">Choose goods</el-button>
+                          <el-button type="danger" @click="cancelall">Batch cancelled</el-button>
                         </div>
                       </div>
                       <template slot="table-columns">
                         <el-table-column type="selection"/>
-                        <!--商品信息-->
-                        <el-table-column  label="商品信息">
+                        <!--Product information-->
+                        <el-table-column  label="Product information">
                           <template slot-scope="scope">
                             <div class="goods-info">
                               <img :src="scope.row.thumbnail" alt="" class="goods-image">
@@ -150,14 +150,14 @@
                             </div>
                           </template>
                         </el-table-column>
-                        <!--库存-->
-                        <el-table-column prop="enable_quantity" label="库存" />
-                        <!--操作-->
-                        <el-table-column label="操作" width="150">
+                        <!--Inventory-->
+                        <el-table-column prop="enable_quantity" label="Inventory" />
+                        <!--Operation-->
+                        <el-table-column label="Operation" width="150">
                           <template slot-scope="scope">
                             <el-button
                               type="danger"
-                              @click="handleCancleJoin(scope.$index, scope.row)">取消参加
+                              @click="handleCancleJoin(scope.$index, scope.row)">Cancel to
                             </el-button>
                           </template>
                         </el-table-column>
@@ -167,19 +167,19 @@
                 </el-form-item>
               </div>
             </div>
-            <!--提交按钮-->
+            <!--The submit button-->
             <div class="btn-submit">
               <el-form-item>
-                <el-button v-show="editEnabled" type="primary" @click="saveActivity('activityForm')">保存设置</el-button>
+                <el-button v-show="editEnabled" type="primary" @click="saveActivity('activityForm')">Save Settings</el-button>
               </el-form-item>
             </div>
           </el-form>
         </div>
-        <!--遮罩层-->
+        <!--The mask layer-->
         <div :class="{'cus-mask': !editEnabled}"></div>
       </el-tab-pane>
     </el-tabs>
-    <!--商品选择器-->
+    <!--Commodity selector-->
     <en-goods-picker
       type="seller"
       goods-type="NORMAL"
@@ -208,18 +208,18 @@
     data() {
       const checkRange = (rule, value, callback) => {
         if (!value) {
-          return callback(new Error('请选择商品参与方式'))
+          return callback(new Error('Please select the mode of product participation'))
         } else {
           callback()
         }
       }
       const checkPrice = (rule, value, callback) => {
         if (!value) {
-          return callback(new Error('请输入要优惠的现金金额'))
+          return callback(new Error('Please enter your preferred cash amount'))
         }
         setTimeout(() => {
           if (!RegExp.money.test(value)) {
-            callback(new Error('请输入正确的金额'))
+            callback(new Error('Please enter the correct amount'))
           } else {
             callback()
           }
@@ -228,104 +228,104 @@
       const checkTakeEffectTime = (rule, value, callback) => {
         const now = new Date().getTime()
         if (!value) {
-          return callback(new Error('请选择生效时间'))
+          return callback(new Error('Please select the effective date'))
         } else if (value[0] <= now) {
-          callback(new Error('活动开始时间不得小于当前时间'))
+          callback(new Error('The start time of the activity must not be less than the current time'))
         } else {
           callback()
         }
       }
       return {
-        /** 当前面板的名字*/
+        /** The name of the current panel*/
         activeName: 'singleCutList',
 
-        /** 单品立即名称 */
-        singleCutName: '新增单品立减',
+        /** Immediate name of item*/
+        singleCutName: 'Newly added items are reduced immediately',
 
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
 
-        /** 列表数据*/
+        /** The list of data*/
         tableData: [],
 
-        /** 列表分页数据 */
+        /** List paging data*/
         pageData: null,
 
-        /** 商品ids */
+        /** productids */
         goodsIds: [],
 
-        /** 新增满减表单信息*/
+        /** Add fill/subtract form information*/
         activityForm: {
-          /** 活动ID*/
+          /** activityID*/
           minus_id: '',
 
-          /** 活动名称*/
+          /** The name of the event*/
           title: '',
 
-          /** 生效时间*/
+          /** Effect of time*/
           take_effect_time: [],
 
-          /** 活动描述*/
+          /** Activity description*/
           description: '',
 
-          /** 优惠方式 减价金额*/
+          /** Discount amount*/
           single_reduction_value: '',
 
-          /** 是否全部商品参与*/
+          /** Whether all goods participate*/
           range_type: '',
 
-          /** 活动商品*/
+          /** Activities of goods*/
           goods_list: []
         },
 
-        /** 表单校验规则*/
+        /** Form check rule*/
         rules: {
           title: [
-            { required: true, message: '请输入活动名称', trigger: 'blur' },
-            { min: 0, max: 60, message: '长度在60个字符之内', trigger: 'blur' }
+            { required: true, message: 'Please enter the activity name', trigger: 'blur' },
+            { min: 0, max: 60, message: 'The length of60Within two characters', trigger: 'blur' }
           ],
           take_effect_time: [
-            { type: 'array', required: true, message: '请选择生效时间', trigger: 'blur' },
+            { type: 'array', required: true, message: 'Please select the effective date', trigger: 'blur' },
             { validator: checkTakeEffectTime, trigger: 'blur' }
           ],
           single_reduction_value: [
             { required: true, validator: checkPrice, trigger: 'blur' }
           ],
 
-          /** 商品参与方式 */
+          /** Mode of Commodity participation*/
           range_type: [
             { required: true, validator: checkRange, trigger: 'change' }
           ]
         },
 
-        // 是否不可编辑 即是否是进行中 或者已失效状态 默认可以
+        // Uneditable means ongoing or defunct by default
         editEnabled: true,
 
-        /** 是否显示商品表格*/
+        /** Whether to display the item table*/
         goodsShow: true,
 
-        /** 选择的goods_id*/
+        /** Select thegoods_id*/
         selectionids: [],
 
-        /** 商品选择器最大长度*/
+        /** Maximum length of commodity selector*/
         maxsize: 0,
 
-        /** 商品选择器列表api*/
+        /** Product selector listapi*/
         goodsApi: 'seller/goods?market_enable=1&is_auth=1',
 
-        /** 商城分类api */
+        /** Mall classificationapi */
         categoryApi: 'seller/goods/category/0/children',
 
-        /** 回显数据使用 */
+        /** Echo data usage*/
         multipleApi: 'seller/goods/@ids/details',
 
-        /** 显示/隐藏商品选择器 */
+        /** According to/Hide the product selector*/
         showDialog: false
       }
     },
@@ -333,12 +333,12 @@
       this.GET_SingleCutActivityList()
     },
     methods: {
-      /** 活动类型 */
+      /** The activity type*/
       activityType(row, column, cellValue) {
-        return '单品立减'
+        return 'Item set'
       },
 
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       searchEvent(data) {
         this.params = {
           ...this.params,
@@ -347,25 +347,25 @@
         this.GET_SingleCutActivityList()
       },
 
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_SingleCutActivityList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_SingleCutActivityList()
       },
 
-      /** 切换面板*/
+      /** Switch panel*/
       handleToggleClick(tab, event) {
         this.activeName = tab.name
         if (this.activeName === 'express') {
           this.GET_SingleCutActivityList()
         } else if (this.activeName === 'add') {
-          this.singleCutName = '新增单品立减'
+          this.singleCutName = 'Newly added items are reduced immediately'
           this.editEnabled = true
           this.activityForm = {
             minus_id: '',
@@ -379,19 +379,19 @@
         }
       },
 
-      /** 是否全选商品*/
+      /** Whether all products are selected*/
       changeJoinGoods(val) {
         this.goodsShow = val === 1
       },
 
-      /** 保存商品选择器选择的商品 */
+      /** Save the item selected by the commodity selector*/
       refreshFunc(val) {
         if (val) {
           this.activityForm.goods_list = val
         }
       },
 
-      /** 显示商品选择器*/
+      /** Displays the product selector*/
       showGoodsSelector() {
         this.showDialog = true
         this.goodsIds = this.activityForm.goods_list.map(key => {
@@ -399,7 +399,7 @@
         })
       },
 
-      /** 取消参加*/
+      /** Cancel to*/
       handleCancleJoin(index, row) {
         this.activityForm.goods_list.forEach((elem, _index) => {
           if (index === _index) {
@@ -415,7 +415,7 @@
         this.selectionids = val.map(item => item.goods_id)
       },
 
-      /** 批量取消 */
+      /** Batch cancelled*/
       cancelall() {
         this.selectionids.forEach(key => {
           this.activityForm.goods_list.forEach((elem, index) => {
@@ -423,14 +423,14 @@
               this.activityForm.goods_list.splice(index, 1)
             }
           })
-          this.$message.success('批量取消成功！')
+          this.$message.success('Batch cancel successful！')
         })
         this.goodsIds = this.activityForm.goods_list.map(key => {
           return key.goods_id
         })
       },
 
-      /** 获取活动信息*/
+      /** Obtain activity information*/
       GET_SingleCutActivityList() {
         this.loading = true
         API_activity.getSingleCutActivityList(this.params).then(response => {
@@ -444,17 +444,17 @@
         })
       },
 
-      /** 编辑活动 */
+      /** Editing activity*/
       handleEditMould(row) {
         this.activeName = 'add'
-        this.singleCutName = '编辑单品立减'
+        this.singleCutName = 'Edit and subtract a single item'
         this.editEnabled = !(row.status === 'END' || row.status === 'UNDERWAY')
         setTimeout(() => { this.$refs['activityForm'].resetFields() })
         this.activityForm.minus_id = row.minus_id
         this.GET_SingleCutActivityDetails(row.minus_id)
       },
 
-      /** 查询一个单品立减活动信息 */
+      /** Inquire information about the activity of a single product*/
       GET_SingleCutActivityDetails(id) {
         if (id) {
           API_activity.getSingleCutActivityDetails(id, {}).then(response => {
@@ -464,7 +464,7 @@
                 take_effect_time: [parseInt(response.start_time) * 1000, parseInt(response.end_time) * 1000]
               }
               this.activityForm.minus_id = response.minus_id || id
-              /** 处理商品列表数据 */
+              /** Process merchandise list data*/
               this.goodsShow = this.activityForm.range_type === 1
               this.activityForm.goods_list = response.goods_list
             })
@@ -472,51 +472,51 @@
         }
       },
 
-      /** 删除活动 */
+      /** Delete activity*/
       handleDeleteFullCut(row) {
-        this.$confirm('确认删除当前项？', '确认信息', { type: 'warning' })
+        this.$confirm('Verify that the current item is deleted？', 'Confirm the information', { type: 'warning' })
           .then(() => this.toDelActivity(row))
           .catch(() => {})
       },
 
-      /** 执行删除*/
+      /** To delete*/
       toDelActivity(row) {
         API_activity.deleteSingleCutActivity(row.minus_id, {}).then(response => {
-          this.$message.success('删除成功！')
+          this.$message.success('Delete the success！')
           this.GET_SingleCutActivityList()
         })
       },
 
-      /** 新增 */
+      /** new*/
       handleAddSingleCut() {
         this.activeName = 'add'
-        this.singleCutName = '新增单品立减'
+        this.singleCutName = 'Newly added items are reduced immediately'
         this.editEnabled = true
         this.activityForm = {
-          /** 活动ID*/
+          /** activityID*/
           minus_id: '',
 
-          /** 活动名称*/
+          /** The name of the event*/
           title: '',
 
-          /** 生效时间*/
+          /** Effect of time*/
           take_effect_time: [],
 
-          /** 活动描述*/
+          /** Activity description*/
           description: '',
 
-          /** 优惠方式 减价金额*/
+          /** Discount amount*/
           single_reduction_value: '',
 
-          /** 是否全部商品参与*/
+          /** Whether all goods participate*/
           range_type: '',
 
-          /** 活动商品*/
+          /** Activities of goods*/
           goods_list: []
         }
       },
 
-      /** 保存表单设置 为此活动保存表单 提交商品goods_id 字符串 用逗号分隔*/
+      /** Save form sets the save form submission for this activitygoods_id Strings are separated by commas*/
       saveActivity(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -524,38 +524,38 @@
             delete _params.take_effect_time
             if (this.activityForm.minus_id) {
               API_activity.saveSingleCutActivity(this.activityForm.minus_id, _params).then(response => {
-                this.$message.success('修改成功！')
+                this.$message.success('Modify the success！')
                 this.activeName = 'singleCutList'
                 this.GET_SingleCutActivityList()
               }).catch((res) => {
                 if (res.response.data.code === '401' && res.response.data.data) {
                   const goods_name = JSON.parse(res.response.data.data).map(key => { return key.name }).toString()
-                  this.$message.error(`${goods_name}已经参加其它活动，于当前活动存在冲突`)
+                  this.$message.error(`${goods_name}Has participated in other activities and has conflicts with the current activities`)
                 } else {
                   this.$message.error(res.response.data.message)
                 }
               })
             } else {
               API_activity.addSingleCutActivity(_params).then(response => {
-                this.$message.success('添加成功！')
+                this.$message.success('Add a success！')
                 this.activeName = 'singleCutList'
                 this.GET_SingleCutActivityList()
               }).catch((res) => {
                 if (res.response.data.code === '401' && res.response.data.data) {
                   const goods_name = JSON.parse(res.response.data.data).map(key => { return key.name }).toString()
-                  this.$message.error(`${goods_name}已经参加其它活动，于当前活动存在冲突`)
+                  this.$message.error(`${goods_name}Has participated in other activities and has conflicts with the current activities`)
                 } else {
                   this.$message.error(res.response.data.message)
                 }
               })
             }
           } else {
-            this.$message.error('表单存在错误，请修正')
+            this.$message.error('There is an error in the form. Please correct it')
           }
         })
       },
 
-      /** 构造表单数据 */
+      /** Constructing form data*/
       generateFormData(data) {
         let _goodslist = []
         if (data.goods_list && Array.isArray(data.goods_list) && this.activityForm.range_type === 2) {
@@ -569,25 +569,25 @@
           })
         }
         const _params = {
-          /** 活动名称/标题 */
+          /** The name of the event/ title*/
           title: data.title,
 
-          /** 活动开始时间 */
+          /** Activity start time*/
           start_time: data.take_effect_time[0] / 1000,
 
-          /** 活动结束时间 */
+          /** End time*/
           end_time: data.take_effect_time[1] / 1000,
 
-          /** 单品立减金额 */
+          /** Immediate reduction for each item*/
           single_reduction_value: parseFloat(data.single_reduction_value),
 
-          /** 商品参与方式 */
+          /** Mode of Commodity participation*/
           range_type: data.range_type
         }
-        /** 活动描述 */
+        /** Activity description*/
         _params.description = this.$refs.UE.getUEContent()
         if (_goodslist.length > 0 && this.activityForm.range_type === 2) {
-          /** 参与商品列表 */
+          /** List of Participated Goods*/
           _params.goods_list = _goodslist
         } else {
           delete _params.goods_list
@@ -609,7 +609,7 @@
     width: 50px;
     height: 50px;
   }
-  /*新增表单面板*/
+  /*New Form panel*/
   /deep/ .el-form-item__content {
     width: 80%;
     .el-input .el-input--medium {
@@ -617,7 +617,7 @@
     }
   }
 
-  /*百度UE*/
+  /*baiduUE*/
   /deep/ #edui1 {
     width: 100% !important;
   }
@@ -630,20 +630,20 @@
     background: none repeat scroll 0 0 #fff;
   }
 
-  /*表单信息*/
+  /*The form of information*/
   .el-form {
     padding-bottom: 80px;
     .el-form-item {
       width: 100%;
       text-align: left;
 
-      /*送积分*/
+      /*Award points*/
       .integral-show {
         .el-input {
           width: 50px;
         }
       }
-      /** 下拉列表 */
+      /** The drop-down list*/
       /deep/ .el-select .el-select--medium {
         width: 160px;
       }
@@ -654,7 +654,7 @@
       }
     }
 
-    /*提交按钮*/
+    /*The submit button*/
     /deep/ .btn-submit {
       width: 100%;
       .el-form-item__content {
@@ -663,7 +663,7 @@
     }
   }
 
-  /** 表格信息 */
+  /** Form information*/
   .goods-info {
     display: flex;
     flex-direction: row;
@@ -683,7 +683,7 @@
     }
   }
 
-  /*平铺*/
+  /*tile*/
   div.base-info-item {
     h4 {
       padding:0 10px;
@@ -714,7 +714,7 @@
     }
   }
 
-  /*商品表格信息*/
+  /*Product Form information*/
   .goods-table {
     /deep/ thead>tr {
       /deep/ th:nth-child(2) {
@@ -723,7 +723,7 @@
     }
   }
 
-  /*遮罩层*/
+  /*The mask layer*/
   .cus-mask {
     position: absolute;
     width: 100%;

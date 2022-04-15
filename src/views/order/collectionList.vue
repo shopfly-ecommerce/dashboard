@@ -11,12 +11,12 @@
           align="right"
           unlink-panels
           range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          start-placeholder="Start date"
+          end-placeholder="End date"
           value-format="timestamp"
           :picker-options="{ disabledDate(time) { return time.getTime() > Date.now() }, shortcuts: MixinPickerShortcuts }">
         </el-date-picker>
-        <el-button size="mini" type="primary" icon="el-icon-download" @click="handleExportCollection" style="margin-left: 5px">导出Excel</el-button>
+        <el-button size="mini" type="primary" icon="el-icon-download" @click="handleExportCollection" style="margin-left: 5px">exportExcel</el-button>
       </div>
       <div class="toolbar-search">
         <en-table-search
@@ -24,32 +24,32 @@
           @advancedSearch="advancedSearchEvent"
           advanced
           advancedWidth="465"
-          placeholder="请输入订单编号"
+          placeholder="Please enter the order number"
         >
           <template slot="advanced-content">
             <el-form ref="advancedForm" :model="advancedForm" label-width="110px">
-              <el-form-item label="付款人">
+              <el-form-item label="The drawee">
                 <el-input size="medium" v-model="advancedForm.member_name" clearable></el-input>
               </el-form-item>
-              <el-form-item label="支付方式">
-                <el-select v-model="advancedForm.pay_way" placeholder="请选择" clearable>
-                  <el-option label="支付宝" value="alipay"/>
-                  <el-option label="微信支付" value="wechat"/>
+              <el-form-item label="Method of payment">
+                <el-select v-model="advancedForm.pay_way" placeholder="Please select" clearable>
+                  <el-option label="Alipay" value="alipay"/>
+                  <el-option label="WeChat pay" value="wechat"/>
                 </el-select>
               </el-form-item>
-              <el-form-item label="付款方式">
-                <el-select v-model="advancedForm.payment_type" placeholder="请选择" clearable>
-                  <el-option label="在线支付" value="ONLINE"/>
-                  <el-option label="货到付款" value="COD"/>
+              <el-form-item label="Payment method">
+                <el-select v-model="advancedForm.payment_type" placeholder="Please select" clearable>
+                  <el-option label="Online payment" value="ONLINE"/>
+                  <el-option label="Cash on delivery" value="COD"/>
                 </el-select>
               </el-form-item>
-              <el-form-item label="付款状态">
-                <el-select v-model="advancedForm.pay_status" placeholder="请选择" clearable>
-                  <el-option label="已支付" value="PAY_YES"/>
-                  <el-option label="未支付" value="PAY_NO"/>
+              <el-form-item label="Payment status">
+                <el-select v-model="advancedForm.pay_status" placeholder="Please select" clearable>
+                  <el-option label="Have to pay" value="PAY_YES"/>
+                  <el-option label="Did not pay" value="PAY_NO"/>
                 </el-select>
               </el-form-item>
-              <el-form-item label="付款日期">
+              <el-form-item label="Date of payment">
                 <el-date-picker
 	                class="apply-time"
                   v-model="advancedForm.refund_time_range"
@@ -58,8 +58,8 @@
                   :editable="false"
                   unlink-panels
                   range-separator="-"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
+                  start-placeholder="Start date"
+                  end-placeholder="End date"
                   value-format="timestamp"
                   :picker-options="{ disabledDate(time) { return time.getTime() > Date.now() }, shortcuts: MixinPickerShortcuts }">
                 </el-date-picker>
@@ -70,16 +70,16 @@
       </div>
     </div>
     <template slot="table-columns">
-      <el-table-column prop="order_sn" label="订单号"/>
-      <el-table-column label="付款方式">
-        <template slot-scope="scope">{{ scope.row.pay_way === 'ONLINE' ? '在线支付' : '货到付款' }}</template>
+      <el-table-column prop="order_sn" label="The order number"/>
+      <el-table-column label="Payment method">
+        <template slot-scope="scope">{{ scope.row.pay_way === 'ONLINE' ? 'Online payment' : 'Cash on delivery' }}</template>
       </el-table-column>
-      <el-table-column prop="pay_type" label="支付方式"/>
-      <el-table-column prop="pay_time" :formatter="MixinUnixToDate" label="付款日期"/>
-      <el-table-column prop="pay_money" :formatter="MixinFormatPrice" label="付款金额"/>
-      <el-table-column prop="pay_member_name" label="付款人"/>
-      <el-table-column label="付款状态">
-        <template slot-scope="scope">{{ scope.row.pay_status === 'PAY_YES' ? '已支付' : '未支付' }}</template>
+      <el-table-column prop="pay_type" label="Method of payment"/>
+      <el-table-column prop="pay_time" :formatter="MixinUnixToDate" label="Date of payment"/>
+      <el-table-column prop="pay_money" :formatter="MixinFormatPrice" label="The payment amount"/>
+      <el-table-column prop="pay_member_name" label="The drawee"/>
+      <el-table-column label="Payment status">
+        <template slot-scope="scope">{{ scope.row.pay_status === 'PAY_YES' ? 'Have to pay' : 'Did not pay' }}</template>
       </el-table-column>
     </template>
     <el-pagination
@@ -107,42 +107,42 @@
     },
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
 
-        /** 列表数据 */
+        /** The list of data*/
         tableData: '',
 
-        /** 高级搜索数据 */
+        /** Advanced search data*/
         advancedForm: {
           payment_type: '',
           pay_status: ''
         },
 
-        /** 导出Excel日期 */
+        /** exportExcelThe date of*/
         exportDateRange: []
       }
     },
     methods: {
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_CollectionOrder()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_CollectionOrder()
       },
 
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       searchEvent(data) {
         this.params = {
           ...this.params,
@@ -152,7 +152,7 @@
         this.GET_CollectionOrder()
       },
 
-      /** 高级搜索事件触发 */
+      /** Advanced search event triggered*/
       advancedSearchEvent() {
         this.params = {
           ...this.params,
@@ -169,33 +169,33 @@
         this.GET_CollectionOrder()
       },
 
-      /** 导出退款单 */
+      /** Export refund form*/
       handleExportCollection() {
         const range = this.MixinClone(this.exportDateRange)
         if (range.length === 0) {
-          this.$message.error('请选择要导出的时间段！')
+          this.$message.error('Please select the time period to export！')
           return false
         }
         const start_time = parseInt(range[0] / 1000)
         const end_time = parseInt(range[1] / 1000)
         API_Colection.exportCollection({ start_time, end_time }).then(response => {
           const json = {
-            sheet_name: '收款单',
+            sheet_name: 'voucher',
             sheet_values: response.map(item => ({
-              '订单号': item.order_sn,
-              '付款方式': item.pay_way === 'COD' ? '货到付款' : '在线支付',
-              '支付方式': item.pay_type,
-              '付款日期': item.pay_time ? Foundation.unixToDate(item.pay_time) : '',
-              '付款金额': Foundation.formatPrice(item.pay_money),
-              '付款人': item.pay_member_name,
-              '付款状态': item.pay_status === 'PAY_YES' ? '已支付' : '未支付'
+              'The order number': item.order_sn,
+              'Payment method': item.pay_way === 'COD' ? 'Cash on delivery' : 'Online payment',
+              'Method of payment': item.pay_type,
+              'Date of payment': item.pay_time ? Foundation.unixToDate(item.pay_time) : '',
+              'The payment amount': Foundation.formatPrice(item.pay_money),
+              'The drawee': item.pay_member_name,
+              'Payment status': item.pay_status === 'PAY_YES' ? 'Have to pay' : 'Did not pay'
             }))
           }
-          this.MixinExportJosnToExcel(json, '收款单')
+          this.MixinExportJosnToExcel(json, 'voucher')
         })
       },
 
-      /** 获取退款单列表数据 */
+      /** Gets the refund single column table data*/
       GET_CollectionOrder() {
         this.loading = true
         API_Colection.getCollectionList(this.params).then(response => {
@@ -224,7 +224,7 @@
     height: 50px;
   }
 
-  /** 申请时间 */
+  /** To apply for time*/
   .apply-time {
 	  width: 100%;
   }

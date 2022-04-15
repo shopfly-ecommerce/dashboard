@@ -25,7 +25,7 @@ export function parseTime(time, cFormat) {
   }
   const time_str = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
     let value = formatObj[key]
-    if (key === 'a') return ['一', '二', '三', '四', '五', '六', '日'][value - 1]
+    if (key === 'a') return ['one', 'two', 'three', 'four', 'five', 'six', 'day'][value - 1]
     if (result.length > 0 && value < 10) {
       value = '0' + value
     }
@@ -42,22 +42,22 @@ export function formatTime(time, option) {
   const diff = (now - d) / 1000
 
   if (diff < 30) {
-    return '刚刚'
+    return 'just'
   } else if (diff < 3600) { // less 1 hour
-    return Math.ceil(diff / 60) + '分钟前'
+    return Math.ceil(diff / 60) + 'Minutes ago'
   } else if (diff < 3600 * 24) {
-    return Math.ceil(diff / 3600) + '小时前'
+    return Math.ceil(diff / 3600) + 'Hours before'
   } else if (diff < 3600 * 24 * 2) {
-    return '1天前'
+    return '1Days ago,'
   }
   if (option) {
     return parseTime(time, option)
   } else {
-    return d.getMonth() + 1 + '月' + d.getDate() + '日' + d.getHours() + '时' + d.getMinutes() + '分'
+    return d.getMonth() + 1 + 'month' + d.getDate() + 'day' + d.getHours() + 'when' + d.getMinutes() + 'points'
   }
 }
 
-// 格式化时间
+// Formatting time
 export function getQueryObject(url) {
   url = url == null ? window.location.href : url
   const search = url.substring(url.lastIndexOf('?') + 1)
@@ -172,7 +172,7 @@ export function toggleClass(element, className) {
 
 export const pickerOptions = [
   {
-    text: '今天',
+    text: 'today',
     onClick(picker) {
       const end = new Date()
       const start = new Date(new Date().toDateString())
@@ -180,7 +180,7 @@ export const pickerOptions = [
       picker.$emit('pick', [start, end])
     }
   }, {
-    text: '最近一周',
+    text: 'In the latest week',
     onClick(picker) {
       const end = new Date(new Date().toDateString())
       const start = new Date()
@@ -188,7 +188,7 @@ export const pickerOptions = [
       picker.$emit('pick', [start, end])
     }
   }, {
-    text: '最近一个月',
+    text: 'Last month',
     onClick(picker) {
       const end = new Date(new Date().toDateString())
       const start = new Date()
@@ -196,7 +196,7 @@ export const pickerOptions = [
       picker.$emit('pick', [start, end])
     }
   }, {
-    text: '最近三个月',
+    text: 'Last three months',
     onClick(picker) {
       const end = new Date(new Date().toDateString())
       const start = new Date()
@@ -217,15 +217,15 @@ export function debounce(func, wait, immediate) {
   let timeout, args, context, timestamp, result
 
   const later = function() {
-    // 据上一次触发时间间隔
+    // According to the last trigger time interval
     const last = +new Date() - timestamp
 
-    // 上次被包装函数被调用时间间隔last小于设定时间间隔wait
+    // The last time the wrapped function was called is less than the set time interval wait
     if (last < wait && last > 0) {
       timeout = setTimeout(later, wait - last)
     } else {
       timeout = null
-      // 如果设定为immediate===true，因为开始边界已经调用过了此处无需调用
+      // If set to immediate===true, there is no need to call here because the start boundary has already been called
       if (!immediate) {
         result = func.apply(context, args)
         if (!timeout) context = args = null
@@ -237,7 +237,7 @@ export function debounce(func, wait, immediate) {
     context = this
     timestamp = +new Date()
     const callNow = immediate && !timeout
-    // 如果延时不存在，重新设定延时
+    // If the delay does not exist, reset the delay
     if (!timeout) timeout = setTimeout(later, wait)
     if (callNow) {
       result = func.apply(context, args)
@@ -248,7 +248,7 @@ export function debounce(func, wait, immediate) {
   }
 }
 
-/** 深拷贝*/
+/** Deep copy*/
 export function deepClone(source) {
   if (!source && typeof source !== 'object') {
     throw new Error('error arguments', 'shallowClone')
@@ -268,7 +268,7 @@ export function deepClone(source) {
 }
 
 /**
- * 处理unix时间戳，转换为可阅读时间格式
+ * To deal withunixTimestamp, converted to readable time format
  * @param unix
  * @param format
  * @returns {*|string}
@@ -291,7 +291,7 @@ export function unixToDate(unix, format) {
 }
 
 /**
- * 数组对象深拷贝
+ * Deep copy of array object
  * @param obj
  * @returns {*}
  */
@@ -301,8 +301,8 @@ export function cloneObj(obj) {
   if (typeof obj !== 'object') {
     return
   } else if (window && window.JSON) {
-    str = JSON.stringify(obj) // 系列化对象
-    newobj = JSON.parse(str) // 还原
+    str = JSON.stringify(obj) // Serialized object
+    newobj = JSON.parse(str) // reduction
   } else {
     for (var i in obj) {
       newobj[i] = typeof obj[i] === 'object' ? cloneObj(obj[i]) : obj[i]

@@ -1,13 +1,13 @@
 /**
- * 统计相关API
+ * Statistical correlationAPI
  */
 
 import request from '@/utils/request'
 
-/** 其它统计 */
+/** Other statistics*/
 
 /**
- * 获取客单价分布
+ * Get customer unit price distribution
  * @param params
  */
 export function getOrderPriceDistribution(params) {
@@ -20,7 +20,7 @@ export function getOrderPriceDistribution(params) {
 }
 
 /**
- * 获取购买时段分布
+ * Get the purchase time distribution
  * @param params
  */
 export function getBuyTimeDistribution(params) {
@@ -33,7 +33,7 @@ export function getBuyTimeDistribution(params) {
 }
 
 /**
- * 获取购买频次数据
+ * Get the purchase frequency data
  * @param params
  */
 export function getBuyFrequency(params) {

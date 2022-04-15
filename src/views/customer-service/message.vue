@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-tabs type="border-card" @tab-click="changeTabs">
-      <el-tab-pane label="未读消息" name="0">
+      <el-tab-pane label="Unread messages" name="0">
         <en-table-layout
           toolbar
           pagination
@@ -11,8 +11,8 @@
           <div slot="toolbar" class="inner-toolbar">
             <div class="toolbar-btns">
               <div class="conditions">
-                <span>消息类型:</span>
-                <el-select v-model="params.type" placeholder="请选择"  @change="handleChangeMsgCategory">
+                <span>Message type:</span>
+                <el-select v-model="params.type" placeholder="Please select"  @change="handleChangeMsgCategory">
                   <el-option
                     v-for="item in msg_categorys"
                     :key="item.msg_category_id"
@@ -21,26 +21,26 @@
                   </el-option>
                 </el-select>
               </div>
-              <el-button @click="handleDeleteAllMsgs" type="danger">全部删除</el-button>
-              <el-button @click="handleSignReadAllMsgs" v-if="isAllRead" type="primary">标记为已读</el-button>
+              <el-button @click="handleDeleteAllMsgs" type="danger">Delete all</el-button>
+              <el-button @click="handleSignReadAllMsgs" v-if="isAllRead" type="primary">Mark as read</el-button>
             </div>
           </div>
           <template slot="table-columns">
             <el-table-column type="selection" width="55"/>
-            <el-table-column prop="notice_content" label="内容"/>
-            <el-table-column label="发送时间" width="200" >
+            <el-table-column prop="notice_content" label="content"/>
+            <el-table-column label="Send time" width="200" >
               <template slot-scope="scope">{{ scope.row.send_time | unixToDate('yyyy-MM-dd hh:mm') }}</template>
             </el-table-column>
-            <el-table-column label="操作" width="200" class="opera-btn">
+            <el-table-column label="Operation" width="200" class="opera-btn">
               <template slot-scope="scope">
                 <el-button
                   type="danger"
-                  @click="handleDeleteMsg(scope.row)">删除
+                  @click="handleDeleteMsg(scope.row)">delete
                 </el-button>
                 <el-button
                   type="primary"
                   v-if="scope.row.is_read === 0"
-                  @click="handleSignRead(scope.row)">标记为已读
+                  @click="handleSignRead(scope.row)">Mark as read
                 </el-button>
               </template>
             </el-table-column>
@@ -58,7 +58,7 @@
           </el-pagination>
         </en-table-layout>
       </el-tab-pane>
-      <el-tab-pane label="已读消息" name="1">
+      <el-tab-pane label="Read the message" name="1">
         <en-table-layout
           toolbar
           pagination
@@ -68,8 +68,8 @@
           <div slot="toolbar" class="inner-toolbar">
             <div class="toolbar-btns">
               <div class="conditions">
-                <span>消息类型:</span>
-                <el-select v-model="params.type" placeholder="请选择"  @change="handleChangeMsgCategory">
+                <span>Message type:</span>
+                <el-select v-model="params.type" placeholder="Please select"  @change="handleChangeMsgCategory">
                   <el-option
                     v-for="item in msg_categorys"
                     :key="item.msg_category_id"
@@ -78,20 +78,20 @@
                   </el-option>
                 </el-select>
               </div>
-              <el-button @click="handleDeleteAllMsgs" type="danger">全部删除</el-button>
+              <el-button @click="handleDeleteAllMsgs" type="danger">Delete all</el-button>
             </div>
           </div>
           <template slot="table-columns">
             <el-table-column type="selection" width="55"/>
-            <el-table-column prop="notice_content" label="内容"/>
-            <el-table-column label="发送时间" width="200" >
+            <el-table-column prop="notice_content" label="content"/>
+            <el-table-column label="Send time" width="200" >
               <template slot-scope="scope">{{ scope.row.send_time | unixToDate('yyyy-MM-dd hh:mm') }}</template>
             </el-table-column>
-            <el-table-column label="操作" width="200" class="opera-btn">
+            <el-table-column label="Operation" width="200" class="opera-btn">
               <template slot-scope="scope">
                 <el-button
                   type="danger"
-                  @click="handleDeleteMsg(scope.row)">删除
+                  @click="handleDeleteMsg(scope.row)">delete
                 </el-button>
               </template>
             </el-table-column>
@@ -124,10 +124,10 @@
     },
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10,
@@ -136,32 +136,32 @@
           type: ''
         },
 
-        /** 列表数据 */
+        /** The list of data*/
         tableData: null,
 
-        /** 列表分页数据 */
+        /** List paging data*/
         pageData: null,
 
-        /** 选中项的ids */
+        /** The selected itemids */
         selectionids: [],
 
-        /** 是否全部已读 */
+        /** Whether all have been read*/
         isAllRead: false,
 
-        /** 消息类型列表 */
+        /** Message type list*/
         msg_categorys: [
           {
             msg_category_id: '',
-            msg_category_label: '所有'
+            msg_category_label: 'all'
           }, {
             msg_category_id: 'GOODS',
-            msg_category_label: '商品相关消息'
+            msg_category_label: 'Commodity related news'
           }, {
             msg_category_id: 'ORDER',
-            msg_category_label: '订单相关消息'
+            msg_category_label: 'Order related message'
           }, {
             msg_category_id: 'AFTERSALE',
-            msg_category_label: '售后相关消息'
+            msg_category_label: 'After-sale related information'
           }
         ]
 
@@ -172,19 +172,19 @@
     },
     methods: {
 
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_MsgsList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_MsgsList()
       },
 
-      /** 切换tab */
+      /** switchtab */
       changeTabs(tab) {
         this.params = {
           ...this.params,
@@ -194,7 +194,7 @@
         this.GET_MsgsList()
       },
 
-      /** 获取消息列表*/
+      /** Get message list*/
       GET_MsgsList() {
         this.loading = true
         API_Messages.getMsgsList(this.params).then(response => {
@@ -211,7 +211,7 @@
         })
       },
 
-      /** 改变分类*/
+      /** Change the classification*/
       handleChangeMsgCategory(val) {
         this.params = {
           ...this.params,
@@ -221,60 +221,60 @@
         this.GET_MsgsList()
       },
 
-      /** 获取选中项*/
+      /** Get the selected item*/
       handleSelectionChange(val) {
         this.selectionids = val.map(item => item.id)
       },
 
-      /** 删除消息 */
+      /** Delete the message*/
       handleDeleteMsg(row) {
-        this.$confirm('确认删除此消息, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('Confirm that this message is deleted, Whether or not to continue?', 'prompt', {
+          confirmButtonText: 'save',
+          cancelButtonText: 'cancel',
           type: 'warning'
         }).then(() => {
           this.Delete_messages(row.id)
         })
       },
 
-      /** 全部删除*/
+      /** Delete all*/
       handleDeleteAllMsgs() {
         if (this.selectionids.length <= 0) {
-          this.$message.warning('请选择要删除的项')
+          this.$message.warning('Select the item to delete')
           return
         }
         const _ids = this.selectionids.toString()
         this.Delete_messages(_ids)
       },
 
-      /** 执行删除*/
+      /** To delete*/
       Delete_messages(ids) {
         API_Messages.deleteMsgs(ids, {}).then(() => {
-          this.$message.success('删除成功！')
+          this.$message.success('Delete the success！')
           this.params.page_no = 1
           this.GET_MsgsList()
         })
       },
 
-      /** 标记为已读 */
+      /** Mark as read*/
       handleSignRead(row) {
         this.signReadMsgs(row.id)
       },
 
-      /** 标记为已读 批量*/
+      /** Mark as read batches*/
       handleSignReadAllMsgs() {
         if (this.selectionids.length <= 0) {
-          this.$message.warning('请选择要标记的项')
+          this.$message.warning('Select the item you want to mark')
           return
         }
         const _ids = this.selectionids.toString()
         this.signReadMsgs(_ids)
       },
 
-      /** 执行标记为已读*/
+      /** Execution marks as read*/
       signReadMsgs(ids) {
         API_Messages.signMsgs(ids, {}).then(() => {
-          this.$message.success('标记成功')
+          this.$message.success('Marked success')
           this.params.page_no = 1
           this.GET_MsgsList()
         })

@@ -1,10 +1,10 @@
 export default {
   data() {
     return {
-      // 朋友
+      // A friend
       friend_timer: null,
       friends: [],
-      // 订单
+      // The order
       orders: [],
       orderParams: {
         page_no: 1,
@@ -12,7 +12,7 @@ export default {
         no_data: false,
         loading: false
       },
-      // 商品浏览历史或者本店商品
+      // Browsing history of products or products of this store
       goodsList: [],
       goodsListParams: {
         page_no: 1,
@@ -20,9 +20,9 @@ export default {
         no_data: false,
         loading: false
       },
-      // 正在咨询的商品
+      // Goods being consulted
       askGoods: '',
-      // 聊天记录
+      // Chat record
       chatHistories: [],
       chatHistoryParams: {
         page_no: 1,
@@ -56,7 +56,7 @@ export default {
       this.chatContentScrollTo()
     },
     /**
-     * 获取好友列表
+     * Get a list of friends
      */
     getFriends() {
       clearTimeout(this.friend_timer)
@@ -77,7 +77,7 @@ export default {
       })
     },
     /**
-     * 获取订单列表
+     * Get order list
      */
     getOrders() {
       this.orderParams.loading = true
@@ -107,7 +107,7 @@ export default {
     },
 
     /**
-     * 创建对话
+     * Create a dialogue
      * @returns {*}
      */
     createSession() {
@@ -124,10 +124,10 @@ export default {
     },
 
     /**
-     * 获取商品列表
-     * 如果是商家端，获取店铺商品列表
-     * 否则，获取会员商品浏览记录
-     * b2c没有浏览记录，就不获取了
+     * Get a list of items
+     * If it is on the merchant side, get the list of goods in the store
+     * Otherwise, obtain the browsing history of member products
+     * b2cNo browsing history, no access
      */
     getGoodsList() {
       if (!this.isSeller) return
@@ -163,7 +163,7 @@ export default {
     },
 
     /**
-     * 获取商品详情
+     * Obtain product details
      */
     getGoodsDetail() {
       if (!this.goods_id) return
@@ -176,7 +176,7 @@ export default {
     },
 
     /**
-     * 获取聊天记录，用于加载更多
+     * Gets chat logs for loading more
      */
     getChatHistory() {
       this.chatHistoryParams.loading = true
@@ -202,7 +202,7 @@ export default {
     },
 
     /**
-     * 发送消息
+     * Send a message
      * @param content
      * @param type
      * @returns {Promise<*>}
@@ -226,7 +226,7 @@ export default {
       return Promise.resolve(res)
     },
     /**
-     * 移除未读消息
+     * Remove unread messages
      * @returns {*}
      */
     removeUnreadNum() {
@@ -243,7 +243,7 @@ export default {
       })
     },
     /**
-     * 获取新消息，轮询
+     * Get new messages, poll
      * @returns {Promise<void>}
      */
     getNewMessage() {
@@ -284,7 +284,7 @@ export default {
       })
     },
     /**
-     * 文件上传
+     * File upload
      * @param file
      */
     uploadFile(file) {

@@ -5,15 +5,15 @@
       :tableData="tableData"
       :loading="loading">
       <template slot="table-columns">
-        <el-table-column label="商品名称">
+        <el-table-column label="Name">
           <template slot-scope="scope">
             <a :href="`${MixinBuyerDomain}/goods/${scope.row.goods_id}`" target="_blank" style="color: #00a2d4;">{{ scope.row.goods_name }}</a>
           </template>
         </el-table-column>
-        <el-table-column prop="original_price" :formatter="MixinFormatPrice" label="商品原价"/>
-        <el-table-column prop="price" :formatter="MixinFormatPrice" label="活动价格"/>
-        <el-table-column prop="sold_quantity" label="售空数量" width="100"/>
-        <el-table-column label="抢购时刻" width="100">
+        <el-table-column prop="original_price" :formatter="MixinFormatPrice" label="Product  price"/>
+        <el-table-column prop="price" :formatter="MixinFormatPrice" label="Activity price"/>
+        <el-table-column prop="sold_quantity" label="The number sold out" width="100"/>
+        <el-table-column label="For moment" width="100">
           <template slot-scope="scope">{{ scope.row.time_line < 10 ? '0' + scope.row.time_line : scope.row.time_line }} : 00</template>
         </el-table-column>
       </template>
@@ -43,22 +43,22 @@
     },
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
 
-        /** 列表数据 */
+        /** The list of data*/
         tableData: [],
 
-        /** 列表分页数据 */
+        /** List paging data*/
         pageData: [],
 
-        /** 限时抢购活动ID */
+        /** Flash salesID */
         activityID: ''
       }
     },
@@ -83,19 +83,19 @@
       this.activityID = this.$route.params.id
     },
     methods: {
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_ActivityGoodsList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_ActivityGoodsList()
       },
 
-      /** 获取活动商品信息*/
+      /** Get active merchandise information*/
       GET_ActivityGoodsList() {
         this.loading = true
         const _params = {
@@ -113,9 +113,9 @@
         })
       },
 
-      /** 查看原因 */
+      /** To check the reason*/
       lookReason(row) {
-        this.$alert(row.fail_reason, '驳回原因')
+        this.$alert(row.fail_reason, 'Dismiss the reason')
       }
     }
   }
@@ -126,7 +126,7 @@
     text-align: center;
   }
 
-  /*平铺*/
+  /*tile*/
   div.base-info-item {
     h4 {
       margin-bottom: 10px;
@@ -155,7 +155,7 @@
       font-size: 13px;
     }
 
-    /*积分提示*/
+    /*Integral prompt*/
     p.exchange-tip {
       margin:0;
       padding: 10px;

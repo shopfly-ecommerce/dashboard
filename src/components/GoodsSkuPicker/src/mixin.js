@@ -8,12 +8,12 @@ import { RegExp } from '~/ui-utils'
 
 export default {
   props: {
-    // 选择器类型，后台管理：admin，商家中心：seller
+    // Selector type, Background management: Admin, Business center: Seller
     type: {
       type: String,
       default: 'admin'
     },
-    // 显示dialog
+    // Display dialog
     show: {
       type: Boolean,
       default: false
@@ -22,37 +22,37 @@ export default {
       type: String,
       default: 'seller/goods'
     },
-    // 获取多个商品API
+    // Get multiple commodity apis
     multipleApi: {
       type: String,
       default: 'seller/goods/@ids/details'
     },
-    // 分类API
+    // Classification of the API
     categoryApi: {
       type: String,
       default: 'seller/goods/categories/@id/children'
     },
-    // 最大可选个数
+    // Maximum number of options
     limit: {
       type: Number,
       default: 0
     },
-    // 商品操作基本单位 默认为goodsID sku为true时为skuID
+    // The commodity operation base unit defaults to goodsID and skU is skuID when skU is true
     sku: {
       type: Boolean,
       detault: false
     },
-    // 默认数据
+    // The default data
     defaultData: {
       type: Array,
       default: () => ([])
     },
-    // 排除
+    // To rule out
     excludeData: {
       type: Array,
       default: () => ([])
     },
-    // 商品类型 【NORMAL： 普通商品, POINT：积分商品】
+    // Type of goods [NORMAL: ordinary goods, POINT: integral goods]
     goodsType: {
       type: String,
       default: ''
@@ -63,23 +63,23 @@ export default {
       params: {
         page_no: 1,
         page_size: 10,
-        // 商品分类路径
+        // Commodity classification path
         category_path: '',
-        // 店铺名称
+        // Shop name
         seller_name: '',
-        // 商品类型
+        // Type
         goods_type: this.goodsType,
-        // 一个或多个商品ids(goods_id或者sku_id)
+        // One or more commodity IDS (Goods_ID or SKU_ID)
         ids: []
       },
-      /** 加载状态 */
+      /** Loading status*/
       loading: false,
-      /** 商品列表 */
+      /** Products*/
       goodsList: [],
-      /** 已选列表 */
+      /** The selected list*/
       selectedList: [],
       dialogVisible: this.show,
-      // 前台域名
+      // The front desk of the domain name
       buyerDomain: domain.buyer_pc
     }
   },
@@ -99,7 +99,7 @@ export default {
     'defaultData': 'defaultDataChanged'
   },
   computed: {
-    /** 计算已选择个数 */
+    /** Count the number of selections*/
     selectedNum() {
       return this.selectedList.filter(item => item).length
     }
@@ -110,19 +110,19 @@ export default {
     }
   },
   methods: {
-    /** 确认 */
+    /** confirm*/
     handleConfirm() {
       this.$emit('confirm', this.selectedList.filter(item => item))
       this.$emit('close')
       this.selectedList = []
     },
-    /** 加载更多 */
+    /** To load more*/
     handleLoadMore() {
       if (this.loading) return
       this.params.page_no += 1
       this.GET_GoodsList()
     },
-    /** 点击商品【可能是选择也可能是取消】 */
+    /** Click on the goods【It could be a choice or a cancellation】 */
     handleClickItem(item, index) {
       let _index
       if (this.sku) {
@@ -135,46 +135,46 @@ export default {
       } else {
         const { limit } = this
         if (limit > 0 && this.selectedList.filter(item => item).length >= limit) {
-          this.$message.error('超过最大可选个数：' + this.limit)
+          this.$message.error('Exceeding the maximum number of options：' + this.limit)
           return
         }
         this.selectedList.push(item)
         this.scrollToBottom()
       }
     },
-    /** 从已选商品中移除商品 */
+    /** Removes the item from the selected item*/
     handleRemoveItem(item, index) {
       this.selectedList.splice(index, 1)
     },
-    /** 已选择列表滚动到底部 */
+    /** Scroll to the bottom of the selected list*/
     scrollToBottom() {
       this.$nextTick(() => {
         const $sel = this.$selectedList
         $sel.scrollTop = $sel.scrollHeight
       })
     },
-    /** 当默认数据发生改变 */
+    /** When the default data changes*/
     defaultDataChanged(newVal) {
       this.selectedList = []
       if (newVal && newVal.length > 0) {
         this.GET_GoodsByGoodsIds(newVal).then(response => this.selectedList.push(...response))
       }
     },
-    /** 计算是否已被选 */
+    /** Calculates whether it has been selected*/
     isSelected(goods) {
       return this.sku ? this.selectedList.findIndex(item => item.sku_id === goods.sku_id) !== -1 : this.selectedList.findIndex(item => item.goods_id === goods.goods_id) !== -1
     },
-    /** 多个商品id输入框发生改变 */
+    /** Multiple itemsidThe input field has changed*/
     handleGoodsIdsChange(ids) {
       if (!ids.length) return
       const last_id = ids[ids.length - 1]
       if (!RegExp.integer.test(last_id)) {
-        this.$message.error('商品ID应为正整数！')
+        this.$message.error('productIDShould be positive integer！')
         ids.pop()
         this.$set(this.params, 'ids', ids)
       }
     },
-    /** 查找多个商品 */
+    /** Find Multiple Items*/
     handleSearchMultipleGoods() {
       const { ids } = this.params
       if (ids.length) {
@@ -183,7 +183,7 @@ export default {
         this.GET_GoodsList(true)
       }
     },
-    /** 获取商品列表 */
+    /** Get a list of items*/
     GET_GoodsList(clean = false) {
       this.loading = true
       !!clean && (this.params.page_no = 1)
@@ -200,12 +200,12 @@ export default {
       }).then(response => {
         this.loading = false
         const data = response.data
-        // 如果clean为true，先清空goodsList
+        // If clean is true, clear goodsList first
         !!clean && (this.goodsList = [])
         this.goodsList.push(...data)
       })
     },
-    /** 根据商品编号获取商品信息 */
+    /** Obtain commodity information according to commodity number*/
     GET_GoodsByGoodsIds(ids) {
       ids = typeof ids === 'string'
         ? ids.replace(/，/g, ',')

@@ -1,12 +1,12 @@
 /**
- * 物流公司相关API
+ * Logistics Company relatedAPI
  */
 
 import request from '@/utils/request'
 import qs from 'qs'
 
 /**
- * 获取物流公司列表
+ * Get a list of logistics companies
  * @param params
  * @returns {Promise<any>}
  */
@@ -20,7 +20,7 @@ export function getExpressCompanyList(params) {
 }
 
 /**
- * 添加物流公司
+ * Add logistics Company
  * @param params
  */
 export function addExpress(params) {
@@ -37,7 +37,7 @@ export function addExpress(params) {
 }
 
 /**
- * 删除物流公司
+ * Delete logistics company
  * @param id
  */
 export function deleteExpress(id) {
@@ -48,7 +48,7 @@ export function deleteExpress(id) {
 }
 
 /**
- * 获取物流公司详情
+ * Get details of logistics company
  * @param id
  */
 export function getExpressDetail(id) {
@@ -59,7 +59,7 @@ export function getExpressDetail(id) {
 }
 
 /**
- * 修改物流公司
+ * Modify logistics company
  * @param id
  * @param params
  */
@@ -77,7 +77,7 @@ export function editExpress(id, params) {
 }
 
 /**
- * 设置 电子面单
+ * Set the electron plane
  * @param ids
  * @param params
  * @returns {Promise<any>}

@@ -1,11 +1,11 @@
 /**
- * 菜单管理相关API
+ * Menu management relatedAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取菜单
+ * Access to the menu
  * @param parent_id
  */
 export function getMenusChildren(parent_id = 0) {
@@ -17,7 +17,7 @@ export function getMenusChildren(parent_id = 0) {
 }
 
 /**
- * 添加菜单
+ * Add menu
  * @param params
  */
 export function addMenu(params) {
@@ -29,7 +29,7 @@ export function addMenu(params) {
 }
 
 /**
- * 修改菜单
+ * Modify the menu
  * @param id
  * @param params
  */
@@ -42,7 +42,7 @@ export function editMenu(id, params) {
 }
 
 /**
- * 删除菜单
+ * Delete menu
  * @param id
  */
 export function deleteMenu(id) {

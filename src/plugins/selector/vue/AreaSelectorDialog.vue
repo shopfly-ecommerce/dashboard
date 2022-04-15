@@ -9,23 +9,23 @@ import '../css/areaSelector.css'
 export default {
   name: 'EnAreaSelectorDialog',
   props: {
-    /** 是否显示 */
+    /** Whether or not shown*/
     showDialog: {
       type: Boolean,
       default: false
     },
 
-    /** 默认数据 */
+    /** The default data*/
     defaultData: {
       type: Array
     },
 
-    /** 请求地址 */
+    /** Request the address*/
     api: {
       required: true
     },
 
-    /** 过滤数据 */
+    /** Filter the data*/
     filterData: {
       type: Array,
       default: []
@@ -54,7 +54,7 @@ export default {
   watch: {
     showDialog(val) {
       if (!val) {
-        // 关闭Dialog
+        // Close the Dialog
         $('.area-container').hide()
         $('.cover').css('display', 'none')
       } else {

@@ -1,13 +1,13 @@
 /**
- * 统计相关API
+ * Statistical correlationAPI
  */
 
 import request from '@/utils/request'
 
-/** 会员分析 */
+/** Member analysis*/
 
 /**
- * 获取会员下单量
+ * Get member orders
  * @param params
  */
 export function getMemberOrderNum(params) {
@@ -20,7 +20,7 @@ export function getMemberOrderNum(params) {
 }
 
 /**
- * 获取会员下单量表格数据
+ * Obtain member order form data
  * @param params
  */
 export function getMemberOrderNumPage(params) {
@@ -33,7 +33,7 @@ export function getMemberOrderNumPage(params) {
 }
 
 /**
- * 获取会员下单商品数
+ * Get the number of items ordered by members
  * @param params
  */
 export function getMemberGoodsNum(params) {
@@ -46,7 +46,7 @@ export function getMemberGoodsNum(params) {
 }
 
 /**
- * 获取会员下单商品数表格数据
+ * Obtain the table data of the number of items ordered by members
  * @param params
  */
 export function getMemberGoodsNumPage(params) {
@@ -59,7 +59,7 @@ export function getMemberGoodsNumPage(params) {
 }
 
 /**
- * 获取会员下单金额
+ * Obtain order amount of member
  * @param params
  */
 export function getMemberPrice(params) {
@@ -72,7 +72,7 @@ export function getMemberPrice(params) {
 }
 
 /**
- * 获取会员下单金额表格数据
+ * Obtain order amount table data of members
  * @param params
  */
 export function getMemberPricePage(params) {
@@ -85,7 +85,7 @@ export function getMemberPricePage(params) {
 }
 
 /**
- * 新增会员统计
+ * Statistics on New Members
  * @param params
  */
 export function addedMember(params) {
@@ -98,7 +98,7 @@ export function addedMember(params) {
 }
 
 /**
- * 新增会员统计表格
+ * New member statistics form
  * @param params
  */
 export function addedMemberPage(params) {

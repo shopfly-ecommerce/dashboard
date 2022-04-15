@@ -1,11 +1,11 @@
 /**
- * 结算单相关API
+ * Statement relatedAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取结算账单列表
+ * Get a list of billing statements
  * @param params
  * @returns {Promise<any>}
  */
@@ -19,7 +19,7 @@ export function getSettleMentList(params) {
 }
 
 /**
- * 导出结算单
+ * Export statement
  * @param params
  */
 export function exportSettleMentExcel(id) {
@@ -31,7 +31,7 @@ export function exportSettleMentExcel(id) {
 }
 
 /**
- * 商家查看某详细账单
+ * The merchant looks at a detailed bill
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -46,7 +46,7 @@ export function getBillDetails(ids, params) {
 }
 
 /**
- * 查看本期账单中的订单列表或者退款单列表
+ * Check the order list or refund list in the current statement
  * @param id
  * @param type
  * @param params
@@ -62,7 +62,7 @@ export function getOrderList(id, type, params) {
 }
 
 /**
- * 卖家对账单进行下一步操作 确认结算
+ * The seller performs the next step on the bill to confirm settlement
  * @param id
  * @param params
  * @returns {Promise<any>}

@@ -1,6 +1,6 @@
 /**
  * Created by Andste on 2018/5/13.
- * 层级选择器，提供基础功能
+ * A hierarchical selector that provides the underlying functionality
  */
 
 import Vue from 'vue'

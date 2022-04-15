@@ -6,19 +6,19 @@
       :loading="loading"
     >
       <template slot="table-columns">
-        <el-table-column prop="name" label="平台名称"/>
-        <el-table-column label="启用状态">
+        <el-table-column prop="name" label="The name of the platform"/>
+        <el-table-column label="enabled">
           <template slot-scope="scope">
-            {{ scope.row.open === 1 ? '已开启' : '已关闭' }}
-            <el-button v-if="scope.row.open === 0" type="text" @click="handleOpenSmsGateway(scope.$index, scope.row)">开启</el-button>
+            {{ scope.row.open === 1 ? 'Has been open' : 'closed' }}
+            <el-button v-if="scope.row.open === 0" type="text" @click="handleOpenSmsGateway(scope.$index, scope.row)">open</el-button>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="Operation">
           <template slot-scope="scope">
             <el-button
               size="mini"
               type="primary"
-              @click="handleEditSmsGateway(scope.$index, scope.row)">修改</el-button>
+              @click="handleEditSmsGateway(scope.$index, scope.row)">edit</el-button>
           </template>
         </el-table-column>
       </template>
@@ -35,7 +35,7 @@
       </el-pagination>
     </en-table-layout>
     <el-dialog
-      title="编辑短信网关参数"
+      title="Edit short message gateway parameters"
       :visible.sync="dialogSmsVisible"
       width="500px"
       append-to-body
@@ -48,13 +48,13 @@
             <el-input v-model="config.value"/>
           </el-form-item>
         </template>
-	      <el-form-item label="助通联系人">
-		      手机号：13601952063 <br> 微信号：WOWjiabao
+	      <el-form-item label="Contact person">
+		      Mobile phone no.：13601952063 <br> WeChat ID：WOWjiabao
 	      </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogSmsVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitSmsForm('smsForm')">确 定</el-button>
+        <el-button @click="dialogSmsVisible = false">cancel</el-button>
+        <el-button type="primary" @click="submitSmsForm('smsForm')">save</el-button>
       </span>
     </el-dialog>
   </div>
@@ -67,18 +67,18 @@
     name: 'SMSGatewaySettings',
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
-        /** 列表数据 */
+        /** The list of data*/
         tableData: '',
-        /** sms 表单 */
+        /** sms The form*/
         smsForm: { open: 0 },
-        /** sms表单 dailog */
+        /** smsThe formdailog */
         dialogSmsVisible: false
       }
     },
@@ -86,43 +86,43 @@
       this.GET_SmsGatewayList()
     },
     methods: {
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_SmsGatewayList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_SmsGatewayList()
       },
 
-      /** 修改短信网关 */
+      /** Modify SMS gateway*/
       handleEditSmsGateway(index, row) {
         this.smsForm = this.MixinClone(row)
         this.dialogSmsVisible = true
       },
 
-      /** 开启短信网关 */
+      /** Open SMS gateway*/
       handleOpenSmsGateway(index, row) {
         API_SmsGateway.openSmsGatewayById(row.bean).then(response => {
-          this.$message.success('开启成功！')
+          this.$message.success('Open the success！')
           this.GET_SmsGatewayList()
         })
       },
 
-      /** 修改短信网关参数 提交表单 */
+      /** Modify the SMS gateway parameter submission form*/
       submitSmsForm(formName) {
         const { bean } = this.smsForm
         API_SmsGateway.editSmsGateway(bean, this.smsForm).then(response => {
           this.dialogSmsVisible = false
-          this.$message.success('修改成功！')
+          this.$message.success('Modify the success！')
           this.MixinSetTableData(this.tableData, 'bean', bean, response)
         })
       },
 
-      /** 获取短信网关列表 */
+      /** Gets the list of SMS gateways*/
       GET_SmsGatewayList() {
         this.loading = true
         API_SmsGateway.getSmsGatewayList(this.params).then(response => {

@@ -5,7 +5,7 @@
 import request from '@/utils/request'
 
 /**
- * 获取楼层数据
+ * Get floor data
  * @param client_type
  * @param page_type
  */
@@ -17,7 +17,7 @@ export function getFloor(client_type, page_type) {
 }
 
 /**
- * 修改楼层
+ * Modify the floor
  * @param client_type
  * @param page_type
  * @param params
@@ -31,7 +31,7 @@ export function editFloor(client_type, page_type, params) {
 }
 
 /**
- * 获取焦点图列表
+ * Gets a list of focus diagrams
  * @param client_type
  */
 export function getFocus(client_type) {
@@ -43,7 +43,7 @@ export function getFocus(client_type) {
 }
 
 /**
- * 添加焦点图
+ * Add focus diagram
  * @param params
  */
 export function addFocus(params) {
@@ -55,7 +55,7 @@ export function addFocus(params) {
 }
 
 /**
- * 获取焦点图详情
+ * Get focus map details
  * @param id
  */
 export function getFocusDetail(id) {
@@ -66,7 +66,7 @@ export function getFocusDetail(id) {
 }
 
 /**
- * 修改焦点图
+ * Modify focus diagram
  * @param id
  * @param params
  */
@@ -79,7 +79,7 @@ export function editFocus(id, params) {
 }
 
 /**
- * 删除焦点图
+ * Delete focus diagram
  * @param id
  */
 export function deleteFocus(id) {

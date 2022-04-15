@@ -1,11 +1,11 @@
 /**
- * 评论管理API
+ * Comments on the managementAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取评论列表
+ * Get a comment list
  * @param params
  * @returns {Promise<any>}
  */
@@ -19,7 +19,7 @@ export function getCommentList(params) {
 }
 
 /**
- * 商家回复评论
+ * Merchants reply to comments
  * @param params
  * @returns {Promise<any>}
  */

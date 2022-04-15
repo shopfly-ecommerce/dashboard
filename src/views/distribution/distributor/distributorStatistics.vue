@@ -1,22 +1,22 @@
 <template>
   <div class="bg-shop-summary">
-    <!--工具条-->
+    <!--The toolbar-->
     <div class="btn-tools">
       <div class="conditions">
-        <span>日期设置:</span>
+        <span>The date set:</span>
         <en-year-month-picker size="mini" @changed="changeYearMonth"></en-year-month-picker>
       </div>
       <div class="conditions">
-        <span>当前会员: {{ memberName }}</span>
+        <span>The current members: {{ memberName }}</span>
       </div>
-      <el-button class="btn-opera" size="mini" type="primary" @click="handleSearch">开始搜索</el-button>
-      <el-button class="btn-opera" size="mini" type="success" @click="exportExcel">导出</el-button>
+      <el-button class="btn-opera" size="mini" type="primary" @click="handleSearch">Begin your search</el-button>
+      <el-button class="btn-opera" size="mini" type="success" @click="exportExcel">export</el-button>
     </div>
-    <!--图表-->
+    <!--The chart-->
     <el-tabs v-model="chartName" type="card" @tab-click="handleClick">
-      <el-tab-pane label="营业额统计" name="turnover"></el-tab-pane>
-      <el-tab-pane label="利润额统计" name="profit"></el-tab-pane>
-      <el-tab-pane label="订单数统计" name="orderNum"></el-tab-pane>
+      <el-tab-pane label="Turnover statistics" name="turnover"></el-tab-pane>
+      <el-tab-pane label="Profit statistics" name="profit"></el-tab-pane>
+      <el-tab-pane label="Order count" name="orderNum"></el-tab-pane>
       <div id="chart" :style="{height: tableHeight + 'px'}"></div>
     </el-tabs>
   </div>
@@ -28,31 +28,31 @@
     name: 'distributorStatistics',
     data() {
       return {
-        /** 当前会员名 */
+        /** Current member name*/
         memberName: this.$route.query.member_name,
 
-        /** 当前标签名 */
+        /** Current tag name*/
         chartName: 'turnover',
 
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 图表参数*/
+        /** Chart parameters*/
         params: {
-          /** 会员id */
+          /** membersid */
           member_id: this.$route.query.member_id,
 
-          /** 当前选择的日期类型 */
+          /** The currently selected date type*/
           circle: 'YEAR',
 
-          /** 年份 */
+          /** year*/
           year: '2018',
 
-          /** 月份*/
+          /** in*/
           month: '6'
         },
 
-        /** 当前数据 */
+        /** The current data*/
         currentChart: {},
 
         tableHeight: document.body.clientHeight / 2
@@ -87,14 +87,14 @@
       next()
     },
     methods: {
-      /** 窗口缩放时计算table高度 */
+      /** Calculated when the window is zoomedtablehighly*/
       countTableHeight() {
         this.tableHeight = document.body.clientHeight / 2
-        /** 图表刷新 */
+        /** The chart to refresh*/
         setTimeout(this.Chart.resize)
       },
 
-      /** 改变日期的回调*/
+      /** A callback that changes the date*/
       changeYearMonth(obj) {
         this.params = {
           member_id: this.$route.query.member_id,
@@ -116,7 +116,7 @@
         }
       },
 
-      /** 执行搜索 */
+      /** Perform a search*/
       handleSearch() {
         switch (this.chartName) {
           case 'profit':
@@ -131,35 +131,35 @@
         }
       },
 
-      /** 导出excel */
+      /** exportexcel */
       exportExcel() {
         let json
         if (this.params.circle === 'YEAR') {
           switch (this.chartName) {
             case 'profit':
               json = {
-                sheet_name: '利润额统计',
+                sheet_name: 'Profit statistics',
                 sheet_values: this.currentChart.xAxis.map((item, index) => ({
-                  '日期': item,
-                  '利润额': this.currentChart.series.data[index]
+                  'The date of': item,
+                  'Profit margin': this.currentChart.series.data[index]
                 }))
               }
               break
             case 'turnover':
               json = {
-                sheet_name: '营业额统计',
+                sheet_name: 'Turnover statistics',
                 sheet_values: this.currentChart.xAxis.map((item, index) => ({
-                  '日期': item,
-                  '营业额': this.currentChart.series.data[index]
+                  'The date of': item,
+                  'turnover': this.currentChart.series.data[index]
                 }))
               }
               break
             case 'orderNum':
               json = {
-                sheet_name: '订单数量统计',
+                sheet_name: 'Order quantity statistics',
                 sheet_values: this.currentChart.xAxis.map((item, index) => ({
-                  '日期': item,
-                  '订单数': this.currentChart.series.data[index]
+                  'The date of': item,
+                  'orders': this.currentChart.series.data[index]
                 }))
               }
               break
@@ -168,37 +168,37 @@
           switch (this.chartName) {
             case 'profit':
               json = {
-                sheet_name: '利润额统计',
+                sheet_name: 'Profit statistics',
                 sheet_values: this.currentChart.xAxis.map((item, index) => ({
-                  '日期': item,
-                  '利润额': this.currentChart.series.data[index]
+                  'The date of': item,
+                  'Profit margin': this.currentChart.series.data[index]
                 }))
               }
               break
             case 'turnover':
               json = {
-                sheet_name: '营业额统计',
+                sheet_name: 'Turnover statistics',
                 sheet_values: this.currentChart.xAxis.map((item, index) => ({
-                  '日期': item,
-                  '营业额': this.currentChart.series.data[index]
+                  'The date of': item,
+                  'turnover': this.currentChart.series.data[index]
                 }))
               }
               break
             case 'orderNum':
               json = {
-                sheet_name: '订单数量统计',
+                sheet_name: 'Order quantity statistics',
                 sheet_values: this.currentChart.xAxis.map((item, index) => ({
-                  '日期': item,
-                  '订单数': this.currentChart.series.data[index]
+                  'The date of': item,
+                  'orders': this.currentChart.series.data[index]
                 }))
               }
               break
           }
         }
-        this.MixinExportJosnToExcel(json, '销售统计')
+        this.MixinExportJosnToExcel(json, 'Sales statistics')
       },
 
-      /** 切换面板 */
+      /** Switch panel*/
       handleClick(tab, event) {
         this.chartName = tab.name
         switch (this.chartName) {
@@ -214,7 +214,7 @@
         }
       },
 
-      /** 获取利润额图表 */
+      /** Get a profit chart*/
       GET_ProfitChart() {
         API_distribution.getProfitChart(this.params).then(response => {
           this.currentChart = response
@@ -222,7 +222,7 @@
         })
       },
 
-      /** 获取营业额图表 */
+      /** Obtain turnover chart*/
       GET_OrderAmountChart() {
         API_distribution.getOrderAmountChart(this.params).then(response => {
           this.currentChart = response
@@ -230,7 +230,7 @@
         })
       },
 
-      /** 获取订单数图表 */
+      /** Get an order number chart*/
       GET_OrderCountChart() {
         API_distribution.getOrderCountChart(this.params).then(response => {
           this.currentChart = response
@@ -238,12 +238,12 @@
         })
       },
 
-      /** 渲染图表 */
+      /** Render the chart*/
       RenderChart(response = {}) {
         this.Chart.setOption({
           title: { text: response.series.name, x: 'center' },
           tooltip: { trigger: 'axis' },
-          legend: { show: true, orient: 'vertical', data: [{ name: '营业额' }], bottom: '10px' },
+          legend: { show: true, orient: 'vertical', data: [{ name: 'turnover' }], bottom: '10px' },
           color: ['#7CB5EC'],
           toolbox: {
             feature: {
@@ -258,7 +258,7 @@
             data: response.xAxis
           },
           yAxis: {
-            name: '营业额',
+            name: 'turnover',
             type: 'value',
             axisLabel: {
               formatter: '{value}'
@@ -270,13 +270,13 @@
               data: response.series.data,
               markPoint: {
                 data: [
-                  { type: 'max', name: '最大值' },
-                  { type: 'min', name: '最小值' }
+                  { type: 'max', name: 'The maximum' },
+                  { type: 'min', name: 'The minimum value' }
                 ]
               },
               markLine: {
                 data: [
-                  { type: 'average', name: '平均值' }
+                  { type: 'average', name: 'The average' }
                 ]
               }
             }
@@ -301,7 +301,7 @@
   /deep/ .el-table td:not(.is-left) {
     text-align: center;
   }
-  /*工具条*/
+  /*The toolbar*/
   div.btn-tools {
     margin: 0 30px 10px 0;
     width: 100%;

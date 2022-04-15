@@ -13,20 +13,20 @@
             @advancedSearch="advancedSearchEvent"
             advanced
             advancedWidth="465"
-            placeholder="请输入商品名称或咨询内容">
+            placeholder="Please input product name or consultation content">
             <template slot="advanced-content">
               <el-form ref="advancedForm" :model="advancedForm" label-width="80px">
-                <el-form-item label="会员名称">
+                <el-form-item label="Member name">
                   <el-input v-model="advancedForm.member_name" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="商品名称">
+                <el-form-item label="Name">
                   <el-input v-model="advancedForm.goods_name" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="咨询内容">
+                <el-form-item label="Consulting content">
                   <el-input v-model="advancedForm.content" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="回复状态">
-                  <el-select v-model="advancedForm.reply_status" placeholder="请选择" clearable>
+                <el-form-item label="Reply to state">
+                  <el-select v-model="advancedForm.reply_status" placeholder="Please select" clearable>
                     <el-option
                       v-for="item in replyStatusList"
                       :label="item.label"
@@ -44,37 +44,37 @@
       <table class="my-table" v-loading="loading">
         <thead>
         <tr class="bg-order">
-          <th>咨询</th>
-          <th>操作</th>
+          <th>consulting</th>
+          <th>Operation</th>
         </tr>
         </thead>
         <tbody v-for="(item, index) in tableData" :key="index">
           <tr class="bg-order">
             <td colspan="2" class="base-info">
-              <!--商品名称-->
+              <!--Name-->
               <a :href="`${MixinBuyerDomain}/goods/${item.goods_id}`" target="_blank" class="goods-name">{{ item.goods_name }}</a>
-              咨询用户：<span class="member-name">{{ item.member_name}} </span>
-              咨询时间：<span>{{ item.create_time | unixToDate('yyyy-MM-dd hh:mm') }}</span>
+              Consulting the user：<span class="member-name">{{ item.member_name}} </span>
+              Consultation time：<span>{{ item.create_time | unixToDate('yyyy-MM-dd hh:mm') }}</span>
             </td>
           </tr>
           <tr>
-            <!--咨询-->
+            <!--consulting-->
             <td>
-              <h4>咨询问题：</h4>
+              <h4>Ask questions：</h4>
               <p>{{ item.content }}</p>
             </td>
-            <!--操作-->
+            <!--Operation-->
             <td class="opera-btn" v-if="item.reply_status === 1">
-              <h4>回复咨询：</h4>
+              <h4>Reply to consulting：</h4>
               <p>{{ item.reply }}</p>
             </td>
             <td class="opera-btn" v-if="item.reply_status === 0">
-              <el-button type="primary" @click="handleReply(item)">回复</el-button>
+              <el-button type="primary" @click="handleReply(item)">reply</el-button>
             </td>
           </tr>
         </tbody>
         <div v-if="tableData.length === 0 " class="empty-block">
-          暂无数据
+          no data
         </div>
       </table>
     </div>
@@ -89,23 +89,23 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="pageData.data_total">
     </el-pagination>
-    <el-dialog title="回复咨询"  :visible.sync="isReplyShow" width="30%">
+    <el-dialog title="Reply to consulting"  :visible.sync="isReplyShow" width="30%">
       <div align="center">
         <el-form :model="replyForm" ref="replyForm" label-position="right" label-width="100px">
-          <el-form-item label="咨询内容:" prop="content" >
+          <el-form-item label="Consulting content:" prop="content" >
             <span class="desc-span">{{ replyForm.content }}</span>
           </el-form-item>
           <el-form-item
-            label="回复内容:"
+            label="Reply content:"
             prop="reply"
-            :rules="{ required: true, message: '请填写回复内容' ,trigger: 'blur' }">
-            <el-input type="textarea" :maxlength="500" rows="5" placeholder="回复内容最多500个字" v-model="replyForm.reply"></el-input>
+            :rules="{ required: true, message: 'Please fill in the reply' ,trigger: 'blur' }">
+            <el-input type="textarea" :maxlength="500" rows="5" placeholder="Most replies500A word" v-model="replyForm.reply"></el-input>
           </el-form-item>
         </el-form>
       </div>
       <div slot="footer">
-        <el-button @click="isReplyShow = false">取 消</el-button>
-        <el-button type="primary" @click="confirmReply">确 定</el-button>
+        <el-button @click="isReplyShow = false">cancel</el-button>
+        <el-button type="primary" @click="confirmReply">save</el-button>
       </div>
     </el-dialog>
   </div>
@@ -122,22 +122,22 @@
     },
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
 
-        /** 列表数据 */
+        /** The list of data*/
         tableData: [],
 
-        /** 列表分页数据 */
+        /** List paging data*/
         pageData: [],
 
-        /** 高级搜索数据 */
+        /** Advanced search data*/
         advancedForm: {
           member_name: '',
 
@@ -148,24 +148,24 @@
           reply_status: ''
         },
 
-        /** 回复状态列表 */
+        /** Reply status list*/
         replyStatusList: [
-          { label: '已回复', value: 1 },
-          { label: '未回复', value: 0 }
+          { label: 'Have to reply', value: 1 },
+          { label: 'Did not return', value: 0 }
         ],
 
-        /** 表格最大高度 */
+        /** Table maximum height*/
         tableMaxHeight: (document.body.clientHeight - 54 - 34 - 50 - 15),
 
-        /** 回复操作框是否显示 */
+        /** Reply whether the action box is displayed*/
         isReplyShow: false,
 
-        /** 回复表单 */
+        /** Reply form*/
         replyForm: {
-          /** 咨询问题 */
+          /** Ask questions*/
           content: '',
 
-          /** 回复内容 */
+          /** Reply content*/
           reply: ''
         }
       }
@@ -176,24 +176,24 @@
       window.onresize = this.countTableHeight
     },
     methods: {
-      /** 计算高度 */
+      /** Calculate height*/
       countTableHeight() {
         this.tableHeight = (document.body.clientHeight - 54 - 35 - 50)
       },
 
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_ConsultationList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_ConsultationList()
       },
 
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       searchEvent(data) {
         this.params = {
           ...this.params,
@@ -203,7 +203,7 @@
         this.GET_ConsultationList()
       },
 
-      /** 高级搜索事件触发 */
+      /** Advanced search event triggered*/
       advancedSearchEvent() {
         delete this.params.keyword
         this.params = {
@@ -213,7 +213,7 @@
         this.GET_ConsultationList()
       },
 
-      /** 获取咨询列表*/
+      /** Get a consultation list*/
       GET_ConsultationList() {
         this.loading = true
         API_consultation.getConsultationList(this.params).then(response => {
@@ -227,20 +227,20 @@
         })
       },
 
-      /** 回复操作 */
+      /** Reply to the operation*/
       handleReply(item) {
         this.isReplyShow = true
         this.replyForm = {
           ask_id: item.ask_id,
-          /** 咨询问题 */
+          /** Ask questions*/
           content: item.content,
 
-          /** 回复内容 */
+          /** Reply content*/
           reply: item.reply
         }
       },
 
-      /** 确认回复 */
+      /** Confirmation reply*/
       confirmReply() {
         this.$refs['replyForm'].validate((valid) => {
           if (valid) {
@@ -248,7 +248,7 @@
               reply_content: this.replyForm.reply
             }
             API_consultation.replyConsultationList(this.replyForm.ask_id, _params).then(() => {
-              this.$message.success('回复成功')
+              this.$message.success('Reply to success')
               this.isReplyShow = false
               this.GET_ConsultationList()
             })
@@ -264,7 +264,7 @@
     height: 70px;
     padding: 20px 0;
   }
-  /* 工具条*/
+  /* The toolbar*/
   .inner-toolbar {
     display: flex;
     width: 100%;
@@ -272,7 +272,7 @@
     padding: 0 20px;
   }
 
-  /*暂无数据时的样式*/
+  /*A pattern in the absence of data*/
   /deep/ .el-table__empty-block {
     display: none;
   }
@@ -288,7 +288,7 @@
     color: #606266;
   }
 
-  /*表格信息*/
+  /*Form information*/
   .my-table-out{
     overflow-y: scroll;
     text-overflow: ellipsis;
@@ -339,14 +339,14 @@
         color: #333;
         font-size: 13px;
 
-        /*商品名称*/
+        /*Name*/
         a.goods-name {
           color: #337ab7 ;
           display: inline-block;
           margin: 0 20px 0 0;
         }
 
-        /*会员名称*/
+        /*Member name*/
         span.member-name {
           display: inline-block;
           margin: 0 20px 0 0;
@@ -360,7 +360,7 @@
     }
   }
 
-  /*分页信息*/
+  /*The paging information*/
   section>div {
     position: relative;
   }
@@ -376,7 +376,7 @@
     padding: 5px 20px;
   }
 
-  /** 弹框信息 */
+  /** Bounced message*/
   .desc-span {
     display: block;
     text-align: left;

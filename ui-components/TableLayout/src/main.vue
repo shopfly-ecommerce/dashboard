@@ -30,36 +30,36 @@
   export default {
     name: 'EnTableLayout',
     props: {
-      /** 是否显示斑纹 */
+      /** Whether to show markings*/
       stripe: {
         type: Boolean,
         default: true
       },
-      /** 行数据的 Key */
+      /** The rows of dataKey */
       rowKey: {
         type: String,
         default: null
       },
-      /** 是否显示工具栏 */
+      /** Whether to display toolbar*/
       toolbar: {
         type: Boolean,
         default: true
       },
-      /** 是否显示分页 */
+      /** Whether paging is displayed*/
       pagination: {
         type: Boolean,
         default: true
       },
-      /** 表格数据 */
+      /** Tabular data*/
       tableData: {
         default: () => ([])
       },
-      /** 加载状态 */
+      /** Loading status*/
       loading: {
         type: Boolean,
         default: false
       },
-      /** 当选择项发生变化 */
+      /** When the selection changes*/
       selectionChange: {
         type: Function,
         default: () => {}
@@ -74,7 +74,7 @@
     height: 100%;
     position: relative;
   }
-  /** 工具栏样式 */
+  /** Toolbar Style*/
   .toolbar {
     display: flex;
     align-items: center;
@@ -92,7 +92,7 @@
   .toolbar-search {
     margin-right: 10px;
   }
-  /** 分页样式 */
+  /** Pagination style*/
   .pagination {
     display: flex;
     justify-content: space-between;

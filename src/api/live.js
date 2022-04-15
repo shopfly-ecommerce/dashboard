@@ -1,12 +1,12 @@
 /**
- * 直播相关API
+ * Live relatedAPI
  */
 
 import request from '@/utils/request'
 import { api } from '~/ui-domain'
 
 /**
- * 获取直播间列表
+ * Get a list of broadcast rooms
  * @param params
  * @returns {Promise<any>}
  */
@@ -20,7 +20,7 @@ export function getLiveVideoList(params) {
 }
 
 /**
- * 添加直播间
+ * Add a live studio
  * @param params
  * @returns {Promise<any>}
  */
@@ -34,7 +34,7 @@ export function addLiveVideoRooms(params) {
 }
 
 /**
- * 提交审核直播间
+ * Submit to review studio
  * @param id
  * @returns {Promise<any>}
  */
@@ -47,7 +47,7 @@ export function auditLiveVideoRooms(id) {
 }
 
 /**
- * 查询一个直播间
+ * Check a live studio
  * @param id
  * @returns {Promise<any>}
  */
@@ -60,7 +60,7 @@ export function getLiveVideo(id) {
 }
 
 /**
- * 修改直播间
+ * Modify the studio
  * @param id
  * @param params
  * @returns {Promise<any>}
@@ -75,7 +75,7 @@ export function updateLiveVideo(id, params) {
 }
 
 /**
- * 删除直播间
+ * Delete the studio
  * @param id
  * @returns {Promise<any>}
  */
@@ -88,7 +88,7 @@ export function deleteLiveVideo(id) {
 }
 
 /**
- * 绑定直播间商品
+ * Bind broadcast room merchandise
  * @param room_id
  * @param params
  * @returns {Promise<any>}
@@ -105,7 +105,7 @@ export function bindLiveVideoGoods(room_id, good_ids) {
 }
 
 /**
- * 查询直播间商品
+ * Inquire about broadcast room merchandise
  * @param room_id
  * @param params
  * @returns {Promise<any>}
@@ -120,7 +120,7 @@ export function getLiveVideoGoods(room_id, params) {
 }
 
 /**
- * 直播间微信图片下载
+ * WeChat picture download
  * @param room_id
  * @returns {Promise<any>}
  */
@@ -137,7 +137,7 @@ export function getLiveVideoMedia(media_id) {
 }
 
 /**
- * 获取直播商品列表
+ * Get a list of live merchandise
  * @param params
  * @returns {Promise<any>}
  */
@@ -151,7 +151,7 @@ export function getLiveVideoGoodsList(params) {
 }
 
 /**
- * 添加直播商品
+ * Add live streaming products
  * @param params
  * @returns {Promise<any>}
  */
@@ -166,7 +166,7 @@ export function addLiveVideoGoods(params) {
 }
 
 /**
- * 查询直播商品
+ * Query live broadcast products
  * @param id
  * @returns {Promise<any>}
  */
@@ -179,7 +179,7 @@ export function getLiveGoods(id) {
 }
 
 /**
- * 修改直播商品
+ * Modify live broadcast products
  * @param id
  * @param params
  * @returns {Promise<any>}
@@ -194,7 +194,7 @@ export function updateLiveGoods(id, params) {
 }
 
 /**
- * 删除直播商品
+ * Delete live broadcast products
  * @param id
  * @returns {Promise<any>}
  */
@@ -207,7 +207,7 @@ export function deleteLiveVideoGoods(id) {
 }
 
 /**
- * 再次审核直播商品
+ * Review live broadcast products again
  * @param id
  * @returns {Promise<any>}
  */
@@ -220,7 +220,7 @@ export function againAuditLiveVideoGoods(id) {
 }
 
 /**
- * 提交审核直播商品
+ * Submit live broadcast products for review
  * @param id
  * @returns {Promise<any>}
  */
@@ -233,7 +233,7 @@ export function submitAuditLiveVideoGoods(id) {
 }
 
 /**
- * 撤回审核直播商品
+ * Withdraw the approval of live broadcast products
  * @param id
  * @returns {Promise<any>}
  */
@@ -246,7 +246,7 @@ export function resetAuditLiveVideoGoods(id) {
 }
 
 /**
- * 直播间商品选择器
+ * Broadcast room commodity selector
  * @param params
  * @returns {Promise<any>}
  */

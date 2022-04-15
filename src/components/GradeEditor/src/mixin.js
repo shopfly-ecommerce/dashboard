@@ -8,17 +8,17 @@ import request from '@/utils/request'
 export default {
   props: {
     /**
-     * 获取数据API
-     * 用@id占位
+     * To get the dataAPI
+     * with@idplaceholder
      */
     api: {
       type: String,
       required: true
     },
     /**
-     * 主要参数的参数名
-     * id: 作为主键
-     * text: 要显示的文本
+     * The parameter name of the main parameter
+     * id: A primary key
+     * text: The text to display
      */
     paramsNames: {
       type: Object,
@@ -28,59 +28,59 @@ export default {
       })
     },
     /**
-     * 最多展示级数
-     * 默认展示到3级
+     * Show series at most
+     * Default display to3level
      */
     maxLevel: {
       type: Number,
       default: 3
     },
     /**
-     * 展示传入的btns
-     * 默认展示，即表示可编辑
+     * Show incomingbtns
+     * The default display means editable
      */
     showBtns: {
       type: Boolean,
       default: true
     },
     /**
-     * 传入的btns
+     * The incomingbtns
      */
     btns: {
       type: Array,
       default: () => []
     },
     /**
-     * 编辑器类型文字描述
-     * 用于显示在"添加x级typeText"
-     * 例如：添加x级分类
+     * Editor type text description
+     * For display in"addxleveltypeText"
+     * For example,：addxGrade classification
      */
     typeText: {
       type: String,
-      default: '数据'
+      default: 'data'
     }
   },
   data() {
     return {
       loading: false,
       data: [],
-      /** 当前层级 */
+      /** The current level*/
       curLevel: 0,
-      /** 当前操作的层级 */
+      /** The level of the current operation*/
       curItem: '',
-      /** 最后一级的数据 */
+      /** The last level of data*/
       lastItem: '',
-      /** 需要删除的自定义的参数数组，用于返回数据时删除 */
+      /** A custom parameter array that needs to be deleted when data is returned*/
       needDeleteParams: ['$id', '$text', '$active', '$hidden'],
-      /** 各个搜索框关键字 */
+      /** Each search box keyword*/
       searchKeywords: [],
-      /** 当前的搜索关键字，用来节流 */
+      /** The current search keyword is used to throttle the flow*/
       curSearchKeyword: ''
     }
   },
   computed: {
     /**
-     * 计算列宽度
+     * Calculate column width
      * @returns {{width : string}}
      */
     columnWdith() {
@@ -89,7 +89,7 @@ export default {
       }
     },
     /**
-     * 占位的层级
+     * The hierarchy of placeholders
      * @returns {*}
      */
     placeLevel() {
@@ -105,8 +105,8 @@ export default {
   },
   methods: {
     /**
-     * 获取数据
-     * 拿到数据后交给数据处理方法处理
+     * To get the data
+     * Take the data and hand it over to the data processing method for processing
      * @param id
      * @constructor
      */
@@ -118,19 +118,19 @@ export default {
         loading: false
       }).then(data => {
         this.loading = false
-        // 如果有返回数据，且不为数组，抛出错误。
+        // If data is returned and is not an array, an error is thrown.
         if (data && !Array.isArray(data)) {
           throw Error('The response is not an array!')
         }
-        // 如果有返回数据，或是数组没有第一个值
-        // 说明后面没有数据了，这个时候可以直接完成
+        // If any data is returned, or the array does not have a first value
+        // There is no data after the explanation, this time can be completed directly
         if (!data || !data[0]) {
           this.data.splice(this.curLevel, this.maxLevel - this.curLevel)
           this.handleRturnItem()
           return
         }
         const names = this.paramsNames
-        // 参数名映射
+        // Parameter name mapping
         data.map(item => {
           item.$id = item[names.id]
           item.$text = item[names.text]
@@ -140,7 +140,7 @@ export default {
       }).catch(() => { this.loading = false })
     },
     /**
-     * 数据处理
+     * The data processing
      */
     dataProcessing(res) {
       const { maxLevel, curLevel, data } = this
@@ -159,7 +159,7 @@ export default {
       }
     },
     /**
-     * 点击item触发事件
+     * Click on theitemTriggering event
      * @param item
      * @param itemIndex
      * @param columnIndex
@@ -179,8 +179,8 @@ export default {
       }
     },
     /**
-     * 点击自定义btn触发事件
-     * 将item作为参数回调回去
+     * Ill go to CustombtnTriggering event
+     * willitemCall back as a parameter
      * @param item
      * @param btn
      * @param btnIndex
@@ -199,9 +199,9 @@ export default {
       typeof onClick === 'function' && onClick(item, parent, parentArray)
     },
     /**
-     * 触发change事件
-     * 最后一级的数据作为参数传递回去
-     * 在这之前，删除组件内部自定义的参数
+     * The triggerchangeThe event
+     * The last level of data is passed back as a parameter
+     * Before doing so, remove the custom parameters within the component
      */
     handleRturnItem() {
       const object = JSON.parse(JSON.stringify(this.lastItem))
@@ -209,18 +209,18 @@ export default {
       this.$emit('change', object)
     },
     /**
-     * 重新获取当前层级数据
-     * type为edit，只刷新当前层次
-     * type为delete，删除当前层次以及后面的层次
-     * @param type 刷新类型【edit, add, delete】
+     * Retrieves the current level data
+     * typeforedit, only refresh the current level
+     * typefordelete, deletes the current level and the following levels
+     * @param type The refresh type【edit, add, delete】
      * @param item
      */
     refresh(type, item) {
       let { data, curItem, paramsNames } = this
       const { $level } = curItem
-      // 拿到操作的数据数组的引用
+      // Gets a reference to the data array for the operation
       const levelArray = data[$level] || []
-      // 拿到操作的数据的索引
+      // Get the index of the data for the operation
       const index = levelArray.findIndex(_item => _item.$active)
       if (type === 'edit' && item) {
         const _item = JSON.parse(JSON.stringify(item))
@@ -244,8 +244,8 @@ export default {
       this.GET_ChildrenById(id)
     },
     /**
-     * 搜索关键字发生改变
-     * 将与关键字不匹配的$hidden设为true
+     * Search keywords have changed
+     * Will not match the keyword$hiddenSet totrue
      * @param columnIndex
      */
     handleSearchKeywordChange(columnIndex) {
@@ -258,11 +258,11 @@ export default {
       }))
     },
     /**
-     * 点击添加按钮
-     * 返回三个参数
-     * columnIndex 当前的层级
-     * parent 上一级
-     * parentArray 上一级的全部数据
+     * Click the Add button
+     * Return three parameters
+     * columnIndex Current hierarchy
+     * parent At the next higher level
+     * parentArray All the data at the next level
      * @param columnIndex
      */
     handleClickAdd(columnIndex) {

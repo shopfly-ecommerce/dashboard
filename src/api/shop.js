@@ -1,12 +1,12 @@
 /**
- * 店铺相关API
+ * Store relatedAPI
  */
 
 import request from '@/utils/request'
 import cache from '@/utils/cache'
 
 /**
- * 获取店铺信息
+ * Access to store information
  * @param params
  * @returns {Promise<any>}
  */
@@ -19,7 +19,7 @@ export function getShopData() {
 }
 
 /**
- * 保存店铺设置
+ * Save store Settings
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -34,7 +34,7 @@ export function saveShopSettings(params) {
 }
 
 /**
- * 修改店铺库存预警数
+ * Revise the store inventory warning number
  * @param params
  * @returns {Promise<any>}
  */
@@ -48,7 +48,7 @@ export function saveStockWarningNum(params) {
 }
 
 /**
- * 提升店铺等级
+ * Upgrade the store level
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -62,7 +62,7 @@ export function promoteShopGrade(ids, params) {
 }
 
 /**
- * 修改店铺logo
+ * Modify the storelogo
  * @param params
  * @returns {Promise<any>}
  */
@@ -75,7 +75,7 @@ export function updateShopLogo(params) {
 }
 
 /**
- * 获取店铺状态
+ * Get store status
  */
 export function getShopStatus() {
   return request({

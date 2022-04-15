@@ -1,5 +1,5 @@
 /**
- * 公共API
+ * publicAPI
  */
 
 import { api } from '~/ui-domain'
@@ -7,7 +7,7 @@ import request from '@/utils/request'
 import Storage from '@/utils/storage'
 
 /**
- * 获取图片验证码URL
+ * Get the image captchaURL
  * @param scene
  * @param uuid
  * @returns {string}
@@ -17,7 +17,7 @@ export function getValidateCodeUrl(scene, uuid) {
 }
 
 /**
- * 刷新token
+ * The refreshtoken
  */
 export function refreshToken() {
   return request({
@@ -30,7 +30,7 @@ export function refreshToken() {
 }
 
 /**
- * 获取站点设置
+ * Get site Settings
  */
 export function getSiteData() {
   return request({

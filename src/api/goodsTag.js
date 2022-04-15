@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 /**
- * 获取标签列表
+ * Get tag list
  * @param params
  * @returns {Promise<any>}
  */
@@ -15,7 +15,7 @@ export function getTagsList(params) {
 }
 
 /**
- * 获取标签商品列表
+ * Get a list of labeled items
  * @param params
  * @returns {Promise<any>}
  */
@@ -29,7 +29,7 @@ export function getTagGoodsList(id, params) {
 }
 
 /**
- * 保存标签商品列表
+ * Save a list of labeled items
  * @param params
  * @returns {Promise<any>}
  */

@@ -1,11 +1,11 @@
 /**
- * 支付方式相关API
+ * Mode of paymentAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取支付方式列表
+ * Gets a list of payment methods
  * @param params
  */
 export function getPaymentList(params) {
@@ -18,9 +18,9 @@ export function getPaymentList(params) {
 }
 
 /**
- * 修改支付方式
- * @param payment_plugin_id 支付方式code
- * @param payment_method 支付方式详细配置
+ * Modification of payment method
+ * @param payment_plugin_id Method of paymentcode
+ * @param payment_method Payment method detailed configuration
  */
 export function editPayment(payment_plugin_id, payment_method) {
   return request({
@@ -32,7 +32,7 @@ export function editPayment(payment_plugin_id, payment_method) {
 }
 
 /**
- * 获取支付方式详情
+ * Get details of payment method
  * @param payment_plugin_id
  */
 export function getPaymentDetail(payment_plugin_id) {

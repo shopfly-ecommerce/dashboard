@@ -5,23 +5,23 @@
   >
     <div slot="toolbar" class="inner-toolbar">
       <div class="toolbar-btns">
-        <el-button size="mini" type="primary" icon="el-icon-circle-plus-outline" @click="handleAddRole">添加</el-button>
+        <el-button size="mini" type="primary" icon="el-icon-circle-plus-outline" @click="handleAddRole">add</el-button>
       </div>
     </div>
 
     <template slot="table-columns">
-      <el-table-column prop="role_name" label="角色名称"/>
-      <el-table-column prop="role_describe" label="角色描述"/>
-      <el-table-column label="操作">
+      <el-table-column prop="role_name" label="Character name"/>
+      <el-table-column prop="role_describe" label="Role description"/>
+      <el-table-column label="Operation">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="primary"
-            @click="handleEditRole(scope.row)">编辑</el-button>
+            @click="handleEditRole(scope.row)">edit</el-button>
           <el-button
             size="mini"
             type="danger"
-            @click="handleDeleteRole(scope.row)">删除</el-button>
+            @click="handleDeleteRole(scope.row)">delete</el-button>
         </template>
       </el-table-column>
     </template>
@@ -47,14 +47,14 @@
     name: 'roleManage',
     data() {
       return {
-        // 列表loading状态
+        // List loading status
         loading: false,
-        // 列表参数
+        // A list of parameters
         params: {
           page_no: 1,
           page_size: 10
         },
-        // 列表数据
+        // The list of data
         tableData: ''
       }
     },
@@ -62,39 +62,39 @@
       this.GET_RoleList()
     },
     methods: {
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_RoleList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_RoleList()
       },
 
-      /** 添加角色 */
+      /** Adding roles*/
       handleAddRole() {
         this.$router.push({ name: 'rolePermission', params: { id: 0, callback: this.GET_RoleList }})
       },
 
-      /** 编辑角色 */
+      /** Editing the role*/
       handleEditRole(row) {
         this.$router.push({ name: 'rolePermission', params: { id: row.role_id, callback: this.GET_RoleList }})
       },
 
-      /** 删除角色 */
+      /** Delete the role*/
       handleDeleteRole(row) {
-        this.$confirm('确定要删除这个角色吗？', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Are you sure you want to delete this character？', 'prompt', { type: 'warning' }).then(() => {
           API_Auth.deleteRole(row.role_id).then(() => {
-            this.$message.success('删除成功！')
+            this.$message.success('Delete the success！')
             this.GET_RoleList()
           })
         }).catch(() => {})
       },
 
-      /** 获取角色列表 */
+      /** Get a list of roles*/
       GET_RoleList() {
         this.loading = true
         API_Auth.getRoleList(this.params).then(response => {

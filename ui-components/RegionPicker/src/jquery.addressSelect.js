@@ -8,22 +8,22 @@ import axios from 'axios'
 (function ($, window, document, undefined) {
   var addressSelect = function (ele, opts) {
     this.$element = ele;
-    //  全局节点
+    // Global node
     this.node = {};
 
-    //  全局地区节点变量
+    // Global locale node variable
     this.region_li = '';
 
-    //  全局title节点变量
+    // Global title node variable
     this.titleView = '';
 
-    //  全局地区id
+    // Global locale ID
     this.regions = {};
 
-    //  初始化默认地区数组
+    // Initialize the default locale array
     this.defaultArray = [];
 
-    //  初始化默认地区index
+    // Initialize the default locale index
     this.index = 0;
 
     this.defaults = {
@@ -43,43 +43,43 @@ import axios from 'axios'
   };
 
   addressSelect.prototype = {
-    //  初始化方法
+    // Initialization method
     init: function () {
-      //  创建css样式
+      // Creating CSS styles
       $('#addressSelectCss').length === 0 && this.createStyles();
 
-      //  初始化element
+      // Initialize the element
       this.initElement();
     },
 
-    //  初始化事件绑定
+    // Initialize the event binding
     initEvent: function () {
       var _this = this;
-      //  初始化显示、隐藏事件
+      // Initialize show and hide events
       _this.initShowHide();
 
-      //  初始化绑定关闭事件
+      // Initializes the binding close event
       _this.appClose();
 
-      //  初始化选择tab事件
+      // Initializes the TAB selection event
       _this.selectTab();
 
-      //  初始化一级地区
+      // Initialize a level 1 region
       if (_this.options.deData && _this.options.deData[0]) {
-        //  有默认值
+        // Have default values
         _this.hasDefault();
       } else {
-        //  没有默认值
+        // No default value
         _this.accessApi();
       }
 
-      //  初始化地区选中事件
+      // Initializes the locale selection event
       _this.selectRegion();
 
-      //  初始化地区鼠标移入事件
+      // Initializes the mouseover event for the region
       _this.curRegion();
 
-      //  初始化展示视图盒子宽度
+      // Initialize the display view box width
       _this.node.app.css({
         width: parseInt(this.node.appTitleView.css('fontSize')) * this.node.appTitleView.html().length
       });
@@ -90,9 +90,9 @@ import axios from 'axios'
       });
     },
 
-    /* 事件处理区
+    /* Event processing area
      ============================================================================ */
-    //  初始化绑定显示、隐藏事件
+    // Initialize binding to show and hide events
     initShowHide: function () {
       var _this = this,
           node  = _this.node;
@@ -100,13 +100,13 @@ import axios from 'axios'
         _this.showApp();
       });
 
-      //  鼠标移出控件隐藏地区选择窗体
+      // Mouse over control hide locale selection form
       node.app.on('mouseleave', function () {
         _this.hideApp();
       });
     },
 
-    //  初始化绑定关闭事件
+    // Initializes the binding close event
     appClose: function () {
       var _this = this;
       _this.node.appClose.on('click', function () {
@@ -114,7 +114,7 @@ import axios from 'axios'
       });
     },
 
-    // 初始化绑定选择tab事件
+    // Initialize the binding to select the TAB event
     selectTab: function () {
       var _this = this;
       $(_this.node.appTab).on('click', '.app-address-tab-a', function () {
@@ -122,7 +122,7 @@ import axios from 'axios'
       });
     },
 
-    //  初始化地区选中事件
+    // Initializes the locale selection event
     selectRegion: function () {
       var _this = this;
       var node = _this.node;
@@ -132,16 +132,16 @@ import axios from 'axios'
             region_grade = $this.attr('region_grade'),
             local_name   = $this.attr('local_title');
 
-        //  计算当前a标签所在盒子索引
+        // Calculates the index of the box where the current A tag is located
         var _index = $this.closest('.app-address-area').index();
 
-        //  根据索引获取对应索引的tab的a标签，并改变内容
+        // Obtain the A TAB of the corresponding index based on the index and change the content
         node.appBody.find('.app-address-tab-a').eq(_index).find('em').html(local_name);
-        node.appBody.find('.app-address-tab-a').eq(_index).nextAll().find('em').html('请选择');
+        node.appBody.find('.app-address-tab-a').eq(_index).nextAll().find('em').html('Please select');
 
         _this.setNameTag(region_grade, region_id, local_name);
 
-        //  移除后面元素
+        // Remove the following element
         _this.removeElement(_index);
 
         if (_this.options.debug) {
@@ -156,19 +156,19 @@ import axios from 'axios'
           });
         });
 
-        //  根据字数调整body宽度
+        // Adjust the body width according to the word count
         _this.wordCount(_index);
 
         if (Number(region_grade) === 4) {
           _this.complete();
         } else {
-          //  调用API接口获取数据
+          // Call the API to get the data
           _this.accessApi(region_id, region_grade);
         }
       });
     },
 
-    //  初始化地区鼠标移入事件
+    // Initializes the mouseover event for the region
     curRegion: function () {
       var _this = this;
       var node = _this.node;
@@ -206,7 +206,7 @@ import axios from 'axios'
       });
     },
 
-    //  初始化默认地区
+    // Initialize the default locale
     hasDefault: function () {
       var _this = this;
       _this.defaultArray.push({re_id: 0, index: 0});
@@ -222,12 +222,12 @@ import axios from 'axios'
         console.log(this.defaultArray);
       }
 
-      //  创建tab、app窗体
+      // Create TAB, APP forms
       _this.createDeElement();
       _this.accessApi(_this.defaultArray[_this.index].re_id);
     },
 
-    //  初始化创建默认地区element
+    // Initializes the creation of the default element locale
     createDeElement: function () {
       var _this = this;
       for (var i = 0, len = _this.defaultArray.length - 2; i < len; i++) {
@@ -238,23 +238,23 @@ import axios from 'axios'
     },
 
 
-    /* 逻辑实现区
+    /* Logical implementation area
      ============================================================================ */
-    //  显示APP
+    // According to the APP
     showApp: function () {
       var node = this.node;
       node.appTitle.addClass('hover');
       node.appBody.addClass('show');
     },
 
-    //  隐藏APP
+    // Hide the APP
     hideApp: function () {
       var node = this.node;
       node.appTitle.removeClass('hover');
       node.appBody.removeClass('show');
     },
 
-    //  tab选中处理
+    // TAB check processing
     selectedTab: function ($this) {
       var index = $this.index();
       $this.addClass('cur')
@@ -263,44 +263,44 @@ import axios from 'axios'
            .find('i').removeClass('cur');
       $this.find('i').addClass('cur');
 
-      //  地区视图展示逻辑
+      // The region view shows the logic
       this.node.appBody.find('.app-address-area').eq(index).addClass('show')
           .siblings().removeClass('show');
     },
 
-    //  创建tab、地区盒子
+    // Create TAB and region boxes
     createElement: function () {
       var node = this.node;
-      //  创建tab
-      var tabA = '<a href="javascript: void(0);" class="app-address-tab-a show"> <em>请选择</em> <i style="padding: 0;"></i> </a>';
+      // Create a TAB
+      var tabA = '<a href="javascript: void(0);" class="app-address-tab-a show"> <em>Please select</em> <i style="padding: 0;"></i> </a>';
 
       $(tabA).appendTo(node.appTab);
 
-      //  创建地区视图
+      // Creating a Region View
       var list = '<div class="app-address-area"><ul class="app-address-area-list"></ul></div>';
       $(list).appendTo(node.appContent);
     },
 
-    //  移出选中tab+1之后的节点
+    // Remove the node after TAB +1 is selected
     removeElement: function (index) {
       this.node.appBody.find('.app-address-tab-a').eq(index).nextAll().remove();
       this.node.appBody.find('.app-address-area').eq(index).nextAll().remove();
     },
 
-    //  处理逻辑、API返回数据
+    // Processing logic, API return data
     useApi: function (res, region_grade) {
       if (!res) return;
       var _this = this;
       var result = res,
           lenght = result.length;
 
-      //  完事
+      // finished
       if (lenght === 0) {
         _this.complete();
         return;
       }
 
-      //  遍历数据组织结构
+      // Walk through the data organization structure
       for (var i = 0, len = result.length; i < len; i++) {
         var local_title = result[i]['local_name'],
             local_name  = local_title.substring(0, 8);
@@ -320,7 +320,7 @@ import axios from 'axios'
       }
     },
 
-    //  API逻辑处理方法实现
+    // API logic processing method implementation
     complyApi: function (index) {
       var _this = this;
       _this.node.appBody.find('.app-address-tab-a').eq(index).addClass('show cur').siblings().removeClass('cur').find('i').removeClass('cur');
@@ -331,7 +331,7 @@ import axios from 'axios'
       _this.region_li = '';
     },
 
-    //  选择完成
+    // Choose to complete
     complete: function () {
       var _this = this;
       var node       = _this.node,
@@ -356,7 +356,7 @@ import axios from 'axios'
       _this.hideApp();
     },
 
-    //  根据tab总字数设置body宽度
+    // Set the body width based on the total TAB word count
     wordCount: function (index) {
       var node = this.node;
       if (index > 1) {
@@ -379,7 +379,7 @@ import axios from 'axios'
       }
     },
 
-    //  动态设置name标签
+    // Dynamically set the name tag
     setNameTag: function (region_grade, region_id, local_name) {
       var _this = this;
       var names = this.options.names;
@@ -418,14 +418,14 @@ import axios from 'axios'
       }
     },
 
-    //  默认地区使用
+    // Default locale use
     complyDeApi: function (res) {
       var _this = this;
       var node = _this.node;
       var result      = res,
           _local_name = '';
 
-      //  遍历数据组织结构
+      // Walk through the data organization structure
       for (var i = 0, len = result.length; i < len; i++) {
         var region_id   = result[i]['id'],
             local_title = result[i]['local_name'],
@@ -452,11 +452,11 @@ import axios from 'axios'
         _this.accessApi(_this.defaultArray[_this.index].re_id);
       }
 
-      // 设置默认tab
+      // Set the default TAB
       _this.defaultArray[0] && this.setNameTag(_this.index, _this.defaultArray[_this.index].re_id, _local_name);
     },
 
-    /* 接口访问区
+    /* Interface access area
      ============================================================================ */
     accessApi: function (region_id, region_grade) {
       var _this = this;
@@ -471,7 +471,7 @@ import axios from 'axios'
       });
     },
 
-    /* 初始化创建element
+    /* Initial creationelement
      ============================================================================ */
     initElement: function () {
       var _this = this,
@@ -488,10 +488,10 @@ import axios from 'axios'
       var inputs = _this.options.setInput ? province + province_id + city + city_id + region + region_id + town + town_id : '';
       var html = '<div class="app-address">'
         + '<div class="app-address-title">'
-        + '<div class="app-address-title-view">-- 请选择 --</div><i style="padding: 0;"></i></div>'
+        + '<div class="app-address-title-view">-- Please select--</div><i style="padding: 0;"></i></div>'
         + '<div class="app-address-body">'
         + '<div class="app-address-tab">'
-        + '<a href="javascript: void(0);" class="app-address-tab-a show"><em>请选择</em> <i class="cur" style="padding: 0;"></i></a></div>'
+        + '<a href="javascript: void(0);" class="app-address-tab-a show"><em>Please select</em> <i class="cur" style="padding: 0;"></i></a></div>'
         + '<div class="app-address-content">'
         + '<div class="app-address-area">'
         + '<ul class="app-address-area-list"></ul>'
@@ -503,7 +503,7 @@ import axios from 'axios'
         + '</div>';
       ele.html(html);
 
-      //  缓存节点
+      // The cache node
       this.node = {
         app: ele.find('.app-address'),
         appBody: ele.find('.app-address-body'),
@@ -514,11 +514,11 @@ import axios from 'axios'
         appContent: ele.find('.app-address-content')
       };
 
-      //  绑定事件
+      // The binding event
       _this.initEvent();
     },
 
-    /* 初始化创建css样式
+    /* Initial creationcssstyle
      ============================================================================ */
     createStyles: function () {
       var style = document.createElement('style'),
@@ -527,7 +527,7 @@ import axios from 'axios'
       style.id = 'addressSelectCss';
       if (style.styleSheet) {
         var func = function () {
-          try { //防止IE中stylesheet数量超过限制而发生错误
+          try { //To preventIEIn thestylesheetAn error occurred when the quantity exceeded the limit
             style.styleSheet.cssText = styles;
           } catch (e) {
 

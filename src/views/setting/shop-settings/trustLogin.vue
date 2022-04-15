@@ -11,7 +11,7 @@
             </el-collapse-item>
           </el-collapse>
           <el-form-item>
-            <el-button type="primary" size="small" class="save-btn" @click="handleSaveConfig(connect)">立即保存</el-button>
+            <el-button type="primary" size="small" class="save-btn" @click="handleSaveConfig(connect)">Instantly save</el-button>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -26,7 +26,7 @@
     name: 'trustLogin',
     data() {
       return {
-        /** 信任登录参数 */
+        /** Trust login parameter*/
         connects: []
       }
     },
@@ -46,12 +46,12 @@
       })
     },
     methods: {
-      /** 保存配置 */
+      /** Save the configuration*/
       handleSaveConfig(connect) {
         const params = this.MixinClone(connect)
         delete params.collapses
         API_Connect.editConnect(connect.type, params).then(() => {
-          this.$message.success('修改成功！')
+          this.$message.success('Modify the success！')
         })
       }
     }

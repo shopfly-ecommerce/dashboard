@@ -1,5 +1,5 @@
 /**
- * 物流公司
+ * Logistics company
  */
 import Vue from 'vue'
 import LogisticsCompany from './main'

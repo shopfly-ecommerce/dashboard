@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     /**
-     * 轮询未读消息数量
+     * Poll the number of unread messages
      * @returns {Promise<void>}
      */
     async getUnreadNum() {

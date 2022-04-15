@@ -1,9 +1,9 @@
 <template>
   <div class="order-detail-container">
-    <!--分销商结算单-->
+    <!--Distributor statement-->
     <el-row :gutter="0">
-      <div class="d-header"> 分销商结算单  结算金额：
-        {{ billOriginInfo.final_money }}(最终佣金) = {{ billOriginInfo.push_money }}(本期佣金) - {{ billOriginInfo.return_push_money }}(退还佣金)</div>
+      <div class="d-header"> Distributor settlement amount：
+        {{ billOriginInfo.final_money }}(The final commission) = {{ billOriginInfo.push_money }}(This commission) - {{ billOriginInfo.return_push_money }}(Return the commission)</div>
       <el-col v-for="col in billInfo" :key="col.key" :span="8">
         <div class="d-content">
           <div v-for="item in col.items" :key="item.key" class="item">
@@ -13,21 +13,21 @@
         </div>
       </el-col>
     </el-row>
-    <!--分销商订单-->
+    <!--Distributor order-->
     <el-row v-if="disOrderList" :gutter="0">
       <el-col :span="24">
-        <div class="d-header">分销商订单</div>
+        <div class="d-header">Distributor order</div>
         <en-table-layout
           :tableData="disOrderList"
           pagination
           height="200px"
           :loading="disOrderLoading">
           <template slot="table-columns">
-            <el-table-column prop="sn" label="账单号"/>
-            <el-table-column label="订单金额">
+            <el-table-column prop="sn" label="Bill no."/>
+            <el-table-column label="Amount">
               <template slot-scope="scope">￥{{ scope.row.order_price | unitPrice }}</template>
             </el-table-column>
-            <el-table-column prop="message" label="提成金额">
+            <el-table-column prop="message" label="Commission amount">
               <template slot-scope="scope">￥{{ scope.row.price | unitPrice }}</template>
             </el-table-column>
           </template>
@@ -45,21 +45,21 @@
         </en-table-layout>
       </el-col>
     </el-row>
-    <!--分销商退货订单-->
+    <!--Distributor Return order-->
     <el-row v-if="disRefundOrderList" :gutter="0">
       <el-col :span="24">
-        <div class="d-header">分销商退货订单</div>
+        <div class="d-header">Distributor Return order</div>
         <en-table-layout
           :tableData="disRefundOrderList"
           pagination
           height="200px"
           :loading="disRefundOrderLoading">
           <template slot="table-columns">
-            <el-table-column prop="sn" label="账单号"/>
-            <el-table-column prop="op_name" label="订单金额">
+            <el-table-column prop="sn" label="Bill no."/>
+            <el-table-column prop="op_name" label="Amount">
               <template slot-scope="scope">￥{{ scope.row.order_price | unitPrice }}</template>
             </el-table-column>
-            <el-table-column prop="message" label="退换提成金额">
+            <el-table-column prop="message" label="Refund or exchange of commission amount">
               <template slot-scope="scope">￥{{ scope.row.price | unitPrice }}</template>
             </el-table-column>
           </template>
@@ -77,10 +77,10 @@
         </en-table-layout>
       </el-col>
     </el-row>
-    <!--分销商结构图-->
+    <!--Distributor structure Chart-->
     <el-row :gutter="0">
       <el-col :span="24">
-        <div class="d-header">分销商结构图</div>
+        <div class="d-header">Distributor structure Chart</div>
         <en-table-layout
           :tableData="dataDown"
           pagination
@@ -128,91 +128,91 @@
     name: 'billDetails',
     data() {
       return {
-        /** 结算单原始info */
+        /** The statement of settlement is originalinfo */
         billOriginInfo: {},
 
-        /** 结算单组合后info */
+        /** After the statement is combinedinfo */
         billInfo: [],
 
-        /** 分销订单 */
+        /** Distribution of orders*/
         disOrderList: [],
 
-        /** 分销订单分页数据 */
+        /** Distribution order paging data*/
         disOrderPageData: {},
 
-        /** 分销订单loading */
+        /** Distribution of ordersloading */
         disOrderLoading: false,
 
-        /** 分销订单参数 */
+        /** Distribution order parameters*/
         disOrderParams: {
           page_no: 1,
           page_size: 10,
           ...this.$route.query
         },
 
-        /** 分销退款订单 */
+        /** Distribution of Refund Order*/
         disRefundOrderList: [],
 
-        /** 分销退款订单分页数据 */
+        /** Distribution of refund order paging data*/
         disRefundOrderPageData: {},
 
-        /** 分销退款订单loading */
+        /** Distribution of Refund Orderloading */
         disRefundOrderLoading: false,
 
-        /** 分销退款订单参数 */
+        /** Distribution refund order parameters*/
         disRefundOrderParams: {
           page_no: 1,
           page_size: 10,
           ...this.$route.query
         },
 
-        /** 默认展开 */
+        /** Open by default*/
         defaultExpandAll: false,
 
-        /** 是否默认树形结构数据 */
+        /** Whether to default to tree structured data*/
         treeStructure: true,
 
-        /** 列信息 */
+        /** Column information*/
         columns: [
           {
             width: 50
           },
           {
-            text: '分销商',
+            text: 'distributors',
             dataIndex: 'member_name',
             width: 100
           },
           {
-            text: '结算金额',
+            text: 'The settlement amount',
             dataIndex: 'final_money'
           },
           {
-            text: '提成金额',
+            text: 'Commission amount',
             dataIndex: 'push_money'
           },
           {
-            text: '订单量',
+            text: 'The order quantity',
             dataIndex: 'order_count'
           },
           {
-            text: '订单金额',
+            text: 'Amount',
             dataIndex: 'order_money'
           },
           {
-            text: '退还提成金额',
+            text: 'Refund the commission amount',
             dataIndex: 'return_push_money'
           },
           {
-            text: '退还订单金额',
+            text: 'Refund of order amount',
             dataIndex: 'return_order_money'
           },
           {
-            text: '退还订单量',
+            text: 'Order return quantity',
             dataIndex: 'return_order_count'
           }
         ],
 
-        /**  下级分销商列表  */
+        /**  Subordinate Distributor List*/
         dataSource: []
       }
     },
@@ -252,13 +252,13 @@
       this.GET_DisBillDown()
     },
     computed: {
-      // 格式化数据源
+      // Formatted data source
       dataDown() {
         return Utils.MSDataTransfer.treeToArray(this.dataSource, null, null, this.defaultExpandAll)
       }
     },
     methods: {
-      /** 获取分销订单列表 */
+      /** Gets a list of distribution orders*/
       GET_DisOrderList() {
         this.disOrderLoading = true
         API_distribution.getDisOrderList(this.disOrderParams).then(response => {
@@ -272,19 +272,19 @@
         })
       },
 
-      /** 分销订单分页大小发生改变 */
+      /** The distribution order page size has changed*/
       handleDisOrderPageSizeChange(size) {
         this.disOrderParams.page_size = size
         this.GET_DisOrderList()
       },
 
-      /** 分销订单分页页数发生改变 */
+      /** The number of distribution order pages has changed*/
       handleDisOrderPageCurrentChange(page) {
         this.disOrderParams.page_no = page
         this.GET_DisOrderList()
       },
 
-      /** 获取分销退款订单列表 */
+      /** Gets a list of distribution refund orders*/
       GET_DisRefundOrderList() {
         this.disRefundOrderLoading = true
         API_distribution.getDisRefundOrderList(this.disRefundOrderParams).then(response => {
@@ -298,19 +298,19 @@
         })
       },
 
-      /** 分销订单退款单分页大小发生改变 */
+      /** The distribution order refund sheet page size has changed*/
       handleDisRefundOrderPageSizeChange(size) {
         this.disRefundOrderParams.page_size = size
         this.GET_DisRefundOrderList()
       },
 
-      /** 分销订单退款单分页页数发生改变 */
+      /** The number of refunds for distribution orders has changed*/
       handleDisRefundOrderPageCurrentChange(page) {
         this.disRefundOrderParams.page_no = page
         this.GET_DisRefundOrderList()
       },
 
-      /** 获取分销商账单详情 */
+      /** Obtain reseller billing details*/
       GET_BillDetails() {
         API_distribution.getDisBillDetails(this.$route.query.bill_id).then(response => {
           this.billOriginInfo = response
@@ -318,35 +318,35 @@
         })
       },
 
-      /** 组合账单详情信息 */
+      /** Combine billing details*/
       countShowData(info) {
         const f = Foundation
         return [
           {
             items: [
-              { label: '分销商', value: info.member_name },
-              { label: '订单数', value: info.order_count },
-              { label: '退货订单数', value: info.return_order_count }
+              { label: 'distributors', value: info.member_name },
+              { label: 'orders', value: info.order_count },
+              { label: 'Return order number', value: info.return_order_count }
             ]
           },
           {
             items: [
-              { label: '结算单号', value: info.sn },
-              { label: '订单金额', value: f.formatPrice(info.order_money) },
-              { label: '退还订单金额', value: f.formatPrice(info.return_order_money) }
+              { label: 'Statement no.', value: info.sn },
+              { label: 'Amount', value: f.formatPrice(info.order_money) },
+              { label: 'Refund of order amount', value: f.formatPrice(info.return_order_money) }
             ]
           },
           {
             items: [
-              { label: '周期', value: `${f.unixToDate(info.start_time, 'yyyy-MM-dd')} ~ ${f.unixToDate(info.end_time, 'yyyy-MM-dd')}` },
-              { label: '提成金额', value: f.formatPrice(info.push_money) },
-              { label: '退还提成金额', value: f.formatPrice(info.return_push_money) }
+              { label: 'cycle', value: `${f.unixToDate(info.start_time, 'yyyy-MM-dd')} ~ ${f.unixToDate(info.end_time, 'yyyy-MM-dd')}` },
+              { label: 'Commission amount', value: f.formatPrice(info.push_money) },
+              { label: 'Refund the commission amount', value: f.formatPrice(info.return_push_money) }
             ]
           }
         ]
       },
 
-      /** 获取某个分销商下级业绩 */
+      /** Obtain the performance of a sub-distributor*/
       GET_DisBillDown() {
         const _params = {
           id: this.$route.query.bill_id,
@@ -357,24 +357,24 @@
         })
       },
 
-      // 显示行
+      // The lines
       showTr({ row, index }) {
         let show = (row._parent ? (row._parent._expanded && row._parent._show) : true)
         row._show = show
         return show ? '' : 'display:none;'
       },
 
-      // 展开下级
+      // On the lower
       toggle(trIndex) {
         this.dataDown[trIndex]._expanded = !this.dataDown[trIndex]._expanded
       },
 
-      // 显示层级关系的空格和图标
+      // Displays Spaces and ICONS for hierarchical relationships
       spaceIconShow(index) {
         return this.treeStructure && index === 0
       },
 
-      // 点击展开和关闭的时候，图标的切换
+      // Click expand and close when the icon toggles
       toggleIconShow(index, record) {
         return this.treeStructure && index === 0 && record.item && record.item.length
       }
@@ -448,7 +448,7 @@
     margin: 0;
   }
 
-  /*层级展开*/
+  /*A hierarchy*/
   .ms-tree-space{
     position: relative;
     top: 1px;

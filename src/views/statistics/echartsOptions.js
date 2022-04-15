@@ -1,5 +1,5 @@
 /**
- * echarts基本配置项
+ * echartsBasic configuration item
  */
 
 export default function(options) {
@@ -37,7 +37,7 @@ export default function(options) {
     ],
     series: options.series || [
       {
-        name: options.seriesName || '数量',
+        name: options.seriesName || 'Quantity',
         type: options.seriesType || 'bar',
         barWidth: '60%',
         data: options.seriesData || []

@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 /**
- * 根据分类id 获取规格信息
+ * According to the classificationid Get specification information
  * @param category_id
  * @param params
  * @returns {Promise<any>}

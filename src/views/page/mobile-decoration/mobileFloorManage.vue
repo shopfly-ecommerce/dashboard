@@ -3,7 +3,7 @@
     <div class="floor-container">
       <div class="draggable-box floor">
         <div style="position: relative">
-          <el-button type="primary" @click="handleSaveFloor" class="save-btn">保存发布</el-button>
+          <el-button type="primary" @click="handleSaveFloor" class="save-btn">Save the release</el-button>
           <draggable v-model="templateArray" :options="tplOptions" class="tpl-list">
             <div v-for="item in templateArray" :class="'item-' + item.tpl_id" class="tpl-item">
               <div class="img-tpl"></div>
@@ -68,22 +68,22 @@
     components: { draggable },
     data() {
       return {
-        // 获取商品列表API
+        // Get the item list API
         goodsListApi: 'seller/goods',
-        // 根据商品id，获取商品列表API
+        // Gets the item list API based on the item ID
         multipleGoodsApi: 'seller/goods/@ids/details',
         templates,
         templateArray,
-        /** 模板列表 */
+        /** The template list*/
         tplList: [],
-        /** 模板配置 */
+        /** The template configuration*/
         tplOptions: {
           group: { name: 'tplGroup', pull: 'clone', put: false },
           sort: false
         },
-        /** 楼层列表 */
+        /** Floor list*/
         floorList: [],
-        /** 楼层配置 */
+        /** Floor configuration*/
         floorOptions: {
           animation: 150,
           group: { name: 'tplGroup', put: true },
@@ -93,11 +93,11 @@
         dialogImageShow: false,
         dialogGoodsShow: false,
         dialogTextShow: false,
-        /** 图片默认数据 */
+        /** Image Default Data*/
         defaultImageData: '',
-        /** 商品默认数据 */
+        /** Product Default Data*/
         defaultGoodsData: [],
-        /** 文本默认数据 */
+        /** Text default data*/
         defaultTextData: {}
       }
     },
@@ -120,7 +120,7 @@
           }] : null
           this.dialogImageShow = true
         } else if (type === 'GOODS') {
-          // 填充默认数据
+          // Populate default data
           this.defaultGoodsData = blockData.block_value ? [blockData.block_value.goods_id] : []
           this.dialogGoodsShow = true
         } else if (type === 'TEXT') {
@@ -132,10 +132,10 @@
           }
           this.dialogTextShow = true
         } else if (type === 'BRAND') {
-          console.log('品牌模块')
+          console.log('Brand module')
         }
       },
-      /** 图片上传组件确认 */
+      /** Picture upload component confirmation*/
       handleImagePickerConfirm(fileList) {
         const file = fileList[0]
         let opt = file ? file.operation : {}
@@ -145,13 +145,13 @@
         target.blockList[targetIndex].block_opt = opt
         this.$set(this.floorList, index, target)
       },
-      /** 商品选择器确认 */
+      /** Commodity selector confirmation*/
       handleGoodsPickerConfirm(list) {
         const { index, target, targetIndex } = this.editOptions
         target.blockList[targetIndex].block_value = this.MixinClone(list[0] || '')
         this.$set(this.floorList, index, target)
       },
-      /** 文本选择器确认 */
+      /** Text selector validation*/
       handleTextPickerConfirm(data) {
         const { index, target, targetIndex } = this.editOptions
         const block = target.blockList[targetIndex]
@@ -161,14 +161,14 @@
         block.block_opt.opt_value = data.opt_value
         this.$set(this.floorList, index, target)
       },
-      /** 保存发布 */
+      /** Save the release*/
       handleSaveFloor() {
         API_Floor.editFloor('WAP', 'INDEX', {
           page_name: 'mobile_floor',
           page_data: JSON.stringify(this.floorList)
-        }).then(() => this.$message.success('保存发布成功！'))
+        }).then(() => this.$message.success('Saved publication successful！'))
       },
-      /** 获取楼层数据 */
+      /** Get floor data*/
       GET_FloorList() {
         API_Floor.getFloor('WAP', 'INDEX').then(response => {
           const { page_data } = response

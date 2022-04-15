@@ -6,16 +6,16 @@
       :loading="loading"
     >
       <template slot="table-columns">
-        <el-table-column prop="method_name" label="支付方式"/>
-        <el-table-column prop="is_retrace" label="是否支持原路退回">
-          <template slot-scope="scope">{{ scope.row.is_retrace ? '支持' : '不支持' }}</template>
+        <el-table-column prop="method_name" label="Method of payment"/>
+        <el-table-column prop="is_retrace" label="Whether to support the original way back">
+          <template slot-scope="scope">{{ scope.row.is_retrace ? 'support' : '不support' }}</template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="Operation">
           <template slot-scope="scope">
             <el-button
               size="mini"
               type="primary"
-              @click="handleEditPayment(scope.$index, scope.row)">配置</el-button>
+              @click="handleEditPayment(scope.$index, scope.row)">configuration</el-button>
           </template>
         </el-table-column>
       </template>
@@ -32,13 +32,13 @@
       </el-pagination>
     </en-table-layout>
     <el-dialog
-      :title="'配置支付方式 - ' + paymentForm.method_name"
+      :title="'Configure payment method- ' + paymentForm.method_name"
       :visible.sync="dialogPaymentVisible"
       width="35%"
       :close-on-click-modal="false"
       :close-on-press-escape="false">
       <el-form :model="paymentForm" :rules="paymentRules" ref="paymentForm" label-width="140px">
-        <el-form-item label="支付方式图片" prop="image">
+        <el-form-item label="Picture of payment method" prop="image">
           <el-upload
             :action="MixinUploadApi"
             :limit="1"
@@ -46,21 +46,21 @@
             :on-success="(res) => { paymentForm.image = res.url }"
             :file-list="paymentForm.image ? [{name: 'payment_image', url: paymentForm.image}] : []"
             list-type="picture">
-            <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">建议上传jpg/png文件，且不超过1MB</div>
+            <el-button size="small" type="primary">upload</el-button>
+            <div slot="tip" class="el-upload__tip">Recommended to uploadjpg/pngFile, and not exceeding1MB</div>
           </el-upload>
         </el-form-item>
-        <el-form-item label="原路退回" prop="is_retrace">
+        <el-form-item label="The way back" prop="is_retrace">
           <el-radio-group v-model="paymentForm.is_retrace">
-            <el-radio :label="1">支持</el-radio>
-            <el-radio :label="0">不支持</el-radio>
+            <el-radio :label="1">support</el-radio>
+            <el-radio :label="0">Does not support</el-radio>
           </el-radio-group>
         </el-form-item>
         <template v-for="(client, index) in paymentForm.enable_client">
           <el-form-item :label="client.name" prop="is_open">
             <el-radio-group v-model="client.is_open">
-              <el-radio :label="1">开启</el-radio>
-              <el-radio :label="0">关闭</el-radio>
+              <el-radio :label="1">open</el-radio>
+              <el-radio :label="0">close</el-radio>
             </el-radio-group>
           </el-form-item>
           <template v-if="client.is_open" v-for="(config, index) in client.config_list">
@@ -71,8 +71,8 @@
         </template>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogPaymentVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitPaymentForm('paymentForm')">确 定</el-button>
+        <el-button @click="dialogPaymentVisible = false">cancel</el-button>
+        <el-button type="primary" @click="submitPaymentForm('paymentForm')">save</el-button>
       </span>
     </el-dialog>
   </div>
@@ -85,20 +85,20 @@
     name: 'payment',
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
-        /** 列表数据 */
+        /** The list of data*/
         tableData: '',
-        /** 支付方式 表单 */
+        /** Payment Method Form*/
         paymentForm: {},
-        /** 支付方式 表单规则 */
+        /** Payment method form rules*/
         paymentRules: {},
-        /** 支付方式 dialog */
+        /** Method of paymentdialog */
         dialogPaymentVisible: false
       }
     },
@@ -106,19 +106,19 @@
       this.GET_PaymentList()
     },
     methods: {
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_PaymentList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_PaymentList()
       },
 
-      /** 配置支付方式 */
+      /** Configure payment method*/
       handleEditPayment(index, row) {
         API_Payment.getPaymentDetail(row.plugin_id).then(response => {
           response.enable_client && response.enable_client.map(item => {
@@ -130,17 +130,17 @@
         })
       },
 
-      /** 提交修改支付方式表单 */
+      /** Submit the form to modify the payment method*/
       submitPaymentForm(formName) {
         const { plugin_id } = this.paymentForm
         API_Payment.editPayment(plugin_id, this.paymentForm).then(response => {
           this.dialogPaymentVisible = false
-          this.$message.success('保存成功！')
+          this.$message.success('Save success！')
           this.GET_PaymentList()
         })
       },
 
-      /** 获取支付方式列表 */
+      /** Gets a list of payment methods*/
       GET_PaymentList() {
         this.loading = true
         API_Payment.getPaymentList(this.params).then(response => {

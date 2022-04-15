@@ -6,13 +6,13 @@
       :loading="loading">
       <div slot="toolbar" class="inner-toolbar">
         <div class="toolbar-btns">
-            <!--状态查询-->
+            <!--State of the query-->
             <div class="conditions">
-              <span>状态：</span>
+              <span>Status：</span>
               <el-select
                 class="choose-machine"
                 v-model="params.status"
-                placeholder="请选择"
+                placeholder="Please select"
                 @change="changeStatus"
               clearable>
               <el-option
@@ -30,13 +30,13 @@
             advanced
             :showSearch="false"
             advancedWidth="465"
-            placeholder="请输入关键字">
+            placeholder="Please enter the keywords">
             <template slot="advanced-content">
               <el-form ref="advancedForm" :model="advancedForm" label-width="80px">
-                <el-form-item label="会员姓名">
+                <el-form-item label="Member name">
                   <el-input v-model="advancedForm.uname" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="申请时间">
+                <el-form-item label="To apply for time">
                   <el-date-picker
                     v-model="advancedForm.putforward_time_range"
                     type="daterange"
@@ -44,8 +44,8 @@
                     :editable="false"
                     unlink-panels
                     range-separator="-"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期">
+                    start-placeholder="Start date"
+                    end-placeholder="End date">
                   </el-date-picker>
                 </el-form-item>
               </el-form>
@@ -56,19 +56,19 @@
       <template slot="table-columns">
         <!--ID-->
         <el-table-column prop="id" label="ID"/>
-        <!--申请时间-->
-        <el-table-column prop="apply_time" :formatter="MixinUnixToDate" label="申请时间"/>
-        <!--申请金额-->
-        <el-table-column label="申请金额">
+        <!--To apply for time-->
+        <el-table-column prop="apply_time" :formatter="MixinUnixToDate" label="To apply for time"/>
+        <!--To apply for the amount-->
+        <el-table-column label="To apply for the amount">
           <template slot-scope="scope">{{ scope.row.apply_money | unitPrice('￥') }}</template>
         </el-table-column>
-        <!--会员-->
-        <el-table-column prop="member_name" label="会员"/>
-        <!--提现状态-->
-        <el-table-column prop="status" label="提现状态" :formatter="withDrawStatus"/>
-        <el-table-column label="操作" width="150">
+        <!--members-->
+        <el-table-column prop="member_name" label="members"/>
+        <!--Withdrawal state-->
+        <el-table-column prop="status" label="Withdrawal state" :formatter="withDrawStatus"/>
+        <el-table-column label="Operation" width="150">
           <template slot-scope="scope">
-            <el-button size="mini" type="primary" @click="handleNext(scope.row)">查看</el-button>
+            <el-button size="mini" type="primary" @click="handleNext(scope.row)">To view</el-button>
           </template>
         </el-table-column>
       </template>
@@ -84,100 +84,100 @@
         :total="pageData.data_total">
       </el-pagination>
     </en-table-layout>
-    <!--查看提现记录-->
-    <el-dialog title="查看提现记录" :visible.sync="isShowPutForwardRecoreds" width="55%" align="center">
+    <!--View withdrawal records-->
+    <el-dialog title="View withdrawal records" :visible.sync="isShowPutForwardRecoreds" width="55%" align="center">
       <div align="center">
-        <div class="d-header"> 提现基本信息 </div>
+        <div class="d-header"> Withdraw basic information</div>
         <table class="putforawrd-baseinfo">
           <tr>
-            <td>申请金额</td>
+            <td>To apply for the amount</td>
             <td>{{ currentRow.apply_money  | unitPrice('￥') }}</td>
           </tr>
           <tr>
-            <td>申请时间</td>
+            <td>To apply for time</td>
             <td>{{ currentRow.apply_time | unixToDate }}</td>
           </tr>
           <tr>
-            <td>申请备注</td>
-            <td>{{ currentRow.apply_remark || '无' }}</td>
+            <td>Application note</td>
+            <td>{{ currentRow.apply_remark || 'There is no' }}</td>
           </tr>
           <tr v-if="currentRow.status === 'VIA_AUDITING' || currentRow.status === 'APPLY'">
-            <td>操作</td>
+            <td>Operation</td>
             <td>
-              <el-button v-if="currentRow.status === 'VIA_AUDITING'" type="success"  size="mini" @click="handleOpera('TRANSFER_ACCOUNTS')">设为已转账</el-button>
-              <el-button v-if="currentRow.status === 'APPLY'" type="success"  size="mini" @click="handleOpera('VIA_AUDITING')">通过审核</el-button>
-              <el-button v-if="currentRow.status === 'APPLY'" type="danger" size="mini" @click="handleOpera('FAIL_AUDITING')">不能通过</el-button>
+              <el-button v-if="currentRow.status === 'VIA_AUDITING'" type="success"  size="mini" @click="handleOpera('TRANSFER_ACCOUNTS')">Set as transferred</el-button>
+              <el-button v-if="currentRow.status === 'APPLY'" type="success"  size="mini" @click="handleOpera('VIA_AUDITING')">Through the review</el-button>
+              <el-button v-if="currentRow.status === 'APPLY'" type="danger" size="mini" @click="handleOpera('FAIL_AUDITING')">Cant pass</el-button>
             </td>
           </tr>
         </table>
-        <div class="d-header"> 银行卡信息 </div>
+        <div class="d-header"> Bank card information</div>
         <table class="putforawrd-baseinfo">
           <tr>
-            <td>户名</td>
+            <td>Account name</td>
             <td>{{bank.member_name}}</td>
           </tr>
           <tr>
-            <td>所属银行</td>
+            <td>Belongs to the bank</td>
             <td>{{bank.bank_name}}</td>
           </tr>
           <tr>
-            <td>开户行号</td>
+            <td>Bank no.</td>
             <td>{{bank.opening_num}}</td>
           </tr>
           <tr>
-            <td>银行卡号</td>
+            <td>Bank card number</td>
             <td>{{bank.bank_card}}</td>
           </tr>
         </table>
-        <!--提现日志-->
-        <div class="d-header"> 提现日志 </div>
+        <!--Withdrawal log-->
+        <div class="d-header"> Withdrawal log</div>
         <en-table-layout :tableData="putforwardLogs" class="pop-table" border v-if="putforwardLogs[0]">
           <template slot="table-columns">
-            <el-table-column v-if="putforwardLogs[0].apply_time"  prop="apply_time" :formatter="MixinUnixToDate" label="申请时间"/>
-            <el-table-column v-if="putforwardLogs[0].apply_time"  prop="apply_remark" label="申请备注"/>
-            <el-table-column v-if="putforwardLogs[0].inspect_time" prop="inspect_time" :formatter="MixinUnixToDate" label="审核时间"/>
-            <el-table-column v-if="putforwardLogs[0].inspect_time"  prop="inspect_remark" label="审核备注"/>
-            <el-table-column v-if="putforwardLogs[0].transfer_time"  prop="transfer_time" :formatter="MixinUnixToDate" label="转账时间"/>
-            <el-table-column v-if="putforwardLogs[0].transfer_time" prop="transfer_remark" label="转账备注"/>
-            <el-table-column  prop="status" label="状态" :formatter="withDrawStatus" />
+            <el-table-column v-if="putforwardLogs[0].apply_time"  prop="apply_time" :formatter="MixinUnixToDate" label="To apply for time"/>
+            <el-table-column v-if="putforwardLogs[0].apply_time"  prop="apply_remark" label="Application note"/>
+            <el-table-column v-if="putforwardLogs[0].inspect_time" prop="inspect_time" :formatter="MixinUnixToDate" label="Audit time"/>
+            <el-table-column v-if="putforwardLogs[0].inspect_time"  prop="inspect_remark" label="Review the note"/>
+            <el-table-column v-if="putforwardLogs[0].transfer_time"  prop="transfer_time" :formatter="MixinUnixToDate" label="Transfer time"/>
+            <el-table-column v-if="putforwardLogs[0].transfer_time" prop="transfer_remark" label="Transfer note"/>
+            <el-table-column  prop="status" label="Status" :formatter="withDrawStatus" />
           </template>
         </en-table-layout>
       </div>
     </el-dialog>
-    <!--审核备注-->
-    <el-dialog title="审核备注" :visible.sync="isShowAuthRemarks" width="23%" align="center">
+    <!--Review the note-->
+    <el-dialog title="Review the note" :visible.sync="isShowAuthRemarks" width="23%" align="center">
       <el-form>
-        <el-form-item label="审核备注" label-width="80px">
+        <el-form-item label="Review the note" label-width="80px">
           <el-input 
             type="textarea"
             :autosize="{ minRows: 2, maxRows: 4}"
-            placeholder="请输入审核备注(120字以内)"
+            placeholder="Please enter audit remarks(120characters)"
             :maxlength="120"
             v-model="authRemarks"
             clearable></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="isShowAuthRemarks = false">取 消</el-button>
-        <el-button type="primary" @click="handleRefusedAudit()">确 定</el-button>
+        <el-button @click="isShowAuthRemarks = false">cancel</el-button>
+        <el-button type="primary" @click="handleRefusedAudit()">save</el-button>
       </div>
     </el-dialog>
-    <!--转账备注-->
-    <el-dialog title="转账备注" :visible.sync="isShowTransRemarks" width="23%" align="center">
+    <!--Transfer note-->
+    <el-dialog title="Transfer note" :visible.sync="isShowTransRemarks" width="23%" align="center">
       <el-form>
-        <el-form-item label="转账备注" label-width="80px">
+        <el-form-item label="Transfer note" label-width="80px">
           <el-input 
             type="textarea"
             :autosize="{ minRows: 2, maxRows: 4}"
-            placeholder="请输入转账备注(120字以内)"
+            placeholder="Please enter transfer notes(120characters)"
             :maxlength="120"
             v-model="transRemarks"
             clearable></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="isShowTransRemarks = false">取 消</el-button>
-        <el-button type="primary" @click="handleTrans()">确 定</el-button>
+        <el-button @click="isShowTransRemarks = false">cancel</el-button>
+        <el-button type="primary" @click="handleTrans()">save</el-button>
       </div>
     </el-dialog>
   </div>
@@ -189,17 +189,17 @@
     name: 'put-forward-apply',
     data() {
       return {
-        // 列表loading状态
+        // List loading status
         loading: false,
 
-        // 列表参数
+        // A list of parameters
         params: {
           page_no: 1,
           page_size: 10,
           uname: ''
         },
 
-        /** 高级搜索参数 */
+        /** Advanced search parameter*/
         advancedForm: {
           uname: '',
           start_time: '',
@@ -207,45 +207,45 @@
           putforward_time_range: ''
         },
 
-        // 列表数据
+        // The list of data
         tableData: [],
 
-        // 分页数据
+        // Paging data
         pageData: [],
 
-        /** 状态列表 */
+        /** State list*/
         statusList: [
-          { label: '审核失败', value: 'FAIL_AUDITING' },
-          { label: '审核通过', value: 'VIA_AUDITING' },
-          { label: '已转账', value: 'TRANSFER_ACCOUNTS' },
-          { label: '申请中', value: 'APPLY' }
+          { label: 'Audit failure', value: 'FAIL_AUDITING' },
+          { label: 'approved', value: 'VIA_AUDITING' },
+          { label: 'Have transfer', value: 'TRANSFER_ACCOUNTS' },
+          { label: 'In the application', value: 'APPLY' }
         ],
 
-        /** 是否显示提现记录 */
+        /** Whether to display the withdrawal record*/
         isShowPutForwardRecoreds: false,
 
-        /** 当前操作行 */
+        /** Current line of operation*/
         currentRow: {},
 
-        /** 银行信息 */
+        /** The bank information*/
         bank: {},
 
-        /** 提现日志 */
+        /** Withdrawal log*/
         putforwardLogs: [],
 
-        /** 是否显示审核备注 */
+        /** Whether to display audit notes*/
         isShowAuthRemarks: false,
 
-        /** 审核备注 */
+        /** Review the note*/
         authRemarks: '',
 
-        /** 是否显示转账备注 */
+        /** Whether to display transfer notes*/
         isShowTransRemarks: false,
 
-        /** 转账备注 */
+        /** Transfer note*/
         transRemarks: '',
 
-        /** 当前操作名称 */
+        /** Name of current operation*/
         operaName: ''
       }
     },
@@ -253,29 +253,29 @@
       this.GET_WithdrawApplyList()
     },
     methods: {
-      /** 状态格式化 */
+      /** State formatting*/
       withDrawStatus(row) {
         switch (row.status) {
-          case 'FAIL_AUDITING': return '审核失败'
-          case 'VIA_AUDITING': return '审核通过'
-          case 'TRANSFER_ACCOUNTS': return '已转账'
-          case 'APPLY': return '申请中'
+          case 'FAIL_AUDITING': return 'Audit failure'
+          case 'VIA_AUDITING': return 'approved'
+          case 'TRANSFER_ACCOUNTS': return 'Have transfer'
+          case 'APPLY': return 'In the application'
         }
       },
 
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_WithdrawApplyList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_WithdrawApplyList()
       },
 
-      /** 获取提现申请列表 */
+      /** Get the withdrawal request list*/
       GET_WithdrawApplyList() {
         this.loading = true
         API_distribution.getWithdrawApplyList(this.params).then(response => {
@@ -289,7 +289,7 @@
         })
       },
 
-      /** 改变状态 */
+      /** Change state*/
       changeStatus(val) {
         this.params = {
           ...this.params,
@@ -298,7 +298,7 @@
         this.GET_WithdrawApplyList()
       },
 
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       searchEvent(data) {
         this.params = {
           ...this.params,
@@ -308,7 +308,7 @@
         this.GET_WithdrawApplyList()
       },
 
-      /** 高级搜索事件触发 */
+      /** Advanced search event triggered*/
       advancedSearchEvent() {
         this.params = {
           ...this.params,
@@ -325,7 +325,7 @@
         this.GET_WithdrawApplyList()
       },
 
-      /** 下一步操作 */
+      /** Next step*/
       handleNext(row) {
         this.isShowPutForwardRecoreds = true
         this.currentRow = row
@@ -342,27 +342,27 @@
         }]
       },
 
-      /** 下一步操作 */
+      /** Next step*/
       handleOpera(operaName) {
-        if (operaName === 'TRANSFER_ACCOUNTS') { // 转账
+        if (operaName === 'TRANSFER_ACCOUNTS') { // transfer
           this.isShowTransRemarks = true
-        } else { // 审核
+        } else { // audit
           this.isShowAuthRemarks = true
           this.operaName = operaName
         }
       },
 
-      /** 转账 */
+      /** transfer*/
       handleTrans() {
         API_distribution.setTransferAccounts({
           apply_id: this.currentRow.id, remark: this.transRemarks }).then(() => {
-          this.$message.success('转账成功')
+          this.$message.success('Transfer success')
           this.isShowTransRemarks = false
           this.GET_WithdrawApplyList()
         })
       },
 
-      /** 审核 */
+      /** audit*/
       handleRefusedAudit() {
         const _params = {
           apply_id: this.currentRow.id,
@@ -370,7 +370,7 @@
           remark: this.authRemarks
         }
         API_distribution.authWithdrawApply(_params).then(() => {
-          this.$message.success('已保存审核结果')
+          this.$message.success('The audit results have been saved')
           this.GET_WithdrawApplyList()
           this.isShowAuthRemarks = false
         })
@@ -397,7 +397,7 @@
     }
   }
 
-  /*提现基本信息*/
+  /*Withdraw basic information*/
   .putforawrd-baseinfo {
     width: 100%;
     border: 1px solid #ddd;
@@ -413,7 +413,7 @@
       width: 200px;
     }
   }
-  /*提现日志*/
+  /*Withdrawal log*/
   div.d-header {
     width: 100%;
     line-height: 40px;

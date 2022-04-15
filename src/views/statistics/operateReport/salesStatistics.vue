@@ -2,21 +2,21 @@
   <div class="bg-shop-summary">
     <div class="tools-bar">
       <div class="conditions">
-        <span>日期设置: </span>
+        <span>The date set: </span>
         <en-year-month-picker @changed="changeYearMonth"></en-year-month-picker>
       </div>
       <div class="conditions">
-        <span >订单金额：{{ order_total | unitPrice('¥')  }}</span>
-        <span>订单量：{{ total_quantity_order }}</span>
+        <span >Amount：{{ order_total | unitPrice('¥')  }}</span>
+        <span>The order quantity：{{ total_quantity_order }}</span>
       </div>
     </div>
     <br>
     <br>
     <el-tabs type="border-card" @tab-click="changeHotType">
-      <el-tab-pane label="下单量">
+      <el-tab-pane label="Order quantity">
         <div id="orderNum" :style="[{height:tableHeight + 'px'},{width:tableWidth+'px'}]"></div>
       </el-tab-pane>
-      <el-tab-pane label="下单金额">
+      <el-tab-pane label="Place the order amount">
         <div id="orderAmount" :style="[{height:tableHeight + 'px'},{width:tableWidth+'px'}]"></div>
       </el-tab-pane>
     </el-tabs>
@@ -25,19 +25,19 @@
       :tableData="tableData"
       :loading="loading">
       <template slot="table-columns">
-        <el-table-column prop="sn" label="订单编号" />
-        <el-table-column prop="buyer_name" label="买家" />
-        <el-table-column label="下单时间">
+        <el-table-column prop="sn" label="Order no." />
+        <el-table-column prop="buyer_name" label="buyers" />
+        <el-table-column label="Create time">
           <template slot-scope="scope">
             {{ scope.row.create_time | unixToDate }}
           </template>
         </el-table-column>
-        <el-table-column label="订单状态">
+        <el-table-column label="Status">
           <template slot-scope="scope">
             {{ scope.row.order_status }}
           </template>
         </el-table-column>
-        <el-table-column label="订单总额">
+        <el-table-column label="The total order">
           <template slot-scope="scope">
             {{ scope.row.order_price | unitPrice('¥') }}
           </template>
@@ -69,10 +69,10 @@
     },
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
 
@@ -85,19 +85,19 @@
           month: '6'
         },
 
-        /** 热卖商品*/
+        /** Selling goods*/
         hotType: 0,
 
-        /** 列表数据 */
+        /** The list of data*/
         tableData: [],
 
-        /** 列表分页数据 */
+        /** List paging data*/
         pageData: [],
 
-        /** 订单总金额*/
+        /** Total order amount*/
         order_total: '',
 
-        /** 下单量*/
+        /** Order quantity*/
         total_quantity_order: '',
 
         tableHeight: document.body.clientHeight / 2,
@@ -115,7 +115,7 @@
       })
     },
     methods: {
-      /** 获取数据小结 */
+      /** Get a summary of the data*/
       getSummary() {
         API_salesStatistics.getSalesStatisticsSummary(this.params).then(response => {
           this.order_total = response.order_price
@@ -123,7 +123,7 @@
         })
       },
 
-      /** 改变日期的回调*/
+      /** A callback that changes the date*/
       changeYearMonth(obj) {
         this.params = {
 
@@ -138,7 +138,7 @@
         this.getSummary()
       },
 
-      /** 窗口缩放时计算table高度 */
+      /** Calculated when the window is zoomedtablehighly*/
       countTableHeight() {
         if (navigator.userAgent.indexOf('Firefox') > 0) {
           this.tableHeight = document.documentElement.clientHeight / 2
@@ -159,7 +159,7 @@
         })
       },
 
-      /** 切换面板时触发 */
+      /** Triggered when switching panels*/
       changeHotType(target) {
         this.hotType = parseInt(target.paneName)
         if (parseInt(target.paneName) === 0) {
@@ -170,7 +170,7 @@
         this.getSummary()
       },
 
-      /** 下单量图表数据*/
+      /** Order chart data*/
       GET_OrderTotaltChart() {
         this.loading = true
         API_salesStatistics.getSalesStatisticsNum(this.params).then(response => {
@@ -179,7 +179,7 @@
             this.orderGoodsNumChart.clear()
           }
           this.orderGoodsNumChart.setOption({
-            title: { text: '下单量统计', x: 'center' },
+            title: { text: 'Order statistics', x: 'center' },
             tooltip: { trigger: 'axis' },
             legend: { data: [
               { name: response.series[0].name },
@@ -196,12 +196,12 @@
               }
             },
             xAxis: {
-              name: '日期',
+              name: 'The date of',
               type: 'category',
               data: response.xAxis
             },
             yAxis: {
-              name: '下单量',
+              name: 'Order quantity',
               type: 'value',
               axisLabel: {
                 formatter: '{value}'
@@ -214,13 +214,13 @@
                 data: response.series[0].data,
                 markPoint: {
                   data: [
-                    { type: 'max', name: '最大值' },
-                    { type: 'min', name: '最小值' }
+                    { type: 'max', name: 'The maximum' },
+                    { type: 'min', name: 'The minimum value' }
                   ]
                 },
                 markLine: {
                   data: [
-                    { type: 'average', name: '平均值' }
+                    { type: 'average', name: 'The average' }
                   ]
                 },
                 barGap: '0'
@@ -231,13 +231,13 @@
                 data: response.series[1].data,
                 markPoint: {
                   data: [
-                    { type: 'max', name: '最大值' },
-                    { type: 'min', name: '最小值' }
+                    { type: 'max', name: 'The maximum' },
+                    { type: 'min', name: 'The minimum value' }
                   ]
                 },
                 markLine: {
                   data: [
-                    { type: 'average', name: '平均值' }
+                    { type: 'average', name: 'The average' }
                   ]
                 },
                 barGap: '0'
@@ -248,7 +248,7 @@
         this.countTableHeight()
       },
 
-      /** 下单金额图表数据*/
+      /** Chart data of order amount*/
       GET_OrderGoodsNumData() {
         this.loading = true
         API_salesStatistics.getSalesStatisticsMoney(this.params).then(response => {
@@ -257,7 +257,7 @@
             this.orderAmountChart.clear()
           }
           this.orderAmountChart.setOption({
-            title: { text: '下单金额统计', x: 'center' },
+            title: { text: 'Order amount statistics', x: 'center' },
             tooltip: { trigger: 'axis' },
             legend: { data: [
               { name: response.series[0].name },
@@ -279,7 +279,7 @@
               data: response.xAxis
             },
             yAxis: {
-              name: '下单金额（元）',
+              name: 'Place the order amount（USD）',
               type: 'value',
               axisLabel: {
                 formatter: '{value}'
@@ -292,13 +292,13 @@
                 data: response.series[0].data,
                 markPoint: {
                   data: [
-                    { type: 'max', name: '最大值' },
-                    { type: 'min', name: '最小值' }
+                    { type: 'max', name: 'The maximum' },
+                    { type: 'min', name: 'The minimum value' }
                   ]
                 },
                 markLine: {
                   data: [
-                    { type: 'average', name: '平均值' }
+                    { type: 'average', name: 'The average' }
                   ]
                 },
                 barGap: '0'
@@ -309,13 +309,13 @@
                 data: response.series[1].data,
                 markPoint: {
                   data: [
-                    { type: 'max', name: '最大值' },
-                    { type: 'min', name: '最小值' }
+                    { type: 'max', name: 'The maximum' },
+                    { type: 'min', name: 'The minimum value' }
                   ]
                 },
                 markLine: {
                   data: [
-                    { type: 'average', name: '平均值' }
+                    { type: 'average', name: 'The average' }
                   ]
                 },
                 barGap: '0'
@@ -326,7 +326,7 @@
         this.countTableHeight()
       },
 
-      /** 表格数据*/
+      /** Tabular data*/
       GET_OrderGoodsData() {
         this.loading = true
         API_salesStatistics.getSalesStatisticsGoodsList(this.params).then(response => {
@@ -336,13 +336,13 @@
             page_size: response.page_size,
             data_total: response.data_total
           }
-          /** 列表信息 */
+          /** A list of information*/
           this.tableData = response.data
         })
         this.countTableHeight()
       },
 
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         if (this.hotType === 0) {
@@ -353,7 +353,7 @@
         this.GET_OrderGoodsData()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         if (this.hotType === 0) {

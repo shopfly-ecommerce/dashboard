@@ -1,13 +1,13 @@
 /**
- * 统计相关API
+ * Statistical correlationAPI
  */
 
 import request from '@/utils/request'
 
-/** 行业分析 */
+/** Industry analysis*/
 
 /**
- * 获取行业规模下单量
+ * Obtain industry scale order quantity
  * @param params
  */
 export function getIndustryScaleOrder(params) {
@@ -20,7 +20,7 @@ export function getIndustryScaleOrder(params) {
 }
 
 /**
- * 获取行业规模下单商品数量
+ * Obtain the quantity of goods ordered by industry scale
  * @param params
  */
 export function getIndustryScaleGoods(params) {
@@ -33,7 +33,7 @@ export function getIndustryScaleGoods(params) {
 }
 
 /**
- * 获取行业规模下单金额
+ * Obtain industry scale order amount
  * @param params
  */
 export function getIndustryScalePrice(params) {
@@ -46,7 +46,7 @@ export function getIndustryScalePrice(params) {
 }
 
 /**
- * 获取概括总览数据
+ * Get the summary overview data
  * @param params
  */
 export function getGeneralityOverviewData(params) {
@@ -58,9 +58,9 @@ export function getGeneralityOverviewData(params) {
   })
 }
 
-/** 流量分析 */
+/** Traffic analysis*/
 /**
- * 获取店铺流量数据
+ * Obtain store traffic data
  * @param params
  */
 export function getTrafficAnalysisShop(params) {
@@ -73,7 +73,7 @@ export function getTrafficAnalysisShop(params) {
 }
 
 /**
- * 获取商品流量数据
+ * Obtain commodity flow data
  * @param params
  */
 export function getTrafficAnalysisGoods(params) {

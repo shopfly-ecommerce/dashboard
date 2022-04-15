@@ -1,6 +1,6 @@
 /**
  * Created by Andste on 2018/5/17.
- * 楼层公共模块导出
+ * Floor common module export
  */
 
 import tpl_23 from './tpl_23'

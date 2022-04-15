@@ -1,12 +1,12 @@
 /**
- * 快递模板相关API
+ * Express template correlationAPI
  */
 
 import request from '@/utils/request'
 import { api } from '~/ui-domain'
 
 /**
- * 运费模版列表
+ * Freight template list
  */
 export function getTplList() {
   return request({
@@ -17,7 +17,7 @@ export function getTplList() {
 }
 
 /**
- * 查询单个运费模版
+ * Query a single freight template
  * @param id
  */
 export function getSimpleTpl(id) {
@@ -29,7 +29,7 @@ export function getSimpleTpl(id) {
 }
 
 /**
- * 删除快递模板
+ * Delete the express template
  * @param ids
  */
 export function deleteExpressMould(ids) {
@@ -40,7 +40,7 @@ export function deleteExpressMould(ids) {
 }
 
 /**
- * 更新运费模板
+ * Update freight template
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -55,7 +55,7 @@ export function saveExpressMould(ids, params) {
 }
 
 /**
- * 添加运费模版
+ * Add the shipping template
  * @param id
  * @param params
  * @returns {Promise<any>}
@@ -70,7 +70,7 @@ export function addExpressMould(params) {
 }
 
 /**
- * 获取树形选择器地区信息
+ * Gets tree selector locale information
  */
 export function getAreaList() {
   return request({

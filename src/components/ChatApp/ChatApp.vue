@@ -10,7 +10,7 @@
             </div>
           </div>
           <div class="search-user">
-            <input v-model="search_keyword" placeholder="搜索最近联系人" class="search-input-user">
+            <input v-model="search_keyword" placeholder="Searching for Recent Contacts" class="search-input-user">
           </div>
         </div>
         <div class="friend-list">
@@ -42,11 +42,11 @@
         <div class="body-right">
           <div class="chat-right">
             <div ref="chat-content" class="list-chat">
-              <div v-if="chatHistoryParams.loading" class="load-more no-data">正在加载数据...</div>
+              <div v-if="chatHistoryParams.loading" class="load-more no-data">Loading data...</div>
               <div v-else-if="currentChat || !isSeller" class="load-more" :class="{'no-data': chatHistoryParams.no_data}" @click="handleLoadMoreHistory">
-                {{ chatHistoryParams.no_data ? '没有聊天记录了' : '点击加载更多' }}
+                {{ chatHistoryParams.no_data ? 'There is no chat history' : 'Click to load more' }}
               </div>
-              <div v-else class="load-more no-data">请在左侧选择一个对话</div>
+              <div v-else class="load-more no-data">Please select a dialogue on the left</div>
               <chat-message-item
                 v-for="(item, index) in chatHistories"
                 :key="index"
@@ -61,7 +61,7 @@
             </div>
             <div v-if="new_message_tip" class="scroll-tip" @click="chatContentScrollTo">
               <i class="scroll-tip-icon"></i>
-              <span>有新的消息</span>
+              <span>There is new information</span>
             </div>
             <div class="input-chat">
               <div class="toolbar-input-chat">
@@ -90,11 +90,11 @@
               </div>
               <div class="send-chat">
                 <div class="send-btn">
-                  <div class="btn-send" @click="handleSendContent(1)">发送</div>
+                  <div class="btn-send" @click="handleSendContent(1)">send</div>
                   <i class="send-btn-arrow" @click.stop="show_enter_key_picker = true"></i>
                   <ul v-show="show_enter_key_picker" class="send-keys">
-                    <li class="send-key" :class="{active: enter_key === 1}" @click="enter_key = 1">按Enter发送</li>
-                    <li class="send-key" :class="{active: enter_key === 2}" @click="enter_key = 2">按Ctrl+Enter发送</li>
+                    <li class="send-key" :class="{active: enter_key === 1}" @click="enter_key = 1">According to theEntersend</li>
+                    <li class="send-key" :class="{active: enter_key === 2}" @click="enter_key = 2">According to theCtrl+Entersend</li>
                   </ul>
                 </div>
               </div>
@@ -106,10 +106,10 @@
           <div class="actions-right">
             <div class="tabs-actions">
               <div v-if="currentAskGoods || isSeller" class="tab-actions ellipsis" :class="{active: current_tab === 0}" @click="current_tab = 0">
-                {{ currentAskGoods ? '正在咨询' : (isSeller ? '店铺商品' : '浏览历史') }}
+                {{ currentAskGoods ? 'Is consulting' : (isSeller ? 'Shop goods' : 'Browsing history') }}
               </div>
               <div class="tab-actions ellipsis" :class="{active: current_tab === 1}" @click="current_tab = 1">
-                {{ isSeller ? '会员订单' : '我的订单' }}
+                {{ isSeller ? 'Member of the order' : 'Orders' }}
               </div>
             </div>
             <div class="content-actions">
@@ -119,31 +119,31 @@
                     <img :src="currentAskGoods['thumbnail']" alt="" class="history-goods-image">
                     <span class="history-goods-name">{{ currentAskGoods['goods_name'] }}</span>
                   </a>
-                  <div class="send-btn" @click="sendMessage(currentAskGoods['goods_id'], 'GOODS')">发送</div>
+                  <div class="send-btn" @click="sendMessage(currentAskGoods['goods_id'], 'GOODS')">send</div>
                 </div>
-                <div v-if="currentAskGoods" class="tab-actions active">浏览历史</div>
+                <div v-if="currentAskGoods" class="tab-actions active">Browsing history</div>
                 <div v-for="item in goodsList" :key="item['goods_id']" class="history-goods">
                   <a :href="`${domains['buyer_pc']}/goods/${item['goods_id']}`" target="_blank" class="history-goods-link">
                     <img :src="item['goods_img']" alt="" class="history-goods-image">
                     <span class="history-goods-name">{{ item['goods_name'] }}</span>
                   </a>
-                  <div class="send-btn" @click="sendMessage(item['goods_id'], 'GOODS')">发送</div>
+                  <div class="send-btn" @click="sendMessage(item['goods_id'], 'GOODS')">send</div>
                 </div>
                 <div
                   class="tip-load-more"
                   :class="{disabled: goodsListParams.loading || goodsListParams.no_data}"
                   @click="handleLoadMoreGoods"
                 >
-                  <span v-if="goodsListParams.loading">加载中...</span>
-                  <span v-else-if="goodsListParams.no_data">没有更多了...</span>
-                  <span v-else>加载更多</span>
+                  <span v-if="goodsListParams.loading">In the load...</span>
+                  <span v-else-if="goodsListParams.no_data">No more...</span>
+                  <span v-else>To load more</span>
                 </div>
               </div>
               <div v-show="current_tab === 1" class="orders-actions">
                 <div v-for="item in orders" :key="item['order_id']" class="item-order">
                   <div class="title-order">
-                    <span class="id-order">订单号：{{ item.sn }}</span>
-                    <span class="status-order send-btn" @click="sendMessage(item['sn'], 'ORDER')">发送</span>
+                    <span class="id-order">The order number：{{ item.sn }}</span>
+                    <span class="status-order send-btn" @click="sendMessage(item['sn'], 'ORDER')">send</span>
                   </div>
                   <ul class="products-order" @click="handleClickOrder(item)">
                     <li v-for="sku in item.sku_list" :key="sku['sku_id']" class="item-products">
@@ -158,7 +158,7 @@
                   </ul>
                   <div class="other-order">
                     <p class="price-order">
-                      <span>订单金额：</span>
+                      <span>Amount：</span>
                       <span class="price">￥{{ item['order_amount'] }}</span>
                     </p>
                     <div>
@@ -171,9 +171,9 @@
                   :class="{disabled: orderParams.loading || orderParams.no_data || (isSeller && !receiver_id)}"
                   @click="handleLoadMoreOrder"
                 >
-                  <span v-if="orderParams.loading">加载中...</span>
-                  <span v-else-if="orderParams.no_data">没有更多了...</span>
-                  <span v-else>{{ (!isSeller || receiver_id) ? '加载更多' : '请在左侧选择一个对话' }}</span>
+                  <span v-if="orderParams.loading">In the load...</span>
+                  <span v-else-if="orderParams.no_data">No more...</span>
+                  <span v-else>{{ (!isSeller || receiver_id) ? 'To load more' : 'Please select a dialogue on the left' }}</span>
                 </div>
               </div>
             </div>
@@ -214,7 +214,7 @@ export default {
       type: Function,
       required: true
     },
-    // 聊天类型
+    // Chat type
     type: {
       type: String,
       required: true
@@ -238,7 +238,7 @@ export default {
     }
   },
   computed: {
-    // 正在聊天对象
+    // Who you are Chatting with
     currentChat() {
       if (!this.isSeller) {
         const { site } = this.$store.getters
@@ -250,21 +250,21 @@ export default {
       const friend = this.friends.filter(item => item['friends_id'] === this.receiver_id)[0]
       return friend || ''
     },
-    // 正在咨询的商品
+    // Goods being consulted
     currentAskGoods() {
       return this.askGoods
     },
-    // 输入框节点
+    // Input box node
     contentEl() {
       return document.getElementById('textarea-input')
     },
-    // 展示的朋友列表【经过搜索关键字过滤】
+    // List of friends shown [filtered by search keyword]
     showFriends() {
       const { search_keyword, friends } = this
       if (!search_keyword.trim()) return friends
       return friends.filter(item => item.name.indexOf(search_keyword) !== -1)
     },
-    // 是否为商家端
+    // Whether it is the merchant end
     isSeller() {
       return this.type === 'seller'
     }
@@ -282,7 +282,7 @@ export default {
   },
   methods: {
     /**
-     * 选择好友
+     * Choose a friend
      * @param item
      */
     handleClickFriend(item) {
@@ -294,7 +294,7 @@ export default {
       this.chatContentScrollTo()
     },
     /**
-     * 发送消息
+     * Send a message
      */
     handleSendContent(event) {
       if (this.isSeller && !this.receiver_id) return
@@ -316,7 +316,7 @@ export default {
       })
     },
     /**
-     * 选择emoji
+     * chooseemoji
      * @param item
      */
     handleEmojiSelect(item) {
@@ -324,14 +324,14 @@ export default {
       this.show_emoji_box = false
     },
     /**
-     * 隐藏所有框框
+     * Hide all boxes
      */
     dismissAnyShow() {
       this.show_emoji_box = false
       this.show_enter_key_picker = false
     },
     /**
-     * 聊天窗口滚动到底部
+     * The chat window scrolls to the bottom
      */
     chatContentScrollTo(offset) {
       this.$nextTick(() => {
@@ -341,7 +341,7 @@ export default {
       })
     },
     /**
-     * 加载更多聊天记录
+     * Load more chats
      */
     async handleLoadMoreHistory() {
       if (this.chatHistoryParams.loading || this.chatHistoryParams.no_data) return
@@ -349,7 +349,7 @@ export default {
       this.getChatHistory()
     },
     /**
-     * 聊天区域滚动监听
+     * Chat area scroll monitor
      * @param event
      */
     chatBoxScrollListener(event) {
@@ -359,7 +359,7 @@ export default {
       }
     },
     /**
-     * 选择图片或视频
+     * Select picture or video
      * @param type
      */
     handleClickTool(type) {
@@ -373,7 +373,7 @@ export default {
       // }
     },
     /**
-     * 文件发生改变
+     * File changes
      * @param event
      */
     async handleToolbarFileChange(event) {
@@ -385,7 +385,7 @@ export default {
       await this.sendMessage(res.url, type)
     },
     /**
-     * 点了消息
+     * O clock news
      * @param message
      */
     handleClickMessage(message) {
@@ -396,7 +396,7 @@ export default {
       }
     },
     /**
-     * 查看订单详情
+     * View order Details
      */
     handleClickOrder(item) {
       const { order_sn, sn } = item
@@ -406,7 +406,7 @@ export default {
       window.open(url)
     },
     /**
-     * 加载更多商品
+     * Loading more items
      */
     handleLoadMoreGoods() {
       if (this.goodsListParams.no_data) return
@@ -414,7 +414,7 @@ export default {
       this.getGoodsList()
     },
     /**
-     * 加载更多订单
+     * Load more orders
      */
     handleLoadMoreOrder() {
       if (this.orderParams.no_data || (this.isSeller && !this.receiver_id)) return
@@ -422,7 +422,7 @@ export default {
       this.getOrders()
     },
     /**
-     * 格式化日期
+     * Formatted date
      * @param unix
      * @param format
      * @returns {string}
@@ -444,7 +444,7 @@ export default {
       return _format
     },
     /**
-     * 素材选择器确认选择
+     * The material picker confirms the selection
      * @param items
      */
     handleResourcePickerConfirm(items) {
@@ -454,7 +454,7 @@ export default {
       }
     },
     /**
-     * 预览图片
+     * The preview image
      * @param message
      */
     handlePreviewImage(message) {
@@ -462,7 +462,7 @@ export default {
       this.$refs['viewer']['$viewer']['show']()
     },
     /**
-     * 初始化粘贴板监听
+     * Initialize the stickboard listener
      */
     initPasteScreenshot() {
       this.contentEl.addEventListener('paste', async(event) => {
@@ -472,7 +472,7 @@ export default {
           if (file.type.indexOf('image/') === -1) return
           event.preventDefault()
           if (this.isSeller && !this.receiver_id) {
-            return this.$message.error('请选择一个对话！')
+            return this.$message.error('Please select a dialogue！')
           }
           const reader = new FileReader()
           reader.readAsDataURL(file)
@@ -480,7 +480,7 @@ export default {
             const h = this.$createElement
             const src = e.target.result
             MessageBox({
-              title: '是否发送图片？',
+              title: 'Whether to send pictures？',
               message: h('img',
                 {
                   style: { 'max-width': '390px', 'max-height': '390px' },
@@ -488,8 +488,8 @@ export default {
                 }
               ),
               showCancelButton: true,
-              confirmButtonText: '确定',
-              cancelButtonText: '取消'
+              confirmButtonText: 'save',
+              cancelButtonText: 'cancel'
             }).then(async() => {
               const res = await this.uploadFile(file)
               await this.sendMessage(res.url, 'IMAGES')

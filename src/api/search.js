@@ -1,11 +1,11 @@
 /**
- * 搜索分词相关API
+ * Search participle relatedAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取自定义分词列表
+ * Gets a list of custom participles
  * @param params
  */
 export function getSearchKeywordsList(params) {
@@ -18,7 +18,7 @@ export function getSearchKeywordsList(params) {
 }
 
 /**
- * 添加自定义分词
+ * Add custom participles
  * @param params
  */
 export function addSearchKeyword(params) {
@@ -31,7 +31,7 @@ export function addSearchKeyword(params) {
 }
 
 /**
- * 删除自定义分词
+ * Delete custom participles
  * @param id
  */
 export function delSearchKeyword(id) {
@@ -43,7 +43,7 @@ export function delSearchKeyword(id) {
 }
 
 /**
- * 设置密钥
+ * Set the key
  * @param params
  */
 export function setSecretKey(params) {
@@ -56,7 +56,7 @@ export function setSecretKey(params) {
 }
 
 /**
- * 搜索关键词历史列表
+ * Search keyword history list
  * @param params
  */
 export function getSearchHistoryList(params) {

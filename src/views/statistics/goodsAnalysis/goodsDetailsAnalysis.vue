@@ -8,7 +8,7 @@
       <div slot="toolbar" class="inner-toolbar">
         <div class="toolbar-btns">
           <div class="conditions">
-            <span>商品分类:</span>
+            <span>Category:</span>
             <en-category-picker
               size="mini"
               :api="api"
@@ -18,30 +18,30 @@
               :clearable='true'/>
           </div>
           <div class="conditions">
-            <span>商品名称:</span>
+            <span>Name:</span>
             <el-input size="mini" v-model="params.goods_name" clearable />
           </div>
-          <el-button @click="handleSearchGoods" type="primary" size="mini">搜索</el-button>
+          <el-button @click="handleSearchGoods" type="primary" size="mini">search</el-button>
         </div>
         <div class="toolbar-search"></div>
       </div>
       <template slot="table-columns">
-        <!--商品名称-->
-        <el-table-column label="商品名称">
+        <!--Name-->
+        <el-table-column label="Name">
           <template slot-scope="scope">
             <a :href="`${MixinBuyerDomain}/goods/${scope.row.goods_id}`" target="_blank" style="color: #00a2d4;">{{ scope.row.goods_name }}</a>
           </template>
         </el-table-column>
-        <!--价格-->
-        <el-table-column label="价格">
+        <!--Price-->
+        <el-table-column label="Price">
           <template slot-scope="scope">
             <span>{{ scope.row.price | unitPrice('¥') }}</span>
           </template>
         </el-table-column>
-        <!--近30天下单商品数-->
-        <el-table-column prop="numbers" sortable label="近30天下单商品数"/>
-        <!--近30天下单金额-->
-        <el-table-column prop="total_price" sortable label="近30天下单金额">
+        <!--nearly30Number of single goods in the world-->
+        <el-table-column prop="numbers" sortable label="nearly30Number of single goods in the world"/>
+        <!--nearly30World order amount-->
+        <el-table-column prop="total_price" sortable label="nearly30World order amount">
           <template slot-scope="scope">
             <span>{{ scope.row.total_price | unitPrice('¥') }}</span>
           </template>
@@ -72,10 +72,10 @@
     },
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
 
@@ -86,16 +86,16 @@
           goods_name: ''
         },
 
-        /** 列表数据 */
+        /** The list of data*/
         tableData: [],
 
-        /** 列表分页数据 */
+        /** List paging data*/
         pageData: [],
 
-        /** 分类请求api */
+        /** Classification requestapi */
         api: 'seller/goods/category/0/children',
 
-        /** 映射属性 */
+        /** Mapping attributes*/
         props: {
           value: 'category_id',
           label: 'name',
@@ -109,26 +109,26 @@
     },
     methods: {
 
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         console.log(33, size)
         this.params.page_size = size
         this.GET_GoodsStatistics()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         console.log(88, page)
         this.params.page_no = page
         this.GET_GoodsStatistics()
       },
 
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       handleSearchGoods() {
         this.GET_GoodsStatistics()
       },
 
-      /**  平台商品分类选择组件值发生改变 */
+      /**  Platform merchandise category selection component values have changed*/
       changeGoodsCateGory(data) {
         if (data[data.length - 1]) {
           this.params.category_id = parseInt(data[data.length - 1])

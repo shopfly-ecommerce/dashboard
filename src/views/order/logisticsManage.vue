@@ -1,10 +1,10 @@
 <template>
   <div>
     <el-tabs v-model="activeName" @tab-click="handleToggleClick">
-      <!--运费模版列表-->
-      <el-tab-pane label="快递模板" name="express">
+      <!--Freight template list-->
+      <el-tab-pane label="Express template" name="express">
         <div style="margin-bottom: 10px;">
-          <el-button type="primary" @click="handleAddMould">新增模板</el-button>
+          <el-button type="primary" @click="handleAddMould">The new template</el-button>
         </div>
         <el-collapse v-for="(item, index) in tableData" :key="index">
           <el-collapse-item>
@@ -12,8 +12,8 @@
               <div class="colla-title">
                 <span>{{ item.name }}</span>
                 <div>
-                  <el-button type="text"plain @click="handleEditMould(item)">编辑</el-button>
-                  <el-button type="text" plain @click="handleDeleteMould(item)">删除</el-button>
+                  <el-button type="text"plain @click="handleEditMould(item)">edit</el-button>
+                  <el-button type="text" plain @click="handleDeleteMould(item)">delete</el-button>
                 </div>
               </div>
             </template>
@@ -23,8 +23,8 @@
               :tableData="item.items"
               :loading="loading">
               <template slot="table-columns">
-                <!--可配送区域-->
-                <el-table-column label="可配送区域" align="left">
+                <!--Deliverable area-->
+                <el-table-column label="Deliverable area" align="left">
                   <template slot-scope="scope">
                     <div class="dispatchingAreas">
                       <span v-for="(item, index) in scope.row.regions">
@@ -42,18 +42,18 @@
                     </div>
                   </template>
                 </el-table-column>
-                <!--首重（kg）-->
-                <el-table-column prop="first_company" :label="item.type === 1 ? '首重（kg）': '首件（个）'"  width="200"/>
-                <!--运费（元）-->
-                <el-table-column label="运费（元）" width="200">
+                <!--The first heavy（kg）-->
+                <el-table-column prop="first_company" :label="item.type === 1 ? 'The first heavy（kg）': 'The first thing（a）'"  width="200"/>
+                <!--freight（USD）-->
+                <el-table-column label="freight（USD）" width="200">
                   <template slot-scope="scope">
                     <span>{{ scope.row.first_price | unitPrice('￥') }}</span>
                   </template>
                 </el-table-column>
-                <!--续重（kg）-->
-                <el-table-column prop="continued_company" :label="item.type === 1 ? '续重（kg）': '续件（个）'" width="200"/>
-                <!--续费（元）-->
-                <el-table-column label="续费（元）" width="200">
+                <!--Continued heavy（kg）-->
+                <el-table-column prop="continued_company" :label="item.type === 1 ? 'Continued heavy（kg）': 'To continue a（a）'" width="200"/>
+                <!--renewal（USD）-->
+                <el-table-column label="renewal（USD）" width="200">
                   <template slot-scope="scope">
                     <span>{{ scope.row.continued_price | unitPrice('￥') }}</span>
                   </template>
@@ -63,7 +63,7 @@
           </el-collapse-item>
         </el-collapse>
       </el-tab-pane>
-      <!--运费模版-->
+      <!--The freight template-->
       <el-tab-pane :label="tplOperaName" name="add">
         <el-form
           :model="mouldForm"
@@ -72,24 +72,24 @@
           ref="mouldForm"
           label-width="120px"
           class="demo-ruleForm">
-          <el-form-item label="模板名称:" prop="name" id="tplName">
+          <el-form-item label="Template name:" prop="name" id="tplName">
             <el-input v-model="mouldForm.name" :maxlength="15" @change="()=> { mouldForm.name = mouldForm.name.trim() }"></el-input>
           </el-form-item>
-          <el-form-item label="计费方式:" prop="type" v-if="!mouldForm.template_id">
+          <el-form-item label="Billing way:" prop="type" v-if="!mouldForm.template_id">
             <el-radio-group v-model="mouldForm.type" >
-              <el-radio :label="2">按件数计费</el-radio>
-              <el-radio :label="1">按重量计费</el-radio>
+              <el-radio :label="2">Charge per unit</el-radio>
+              <el-radio :label="1">Charge by weight</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="计费方式:" v-if="mouldForm.template_id">
+          <el-form-item label="Billing way:" v-if="mouldForm.template_id">
             <div style="color: #909399;font-size: 13px;">{{ mouldForm.type | typeStatus }}</div>
           </el-form-item>
-          <el-form-item label="配送区域:" prop="items">
+          <el-form-item label="Distribution area:" prop="items">
             <el-table
               :data="mouldForm.items"
               style="width: 80%"
               border>
-              <el-table-column label="可配送区域" align="left" >
+              <el-table-column label="Deliverable area" align="left" >
                 <template slot-scope="scope">
                   <div class="dispatchingAreas">
                     <span v-for="levle1 in scope.row.area">
@@ -115,13 +115,13 @@
                       </span>
                     </span>
                     <div style="float: right;">
-                      <el-button type="text" plain @click="editArea(scope.row, scope.$index)">编辑</el-button>
-                      <el-button type="text" plain @click="delArea(scope.$index)">删除</el-button>
+                      <el-button type="text" plain @click="editArea(scope.row, scope.$index)">edit</el-button>
+                      <el-button type="text" plain @click="delArea(scope.$index)">delete</el-button>
                     </div>
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column :label="mouldForm.type === 1 ? '首重（kg）': '首件（个）'" prop="id" align="center" width="200">
+              <el-table-column :label="mouldForm.type === 1 ? 'The first heavy（kg）': 'The first thing（a）'" prop="id" align="center" width="200">
                 <template slot-scope="scope">
                   <el-input
                     v-model="scope.row.first_company"
@@ -129,17 +129,17 @@
                     clearable></el-input>
                 </template>
               </el-table-column>
-              <el-table-column label="运费（元）" prop="name" align="center" width="200">
+              <el-table-column label="freight（USD）" prop="name" align="center" width="200">
                 <template slot-scope="scope">
                   <el-input v-model="scope.row.first_price" @blur="intMoney(scope.row)" clearable></el-input>
                 </template>
               </el-table-column>
-              <el-table-column :label="mouldForm.type === 1 ? '续重（kg）': '续件（个）'" prop="desc" align="center" width="200">
+              <el-table-column :label="mouldForm.type === 1 ? 'Continued heavy（kg）': 'To continue a（a）'" prop="desc" align="center" width="200">
                 <template slot-scope="scope">
                   <el-input v-model="scope.row.continued_company" @blur="intContinuedCompany(scope.row)" clearable></el-input>
                 </template>
               </el-table-column>
-              <el-table-column label="续费（元）" prop="desc" align="center" width="200">
+              <el-table-column label="renewal（USD）" prop="desc" align="center" width="200">
                 <template slot-scope="scope">
                   <el-input v-model="scope.row.continued_price" @blur="intMoney(scope.row)" clearable></el-input>
                 </template>
@@ -147,16 +147,16 @@
             </el-table>
           </el-form-item>
           <el-form-item prop="area">
-            <el-button type="text" plain @click="chooseArea">指定可配送区域和运费</el-button>
+            <el-button type="text" plain @click="chooseArea">Specify shipping area and freight</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="saveMould('mouldForm')">保存模板</el-button>
+            <el-button type="primary" @click="saveMould('mouldForm')">Save the template</el-button>
           </el-form-item>
         </el-form>
       </el-tab-pane>
     </el-tabs>
     <el-dialog
-      title="选择配送区域"
+      title="Select Delivery Area"
       center
       :close-on-click-modal="false"
       :visible.sync="areaDialog"
@@ -175,8 +175,8 @@
         @to_selected_all="toSelectedAll"
       ></en-transfer-tree>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="areaDialog = false">取 消</el-button>
-        <el-button type="primary" @click="addTransItem">确 定</el-button>
+        <el-button @click="areaDialog = false">cancel</el-button>
+        <el-button type="primary" @click="addTransItem">save</el-button>
       </span>
     </el-dialog>
   </div>
@@ -198,101 +198,101 @@
     },
     data() {
       return {
-        /** 当前面板的名字*/
+        /** The name of the current panel*/
         activeName: 'express',
 
-        /** 新增模版/修改模版 */
-        tplOperaName: '新增模版',
+        /** A new template/Modify the template*/
+        tplOperaName: 'A new template',
 
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 快递模板列表参数 */
+        /** Express template list parameters*/
         params: {},
 
-        /** 快递模板列表数据 */
+        /** Express template list data*/
         tableData: [],
 
-        /** 模板表单信息 */
+        /** Template form information*/
         mouldForm: {
-          /** 模板id */
+          /** The templateid */
           template_id: '',
 
-          /** 模板名称 */
+          /** Template name*/
           name: '',
 
-          /** 模版类型 */
+          /** Template type*/
           type: 1,
 
           items: []
         },
 
-        /** 地区选择器是否打开 */
+        /** Whether the locale selector is turned on*/
         areaDialog: false,
 
-        /** 全部地区信息 */
+        /** All district information*/
         areaData: [],
 
-        /** 是否是编辑模式 默认是添加模式(false) 编辑模式(true) */
+        /** Edit mode The default mode is Add mode(false) Edit mode(true) */
         isEdit: false,
 
-        /** 操作当前行索引 */
+        /** Operates on the current row index*/
         currentIndex: -1,
 
-        /** 过滤地区数据 */
+        /** Filtering regional data*/
         filterData: [],
 
-        /** 树形地区选择器源数据 */
+        /** Tree locale selector source data*/
         fromData: {},
 
-        /** 上一次更新的源数据 */
+        /** The source data of the last update*/
         lastFromData: {},
 
-        /** 树形地区选择器目标数据 */
+        /** Tree locale selector target data*/
         toData: {},
 
-        /** 树形地区选择器静态数据 用于存储用户操作的原始数据 */
+        /** Tree locale selector static data is used to store raw data for user operations*/
         staticData: {},
 
-        /** 树形地区选择器标题 */
-        title: ['可选省、市、县', '已选省、市、县'],
+        /** Tree locale selector header*/
+        title: ['Optional province、The city、county', 'The selected provinces、The city、county'],
 
-        /** 表单校验规则*/
+        /** Form check rule*/
         rules: {
           name: [
-            { required: true, message: '请输入模板名称', trigger: 'blur' },
-            { max: 15, message: '模版名称最多15个字符', trigger: 'blur' }
+            { required: true, message: 'Please enter the template name', trigger: 'blur' },
+            { max: 15, message: 'Most template names15A character', trigger: 'blur' }
           ],
           type: [
-            { required: true, message: '请选择模板类型', trigger: 'change' }
+            { required: true, message: 'Select the template type', trigger: 'change' }
           ]
         },
 
         isShow: false,
         configSheet: {},
 
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         logisticsLoading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         logisticsParams: {
           page_no: 1,
           page_size: 10
         },
 
-        /** 列表数据 */
+        /** The list of data*/
         logisticsTableData: '',
 
-        /** 快递公司 表单 */
+        /** Express Company Form*/
         expressForm: { formItems: [] },
 
-        /** 快递公司 dialog */
+        /** Courier companydialog */
         dialogExpressVisible: false
       }
     },
     filters: {
       typeStatus(type) {
-        return type === 1 ? '重量算运费' : '计件算运费'
+        return type === 1 ? 'Freight by weight' : 'Piece rate'
       }
     },
     mounted() {
@@ -301,12 +301,12 @@
       this.GET_ExpressList()
     },
     methods: {
-      /** 获取全部地区数据 计算出用户操作变化的原始静态数据 方便使用 */
+      /** It is easy to use to obtain raw static data that calculates changes in user operations for all regions*/
       getAreaList() {
         API_express.getAreaList().then(response => {
           response.pop()
           this.areaData = response
-          // 为每一项设置选中属性 isSelected Boolean值
+          // Check the property isSelected Boolean value for each setting
           let stack = []
           let parallel = []
           for (let i = 0, len = this.areaData.length; i < len; i++) {
@@ -315,24 +315,24 @@
           let item
           while (stack.length) {
             item = stack.shift()
-            // 如果该节点有子节点，继续添加进入栈顶
+            // If the node has children, continue adding to the top of the stack
             this.$set(item, 'isSelected', false)
-            // 把当前项添加进入平行数组
+            // Adds the current item to a parallel array
             parallel.push(item)
             if (item.children && item.children.length) {
               stack = item.children.concat(stack)
             }
           }
-          // 平行结构转换对象 随后可进行滚动加载进行性能优化， 可减少计算进行性能优化
+          // Parallel structure conversion objects can then be rolled for performance optimization, which reduces computation for performance optimization
           this.staticData = this.buildTree(parallel)
           this.initArea()
         })
       },
 
       /**
-       * 将一维的扁平数组转换为多层级对象
-       * @param  {[type]} list 一维数组，数组中每一个元素需包含id和parent_id两个属性
-       * @return {[type]} tree 多层级树状结构
+       * Converts a one-dimensional flat array to a multilevel object
+       * @param  {[type]} list A one-dimensional array containing each element of the arrayidandparent_idTwo attributes
+       * @return {[type]} tree Multilevel tree structure
        */
       buildTree(list) {
         let temp = {}
@@ -353,21 +353,21 @@
         return tree
       },
 
-      /** 切换标签模版 */
+      /** Toggle the label template*/
       handleToggleClick(tab, event) {
         this.activeName = tab.name
-        this.tplOperaName = '新增模版'
+        this.tplOperaName = 'A new template'
         if (this.activeName === 'express') {
           this.GET_ExpressMould()
         } else if (this.activeName === 'add') {
           this.mouldForm = {
-            /** 模板id */
+            /** The templateid */
             template_id: '',
 
-            /** 模板名称 */
+            /** Template name*/
             name: '',
 
-            /** 模版类型 */
+            /** Template type*/
             type: 1,
 
             items: []
@@ -379,40 +379,40 @@
         }
       },
 
-      /** 初始化源数据 & 目标数据  每次只能给15条用来进行渲染 暂时没有用到 用于进行后期性能优化*/
+      /** Initialize the source data& Target data can only be given each time15The bar is used for rendering and is not used for late performance optimization*/
       initArea() {
-        // 初始化源数据
+        // Initialize the source data
         const init_from = Object.keys(this.staticData).slice(0, 11)
         init_from.forEach(key => {
           this.fromData[key] = this.staticData[key]
         })
-        // 初始化目标数据
+        // Initialize target data
         this.toData = {}
 
-        // 2s 之后加载完整数据 用来加快弹框加载显示
+        // Load the full data after 2s to speed up the display
         setTimeout(() => {
           this.fromData = JSON.parse(JSON.stringify(this.staticData))
         }, 2000)
       },
 
-      /** 选择配送地区 */
+      /** Select distribution area*/
       chooseArea() {
         this.areaDialog = true
         if (this.isEdit) this.toData = {}
         this.isEdit = false
       },
 
-      /** 滚动监听触发 继续加载更多源数据 */
+      /** The scroll listener triggers to continue loading more source data*/
       fromLoadMore() {
-        // console.log('滚动加载源数据')
+        // Console.log ( Scroll loading source data )
       },
 
-      /** 滚动监听触发 继续加载更多目标数据 */
+      /** The scroll listener triggers to continue loading more target data*/
       toLoadMore() {
-        // console.log('滚动加载目标数据')
+        // Console.log ( Scroll loading target data )
       },
 
-      /** 源数据全选 */
+      /** Select all source data*/
       fromSelectedAll(val) {
         let stack = []
         for (let i in this.fromData) {
@@ -421,9 +421,9 @@
         let item
         while (stack.length) {
           item = stack.shift()
-          // 如果当前节点的兄弟节点 全部跟当前节点一样 则父节点保持同步
+          // If all the siblings of the current node are the same as the current node, the parent node remains in sync
           item.isSelected = val
-          // 如果该节点有子节点，继续添加进入栈顶
+          // If the node has children, continue adding to the top of the stack
           if (item && item.children && !Array.isArray(item.children)) {
             for (let i in item.children) {
               stack.push(item.children[i])
@@ -432,7 +432,7 @@
         }
       },
 
-      /** 目标数据全选 */
+      /** Select all target data*/
       toSelectedAll(val) {
         let stack = []
         for (let i in this.toData) {
@@ -441,9 +441,9 @@
         let item
         while (stack.length) {
           item = stack.shift()
-          // 如果当前节点的兄弟节点 全部跟当前节点一样 则父节点保持同步
+          // If all the siblings of the current node are the same as the current node, the parent node remains in sync
           item.isSelected = val
-          // 如果该节点有子节点，继续添加进入栈顶
+          // If the node has children, continue adding to the top of the stack
           if (item && item.children && !Array.isArray(item.children)) {
             for (let i in item.children) {
               stack.push(item.children[i])
@@ -452,47 +452,47 @@
         }
       },
 
-      /** 源数据更新*/
+      /** Source data update*/
       fromDataChange(data, type) {
-        if (type) { // 如果type 为1 则进行添加 否则移除
-          // 如果源数据（fromData）是空对象 则直接赋值 如果不是 则进行对象合并
+        if (type) { // iftype for1 Add or remove
+          // If the fromData is an empty object, the value is assigned directly. If not, the object is merged
           if (!Object.keys(this.fromData).length) {
             this.fromData = JSON.parse(JSON.stringify(data))
           } else {
             this.objAssign(this.fromData, data)
           }
-        } else { // 移除
+        } else { // remove
           this.objDel(this.fromData, data)
         }
         this.resetSelected(this.fromData)
       },
 
-      /** 目标数据更新 */
+      /** Target data update*/
       toDataChange(data, type) {
-        if (type) { // 如果type 为1 则进行添加 否则移除
-          // 如果目标数据（toData）是空对象 则直接赋值 如果不是 则进行对象合并
+        if (type) { // iftype for1 Add or remove
+          // If toData is an empty object, the value is assigned directly. If not, the object is merged
           if (!Object.keys(this.toData).length) {
             this.toData = JSON.parse(JSON.stringify(data))
           } else {
             this.objAssign(this.toData, data)
           }
-        } else { // 移除
+        } else { // remove
           this.objDel(this.toData, data)
         }
         this.resetSelected(this.toData)
       },
 
-      // 对象合并 同名对象子节点添加
+      // Object merge object with same name object child node added
       objAssign(origins, data) {
         for (let i in data) {
-          if (!origins[i]) { // 如果level1中被整合的目标数据中不存在当前选中项 直接把当前level1进行赋值
+          if (!origins[i]) { // iflevel1In the integrated target data does not exist in the current selected item directly to the currentlevel1For the assignment
             this.$set(origins, i, JSON.parse(JSON.stringify(data[i])))
-          } else { // 在level1中存在被整合的目标数据中不存在当前选中项 则进行检测下一级别（level2）
-            for (let j in data[i].children) { // 如果level2中被整合的目标数据中不存在当前选中项 直接把当前level2进行赋值
+          } else { // inlevel1中存in被整合的目标数据中不存in当前选中项则进行检测下一级别（level2）
+            for (let j in data[i].children) { // iflevel2In the integrated target data does not exist in the current selected item directly to the currentlevel2For the assignment
               if (!origins[i].children[j]) {
                 this.$set(origins[i].children, j, JSON.parse(JSON.stringify(data[i].children[j])))
-              } else { // 在level2中存在被整合的目标数据中不存在当前选中项 则进行检测下一级别（level3）
-                for (let k in data[i].children[j].children) { // 如果level3中被整合的目标数据中不存在当前选中项 直接把当前level3进行赋值
+              } else { // inlevel2中存in被整合的目标数据中不存in当前选中项则进行检测下一级别（level3）
+                for (let k in data[i].children[j].children) { // iflevel3In the integrated target data does not exist in the current selected item directly to the currentlevel3For the assignment
                   if (!origins[i].children[j].children[k]) {
                     this.$set(origins[i].children[j].children, k, JSON.parse(JSON.stringify(data[i].children[j].children[k])))
                   }
@@ -503,16 +503,16 @@
         }
       },
 
-      // 对象递归移除 同名对象子节点移除
+      // Object recursively removed object child node removed
       objDel(origins, data) {
         for (let i in data) {
-          if (data[i].isSelected) { // level1全选
+          if (data[i].isSelected) { // level1Select all
             this.$delete(origins, i)
           } else {
-            for (let j in data[i].children) { // level1级别未全选 则循环检查level2
-              if (data[i].children[j].isSelected) { // level2全选
+            for (let j in data[i].children) { // level1If the levels are not all selected, the cycle check is performedlevel2
+              if (data[i].children[j].isSelected) { // level2Select all
                 this.$delete(origins[i].children, j)
-              } else { // level2级别未全选 则循环检查level3
+              } else { // level2If the levels are not all selected, the cycle check is performedlevel3
                 for (let k in data[i].children[j].children) {
                   if (data[i].children[j].children[k].isSelected) {
                     this.$delete(origins[i].children[j].children, k)
@@ -524,7 +524,7 @@
         }
       },
 
-      /** 重置选中数据 isSelected 为false*/
+      /** Reset selected dataisSelected forfalse*/
       resetSelected(model) {
         let stack = []
         for (let i in model) {
@@ -533,9 +533,9 @@
         let item
         while (stack.length) {
           item = stack.shift()
-          // 如果当前节点的兄弟节点 全部跟当前节点一样 则父节点保持同步
+          // If all the siblings of the current node are the same as the current node, the parent node remains in sync
           item.isSelected = false
-          // 如果该节点有子节点，继续添加进入栈顶
+          // If the node has children, continue adding to the top of the stack
           if (item && item.children && !Array.isArray(item.children)) {
             for (let i in item.children) {
               stack.push(item.children[i])
@@ -544,22 +544,22 @@
         }
       },
 
-      /** 树形地区选择器确认回调 */
+      /** The tree locale selector confirms the callback*/
       addTransItem() {
-        // 关闭地区选择器
+        // Close the region selector
         this.areaDialog = false
-        // 如果是编辑模式 则进行对应运费模版子项的更新
+        // If it is in edit mode, update the corresponding freight template subitem
         if (this.isEdit) {
-          // 检测目标数据是否为空对象 如果是则执行删除
+          // Detects if the target data is empty and, if so, performs deletion
           if (!Object.keys(this.toData).length) {
             this.implementDel(this.currentIndex)
           } else {
             this.mouldForm.items[this.currentIndex].area = JSON.parse(JSON.stringify(this.toData))
           }
-        } else { // 如果是添加模式 则添加运费模版子项
-          // 校验目标数据是否为空
+        } else { // If it is add mode, add the freight template subitem
+          // Verify that the target data is null
           if (!Object.keys(this.toData).length) {
-            this.$message.warning('目标地区数据为空，可点击取消或右上角关闭地区选择器')
+            this.$message.warning('If the target locale data is empty, click cancel or close the locale selector in the upper right corner')
             return
           }
           this.mouldForm.items.push({
@@ -570,33 +570,33 @@
             area: JSON.parse(JSON.stringify(this.toData))
           })
         }
-        // 更新过滤地区数据  把新添加或者删除的目标数据更新进入过滤地区中
-        if (this.filterData[this.currentIndex]) { // 替换
+        // Update filter locale data Updates the newly added or deleted target data into the filter locale
+        if (this.filterData[this.currentIndex]) { // replace
           this.filterData[this.currentIndex] = JSON.parse(JSON.stringify(this.toData))
-        } else { // 添加
+        } else { // add
           this.filterData.push(JSON.parse(JSON.stringify(this.toData)))
         }
-        // 置空目标数据
+        // Empty target data
         this.toData = {}
-        // 上次源数据更新
+        // Last source data update
         this.lastFromData = JSON.parse(JSON.stringify(this.fromData))
       },
 
-      /** 过滤first_company */
+      /** filterfirst_company */
       intFirstCompany(row) {
         if (!RegExp.integer.test(row.first_company)) {
           row.first_company = 1
         }
       },
 
-      /** 过滤continued_company */
+      /** filtercontinued_company */
       intContinuedCompany(row) {
         if (!RegExp.integer.test(row.continued_company)) {
           row.continued_company = 1
         }
       },
 
-      /** 过滤first_price continued_price */
+      /** filterfirst_price continued_price */
       intMoney(row) {
         if (!RegExp.money.test(row.first_price)) {
           row.first_price = 0.00
@@ -610,38 +610,38 @@
         }
       },
 
-      /** 编辑子地区 */
+      /** Edit subarea*/
       editArea(row, $index) {
         this.areaDialog = true
         this.isEdit = true
-        // 更新当前目标数据
+        // Update current target data
         this.toData = JSON.parse(JSON.stringify(row.area))
-        // 目标数据进行重置选中
+        // Reset the target data
         this.resetSelected(this.toData)
-        // 更新当前操作索引
+        // Update the current operation index
         this.currentIndex = $index
       },
 
-      /** 删除子地区 */
+      /** Delete sublocale*/
       delArea($index) {
-        this.$confirm('确定删除?', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Sure to delete?', 'prompt', { type: 'warning' }).then(() => {
           this.implementDel($index)
         }).catch(() => {})
       },
 
-      /** 执行删除子地区 */
+      /** Perform the deletion of sublocales*/
       implementDel($index) {
-        // 更新表格数据
+        // Updating table data
         this.mouldForm.items.splice($index, 1)
-        // 更新过滤数据 删除
+        // Update filter data deletion
         const delItem = this.filterData.splice($index, 1)
-        // 更新源数据
+        // Update source data
         for (let i in delItem[0]) {
-          if (!this.fromData[i]) { // 不存在level1
+          if (!this.fromData[i]) { // There is nolevel1
             this.$set(this.fromData, i, delItem[0][i])
           } else {
             for (let j in delItem[0][i].children) {
-              if (!this.fromData[i].children[j]) { // 不存在level2
+              if (!this.fromData[i].children[j]) { // There is nolevel2
                 this.$set(this.fromData[i].children, j, delItem[0][i].children[j])
               } else {
                 for (let k in delItem[0][i].children[j].children) {
@@ -653,7 +653,7 @@
         }
       },
 
-      /** 获取快递模板列表信息 */
+      /** Gets the Courier template list information*/
       GET_ExpressMould() {
         this.loading = true
         API_express.getTplList().then(response => {
@@ -662,14 +662,14 @@
         })
       },
 
-      /** 编辑模板*/
+      /** Edit template*/
       handleEditMould(row) {
         this.activeName = 'add'
-        this.tplOperaName = '修改模版'
+        this.tplOperaName = 'Modify the template'
         API_express.getSimpleTpl(row.id).then((response) => {
-          // 重置初始数据 防止重复编辑的情况下出错
+          // Resetting the initial data prevents errors in the case of repeat edits
           this.fromData = JSON.parse(JSON.stringify(this.staticData))
-          // 计算编辑地区
+          // Computational editing area
           response.items.forEach(key => {
             key.area = typeof key.area === 'string' ? JSON.parse(key.area) : key.area
             for (let i in key.area) {
@@ -691,10 +691,10 @@
               }
             }
           })
-          // 此时的上次源数据 为过滤后的地区数据
+          // The last source data at this point is the filtered locale data
           this.lastFromData = JSON.parse(JSON.stringify(this.fromData))
           this.mouldForm = { ...response }
-          // 初始化过滤地区
+          // Initializes the filter area
           this.filterData = []
           response.items.forEach(key => {
             this.filterData.push(JSON.parse(JSON.stringify(key.area)))
@@ -702,45 +702,45 @@
         })
       },
 
-      /** 删除模板*/
+      /** To delete a template*/
       handleDeleteMould(row) {
         const _id = row.id
-        this.$confirm(`确定要删除模板么?`, '确认信息', { type: 'warning' })
+        this.$confirm(`Are you sure you want to delete the template?`, 'Confirm the information', { type: 'warning' })
           .then(() => {
             API_express.deleteExpressMould(_id).then(() => {
               this.GET_ExpressMould()
-              this.$message.success('删除成功')
+              this.$message.success('Delete the success')
             })
           })
       },
 
-      /** 新增模板 */
+      /** The new template*/
       handleAddMould() {
         this.activeName = 'add'
-        this.tplOperaName = '新增模板'
+        this.tplOperaName = 'The new template'
         this.mouldForm = {
-          /** 模板id */
+          /** The templateid */
           id: '',
 
-          /** 模板名称 */
+          /** Template name*/
           name: '',
 
-          /** 模版类型 */
+          /** Template type*/
           type: 1,
 
           items: []
         }
-        // 重置源数据
+        // Resetting source data
         this.fromData = JSON.parse(JSON.stringify(this.staticData))
-        // 重置目标数据
+        // Reset target data
         this.toData = {}
-        // 重置过滤地区
+        // Reset filter area
         this.filterData = []
-        // 此时的上次源数据 为过滤后的地区数据
+        // The last source data at this point is the filtered locale data
         this.lastFromData = JSON.parse(JSON.stringify(this.fromData))
       },
 
-      /** 检测是否全选 */
+      /** Check whether all are selected*/
       checkSelectAll(model) {
         let isSelectAll = false
         let _resultlevel1 = 0
@@ -771,7 +771,7 @@
           }
         }
 
-        if (model.level === 3) { // 此处怀疑逻辑有问题，但是没有发现，可能是我神经质了把。。。mmp
+        if (model.level === 3) { // I suspect theres something wrong with the logic here, but I dont find it. Maybe Im neurotic enough to...mmp
           if (_resultlevel3 <= 1 && (!this.lastFromData[model.parent_id] || !this.lastFromData[model.parent_id].children[model.id])) {
             isSelectAll = true
           }
@@ -780,21 +780,21 @@
         return isSelectAll
       },
 
-      /** 保存模板 */
+      /** Save the template*/
       saveMould(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             const _params = JSON.parse(JSON.stringify(this.mouldForm))
             _params.items.forEach(key => {
-              // 计算提交数据
+              // Calculate submission data
               for (let i in key.area) {
-                if (this.checkSelectAll(key.area[i])) { // level1 全选
+                if (this.checkSelectAll(key.area[i])) { // level1 Select all
                   this.$set(key.area[i], 'selected_all', true)
                   key.area[i].children = null
                 } else {
                   this.$set(key.area[i], 'selected_all', false)
                   for (let j in key.area[i].children) {
-                    if (this.checkSelectAll(key.area[i].children[j])) { // level2 全选
+                    if (this.checkSelectAll(key.area[i].children[j])) { // level2 Select all
                       this.$set(key.area[i].children[j], 'selected_all', true)
                       key.area[i].children[j].children = null
                     } else {
@@ -805,17 +805,17 @@
               }
               key.area = typeof key.area === 'string' ? key.area : JSON.stringify(key.area)
             })
-            if (this.mouldForm.id) { // 修改
+            if (this.mouldForm.id) { // edit
               API_express.saveExpressMould(this.mouldForm.id, _params).then(() => {
-                this.$message.success('修改成功')
+                this.$message.success('Modify the success')
                 this.GET_ExpressMould()
                 this.activeName = 'express'
-                this.tplOperaName = '新增模板'
+                this.tplOperaName = 'The new template'
               })
-            } else { // 添加
+            } else { // add
               delete this.mouldForm.id
               API_express.addExpressMould(_params).then(() => {
-                this.$message.success('添加成功')
+                this.$message.success('Add a success')
                 this.GET_ExpressMould()
                 this.activeName = 'express'
               })
@@ -825,7 +825,7 @@
       },
 
       addFormList() {
-        /** 电子面单表单验证 */
+        /** Electronic side single form validation*/
         let { formItems } = this.expressForm
         let isContainue = true
         if (!formItems.length) {
@@ -837,7 +837,7 @@
         }
         let last = formItems[formItems.length - 1]
         if (!last.code || !last.code) {
-          this.$message.error('请填写完整在添加！')
+          this.$message.error('Please fill in the complete before adding！')
           return
         }
         formItems.forEach(item => {
@@ -845,7 +845,7 @@
           current.length > 1 ? isContainue = false : null
         })
         if (!isContainue) {
-          this.$message.error('已经存在重复的字段类型或字段名称！')
+          this.$message.error('Duplicate field types or field names already exist！')
           return
         }
 
@@ -859,26 +859,26 @@
         this.expressForm.formItems.splice(payload, 1)
       },
 
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.logisticsParams.page_size = size
         this.GET_ExpressList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.logisticsParams.page_no = page
         this.GET_ExpressList()
       },
 
-      /** 添加快递公司 */
+      /** Add a Courier company*/
       handleAddExpress() {
         this.expressForm = { is_waybill: 0, formItems: [] }
         this.dialogExpressVisible = true
         this.$nextTick(() => this.$refs.expressForm.clearValidate())
       },
 
-      /** 编辑物流公司 */
+      /** Edit Logistics Company*/
       handleEditExpress(index, row) {
         const params = JSON.parse(JSON.stringify(row))
         if (typeof params.is_waybill !== 'number') {
@@ -898,7 +898,7 @@
         this.$nextTick(() => this.$refs.expressForm.clearValidate())
       },
 
-      /** 快递公司 提交表单 */
+      /** The delivery company submits the form*/
       submitExpressForm(formName) {
         this.$refs[formName].validate(valid => {
           if (valid) {
@@ -907,24 +907,24 @@
             if (!id) {
               API_logistics.addExpress(expressForm).then(response => {
                 this.dialogExpressVisible = false
-                this.$message.success('添加成功！')
+                this.$message.success('Add a success！')
                 this.GET_ExpressList()
               })
             } else {
               API_logistics.editExpress(id, expressForm).then(response => {
                 this.dialogExpressVisible = false
-                this.$message.success('保存成功！')
+                this.$message.success('Save success！')
                 this.GET_ExpressList()
               })
             }
           } else {
-            this.$message.error('表单填写有误，请检查！')
+            this.$message.error('The form is filled incorrectly, please check！')
             return false
           }
         })
       },
 
-      /** 获取物流公司信息*/
+      /** Access logistics company information*/
       GET_logisticsList() {
         this.loading = true
         API_logistics.getExpressCompanyList({}).then(response => {
@@ -954,7 +954,7 @@
         this.isShow = false
       },
 
-      /** 获取物流公司列表 */
+      /** Get a list of logistics companies*/
       GET_ExpressList() {
         this.logisticsLoading = true
         API_logistics.getExpressCompanyList(this.logisticsParams).then(response => {

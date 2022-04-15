@@ -6,8 +6,8 @@
           <div class="focus-item">
             <img :src="focus.pic_url" class="focus-image">
             <div class="opt-box">
-              <i class="opt-btn el-icon-edit-outline" title="编辑" @click="handleEditFocus(focus, index)"></i>
-              <i class="opt-btn el-icon-delete" title="删除" @click="handleDeleteFocus(focus, index)"></i>
+              <i class="opt-btn el-icon-edit-outline" title="edit" @click="handleEditFocus(focus, index)"></i>
+              <i class="opt-btn el-icon-delete" title="delete" @click="handleDeleteFocus(focus, index)"></i>
             </div>
           </div>
         </swiper-slide>
@@ -15,7 +15,7 @@
         <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
         <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
       </swiper>
-      <el-button type="primary" class="add-focus-btn" @click="hanldeAddFocus">新增焦点图</el-button>
+      <el-button type="primary" class="add-focus-btn" @click="hanldeAddFocus">New focus map</el-button>
     </div>
     <en-image-picker
       :show="dialogImageShow"
@@ -45,10 +45,10 @@
             prevEl: '.swiper-button-prev'
           }
         },
-        /** 图片编辑器 显示 */
+        /** Image editor display*/
         dialogImageShow: false,
         defaultImageData: null,
-        /** 正在编辑的 */
+        /** edit-in-progress*/
         curEditIndex: null
       }
     },
@@ -56,12 +56,12 @@
       this.GET_FocusList()
     },
     methods: {
-      /** 新增焦点图片 */
+      /** New focus image*/
       hanldeAddFocus() {
         this.curEditIndex = null
         this.dialogImageShow = true
       },
-      /** 编辑焦点图 */
+      /** Edit focus map*/
       handleEditFocus(focus, index) {
         this.curEditIndex = index
         this.defaultImageData = [{
@@ -74,16 +74,16 @@
         }]
         this.dialogImageShow = true
       },
-      /** 删除焦点图 */
+      /** Delete focus diagram*/
       handleDeleteFocus(focus, index) {
-        this.$confirm('确定要删除这个焦点图吗？', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Are you sure you want to delete this focus diagram？', 'prompt', { type: 'warning' }).then(() => {
           API_Floor.deleteFocus(focus.id).then(() => {
-            this.$message.success('删除成功！')
+            this.$message.success('Delete the success！')
             this.focusList.splice(index, 1)
           })
         }).catch(() => {})
       },
-      /** 图片上传组件确认 */
+      /** Picture upload component confirmation*/
       handleImagePickerConfirm(fileList) {
         this.dialogImageShow = false
         const { curEditIndex } = this
@@ -97,12 +97,12 @@
         if (curEditIndex || curEditIndex === 0) {
           API_Floor.editFocus(this.focusList[curEditIndex].id, params).then(response => {
             this.GET_FocusList()
-            this.$message.success('修改成功！')
+            this.$message.success('Modify the success！')
           })
         } else {
           API_Floor.addFocus(params).then(response => {
             this.focusList.push(response)
-            this.$message.success('添加成功！')
+            this.$message.success('Add a success！')
           })
         }
       },

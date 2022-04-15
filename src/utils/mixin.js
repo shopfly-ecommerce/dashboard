@@ -11,19 +11,19 @@ import * as XLSX from 'xlsx'
 export default {
   data() {
     return {
-      // 图片上传API
+      // Image upload API
       MixinUploadApi: api.base + '/uploaders',
-      // 微信图片上传
+      // WeChat image upload
       MixinWXUploadApi: api.live + '/seller/live-video/media/upload',
-      // 地区API
+      // In the API
       MixinRegionApi: api.base + '/regions/@id/children',
-      // 买家端PC域名
+      // Buyer side PC domain name
       MixinBuyerDomain: domain.buyer_pc,
-      // 买家端WAP域名
+      // Buyer side WAP domain name
       MixinBuyerWapDomain: domain.buyer_wap,
-      // 日期选择器快捷选项
+      // Date picker shortcut options
       MixinPickerShortcuts: [{
-        text: '最近一周',
+        text: 'In the latest week',
         onClick(picker) {
           const end = new Date()
           const start = new Date()
@@ -31,7 +31,7 @@ export default {
           picker.$emit('pick', [start, end])
         }
       }, {
-        text: '最近一个月',
+        text: 'Last month',
         onClick(picker) {
           const end = new Date()
           const start = new Date()
@@ -39,7 +39,7 @@ export default {
           picker.$emit('pick', [start, end])
         }
       }, {
-        text: '最近三个月',
+        text: 'Last three months',
         onClick(picker) {
           const end = new Date()
           const start = new Date()
@@ -51,21 +51,21 @@ export default {
       MixinDomain: domain,
       // API
       MixinApi: api,
-      // 是否开启了IM
+      // Whether IM is enabled
       MixinIsIM: process.env.IM
     }
   },
   computed: {
     /**
-     * 缓存页面数组
+     * Cached page array
      * @returns {default.computed.cachedViews|(function())|Array|*|getters.cachedViews}
      */
     cachedViews() {
       return this.$store.state.tagsView.cachedViews
     },
     /**
-     * 返回默认时间 + 5分钟
-     * 用于日期时间选择器的默认时间
+     * Return the default time+ 5minutes
+     * The default time for the date-time selector
      * @returns {string}
      * @constructor
      */
@@ -81,34 +81,34 @@ export default {
     }
   },
   methods: {
-    /** 返回克隆后的对象 */
+    /** Returns the cloned object*/
     MixinClone(obj) {
       return JSON.parse(JSON.stringify(obj))
     },
-    /** 用于修改单条表格数据后，set到tableData中 */
+    /** After modifying a single table data,settotableDataIn the*/
     MixinSetTableData(tableData, idName, id, response) {
       const { data } = tableData
       const index = data.findIndex(item => item[idName] === id)
       Vue.set(data, index, response)
     },
-    /** 用于判断表单是否为空 */
+    /** Used to determine if the form is empty*/
     MixinRequired(message, trigger) {
       return { required: true, pattern: /^\S.*$/gi, message: message, trigger: trigger || 'blur' }
     },
-    /** 格式化金钱 */
+    /** Formatted money*/
     MixinFormatPrice(row, column, cellValue, index) {
       if (typeof cellValue !== 'number') return ''
       return '￥' + Foundation.formatPrice(cellValue)
     },
-    /** 格式化时间戳 */
+    /** Formatted timestamp*/
     MixinUnixToDate(row, column, cellValue, index) {
       return Foundation.unixToDate(cellValue)
     },
     /**
-     * 导出Excel
-     * @param json   要导出的json数据
-     * @param name   要导出的文件名
-     * @param type   要导出的数据类型
+     * exportExcel
+     * @param json   To export thejsondata
+     * @param name   The file name to export
+     * @param type   The data type to export
      * @constructor
      */
     MixinExportJosnToExcel(json, name = 'data', type = 'application/octet-stream') {
@@ -126,7 +126,7 @@ export default {
       link.href = window.URL.createObjectURL(blob)
       link.download = `${name}.xlsx`
       link.click()
-      // 释放资源
+      // Release resources
       setTimeout(() => {
         URL.revokeObjectURL(link.href)
       }, 100)
@@ -145,7 +145,7 @@ export default {
       }
     },
     /**
-     * 请求方法
+     * Request method
      */
     MixinRequest: request
   }

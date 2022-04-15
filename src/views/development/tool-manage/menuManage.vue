@@ -13,21 +13,21 @@
             size="mini"
             :disabled="node.level === 3"
             icon="el-icon-plus"
-            :title="node.level === 3 ? '菜单最多添加三级' : '增加'"
+            :title="node.level === 3 ? 'Add up to three levels to the menu' : 'increase'"
             @click.stop="handleAddMenu(data)"
           />
           <el-button
             type="text"
             size="mini"
             icon="el-icon-minus"
-            title="删除"
+            title="delete"
             @click.stop="handleDeleteMenu(node, data)"
           />
           <el-button
             type="text"
             size="mini"
             icon="el-icon-edit"
-            title="编辑"
+            title="edit"
             @click.stop="handleEditMenu(data)"
           />
         </span>
@@ -39,28 +39,28 @@
       size="mini"
       style="margin-top: 10px; margin-left: 20px"
       @click="handleAddMenu('')"
-    >添加顶级菜单</el-button>
+    >Add top-level menu</el-button>
     <el-dialog
-      :title="menuForm.menu_name ? '编辑菜单' : '添加菜单'"
+      :title="menuForm.menu_name ? 'The edit menu' : 'Add menu'"
       :visible.sync="dialogMenuVisible"
       width="500px"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
       <el-form :model="menuForm" :rules="menuRules" ref="menuForm" label-width="100px">
-        <el-form-item label="菜单标题" prop="title">
+        <el-form-item label="The menu title" prop="title">
           <el-input v-model="menuForm.title" :maxlength="6"></el-input>
         </el-form-item>
-        <el-form-item label="菜单标识" prop="identifier">
+        <el-form-item label="Menu identifier" prop="identifier">
           <el-input v-model="menuForm.identifier" :maxlength="50"></el-input>
         </el-form-item>
-        <el-form-item label="菜单权限" prop="auth_regular">
+        <el-form-item label="Menu permissions" prop="auth_regular">
           <el-input v-model="menuForm.auth_regular" :maxlength="50"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogMenuVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitMenuForm('menuForm')">确 定</el-button>
+        <el-button @click="dialogMenuVisible = false">cancel</el-button>
+        <el-button type="primary" @click="submitMenuForm('menuForm')">save</el-button>
       </span>
     </el-dialog>
   </div>
@@ -74,26 +74,26 @@
     data() {
       return {
         menus: [],
-        /** 添加、编辑菜单 表单 */
+        /** add、Edit menu form*/
         menuForm: {},
-        /** 添加、编辑菜单 表单规则 */
+        /** add、Edit menu form rules*/
         menuRules: {
           title: [
-            this.MixinRequired('请输入菜单标题！'),
-            { min: 2, max: 6, message: '长度在 2 到 6 个字符', trigger: 'blur' }
+            this.MixinRequired('Please enter the menu title！'),
+            { min: 2, max: 6, message: 'The length of2 to6 A character', trigger: 'blur' }
           ],
           identifier: [
-            this.MixinRequired('请输入菜单标识！'),
-            { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
+            this.MixinRequired('Please enter the menu id！'),
+            { min: 1, max: 50, message: 'The length of1 to50 A character', trigger: 'blur' }
           ],
           auth_regular: [
-            this.MixinRequired('请输入菜单权限！'),
-            { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
+            this.MixinRequired('Please enter menu permission！'),
+            { min: 1, max: 50, message: 'The length of1 to50 A character', trigger: 'blur' }
           ]
         },
-        /** 添加、编辑菜单 dialog */
+        /** add、The edit menudialog */
         dialogMenuVisible: false,
-        /** 当前操作的menu */
+        /** Currently in operationmenu */
         currentMenu: ''
       }
     },
@@ -101,7 +101,7 @@
       this.GET_Memus()
     },
     methods: {
-      /** 添加菜单 */
+      /** Add menu*/
       handleAddMenu(menu) {
         this.menuForm = {
           parent_id: menu ? menu.id : 0
@@ -109,9 +109,9 @@
         this.currentMenu = menu || {}
         this.dialogMenuVisible = true
       },
-      /** 删除菜单 */
+      /** Delete menu*/
       handleDeleteMenu(node, menu) {
-        this.$confirm('确定要删除这个菜单吗？如果有子菜单，子菜单也会被一并删除！', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Are you sure to delete this menu？If there are submenus, the submenus are also deleted！', 'prompt', { type: 'warning' }).then(() => {
           API_Menus.deleteMenu(menu.id).then(() => {
             const parent = node.parent
             const children = parent.data.children || parent.data
@@ -120,13 +120,13 @@
           })
         }).catch(() => {})
       },
-      /** 编辑菜单 */
+      /** The edit menu*/
       handleEditMenu(menu) {
         this.menuForm = JSON.parse(JSON.stringify(menu))
         this.currentMenu = menu
         this.dialogMenuVisible = true
       },
-      /** 添加、编辑菜单 表单提交 */
+      /** add、Edit the menu form submission*/
       submitMenuForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -134,7 +134,7 @@
             if (id) {
               API_Menus.editMenu(id, this.menuForm).then(response => {
                 this.dialogMenuVisible = false
-                this.$message.success('保存成功！')
+                this.$message.success('Save success！')
                 this.GET_Memus()
               })
             } else {
@@ -147,16 +147,16 @@
                   data.children.push(response)
                 }
                 this.dialogMenuVisible = false
-                this.$message.success('保存成功！')
+                this.$message.success('Save success！')
               })
             }
           } else {
-            this.$message.error('表单填写有误，请检查！')
+            this.$message.error('The form is filled incorrectly, please check！')
             return false
           }
         })
       },
-      /** 获取菜单 */
+      /** Access to the menu*/
       GET_Memus(parent_id) {
         API_Menus.getMenusChildren(parent_id).then(response => {
           this.menus = response

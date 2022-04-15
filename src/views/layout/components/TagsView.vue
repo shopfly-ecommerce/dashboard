@@ -53,14 +53,14 @@
     methods: {
       generateTitle, // generateTitle by vue-i18n
       generateFormatTitle(tag) {
-        if (tag.name === 'tagAdd') { // 添加标签商品
+        if (tag.name === 'tagAdd') { // Labeled goods
           return `${this.generateTitle(tag.title)} - ${tag.query.tag_name}`
         }
-        if (tag.name === 'groupBuyGoods') { // 编辑/新增团购活动
+        if (tag.name === 'groupBuyGoods') { // edit/New group purchase activities
           return `${tag.query.group_name}${this.generateTitle(tag.title)}`
         }
-        if (tag.name === 'assemble') { // 编辑/新增拼团活动
-          return tag.params.promotion_id ? `编辑${this.generateTitle(tag.title)}` : `新增${this.generateTitle(tag.title)}`
+        if (tag.name === 'assemble') { // edit/Add group activities
+          return tag.params.promotion_id ? `edit${this.generateTitle(tag.title)}` : `new${this.generateTitle(tag.title)}`
         }
         return this.generateTitle(tag.title)
       },

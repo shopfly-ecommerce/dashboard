@@ -8,13 +8,13 @@
       :selectionChange="selectionChange">
       <div slot="toolbar" class="inner-toolbar">
         <div class="toolbar-btns">
-          <el-button type="primary" @click="selectgoodslist" >选择商品</el-button>
-          <el-button type="danger" @click="cancelall">批量取消</el-button>
+          <el-button type="primary" @click="selectgoodslist" >Choose goods</el-button>
+          <el-button type="danger" @click="cancelall">Batch cancelled</el-button>
         </div>
       </div>
       <template slot="table-columns">
         <el-table-column type="selection"/>
-        <el-table-column label="商品信息" width="1000">
+        <el-table-column label="Product information" width="1000">
           <template slot-scope="scope">
             <div class="goods-info">
               <a class="goods-name" :href="`${MixinBuyerDomain}/goods/${scope.row.goods_id}`">
@@ -27,23 +27,23 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="库存">
+        <el-table-column label="Inventory">
           <template slot-scope="scope">
              <span v-if="scope.row.enable_quantity || scope.row.enable_quantity === 0">{{ scope.row.enable_quantity }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="Operation">
           <template slot-scope="scope">
             <el-button
               type="danger"
-              @click="canceljoin(scope)">取消参加
+              @click="canceljoin(scope)">Cancel to
             </el-button>
           </template>
         </el-table-column>
       </template>
     </en-table-layout>
     <div class="save-tag">
-      <el-button type="primary" @click="savesetup">保存设置</el-button>
+      <el-button type="primary" @click="savesetup">Save Settings</el-button>
     </div>
     <en-goods-picker
       type="seller"
@@ -64,43 +64,43 @@
     name: 'tagAdd',
     data() {
       return {
-        /** 标签商品列表loading状态 */
+        /** Labeled goods listloadingStatus*/
         loading: false,
 
-        /** 标签商品列表参数*/
+        /** Label item list parameters*/
         params: {
           page_no: 1,
           page_size: 10,
           tag_id: ''
         },
 
-        /** 标签id */
+        /** The labelid */
         tag_id: '',
 
-        /** 标签名称 */
+        /** Tag name*/
         tag_name: '',
 
-        /** 标签商品列表数据 */
+        /** Tagged item list data*/
         tableData: [],
 
-        /** 标签商品已选择项id的集合 */
+        /** Label items selectedidA collection of*/
         selectionids: [],
 
-        /** 商品选择器最大长度*/
+        /** Maximum length of commodity selector*/
         maxsize: 0,
 
-        /** 商品选择器列表api*/
+        /** Product selector listapi*/
         goodsApi: 'seller/goods?market_enable=1&is_auth=1',
 
         multipleApi: 'seller/goods/@ids/details',
 
-        /** 商城分类api */
+        /** Mall classificationapi */
         categoryApi: 'seller/goods/category/0/children',
 
-        /** 显示/隐藏商品选择器 */
+        /** According to/Hide the product selector*/
         showDialog: false,
 
-        /** 商品ids */
+        /** productids */
         goodsIds: []
       }
     },
@@ -121,15 +121,15 @@
       this.tag_name = this.$route.query.tag_name
     },
     methods: {
-      /**  显示商品选择器*/
+      /**  Displays the product selector*/
       selectgoodslist() {
         this.showDialog = true
       },
 
-      /** 保存商品选择器选择的商品 */
+      /** Save the item selected by the commodity selector*/
       refreshFunc(val) {
         this.tableData = val
-        /** 去重 转化 */
+        /** To weight conversion*/
         const res = new Map()
         this.tableData = this.tableData.filter((key) => !res.has(key.goods_id) && res.set(key.goods_id, 1))
         this.goodsIds = this.tableData.map(key => {
@@ -137,7 +137,7 @@
         })
       },
 
-      /** 获取标签下的商品列表**/
+      /** Gets the list of items under the label**/
       GET_TagGoodsList() {
         this.loading = true
         API_goodsTag.getTagGoodsList(this.params.tag_id, {}).then(response => {
@@ -150,7 +150,7 @@
         })
       },
 
-      /**  取消参加 */
+      /**  Cancel to*/
       canceljoin(scope) {
         this.tableData.forEach((elem, index) => {
           if (elem.goods_id === scope.row.goods_id) {
@@ -166,10 +166,10 @@
         this.selectionids = val.map(item => item.goods_id)
       },
 
-      /** 批量取消 */
+      /** Batch cancelled*/
       cancelall() {
         if (this.selectionids.length <= 0) {
-          this.$message.error('请选择要取消的商品')
+          this.$message.error('Please select the item to cancel')
           return
         }
         this.selectionids.forEach(key => {
@@ -183,7 +183,7 @@
           return key.goods_id
         })
       },
-      /** 保存设置 */
+      /** Save Settings*/
       savesetup() {
         let _goods_ids = this.tableData.map(key => {
           return key.goods_id
@@ -191,7 +191,7 @@
         if (!_goods_ids.length) _goods_ids = -1
         API_goodsTag.saveTagGoodsList(this.params.tag_id, _goods_ids, this.params).then(() => {
           this.loading = false
-          this.$message.success('保存设置成功！')
+          this.$message.success('Save Settings successfully！')
         })
       }
     }
@@ -213,7 +213,7 @@
     }
   }
 
-  /*商品信息*/
+  /*Product information*/
   .goods-info {
     display: flex;
     flex-direction: row;
@@ -242,7 +242,7 @@
 
 
 
-  /*保存标签商品*/
+  /*Save labelled goods*/
   .save-tag {
     text-align: center;
     button {

@@ -12,7 +12,7 @@
   export default {
     name: 'tpl_30',
     mixins: [mixin],
-    title: '标题或间隔性模块',
+    title: 'Header or spacer modules',
     dataTpl: {
       tpl_id: 30,
       blockList: [

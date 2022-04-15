@@ -7,31 +7,31 @@
     >
       <div slot="toolbar" class="inner-toolbar">
         <div class="toolbar-btns">
-          <el-button size="mini" type="primary" icon="el-icon-circle-plus-outline" @click="handleAddSiteMenu">添加</el-button>
+          <el-button size="mini" type="primary" icon="el-icon-circle-plus-outline" @click="handleAddSiteMenu">add</el-button>
         </div>
       </div>
 
       <template slot="table-columns">
-        <el-table-column prop="navigation_name" label="名称"/>
+        <el-table-column prop="navigation_name" label="The name of the"/>
         <el-table-column prop="url" label="URL"/>
-        <el-table-column label="操作">
+        <el-table-column label="Operation">
           <template slot-scope="scope">
             <el-button
               size="mini"
               type="primary"
-              @click="handleEditSiteMenu(scope.$index, scope.row)">编辑</el-button>
+              @click="handleEditSiteMenu(scope.$index, scope.row)">edit</el-button>
             <el-button
               size="mini"
               type="danger"
-              @click="handleDeleteSiteMenu(scope.$index, scope.row)">删除</el-button>
+              @click="handleDeleteSiteMenu(scope.$index, scope.row)">delete</el-button>
             <el-button
               size="mini"
               :disabled="scope.$index === 0"
-              @click="handleSortSiteMenu(scope.$index, scope.row, 'up')">上移</el-button>
+              @click="handleSortSiteMenu(scope.$index, scope.row, 'up')"> up</el-button>
             <el-button
               size="mini"
               :disabled="scope.$index === tableData.data.length - 1"
-              @click="handleSortSiteMenu(scope.$index, scope.row, 'down')">下移</el-button>
+              @click="handleSortSiteMenu(scope.$index, scope.row, 'down')">down</el-button>
           </template>
         </el-table-column>
       </template>
@@ -50,22 +50,22 @@
     </en-table-layout>
 
     <el-dialog
-      :title="(siteMenuForm.id ? '编辑' : '添加') + '导航菜单'"
+      :title="(siteMenuForm.id ? 'edit' : 'add') + 'Navigation menu'"
       :visible.sync="dialogVisible" width="500px"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
       <el-form :model="siteMenuForm" :rules="siteMenuRules" ref="siteMenuForm" label-width="110px">
-        <el-form-item label="导航菜单名称" prop="navigation_name">
+        <el-form-item label="Navigation menu name" prop="navigation_name">
           <el-input v-model="siteMenuForm.navigation_name" clearable :maxlength="4"></el-input>
         </el-form-item>
-        <el-form-item label="导航菜单链接" prop="url">
+        <el-form-item label="Navigation menu link" prop="url">
           <el-input v-model="siteMenuForm.url" clearable :maxlength="225"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitSiteMenuForm('siteMenuForm')">确 定</el-button>
+        <el-button @click="dialogVisible = false">cancel</el-button>
+        <el-button type="primary" @click="submitSiteMenuForm('siteMenuForm')">save</el-button>
       </div>
     </el-dialog>
   </div>
@@ -78,29 +78,29 @@
     name: 'pcSiteMenu',
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10,
           client_type: 'PC'
         },
 
-        /** 列表数据 */
+        /** The list of data*/
         tableData: '',
 
-        /** 添加、编辑导航菜单 dialog */
+        /** add、Edit navigation menudialog */
         dialogVisible: false,
 
-        /** 添加、编辑导航菜单 表单 */
+        /** add、Edit the navigation menu form*/
         siteMenuForm: {},
 
-        /** 添加、编辑导航菜单 表单规则 */
+        /** add、Edit navigation menu form rules*/
         siteMenuRules: {
-          navigation_name: [this.MixinRequired('请输入导航菜单名称！')],
-          url: [this.MixinRequired('请输入导航菜单链接！')]
+          navigation_name: [this.MixinRequired('Please enter the navigation menu name！')],
+          url: [this.MixinRequired('Please enter the navigation menu link！')]
         }
       }
     },
@@ -108,41 +108,41 @@
       this.GET_SiteMenuList()
     },
     methods: {
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_SiteMenuList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_SiteMenuList()
       },
 
-      /** 添加导航菜单 */
+      /** Add navigation menu*/
       handleAddSiteMenu() {
         this.siteMenuForm = {}
         this.dialogVisible = true
       },
 
-      /** 编辑导航菜单 */
+      /** Edit navigation menu*/
       handleEditSiteMenu(index, row) {
         this.siteMenuForm = this.MixinClone(row)
         this.dialogVisible = true
       },
 
-      /** 删除导航菜单 */
+      /** Delete navigation menu*/
       handleDeleteSiteMenu(index, row) {
-        this.$confirm('确定要删除这个导航菜单吗？', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Are you sure you want to delete this navigation menu？', 'prompt', { type: 'warning' }).then(() => {
           API_SiteMenu.deleteSiteMenu(row.navigation_id).then(response => {
-            this.$message.success('删除成功！')
+            this.$message.success('Delete the success！')
             this.GET_SiteMenuList()
           })
         }).catch(() => {})
       },
 
-      /** 添加、编辑导航菜单 提交表单 */
+      /** add、Edit the navigation menu submit form*/
       submitSiteMenuForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -150,32 +150,32 @@
             if (navigation_id) {
               API_SiteMenu.editSiteMenu(navigation_id, this.siteMenuForm).then(response => {
                 this.dialogVisible = false
-                this.$message.success('保存成功！')
+                this.$message.success('Save success！')
                 this.MixinSetTableData(this.tableData, 'navigation_id', navigation_id, response)
               })
             } else {
               API_SiteMenu.addSiteMenu(this.params.client_type, this.siteMenuForm).then(response => {
                 this.dialogVisible = false
-                this.$message.success('添加成功！')
+                this.$message.success('Add a success！')
                 this.GET_SiteMenuList()
               })
             }
           } else {
-            this.$message.error('表单填写有误，请检查！')
+            this.$message.error('The form is filled incorrectly, please check！')
             return false
           }
         })
       },
 
-      /** 导航排序 */
+      /** Navigation sorting*/
       handleSortSiteMenu(index, row, sort_type) {
         API_SiteMenu.sortSiteMenu(row.navigation_id, sort_type).then(response => {
           this.GET_SiteMenuList()
-          this.$message.success('操作成功！')
+          this.$message.success('Operation is successful！')
         })
       },
 
-      /** 获取导航菜单列表 */
+      /** Gets the navigation menu list*/
       GET_SiteMenuList() {
         this.loading = true
         API_SiteMenu.getSiteMenuList(this.params).then(response => {

@@ -1,11 +1,11 @@
 /**
- * 团购商品相关API
+ * Group purchase merchandise relatedAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取团购商品列表
+ * Get a list of group purchase items
  * @param params
  * @returns {Promise<any>}
  */
@@ -19,7 +19,7 @@ export function getGroupBuyGoodsList(params) {
 }
 
 /**
- * 获取团购分类列表
+ * Get the group purchase category list
  * @param params
  * @returns {Promise<any>}
  */
@@ -32,7 +32,7 @@ export function getGroupCateGoriesList() {
 }
 
 /**
- * 删除团购商品
+ * Delete group purchase products
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -47,7 +47,7 @@ export function deleteGroupBuyGoods(ids, params) {
 }
 
 /**
- * 保存团购商品详情 更新操作
+ * Save group purchase details update operation
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -63,7 +63,7 @@ export function saveGroupBuyGoods(ids, params) {
 }
 
 /**
- * 新增团购商品
+ * New group purchase products
  * @param params
  * @returns {Promise<any>}
  */
@@ -78,7 +78,7 @@ export function addGroupBuyGoods(params) {
 }
 
 /**
- * 获取一个团购商品详情
+ * Get details of a group purchase item
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -93,7 +93,7 @@ export function getGroupBuyGoodsDetails(ids, params) {
 }
 
 /**
- * 获取团购活动列表
+ * Get a list of group purchase activities
  * @param params
  */
 export function getGroupBuyActives(params) {
@@ -106,7 +106,7 @@ export function getGroupBuyActives(params) {
 }
 
 /**
- * 获取团购活动列表
+ * Get a list of group purchase activities
  * @param params
  */
 export function getGroupBuyActivesIds(act_id) {
@@ -118,7 +118,7 @@ export function getGroupBuyActivesIds(act_id) {
 }
 
 /**
- * 添加团购活动
+ * Add group purchase activities
  * @param params
  */
 export function addGrouBuyActivity(params) {
@@ -131,7 +131,7 @@ export function addGrouBuyActivity(params) {
 }
 
 /**
- * 获取团购活动商品列表
+ * Get a list of deals
  * @param params
  */
 export function getGroupBuyGoods(params) {
@@ -144,7 +144,7 @@ export function getGroupBuyGoods(params) {
 }
 
 /**
- * 获取团购商品详情
+ * Get details of group purchase products
  * @param gb_id
  */
 export function getGroupBuyGoodsDetail(gb_id) {
@@ -155,7 +155,7 @@ export function getGroupBuyGoodsDetail(gb_id) {
 }
 
 /**
- * 编辑团购活动
+ * Edit group purchase activities
  * @param id
  * @param params
  */
@@ -169,7 +169,7 @@ export function editGroupBuyActivity(id, params) {
 }
 
 /**
- * 删除团购活动
+ * Delete group purchase activities
  * @param id
  */
 export function deleteGroupBuyActivity(id) {
@@ -180,7 +180,7 @@ export function deleteGroupBuyActivity(id) {
 }
 
 /**
- * 获取团购分类列表
+ * Get the group purchase category list
  * @param params
  */
 export function getGroupBuyCategory(params) {
@@ -193,7 +193,7 @@ export function getGroupBuyCategory(params) {
 }
 
 /**
- * 添加团购分类
+ * Add group Purchase category
  * @param params
  */
 export function addGroupBuyCategory(params) {
@@ -206,7 +206,7 @@ export function addGroupBuyCategory(params) {
 }
 
 /**
- * 获取团购详情
+ * Get group purchase details
  * @param id
  */
 export function getGroupBuyCategoryDetail(id) {
@@ -217,7 +217,7 @@ export function getGroupBuyCategoryDetail(id) {
 }
 
 /**
- * 编辑团购分类
+ * Edit the Group Purchase category
  * @param id
  * @param params
  */
@@ -231,7 +231,7 @@ export function editGroupBuyCategory(id, params) {
 }
 
 /**
- * 删除团购分类
+ * Delete group purchase category
  * @param id
  */
 export function deleteGroupBuyCategory(id) {
@@ -242,7 +242,7 @@ export function deleteGroupBuyCategory(id) {
 }
 
 /**
- * 获取团购活动列表 （待审核状态可显示）
+ * Get a list of group purchase activities（Pending status can be displayed）
  * @param params
  * @returns {Promise<any>}
  */

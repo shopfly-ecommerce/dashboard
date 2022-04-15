@@ -2,8 +2,8 @@
   <div class="bg-shop-summary">
     <div>
       <el-button-group>
-<!--        <el-button :type="currentStatistics == 1 ? 'primary' : ''" @click="handleShopSumaryStatistics" autofocus>店铺总流量</el-button>-->
-        <el-button :type="currentStatistics == 2 ? 'primary' : ''" @click="handleGoodsStatistics">商品流量排行</el-button>
+<!--        <el-button :type="currentStatistics == 1 ? 'primary' : ''" @click="handleShopSumaryStatistics" autofocus>Total store traffic</el-button>-->
+        <el-button :type="currentStatistics == 2 ? 'primary' : ''" @click="handleGoodsStatistics">Product Flow ranking</el-button>
       </el-button-group>
       <en-year-month-picker @changed="changeYearMonth"></en-year-month-picker>
     </div>
@@ -17,28 +17,28 @@
     name: 'trafficStatistics',
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 图表参数*/
+        /** Chart parameters*/
         params: {
-          /** 当前选择的日期类型 */
+          /** The currently selected date type*/
           cycle_type: 'YEAR',
 
-          /** 年份 */
+          /** year*/
           year: '',
 
-          /** 月份*/
+          /** in*/
           month: ''
         },
 
-        /** 当前访问的流量统计图 1店铺总流量 2商品流量排行*/
+        /** The current traffic statistics graph1Total store traffic2Product Flow ranking*/
         currentStatistics: 1,
 
-        /** 店铺总流量 */
+        /** Total store traffic*/
         shopSummaryStatistics: null,
 
-        /** 商品访问量Top30 */
+        /** Page view of goodsTop30 */
         goodsStatistics: null,
 
         tableHeight: document.body.clientHeight / 2
@@ -54,14 +54,14 @@
       })
     },
     methods: {
-      /** 窗口缩放时计算table高度 */
+      /** Calculated when the window is zoomedtablehighly*/
       countTableHeight() {
         this.tableHeight = document.body.clientHeight / 2
-        /** 图表刷新 */
+        /** The chart to refresh*/
         setTimeout(this.sesalChart.resize)
       },
 
-      /** 改变日期的回调 更改参数*/
+      /** The callback that changes the date changes the parameter*/
       changeYearMonth(obj) {
         this.params = {
           cycle_type: obj.type,
@@ -71,13 +71,13 @@
         this.currentStatistics === 1 ? this.handleShopSumaryStatistics() : this.handleGoodsStatistics()
       },
 
-      /** 店铺总流量*/
+      /** Total store traffic*/
       // handleShopSumaryStatistics() {
       //   this.currentStatistics = 1
       //   API_trafficStatistics.getShopTraffic(this.params).then(response => {
       //     this.loading = false
       //     this.sesalChart.setOption({
-      //       title: { text: '访问量统计', x: 'center' },
+      // X: center, x: center,
       //       tooltip: {
       //         trigger: 'axis',
       //         show: true,
@@ -103,26 +103,26 @@
       //         data: response.xAxis
       //       },
       //       yAxis: {
-      //         name: '访问量（次）',
+      // Name: page view ,
       //         type: 'value',
       //         axisLabel: {
-      //           formatter: '{value} 次'
+      // The formatter: {value} time
       //         }
       //       },
       //       series: [
       //         {
-      //           name: '访问量',
+      // Name: page view ,
       //           type: 'line',
       //           data: response.series.data,
       //           markPoint: {
       //             data: [
-      //               { type: 'max', name: '最大值' },
-      //               { type: 'min', name: '最小值' }
+      // {type: Max , name: Max },
+      // {type: min, name: min}
       //             ]
       //           },
       //           markLine: {
       //             data: [
-      //               { type: 'average', name: '平均值' }
+      // {type: average, name: average}
       //             ]
       //           }
       //         }
@@ -131,21 +131,21 @@
       //   })
       // },
 
-      /** 商品流量排行*/
+      /** Product Flow ranking*/
       handleGoodsStatistics() {
         this.currentStatistics = 2
         API_trafficStatistics.getGoodsStatistics(this.params).then(response => {
           this.loading = false
-          /** 商品访问量Top30 */
+          /** Page view of goodsTop30 */
           this.goodsStatistics = response
           this.sesalChart.setOption({
-            title: { text: '商品访问量Top30', x: 'center' },
+            title: { text: 'Page view of goodsTop30', x: 'center' },
             tooltip: {
               trigger: 'axis',
               show: true,
               formatter: function(params, ticket, callback) {
                 if (response.series.localName[params[0].dataIndex] && params[0].value) {
-                  return `商品名称:${response.series.localName[params[0].dataIndex]}<br>${params[0].seriesId.replace(/0/, '')}：${params[0].value}`
+                  return `Name:${response.series.localName[params[0].dataIndex]}<br>${params[0].seriesId.replace(/0/, '')}：${params[0].value}`
                 }
               }
             },
@@ -164,10 +164,10 @@
               data: response.xAxis
             },
             yAxis: {
-              name: '访问量（次）',
+              name: 'traffic（time）',
               type: 'value',
               axisLabel: {
-                formatter: '{value} 次'
+                formatter: '{value} time'
               }
             },
             series: [
@@ -177,13 +177,13 @@
                 label: { show: true },
                 markPoint: {
                   data: [
-                    { type: 'max', name: '最大值' },
-                    { type: 'min', name: '最小值' }
+                    { type: 'max', name: 'The maximum' },
+                    { type: 'min', name: 'The minimum value' }
                   ]
                 },
                 markLine: {
                   data: [
-                    { type: 'average', name: '平均值' }
+                    { type: 'average', name: 'The average' }
                   ]
                 }
               }

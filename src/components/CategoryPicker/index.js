@@ -1,6 +1,6 @@
 /**
- * 分类选择组件
- * 随选随用
+ * Category selection component
+ * Increases with the increasing choice
  */
 import Vue from 'vue'
 import CategoryPicker from './src/main'

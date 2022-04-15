@@ -10,7 +10,7 @@
     >
       <div slot="toolbar" class="inner-toolbar">
         <div class="toolbar-btns">
-          <el-button size="mini" type="primary" icon="el-icon-circle-plus-outline" @click="handleAddCategory">添加</el-button>
+          <el-button size="mini" type="primary" icon="el-icon-circle-plus-outline" @click="handleAddCategory">add</el-button>
         </div>
         <div class="toolbar-search">
           <en-table-search @search="searchEvent"/>
@@ -38,25 +38,25 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column label="文章排序">
+                <el-table-column label="The article sorted">
                   <template slot-scope="scope">{{ scope.row.sort || 0 }}</template>
                 </el-table-column>
-                <el-table-column prop="name" label="文章分类"/>
-                <el-table-column prop="type" label="显示位置"/>
-                <el-table-column label="是否可删除">
-                  <template slot-scope="scope">{{ scope.row.allow_delete ? '是' : '否' }}</template>
+                <el-table-column prop="name" label="The article classification"/>
+                <el-table-column prop="type" label="Display position"/>
+                <el-table-column label="Whether it can be deleted">
+                  <template slot-scope="scope">{{ scope.row.allow_delete ? 'is' : 'no' }}</template>
                 </el-table-column>
-                <!--操作-->
-                <el-table-column label="操作" width="150">
+                <!--Operation-->
+                <el-table-column label="Operation" width="150">
                   <template slot-scope="scope">
                     <el-button
                       size="mini"
                       type="primary"
-                      @click="handleEditCategory(scope.$index, scope.row)">修改</el-button>
+                      @click="handleEditCategory(scope.$index, scope.row)">edit</el-button>
                     <el-button
                       size="mini"
                       type="danger"
-                      @click="handleDeleteCategory(scope.$index, scope.row)">删除</el-button>
+                      @click="handleDeleteCategory(scope.$index, scope.row)">delete</el-button>
                   </template>
                 </el-table-column>
               </template>
@@ -70,25 +70,25 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="文章排序">
+        <el-table-column label="The article sorted">
           <template slot-scope="scope">{{ scope.row.sort || 0 }}</template>
         </el-table-column>
-        <el-table-column prop="name" label="文章分类"/>
-        <el-table-column prop="type" label="显示位置"/>
-        <el-table-column label="是否可删除">
-          <template slot-scope="scope">{{ scope.row.allow_delete ? '是' : '否' }}</template>
+        <el-table-column prop="name" label="The article classification"/>
+        <el-table-column prop="type" label="Display position"/>
+        <el-table-column label="Whether it can be deleted">
+          <template slot-scope="scope">{{ scope.row.allow_delete ? 'is' : 'no' }}</template>
         </el-table-column>
-        <!--操作-->
-        <el-table-column label="操作" width="150">
+        <!--Operation-->
+        <el-table-column label="Operation" width="150">
           <template slot-scope="scope">
             <el-button
               size="mini"
               type="primary"
-              @click="handleEditCategory(scope.$index, scope.row)">修改</el-button>
+              @click="handleEditCategory(scope.$index, scope.row)">edit</el-button>
             <el-button
               size="mini"
               type="danger"
-              @click="handleDeleteCategory(scope.$index, scope.row)">删除</el-button>
+              @click="handleDeleteCategory(scope.$index, scope.row)">delete</el-button>
           </template>
         </el-table-column>
       </template>
@@ -105,20 +105,20 @@
       </el-pagination>
     </en-table-layout>
     <el-dialog
-      :title="categoryForm.id ? '编辑分类' : '添加分类'"
+      :title="categoryForm.id ? 'Edit category' : 'Add the classification'"
       width="500px"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
       <el-form :model="categoryForm" :rules="catgoryRules" ref="categoryForm" label-width="100px">
-        <!--分类名称-->
-        <el-form-item label="分类名称" prop="name">
+        <!--name-->
+        <el-form-item label="name" prop="name">
           <el-input v-model="categoryForm.name"></el-input>
         </el-form-item>
-        <!--上级分类-->
-        <el-form-item v-if="parentOptions && categoryForm.parent_id !== 0" label="上级分类" prop="parent_id">
-          <el-select v-model="categoryForm.parent_id" placeholder="请选择上级分类">
+        <!--Parent-->
+        <el-form-item v-if="parentOptions && categoryForm.parent_id !== 0" label="Parent" prop="parent_id">
+          <el-select v-model="categoryForm.parent_id" placeholder="Please select the superior category">
             <el-option
               v-for="item in parentOptions"
               :label="item.name"
@@ -128,14 +128,14 @@
             />
           </el-select>
         </el-form-item>
-        <!--排序-->
-        <el-form-item label="排序" prop="category_order">
+        <!--sort-->
+        <el-form-item label="sort" prop="category_order">
           <el-input-number v-model="categoryForm.sort" controls-position="right" :min="0" :max="99999"/>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitCategoryForm('categoryForm')">确 定</el-button>
+        <el-button @click="dialogVisible = false">cancel</el-button>
+        <el-button type="primary" @click="submitCategoryForm('categoryForm')">save</el-button>
       </span>
     </el-dialog>
   </div>
@@ -156,15 +156,15 @@
         loading: false,
         ch_loading: false,
         tableData: '',
-        /** 添加、修改分类 表单 */
+        /** add、Modify the category form*/
         categoryForm: {},
-        /** 添加、修改分类 表单规则 */
+        /** add、Modify the classification form rules*/
         catgoryRules: {
-          name: [this.MixinRequired('请输入文章分类名称！')]
+          name: [this.MixinRequired('Please enter the name of the article category！')]
         },
-        /** 添加、修改分类 dialog */
+        /** add、Modify the classificationdialog */
         dialogVisible: false,
-        /** 父分类 */
+        /** The parent category*/
         parentOptions: ''
       }
     },
@@ -172,17 +172,17 @@
       this.GET_ArticleCategoryList()
     },
     methods: {
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(page_size) {
         this.params.page_size = page_size
         this.GET_ArticleCategoryList()
       },
-      /** 当前分页数发生改变 */
+      /** The current page count has changed*/
       handlePageCurrentChange(page_no) {
         this.params.page_no = page_no
         this.GET_ArticleCategoryList()
       },
-      /** 展开row */
+      /** anrow */
       handleToggleExpand(row) {
         if (row.children) {
           this.$refs['tableLayout'].$refs['table'].toggleRowExpansion(row)
@@ -196,12 +196,12 @@
           row.expanded = !expanded
         })
       },
-      /** 列表搜索 */
+      /** A list of search*/
       searchEvent(data) {
         this.params.name = data
         this.GET_ArticleCategoryList()
       },
-      /** 添加分类 */
+      /** Add the classification*/
       handleAddCategory() {
         this.categoryForm = {
           parent_id: parent ? parent.id : 0,
@@ -209,41 +209,41 @@
         }
         this.dialogVisible = true
       },
-      /** 编辑文章分类 */
+      /** Edit article classification*/
       handleEditCategory(index, row) {
         this.categoryForm = this.MixinClone(row)
         // this.parentOptions = parentArray
         this.dialogVisible = true
       },
-      /** 删除文章分类 */
+      /** Delete article categories*/
       handleDeleteCategory(index, row) {
-        this.$confirm('确定要删除这个文章分类吗？', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Are you sure you want to delete this article category？', 'prompt', { type: 'warning' }).then(() => {
           API_Article.deleteAritcleCategory(row.id).then(() => {
-            this.$message.success('删除成功！')
+            this.$message.success('Delete the success！')
             this.handleCountExpand(row)
           })
         }).catch(() => {})
       },
-      /** 提交文章分类表单 */
+      /** Submit the article category form*/
       submitCategoryForm(formName) {
         this.$refs[formName].validate((valid) => {
           const { id } = this.categoryForm
           if (id) {
             API_Article.editArticleCategory(id, this.categoryForm).then(response => {
               this.dialogVisible = false
-              this.$message.success('修改成功！')
+              this.$message.success('Modify the success！')
               this.handleCountExpand(this.categoryForm)
             })
           } else {
             API_Article.addArticleCategory(this.categoryForm).then(() => {
               this.dialogVisible = false
-              this.$message.success('添加成功！')
+              this.$message.success('Add a success！')
               this.handleCountExpand(this.categoryForm)
             })
           }
         })
       },
-      /** 计算展开和加载数据 */
+      /** Calculate expansion and load data*/
       handleCountExpand(row) {
         const { parent_id } = row
         if (parent_id) {
@@ -257,7 +257,7 @@
           this.GET_ArticleCategoryList()
         }
       },
-      /** 获取文章分类列表 */
+      /** Gets a list of article categories*/
       GET_ArticleCategoryList() {
         this.loading = true
         API_Article.getArticleCategory(this.params).then(response => {
@@ -266,7 +266,7 @@
           this.loading = false
         }).catch(() => { this.loading = false })
       },
-      /** 获取文章子集 */
+      /** Get article subsets*/
       GET_ArticleCategoryChildren(id) {
         this.loading = true
         return new Promise((resolve, reject) => {

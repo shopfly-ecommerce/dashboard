@@ -2,11 +2,11 @@
   <div class="bg-shop-summary">
     <div class="toolbar-btns">
       <div class="conditions">
-        <span>日期设置:</span>
+        <span>The date set:</span>
         <en-year-month-picker @changed="changeYearMonth"></en-year-month-picker>
       </div>
       <div class="conditions">
-        <span>平台商品分类：</span>
+        <span>Platform commodity classification：</span>
         <en-category-picker
           size="mini"
           :api="api"
@@ -15,11 +15,11 @@
           :clearable='true'/>
       </div>
       <div class="conditions">
-        <span>价格设置:</span>
+        <span>The price set:</span>
         <en-price-range @changed="changePriceRange"/>
       </div>
       <div class="conditions">
-        <el-button type="primary" @click="handleSearch" size="mini">开始搜索</el-button>
+        <el-button type="primary" @click="handleSearch" size="mini">Begin your search</el-button>
       </div>
     </div>
     <div id="trafficStatistics" :style="{height: tableHeight + 'px'}"></div>
@@ -36,31 +36,31 @@
     },
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 图表参数*/
+        /** Chart parameters*/
         params: {
-          /** 当前选择的日期类型 */
+          /** The currently selected date type*/
           cycle_type: 'MONTH',
 
-          /** 年份 */
+          /** year*/
           year: '2018',
 
-          /** 月份*/
+          /** in*/
           month: '6',
 
-          /** 商品分类ID */
+          /** CategoryID */
           category_id: '',
 
-          /** 价格区间 默认区间*/
+          /** Price range Default price range*/
           sections: []
         },
 
-        /** 分类请求api */
+        /** Classification requestapi */
         api: 'seller/goods/category/1/children',
 
-        /** 映射属性 */
+        /** Mapping attributes*/
         props: {
           value: 'category_id',
           label: 'name',
@@ -79,14 +79,14 @@
       })
     },
     methods: {
-      /** 窗口缩放时计算table高度 */
+      /** Calculated when the window is zoomedtablehighly*/
       countTableHeight() {
         this.tableHeight = document.body.clientHeight / 2
-        /** 图表刷新 */
+        /** The chart to refresh*/
         setTimeout(this.sesalChart.resize)
       },
 
-      /**  分类选择组件值发生改变 */
+      /**  The value of the category selection component has changed*/
       changeGoodsCateGory(data) {
         if (data[data.length - 1]) {
           this.params.category_id = parseInt(data[data.length - 1])
@@ -95,21 +95,21 @@
         }
       },
 
-      /** 改变日期的回调*/
+      /** A callback that changes the date*/
       changeYearMonth(obj) {
         this.params = {
-          /** 当前选择的日期类型 */
+          /** The currently selected date type*/
           cycle_type: obj.type,
 
-          /** 年份 */
+          /** year*/
           year: obj.year,
 
-          /** 月份*/
+          /** in*/
           month: obj.month
         }
       },
 
-      /** 价格区间 */
+      /** A price range*/
       changePriceRange(obj) {
         this.params = {
           ...this.params,
@@ -117,7 +117,7 @@
         }
       },
 
-      /** 执行搜索 */
+      /** Perform a search*/
       handleSearch() {
         this.GET_PriceStatistics()
       },
@@ -126,13 +126,13 @@
         API_goodsPriceStatistics.getPriceStatisticsList(this.params).then(response => {
           this.loading = false
           this.sesalChart.setOption({
-            title: { text: '价格销量分析', x: 'center' },
+            title: { text: 'Price and volume analysis', x: 'center' },
             tooltip: {
               trigger: 'axis',
               show: true,
               formatter: function(params, ticket, callback) {
                 if (params[0].name && params[0].value) {
-                  return `价格:${params[0].name}<br>${params[0].seriesId.replace(/0/, '')}：${params[0].value}`
+                  return `Price:${params[0].name}<br>${params[0].seriesId.replace(/0/, '')}：${params[0].value}`
                 }
               }
             },
@@ -148,33 +148,33 @@
               }
             },
             xAxis: {
-              name: '价格（元）',
+              name: 'Price（USD）',
               type: 'category',
               boundaryGap: false,
               data: response.xAxis
             },
             yAxis: {
-              name: '下单量（次）',
+              name: 'Order quantity（time）',
               type: 'value',
               axisLabel: {
-                formatter: '{value} 次'
+                formatter: '{value} time'
               }
             },
             series: [
               {
-                name: '下单量',
+                name: 'Order quantity',
                 type: 'line',
                 data: response.series.data,
                 barWidth: 50,
                 markPoint: {
                   data: [
-                    { type: 'max', name: '最大值' },
-                    { type: 'min', name: '最小值' }
+                    { type: 'max', name: 'The maximum' },
+                    { type: 'min', name: 'The minimum value' }
                   ]
                 },
                 markLine: {
                   data: [
-                    { type: 'average', name: '平均值' }
+                    { type: 'average', name: 'The average' }
                   ]
                 }
               }

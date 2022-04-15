@@ -5,10 +5,10 @@
     :stripe="false"
     :loading="loading">
     <template slot="table-columns">
-      <el-table-column prop="tag_name" label="标签名称"/>
-      <el-table-column label="操作">
+      <el-table-column prop="tag_name" label="Tag name"/>
+      <el-table-column label="Operation">
         <template slot-scope="scope">
-          <el-button type="primary" @click="addtag(scope.row)">标签商品设置</el-button>
+          <el-button type="primary" @click="addtag(scope.row)">Label product Settings</el-button>
         </template>
       </el-table-column>
     </template>
@@ -32,19 +32,19 @@
     name: 'tagManage',
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
 
-        /** 列表数据 */
+        /** The list of data*/
         tableData: [],
 
-        /** 列表分页数据 */
+        /** List paging data*/
         pageData: []
       }
     },
@@ -53,19 +53,19 @@
     },
     methods: {
 
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_TagsList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_TagsList()
       },
 
-      /** 标签列表 */
+      /** The tag list*/
       GET_TagsList() {
         this.loading = true
         API_goodsTag.getTagsList(this.params).then(response => {
@@ -79,7 +79,7 @@
         })
       },
 
-      /** 标签商品设置 */
+      /** Label product Settings*/
       addtag(row) {
         this.$router.push({ path: `/goods/tag-add/${row.tag_id}`, query: { tag_name: row.tag_name }})
       }

@@ -1,45 +1,45 @@
 <template>
   <div v-if="form" class="container">
     <el-form :model="form" label-width="100px">
-      <el-form-item label="团购活动">
+      <el-form-item label="Group-buying activities">
         <span>{{ form.title }}</span>
       </el-form-item>
-      <el-form-item label="活动时间">
+      <el-form-item label="The activity time">
         <span>{{ form.start_time | unixToDate }} - {{ form.end_time | unixToDate }}</span>
       </el-form-item>
-      <el-form-item label="团购名称">
+      <el-form-item label="Group name">
         <span>{{ form.gb_name }}</span>
       </el-form-item>
-      <el-form-item label="团购标题">
+      <el-form-item label="Group-buying title">
         <span>{{ form.gb_title }}</span>
       </el-form-item>
-      <el-form-item label="商品名称">
+      <el-form-item label="Name">
         <span>{{ form.goods_name }}</span>
       </el-form-item>
-      <el-form-item label="商品价格">
+      <el-form-item label="Price">
         <span>{{ form.original_price | unitPrice("￥") }}</span>
       </el-form-item>
-      <el-form-item label="商品库存">
+      <el-form-item label="inventory">
         <span>{{ form.goods_num }}</span>
       </el-form-item>
-      <el-form-item label="团购价格">
+      <el-form-item label="Group purchase price">
         <span>{{ form.price | unitPrice('¥') }}</span>
       </el-form-item>
-      <el-form-item label="团购数量">
+      <el-form-item label="A bulk quantity">
         <span>{{ form.goods_num }}</span>
       </el-form-item>
-      <el-form-item label="团购图片">
+      <el-form-item label="Group photo">
         <img :src="form.img_url" :alt="form.goods_name" class="goods-image">
       </el-form-item>
-      <el-form-item label="虚拟数量">
+      <el-form-item label="Number of virtual">
         <span>{{ form.visual_num }}</span>
       </el-form-item>
-      <el-form-item label="限购数量">
+      <el-form-item label="The amount for purchasing">
         <span>{{ form.limit_num }}</span>
       </el-form-item>
-      <el-form-item label="团购分类">
-        <el-select disabled v-model="form.cat_id" placeholder="请选择">
-          <el-option label="不限" :value="0"/>
+      <el-form-item label="Group classification">
+        <el-select disabled v-model="form.cat_id" placeholder="Please select">
+          <el-option label="There is no limit" :value="0"/>
           <el-option
             v-for="item in options"
             :key="item.cat_id"
@@ -48,7 +48,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="团购介绍">
+      <el-form-item label="Group-buying is introduced">
         <div v-html="form.remark"></div>
       </el-form-item>
     </el-form>

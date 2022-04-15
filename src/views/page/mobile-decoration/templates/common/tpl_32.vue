@@ -18,7 +18,7 @@
   export default {
     name: 'tpl_32',
     mixins: [mixin],
-    title: '左一右二竖排模板',
+    title: 'Left one right two vertical column template',
     dataTpl: {
       tpl_id: 32,
       blockList: [

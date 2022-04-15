@@ -1,6 +1,6 @@
 /**
- * 搜索组件
- * 包含高级模式
+ * Search component
+ * Include advanced modes
  */
 import Vue from 'vue'
 import Search from './src/main'

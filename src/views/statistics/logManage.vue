@@ -14,8 +14,8 @@
             advanced>
             <template slot="advanced-content">
               <el-form ref="advancedForm" :model="advancedForm" label-width="80px">
-                <el-form-item label="操作者">
-                  <el-select v-model="advancedForm.operator" placeholder="请选择">
+                <el-form-item label="The operator">
+                  <el-select v-model="advancedForm.operator" placeholder="Please select">
                     <el-option
                       v-for="item in operators"
                       :key="item.operator_id"
@@ -24,8 +24,8 @@
                     </el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item label="类型">
-                  <el-select v-model="advancedForm.log_type" placeholder="请选择">
+                <el-form-item label="type">
+                  <el-select v-model="advancedForm.log_type" placeholder="Please select">
                     <el-option
                       v-for="item in operaTypes"
                       :key="item.opera_id"
@@ -34,14 +34,14 @@
                     </el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item label="时间">
+                <el-form-item label="time">
                   <el-date-picker
                     style="width: 280px;"
                     v-model="advancedForm.opera_time"
                     type="daterange"
                     range-separator="-"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期">
+                    start-placeholder="Start date"
+                    end-placeholder="End date">
                   </el-date-picker>
                 </el-form-item>
               </el-form>
@@ -50,11 +50,11 @@
         </div>
       </div>
       <template slot="table-columns">
-        <el-table-column label="序号" type="index" width="50"/>
-        <el-table-column prop="log_type" label="类型" />
-        <el-table-column prop="opera_name" label="操作"/>
-        <el-table-column prop="operator" label="操作者" />
-        <el-table-column label="时间">
+        <el-table-column label="The serial number" type="index" width="50"/>
+        <el-table-column prop="log_type" label="type" />
+        <el-table-column prop="opera_name" label="Operation"/>
+        <el-table-column prop="operator" label="The operator" />
+        <el-table-column label="time">
           <template slot-scope="scope">
             {{ scope.row.opera_time | unixToDate }}
           </template>
@@ -87,50 +87,50 @@
     },
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
 
-        /** 列表数据 */
+        /** The list of data*/
         tableData: null,
 
-        /** 列表分页数据 */
+        /** List paging data*/
         pageData: null,
 
-        /** 高级搜索数据 */
+        /** Advanced search data*/
         advancedForm: {
-          /** 日志类型*/
+          /** Log type*/
           log_type: '',
 
-          /** 日志操作 */
+          /** Log operation*/
           opera_name: '',
 
-          /** 操作者 */
+          /** The operator*/
           operator: '',
 
-          /** 操作时间 */
+          /** Operating time*/
           opera_time: ''
         },
 
-        /** 操作类型列表*/
+        /** List of operation types*/
         operaTypes: [
-          { opera_id: 0, opera_name: '删除' },
-          { opera_id: 1, opera_name: '增加' },
-          { opera_id: 2, opera_name: '修改更新' },
-          { opera_id: 3, opera_name: '浏览' }
+          { opera_id: 0, opera_name: 'delete' },
+          { opera_id: 1, opera_name: 'increase' },
+          { opera_id: 2, opera_name: 'Modify the update' },
+          { opera_id: 3, opera_name: 'browse' }
         ],
 
-        /** 操作者列表*/
+        /** Operator list*/
         operators: [
-          { operator_id: 0, operator_name: '小兰' },
-          { operator_id: 1, operator_name: '小明' },
-          { operator_id: 2, operator_name: '小红' },
-          { operator_id: 3, operator_name: '小冰' }
+          { operator_id: 0, operator_name: 'Xiao LAN' },
+          { operator_id: 1, operator_name: 'Xiao Ming' },
+          { operator_id: 2, operator_name: 'The little red' },
+          { operator_id: 3, operator_name: 'The little ice' }
         ]
       }
     },
@@ -139,24 +139,24 @@
     },
     methods: {
 
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_LogsList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_LogsList()
       },
 
-      /** 销售状态格式化 */
+      /** Sales status formatting*/
       marketStatus(row, column, cellValue) {
-        return row.market_enable === 1 ? '售卖中' : '已下架'
+        return row.market_enable === 1 ? 'In the sale' : 'unsold'
       },
 
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       searchEvent(data) {
         this.params = {
           ...this.params,
@@ -166,7 +166,7 @@
         this.GET_LogsList()
       },
 
-      /** 高级搜索事件触发 */
+      /** Advanced search event triggered*/
       advancedSearchEvent() {
         this.params = {
           ...this.params,

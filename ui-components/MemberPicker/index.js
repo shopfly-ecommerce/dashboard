@@ -1,7 +1,7 @@
 /**
  * Created by Andste on 2018/5/28.
- * 会员选择器
- * 依赖于element-ui
+ * Member selector
+ * Depends on theelement-ui
  */
 
 import Vue from 'vue'

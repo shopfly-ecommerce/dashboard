@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="emoji-tabs">
-      <div class="emoji-tab active">经典</div>
+      <div class="emoji-tab active">classic</div>
     </div>
   </div>
 </template>

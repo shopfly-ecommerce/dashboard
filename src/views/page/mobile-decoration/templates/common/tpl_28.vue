@@ -22,7 +22,7 @@
   export default {
     name: 'tpl_28',
     mixins: [mixin],
-    title: '轮播图模块',
+    title: 'Wheel cast diagram module',
     dataTpl: {
       tpl_id: 28,
       blockList: [

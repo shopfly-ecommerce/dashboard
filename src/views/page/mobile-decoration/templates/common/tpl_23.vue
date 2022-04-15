@@ -12,7 +12,7 @@
   export default {
     name: 'tpl_23',
     mixins: [mixin],
-    title: '单列单张大图模块',
+    title: 'Single column single large map module',
     dataTpl: {
       tpl_id: 23,
       blockList: [

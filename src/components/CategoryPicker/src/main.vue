@@ -21,24 +21,24 @@
         type: String,
         default: 'seller/shops/cats'
       },
-      /** 最大级数 */
+      /** The largest series*/
       maxLevel: {
         type: Number,
         default: 4
       },
-      /** 是否可以清空 */
+      /** Can I clear it*/
       clearable: {
         type: Boolean,
         default: false
       },
 
-      /** 默认值 */
+      /** The default value*/
       defaultVal: {
         type: Number,
         default: -1
       },
 
-      /** 映射属性 */
+      /** Mapping attributes*/
       props: {
         type: Object,
         default: () => {
@@ -53,10 +53,10 @@
     },
     data() {
       return {
-        /** 当前数据 */
+        /** The current data*/
         options: [],
 
-        /** 默认值映射的 数组 */
+        /** The default values map to an array*/
         defaultArr: []
       }
     },
@@ -80,7 +80,7 @@
           method: 'get',
           loading: false
         }).then(response => {
-          // 去除隐藏起来的值
+          // Removes hidden values
           if (!response || !response[0]) return
           this.options = []
           if (this.props.value === 'shop_cat_id') {
@@ -88,18 +88,18 @@
           } else {
             this.options = response
           }
-          // 如果children为空 则不进行展开
+          // If children is empty, it is not expanded
           this.options = this.deleteEmptyChild(this.options)
           this.defaultVal !== -1 && this.findItem()
         })
       },
 
-      /** 选中项发生改变 */
+      /** The selected item has changed*/
       handleItemChange(val) {
         this.$emit('changed', val)
       },
 
-      /** 筛选出要显示的项 */
+      /** Filter out the items to display*/
       filterShowItem(data = []) {
         let result = []
         data.forEach(key => {
@@ -112,7 +112,7 @@
         return result
       },
 
-      /** 如果chilren的length 为 0 则删除此项 */
+      /** ifchilrenthelength for0 Delete this item*/
       deleteEmptyChild(arr = []) {
         arr.forEach(key => {
           if (key.children && !key.children.length) {
@@ -124,7 +124,7 @@
         return arr
       },
 
-      /** 存在默认值时 找出对应的选项 */
+      /** Find the option if there is a default value*/
       findItem() {
         if (!this.options || this.options.length === 0) return
         this.defaultArr = []

@@ -1,6 +1,6 @@
 /**
  * Created by Andste on 2018/5/28.
- * 地区选择组件
+ * Locale selection component
  */
 
 import Vue from 'vue'

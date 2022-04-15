@@ -15,7 +15,7 @@
   export default {
     name: 'tpl_26',
     mixins: [mixin],
-    title: '三列单行图片模块',
+    title: 'Three column single row image module',
     dataTpl: {
       tpl_id: 26,
       blockList: [

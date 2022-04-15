@@ -1,11 +1,11 @@
 /**
- * 店铺概况相关API
+ * Store ProfileAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取店铺30天展示数据
+ * Access to the store30Day display data
  * @returns {Promise<any>}
  */
 export function getShopSurvey() {
@@ -17,7 +17,7 @@ export function getShopSurvey() {
 }
 
 /**
- * 获取店铺概况
+ * Get store profile
  * @param params
  * @returns {Promise<any>}
  */

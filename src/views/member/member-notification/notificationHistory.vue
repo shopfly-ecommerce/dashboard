@@ -7,14 +7,14 @@
     >
       <div slot="toolbar" class="inner-toolbar">
         <div class="toolbar-btns">
-          <el-button size="mini" type="primary" icon="el-icon-circle-plus-outline" @click="handleReleaseMessage">发送</el-button>
+          <el-button size="mini" type="primary" icon="el-icon-circle-plus-outline" @click="handleReleaseMessage">send</el-button>
         </div>
       </div>
       <template slot="table-columns">
-        <el-table-column prop="title" label="消息标题"/>
-        <el-table-column prop="send_type" label="发送类型"/>
-        <el-table-column prop="send_time" :formatter="MixinUnixToDate" label="发送时间"/>
-        <el-table-column prop="content" label="消息内容" width="500"/>
+        <el-table-column prop="title" label="News headlines"/>
+        <el-table-column prop="send_type" label="Send type"/>
+        <el-table-column prop="send_time" :formatter="MixinUnixToDate" label="Send time"/>
+        <el-table-column prop="content" label="The message content" width="500"/>
       </template>
       <el-pagination
         v-if="tableData"
@@ -29,32 +29,32 @@
       </el-pagination>
     </en-table-layout>
     <el-dialog
-      title="发送站内消息"
+      title="Send in-station messages"
       :visible.sync="dialogVisible"
       width="500px"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
       <el-form :model="messageForm" :rules="messageRules" ref="messageForm" label-width="100px">
-        <el-form-item label="消息标题" prop="title">
-          <el-input v-model="messageForm.title" :maxlength="20" placeholder="标题在20字以内"></el-input>
+        <el-form-item label="News headlines" prop="title">
+          <el-input v-model="messageForm.title" :maxlength="20" placeholder="The title in20characters"></el-input>
         </el-form-item>
-        <el-form-item label="消息内容" prop="content">
+        <el-form-item label="The message content" prop="content">
           <el-input
             type="textarea"
             :autosize="{ minRows: 2, maxRows: 4}"
-            placeholder="请输入消息内容"
+            placeholder="Please enter the message content"
             v-model="messageForm.content"
             :maxlength="2000">
           </el-input>
         </el-form-item>
-        <el-form-item label="发送类型">
+        <el-form-item label="Send type">
           <el-radio-group v-model="messageForm.send_type">
-            <el-radio :label="0">全站</el-radio>
-            <el-radio :label="1">指定会员</el-radio>
+            <el-radio :label="0">Total station</el-radio>
+            <el-radio :label="1">The specified member</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item v-show="messageForm.send_type === 1" label="已选会员" prop="member_ids">
+        <el-form-item v-show="messageForm.send_type === 1" label="The selected member" prop="member_ids">
           <template v-if="messageForm.member_ids && messageForm.member_ids.length">
             <el-tag
               v-for="(member, index) in messageForm.member_ids"
@@ -65,12 +65,12 @@
               {{ member.uname }}
             </el-tag>
           </template>
-          <el-button v-else size="mini" @click="memberPickerShow = true">选择会员</el-button>
+          <el-button v-else size="mini" @click="memberPickerShow = true">Select the member</el-button>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitMessageForm('messageForm')">确 定</el-button>
+        <el-button @click="dialogVisible = false">cancel</el-button>
+        <el-button type="primary" @click="submitMessageForm('messageForm')">save</el-button>
       </span>
     </el-dialog>
     <en-member-picker
@@ -87,29 +87,29 @@
     name: 'notificationHistory',
     data() {
       return {
-        // 列表loading状态
+        // List loading status
         loading: false,
-        // 列表参数
+        // A list of parameters
         params: {
           page_no: 1,
           page_size: 10
         },
-        // 列表数据
+        // The list of data
         tableData: '',
-        // 发布消息 dialog
+        // Publish message dialog
         dialogVisible: false,
-        // 发布消息 表单
+        // Publish message form
         messageForm: {
           send_type: 0,
           member_ids: []
         },
-        // 发布消息 表单规则
+        // Publish message form rules
         messageRules: {
-          title: [this.MixinRequired('请输入消息标题！')],
-          content: [this.MixinRequired('请输入消息内容！')],
-          member_ids: [{ type: 'array', required: false, message: '请至少选择一个会员！' }]
+          title: [this.MixinRequired('Please enter the message title！')],
+          content: [this.MixinRequired('Please enter the message content！')],
+          member_ids: [{ type: 'array', required: false, message: 'Please select at least one member！' }]
         },
-        // 会员选择器显示
+        // Member selector display
         memberPickerShow: false
       }
     },
@@ -126,19 +126,19 @@
       }
     },
     methods: {
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_MessageList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_MessageList()
       },
 
-      /** 发布消息 */
+      /** news*/
       handleReleaseMessage() {
         this.messageForm = {
           send_type: 0,
@@ -147,18 +147,18 @@
         this.dialogVisible = true
       },
 
-      /** 选择会员回调 */
+      /** Select the member callback*/
       handleMemberPickerConfirm(memberList) {
         this.messageForm.member_ids = memberList
       },
-      /** 移除会员 */
+      /** Remove members*/
       handleRemoveMember(index) {
         const { member_ids } = this.messageForm
         member_ids.splice(index, 1)
         this.$set(this.messageForm, 'member_ids', member_ids)
       },
 
-      /** 发布消息 表单提交 */
+      /** Publish message form submission*/
       submitMessageForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -170,17 +170,17 @@
             }
             API_Message.releaseMessage(params).then(response => {
               this.dialogVisible = false
-              this.$message.success('发布成功！')
+              this.$message.success('Release success！')
               this.GET_MessageList()
             })
           } else {
-            this.$message.error('表单填写有误，请检查！')
+            this.$message.error('The form is filled incorrectly, please check！')
             return false
           }
         })
       },
 
-      /** 获取回收站会员列表 */
+      /** Get a list of Recycle Bin members*/
       GET_MessageList() {
         this.loading = true
         API_Message.getMessageList(this.params).then(response => {

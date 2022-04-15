@@ -1,12 +1,12 @@
 /**
- * 商品管理API
+ * Commodity managementAPI
  */
 
 import request from '@/utils/request'
 import cache from '@/utils/cache'
 
 /**
- * 获取商品列表
+ * Get a list of items
  * @param params
  * @returns {Promise<any>}
  */
@@ -20,7 +20,7 @@ export function getGoodsList(params) {
 }
 
 /**
- * 商品列表 删除商品  商家将商品放入回收站  下架的商品才能放入回收站
+ * List of goods to delete goods merchants will be put into the recycling station goods off the shelf can be put into the recycling station
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -35,7 +35,7 @@ export function deleteGoods(ids, params) {
 }
 
 /**
- * 查询库存商品数据  查询商品sku（规格）信息
+ * Query the inventory data Query the inventorysku（specifications）information
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -50,7 +50,7 @@ export function getGoodsStockList(ids, params) {
 }
 
 /**
- * 保存库存商品
+ * Keep goods in stock
  * @param goods_id
  * @param params
  * @returns {Promise<any>}
@@ -65,7 +65,7 @@ export function reserveStockGoods(goods_id, params) {
 }
 
 /**
- * 发布商品   查询商品参数，获取所选分类关联的参数信息
+ * Publish commodities. Query commodity parameters to obtain information about the parameters associated with a selected category
  * @param category_id
  * @returns {Promise<any>}
  */
@@ -78,7 +78,7 @@ export function getGoodsParams(category_id) {
 }
 
 /**
- * 编辑商品   查询商品参数，获取所选分类关联的参数信息
+ * Edit commodity query commodity parameters to obtain the parameter information associated with the selected category
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -92,7 +92,7 @@ export function getEditGoodsParams(category_id, goods_id) {
 }
 
 /**
- * 草稿箱编辑 查询草稿箱商品参数
+ * Draft box edit Queries draft box product parameters
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -107,7 +107,7 @@ export function getGoodsDraftParams(ids, params) {
 }
 
 /**
- * 查询商品品类信息  ids 为category_id 商城商品品类
+ * Query product category informationids forcategory_id Mall product category
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -122,7 +122,7 @@ export function getGoodsCatrgory(ids, params) {
 }
 
 /**
- * 查询单个商品信息 商品列表 编辑
+ * Query information about a single product. Edit the product list
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -137,7 +137,7 @@ export function getGoodData(ids, params) {
 }
 
 /**
- * 查询单个草稿箱商品信息 草稿箱商品列表 编辑
+ * Query information about a single draft box. Edit the draft box list
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -152,7 +152,7 @@ export function getGoodDraftData(ids, params) {
 }
 
 /**
- * 品牌列表 ids为categoryid  商品发布，获取所选分类关联的品牌信息
+ * Brand listidsforcategoryid  Product release to obtain brand information associated with the selected category
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -167,7 +167,7 @@ export function getGoodsBrandList(ids, params) {
 }
 
 /**
- * 运费模板列表
+ * Freight template list
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -182,7 +182,7 @@ export function getTplList(ids, params) {
 }
 
 /**
- * 获取积分商品分类列表
+ * Gets a list of points by category
  * @param id
  */
 export function getExchangeCatsList(id) {
@@ -194,7 +194,7 @@ export function getExchangeCatsList(id) {
 }
 
 /**
- * 商家下架商品
+ * Merchants took their goods off the shelves
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -208,7 +208,7 @@ export function underGoods(ids, params) {
 }
 
 /**
- * 上架正常商品 商品相关API-添加商品
+ * Shelf normal merchandise merchandise relatedAPI-Add the goods
  * @param params
  * @returns {Promise<any>}
  */
@@ -222,7 +222,7 @@ export function aboveGoods(params) {
 }
 
 /**
- * 修改正常商品 编辑商品时用到
+ * Modify normal commodities Used when editing commodities
  * @param id
  * @param params
  * @returns {Promise<any>}
@@ -237,7 +237,7 @@ export function editGoods(id, params) {
 }
 
 /**
- * 正常商品 保存草稿 草稿商品相关API-添加商品
+ * Normal merchandise save draft merchandise relatedAPI-Add the goods
  * @param params
  * @returns {Promise<any>}
  */
@@ -251,7 +251,7 @@ export function saveDraft(params) {
 }
 
 /**
- * 上架草稿箱商品
+ * Shelf draft box goods
  * @param params
  * @returns {Promise<any>}
  */
@@ -264,7 +264,7 @@ export function aboveDraftGoods(ids, params) {
   })
 }
 
-/** 草稿箱商品 保存草稿 即 修改草稿箱商品 */
+/** Draft box goods save the draft is to modify the draft box goods*/
 export function editDraftGoods(id, params) {
   return request({
     url: `seller/goods/draft-goods/${id}`,
@@ -275,7 +275,7 @@ export function editDraftGoods(id, params) {
 }
 
 /**
- * 查询草稿箱sku信息
+ * Query draft boxskuinformation
  * @param id
  * @param params
  * @returns {Promise<any>}
@@ -289,7 +289,7 @@ export function draftSku(id, params) {
 }
 
 /**
- * 获取草稿箱商品列表
+ * Get draft box item list
  * @param params
  * @returns {Promise<any>}
  */
@@ -303,7 +303,7 @@ export function getDraftGoodsList(params) {
 }
 
 /**
- * 删除草稿箱商品
+ * Delete draft box items
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -318,7 +318,7 @@ export function deleteDraftGoods(ids, params) {
 }
 
 /**
- * 获取回收站商品列表
+ * Gets a list of recycle bin items
  * @param params
  * @returns {Promise<any>}
  */
@@ -332,7 +332,7 @@ export function getRecycleGoodsList(params) {
 }
 
 /**
- * 回收站 还原商品
+ * Recycle bin restores goods
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -347,7 +347,7 @@ export function RecycleReductionGoods(ids, params) {
 }
 
 /**
- * 回收站 彻底删除商品
+ * Recycle bin completely remove goods
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -362,7 +362,7 @@ export function RecycleDeleteGoods(ids, params) {
 }
 
 /**
- * 获取预警商品列表
+ * Get a list of warning products
  * @param params
  * @returns {Promise<any>}
  */
@@ -376,7 +376,7 @@ export function getWarningGoodsList(params) {
 }
 
 /**
- * 查看预警商品库存信息
+ * View alert merchandise inventory information
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -391,7 +391,7 @@ export function getWarningGoodsStockList(ids, params) {
 }
 
 /**
- * 获取分销设置
+ * Get distribution Settings
  */
 export function getDistributionSet() {
   return request({
@@ -402,7 +402,7 @@ export function getDistributionSet() {
 }
 
 /**
- * 获取分销返利信息
+ * Obtain distribution rebate information
  * @param id
  */
 export function getDistributionInfo(id) {
@@ -414,7 +414,7 @@ export function getDistributionInfo(id) {
 }
 
 /**
- * 保存分销返利
+ * Preserve distribution rebates
  * @param params
  */
 export function setDistributionInfo(params) {
@@ -426,7 +426,7 @@ export function setDistributionInfo(params) {
 }
 
 /**
- * 获取商品设置
+ * Get commodity Settings
  */
 export function getGoodsSettings() {
   return request({
@@ -436,7 +436,7 @@ export function getGoodsSettings() {
 }
 
 /**
- * 修改商品设置
+ * Modify product Settings
  * @param params
  */
 export function editGoodsSettings(params) {
@@ -448,7 +448,7 @@ export function editGoodsSettings(params) {
 }
 
 /**
- * 商品索引生成
+ * Commodity index generation
  */
 export function initSearchIndex() {
   return request({

@@ -1,11 +1,11 @@
 /**
- * 赠品管理API
+ * Merchandise managementAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取赠品品列表
+ * Get a list of freebies
  * @param params
  * @returns {Promise<any>}
  */
@@ -19,7 +19,7 @@ export function getGiftsList(params) {
 }
 
 /**
- * 获取全部赠品品列表
+ * Get a full list of freebies
  */
 export function getGiftsAllList() {
   return request({
@@ -30,7 +30,7 @@ export function getGiftsAllList() {
 }
 
 /**
- * 删除赠品
+ * Delete the gifts
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -44,7 +44,7 @@ export function deleteGifts(ids) {
 }
 
 /**
- * 保存赠品更新
+ * Save gift updates
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -59,7 +59,7 @@ export function saveGifts(ids, params) {
 }
 
 /**
- * 新增赠品
+ * New gift
  * @param params
  * @returns {Promise<any>}
  */
@@ -73,7 +73,7 @@ export function addGifts(params) {
 }
 
 /**
- * 查询一个赠品详情
+ * Inquire about details of a gift
  * @param id
  * @param params
  * @returns {Promise<any>}

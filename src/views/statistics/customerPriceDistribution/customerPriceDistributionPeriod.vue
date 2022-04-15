@@ -35,10 +35,10 @@
           const { data, name, localName } = response.series
           const { xAxis } = response
           this.echarts.setOption(echartsOptions({
-            titleText: '购买时段分布',
+            titleText: 'Purchase time distribution',
             tooltipFormatter: function(params) {
               params = params[0]
-              return `时段：${xAxis[params.dataIndex]}点<br/>${params.marker}${name}：${params.value}`
+              return `Period of time：${xAxis[params.dataIndex]}point<br/>${params.marker}${name}：${params.value}`
             },
             xAxisData: xAxis,
             seriesName: name,

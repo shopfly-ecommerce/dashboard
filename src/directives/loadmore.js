@@ -1,14 +1,14 @@
-// v-loadmore: 用于在元素上加上滚动到底事件监听
+// v-loadmore: Used to add a scroll-to-bottom event listener to an element
 export default (Vue) => {
   Vue.directive('loadmore', {
     bind(el, binding) {
-      // 获取定义好的scroll盒子
+      // Get the defined scroll box
       el.addEventListener('scroll', function() {
         /*
-         * scrollHeight 获取元素内容高度(只读)
-         * scrollTop 获取或者设置元素的偏移值,常用于, 计算滚动条的位置, 当一个元素的容器没有产生垂直方向的滚动条, 那它的scrollTop的值默认为0.
-         * clientHeight 读取元素的可见高度(只读)
-         * 如果元素滚动到底, 下面等式返回true, 没有则返回false:
+         * scrollHeight Gets the content height of the element(read-only)
+         * scrollTop Gets or sets the offset value of the element,Commonly used in, Calculate the position of the scroll bar, When an elements container does not produce a vertical scroll bar, ItsscrollTopThe default value of is0.
+         * clientHeight Reads the visible height of the element(read-only)
+         * If the element scrolls to the bottom, The following equation returnstrue, If not, returnfalse:
          * ele.scrollHeight - ele.scrollTop === ele.clientHeight;
          */
         const CONDITION = el.scrollHeight - el.scrollTop <= el.clientHeight

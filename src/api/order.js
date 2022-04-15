@@ -1,11 +1,11 @@
 /**
- * 订单相关API
+ * Order relatedAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取订单列表
+ * Get order list
  * @param params
  * @returns {Promise<any>}
  */
@@ -19,7 +19,7 @@ export function getOrderList(params) {
 }
 
 /**
- * 根据订单sn获取订单详情
+ * According to the ordersnObtain order details
  * @param sn
  * @returns {Promise<any>}
  */
@@ -32,7 +32,7 @@ export function getOrderDetail(sn) {
 }
 
 /**
- * 调整价格
+ * Adjust the price
  * @param sn
  * @returns {Promise<any>}
  */
@@ -46,7 +46,7 @@ export function updateOrderPrice(sn, params) {
 }
 
 /**
- * 修改收货人信息
+ * Modify consignee information
  * @param sn
  * @param params
  * @returns {Promise<any>}
@@ -61,7 +61,7 @@ export function updateConsigneeInfo(sn, params) {
 }
 
 /**
- * 确认收款
+ * Confirm receipt
  * @param sn
  * @param params
  * @returns {Promise<any>}
@@ -76,7 +76,7 @@ export function confirmGetAmount(sn, params) {
 }
 
 /**
- * 发货
+ * The delivery
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -91,7 +91,7 @@ export function deliveryGoods(sn, params) {
 }
 
 /**
- * 查询快递物流信息
+ * Check express logistics information
  * @param params
  * @returns {Promise<any>}
  */
@@ -105,7 +105,7 @@ export function getLogisticsInfo(params) {
 }
 
 /**
- * 生成电子面单
+ * Generate an electron plane
  * @param params
  * @returns {Promise<any>}
  */
@@ -119,7 +119,7 @@ export function generateElectronicSurface(params) {
 }
 
 /**
- * 获取订单流程图数据
+ * Obtain order flow chart data
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -133,7 +133,7 @@ export function getStepList(ids) {
 }
 
 /**
- * 获取订单设置
+ * Get order Settings
  */
 export function getOrderSettings() {
   return request({
@@ -143,7 +143,7 @@ export function getOrderSettings() {
 }
 
 /**
- * 修改订单设置
+ * Modify order Settings
  * @param params
  */
 export function editOrderSettings(params) {
@@ -155,7 +155,7 @@ export function editOrderSettings(params) {
 }
 
 /**
- * 导出订单
+ * Export orders
  * @param params
  */
 export function exportOrders(params) {
@@ -168,7 +168,7 @@ export function exportOrders(params) {
 }
 
 /**
- * 确认收款
+ * Confirm receipt
  * @param order_sn
  * @param pay_price
  */
@@ -181,7 +181,7 @@ export function confirmPay(order_sn, pay_price) {
 }
 
 /**
- * 取消订单
+ * Cancel the order
  * @param order_sn
  */
 export function cancleOrder(order_sn) {

@@ -5,37 +5,37 @@
     :close-on-press-escape="false"
     append-to-body
     width="520px">
-    <div slot="title" class="text-picker-title">楼层标题编辑</div>
+    <div slot="title" class="text-picker-title">Floor title editor</div>
     <div class="text-picker-body">
       <div class="text-picker-content">
         <el-form :model="textForm" :rules="textRules" ref="textForm" label-width="200px" style="width: 350px">
-          <el-form-item label="标题文字" prop="text">
+          <el-form-item label="text" prop="text">
             <el-input
               :minlength="2"
               :maxlength="16"
-              placeholder="文字"
+              placeholder="The text"
               v-model="textForm.text">
             </el-input>
           </el-form-item>
-          <el-form-item label="标题栏背景色" prop="start_color">
-            <el-input placeholder="请选择或输入标题栏背景色" v-model="textForm.start_color">
+          <el-form-item label="bar background" prop="start_color">
+            <el-input placeholder="Select or enter the title bar background color" v-model="textForm.start_color">
               <el-color-picker slot="append" v-model="textForm.start_color" size="mini"></el-color-picker>
             </el-input>
           </el-form-item>
-          <el-form-item label="背景过渡色" prop="end_color">
-            <el-input placeholder="请选择或输入背景过渡色" v-model="textForm.end_color">
+          <el-form-item label="transition color" prop="end_color">
+            <el-input placeholder="Please select or enter the background transition color" v-model="textForm.end_color">
               <el-color-picker slot="append" v-model="textForm.end_color" size="mini"></el-color-picker>
             </el-input>
           </el-form-item>
-          <el-form-item label="过渡色预览">
+          <el-form-item label="Transition color preview">
             <div class="color-preview" :style="colorPreviewStyle"></div>
           </el-form-item>
         </el-form>
       </div>
     </div>
     <div slot="footer" class="text-picker-footer">
-      <el-button @click="visible = false">取 消</el-button>
-      <el-button type="primary" @click="handleConfirm">确 定</el-button>
+      <el-button @click="visible = false">cancel</el-button>
+      <el-button type="primary" @click="handleConfirm">save</el-button>
     </div>
   </el-dialog>
 </template>
@@ -51,25 +51,25 @@
         if (/^#[0-9a-fA-F]{3,6}$/.test(value)) {
           callback()
         } else {
-          callback(new Error('请输入正确的十六进制颜色！'))
+          callback(new Error('Please enter the correct hexadecimal color！'))
         }
       }
       return {
         textRules: {
-          text: [{ required: true, message: '请输入楼层标题文字！', trigger: 'blur' }],
+          text: [{ required: true, message: 'Please enter the floor title text！', trigger: 'blur' }],
           start_color: [
-            { required: true, message: '请选择或输入标题栏背景色！', trigger: 'blur' },
+            { required: true, message: 'Select or enter the title bar background color！', trigger: 'blur' },
             { validator: vaildColor }
           ],
           end_color: [
-            { required: true, message: '请选择或输入背景过渡色！', trigger: 'blur' },
+            { required: true, message: 'Please select or enter the background transition color！', trigger: 'blur' },
             { validator: vaildColor }
           ]
         }
       }
     },
     computed: {
-      /** 计算预览样式 */
+      /** Calculate preview styles*/
       colorPreviewStyle() {
         const { start_color, end_color } = this.textForm
         return {

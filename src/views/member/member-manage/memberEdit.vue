@@ -1,76 +1,76 @@
 <template>
   <div class="">
     <el-tabs type="border-card">
-      <el-tab-pane label="编辑会员">
+      <el-tab-pane label="Edit member">
         <el-form :model="editMemberForm" :rules="editMemberRules" ref="editForm" inline label-width="100px">
-          <el-form-item label="昵称" prop="nickname">
+          <el-form-item label="nickname" prop="nickname">
             <el-input v-model="editMemberForm.nickname" :maxlength="20"></el-input>
           </el-form-item>
-          <el-form-item label="密码" prop="password">
-            <el-input v-model="editMemberForm.password" placeholder="不填则不更改" :maxlength="20"></el-input>
+          <el-form-item label="password" prop="password">
+            <el-input v-model="editMemberForm.password" placeholder="Do not fill, do not change" :maxlength="20"></el-input>
           </el-form-item>
-          <el-form-item label="地区" class="form-item-region">
+          <el-form-item label="region" class="form-item-region">
             <en-region-picker :api="MixinRegionApi" :default="defaultRegion" @changed="(object) => { editMemberForm.region = object.last_id }"/>
           </el-form-item>
-          <el-form-item label="会员备注">
-            <el-input placeholder="请输入会员备注" v-model="editMemberForm.remark" clearable></el-input>
+          <el-form-item label="Member of the note">
+            <el-input placeholder="Please enter membership notes" v-model="editMemberForm.remark" clearable></el-input>
           </el-form-item>
-          <el-form-item label="邮箱" prop="email">
+          <el-form-item label="email" prop="email">
             <el-input v-model="editMemberForm.email" :maxlength="50"></el-input>
           </el-form-item>
-          <el-form-item label="手机" prop="mobile">
+          <el-form-item label="Mobile phone" prop="mobile">
             <el-input v-model="editMemberForm.mobile" :maxlength="11"></el-input>
           </el-form-item>
-          <el-form-item label="生日">
+          <el-form-item label="birthday">
             <el-date-picker
               v-model="editMemberForm.birthday"
               type="date"
               :editable="false"
               value-format="timestamp"
-              placeholder="选择生日"
+              placeholder="Choose a birthday"
               :picker-options="{disabledDate(time) { return time.getTime() > Date.now() }}">
             </el-date-picker>
           </el-form-item>
-          <el-form-item label="性别" class="form-item-sex">
-            <el-radio v-model="editMemberForm.sex" :label="1">男</el-radio>
-            <el-radio v-model="editMemberForm.sex" :label="0">女</el-radio>
+          <el-form-item label="gender" class="form-item-sex">
+            <el-radio v-model="editMemberForm.sex" :label="1">male</el-radio>
+            <el-radio v-model="editMemberForm.sex" :label="0">female</el-radio>
           </el-form-item>
-          <el-form-item label="详细地址">
+          <el-form-item label="Detailed address">
             <el-input v-model="editMemberForm.address" :maxlength="50"></el-input>
           </el-form-item>
-          <el-form-item label="邮编">
+          <el-form-item label="Zip code">
             <el-input v-model="editMemberForm.zip" :maxlength="6"></el-input>
           </el-form-item>
-          <el-form-item label="固定电话">
+          <el-form-item label="Fixed telephone">
             <el-input v-model="editMemberForm.tel"></el-input>
           </el-form-item>
         </el-form>
-        <el-button type="primary" @click="submitEditMemberForm('editForm')" class="save">保存修改</el-button>
+        <el-button type="primary" @click="submitEditMemberForm('editForm')" class="save">Save the changes</el-button>
       </el-tab-pane>
-      <el-tab-pane label="TA的订单">
+      <el-tab-pane label="TAThe order of">
         <member-list-order :member-id="member_id"/>
       </el-tab-pane>
-      <el-tab-pane label="消费积分">
+      <el-tab-pane label="score">
         <el-form :model="editPointForm" ref="editPointForm" label-width="100px">
-          <el-form-item label="当前消费积分">
+          <el-form-item label="Current consumption score">
             {{ editPointForm.currentPoint }}
           </el-form-item>
-          <el-form-item label="调整消费积分">
+          <el-form-item label="Adjusted consumption score">
             <el-input-number v-model="editPointForm.changedPoint" :max="99999999" class="myNumber"></el-input-number>
           </el-form-item>
         </el-form>
-        <el-button type="primary" @click="handleSavePoint" class="save">保存修改</el-button>
+        <el-button type="primary" @click="handleSavePoint" class="save">Save the changes</el-button>
       </el-tab-pane>
-      <el-tab-pane label="TA的积分">
+      <el-tab-pane label="TAThe integral of">
         <member-list-points :member-id="member_id"/>
       </el-tab-pane>
-      <el-tab-pane label="TA的咨询">
+      <el-tab-pane label="TAThe consulting">
         <member-list-ask :member-id="member_id"/>
       </el-tab-pane>
-      <el-tab-pane label="TA的评论">
+      <el-tab-pane label="TAThe comments">
         <member-list-comments :member-id="member_id"/>
       </el-tab-pane>
-      <el-tab-pane label="TA的收货地址">
+      <el-tab-pane label="TAReceiving address of">
         <member-list-address :member-id="member_id"/>
       </el-tab-pane>
     </el-tabs>
@@ -98,26 +98,26 @@
     data() {
       return {
         member_id: this.$route.params.id,
-        // 编辑会员 表单
+        // Edit the membership form
         editMemberForm: {},
-        // 编辑会员 表单规则
+        // Edit membership form rules
         editMemberRules: {
           nickname: [
-            this.MixinRequired('请输入昵称！'),
-            { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' },
+            this.MixinRequired('Please enter a nickname！'),
+            { min: 2, max: 20, message: 'The length of2 to20 A character', trigger: 'blur' },
             { validator: (rule, value, callback) => {
               if (!RegExp.userName.test(value)) {
-                callback(new Error('只支持汉字、字母、数字、“-”、“_”的组合！'))
+                callback(new Error('Support only Chinese characters、The letter、digital、“-”、“_The combination of"！'))
               } else {
                 callback()
               }
             } }
           ],
           mobile: [
-            this.MixinRequired('请输入手机号！'),
+            this.MixinRequired('Please enter your cell phone number！'),
             { validator: (rule, value, callback) => {
               if (!RegExp.mobile.test(value)) {
-                callback(new Error('手机格式有误！'))
+                callback(new Error('Incorrect phone format！'))
               } else {
                 callback()
               }
@@ -128,7 +128,7 @@
               if (value !== 0 && !value) {
                 callback()
               } else if (!RegExp.email.test(value)) {
-                callback(new Error('邮箱格式有误！'))
+                callback(new Error('The mailbox format is incorrect！'))
               } else {
                 callback()
               }
@@ -139,16 +139,16 @@
               if (value !== 0 && !value) {
                 callback()
               } else if (!RegExp.password.test(value)) {
-                callback(new Error('密码应为6-20位英文或数字！'))
+                callback(new Error('The password should be6-20English bits or Numbers！'))
               } else {
                 callback()
               }
             } }
           ]
         },
-        // 地区id数组
+        // Locale ID array
         defaultRegion: null,
-        // 编辑积分 表单
+        // Edit the points form
         editPointForm: {
           currentPoint: 0,
           changedPoint: 0
@@ -172,30 +172,30 @@
       }
     },
     methods: {
-      /** 提交修改会员表单 */
+      /** Submit the modified membership form*/
       submitEditMemberForm(formName) {
         this.$refs[formName].validate(valid => {
           if (valid) {
             const params = this.MixinClone(this.editMemberForm)
             params.birthday /= 1000
             API_Member.editMember(params.member_id, params).then(response => {
-              this.$message.success('修改成功！')
+              this.$message.success('Modify the success！')
             })
           } else {
-            this.$message.error('表单填写有误，请检查！')
+            this.$message.error('The form is filled incorrectly, please check！')
             return false
           }
         })
       },
-      /** 保存积分 */
+      /** Save the integral*/
       handleSavePoint() {
         const { changedPoint } = this.editPointForm
         API_Member.editMemberConsumPoint(this.member_id, changedPoint).then(() => {
-          this.$message.success('修改成功！')
+          this.$message.success('Modify the success！')
           this.editPointForm.currentPoint = changedPoint
         })
       },
-      /** 获取会员详情 */
+      /** Obtain Membership details*/
       GET_MemberDetail() {
         API_Member.getMemberDetail(this.member_id).then(response => {
           response.birthday *= 1000

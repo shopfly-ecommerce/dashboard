@@ -1,11 +1,11 @@
 /**
- * 活动相关API
+ * Activities related toAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取满减活动列表
+ * Gets the list of full minus activities
  * @param params
  * @returns {Promise<any>}
  */
@@ -19,7 +19,7 @@ export function getFullCutActivityList(params) {
 }
 
 /**
- * 删除满减活动
+ * Delete full minus activities
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -34,7 +34,7 @@ export function deleteFullCutActivity(ids) {
 }
 
 /**
- * 新增满减活动
+ * Add full reduction activities
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -51,7 +51,7 @@ export function addFullCutActivity(params) {
 }
 
 /**
- * 修改满减活动内容
+ * Modify the full minus activity content
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -68,7 +68,7 @@ export function saveFullCutActivity(ids, params) {
 }
 
 /**
- * 获取满减单个活动详情
+ * Get full minus individual activity details
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -83,7 +83,7 @@ export function getFullCutActivityDetails(ids, params) {
 }
 
 /**
- * 获取单品立减活动列表
+ * Get a list of single item vertical reduction activities
  * @param params
  * @returns {Promise<any>}
  */
@@ -97,7 +97,7 @@ export function getSingleCutActivityList(params) {
 }
 
 /**
- * 删除单品立减活动
+ * Delete single item vertical reduction activities
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -112,7 +112,7 @@ export function deleteSingleCutActivity(ids, params) {
 }
 
 /**
- * 新增单品立减活动
+ * New single product vertical reduction activities
  * @param params
  * @returns {Promise<any>}
  */
@@ -127,7 +127,7 @@ export function addSingleCutActivity(params) {
 }
 
 /**
- * 修改单品立减活动
+ * Modify single product vertical reduction activities
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -143,7 +143,7 @@ export function saveSingleCutActivity(ids, params) {
 }
 
 /**
- * 获取一个单品立减活动洗详情
+ * Get details of a single - item stand - down campaign
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -158,7 +158,7 @@ export function getSingleCutActivityDetails(ids, params) {
 }
 
 /**
- * 获取第二件半价活动列表
+ * Get the second half price activity list
  * @param params
  * @returns {Promise<any>}
  */
@@ -172,7 +172,7 @@ export function getSecondHalfActivityList(params) {
 }
 
 /**
- * 删除第二件半价活动
+ * Delete the second half price activity
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -187,7 +187,7 @@ export function deleteSeconedHalfActivity(ids, params) {
 }
 
 /**
- * 新增第二件半价活动
+ * Add the second half price activity
  * @param params
  * @returns {Promise<any>}
  */
@@ -202,7 +202,7 @@ export function addSeconedHalfActivity(params) {
 }
 
 /**
- * 修改第二件半价活动
+ * Modify the second half price activity
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -218,7 +218,7 @@ export function saveSeconedHalfActivity(ids, params) {
 }
 
 /**
- * 获取一个第二件半价活动详情
+ * Get details of a second half price campaign
  * @param ids
  * @param params
  * @returns {Promise<any>}

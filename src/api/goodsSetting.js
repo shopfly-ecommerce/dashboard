@@ -1,10 +1,10 @@
 /**
- * 分类管理API
+ * Classification managementAPI
  */
 import request from '@/utils/request'
 
 /**
- * 添加分类
+ * Add the classification
  * @param params
  */
 export function addCategory(params) {
@@ -22,7 +22,7 @@ export function addCategory(params) {
 }
 
 /**
- * 编辑分类
+ * Edit category
  * @param id
  * @param params
  */
@@ -41,7 +41,7 @@ export function editCategory(id, params) {
 }
 
 /**
- * 根据分类ID获取分类关联品牌数据
+ * According to the classificationIDObtain classified associated brand data
  * @param category_id
  * @returns {Promise<any>}
  */
@@ -53,9 +53,9 @@ export function getBrandByCategoryId(category_id) {
 }
 
 /**
- * 编辑分类关联品牌
- * @param category_id 分类ID
- * @param choose_brands 品牌数组
+ * Editors categorize associated brands
+ * @param category_id CategoriesID
+ * @param choose_brands Brand array
  */
 export function editCategoryBrand(category_id, choose_brands) {
   return request({
@@ -66,7 +66,7 @@ export function editCategoryBrand(category_id, choose_brands) {
 }
 
 /**
- * 根据分类ID获取分类关联规格数据
+ * According to the classificationIDGets the classification association specification data
  * @param category_id
  * @returns {Promise<any>}
  */
@@ -77,9 +77,9 @@ export function getSpecsByCategoryId(category_id) {
   })
 }
 /**
- * 编辑分类关联规格
- * @param category_id 分类ID
- * @param choose_specs 规格数组
+ * Edit the category association specification
+ * @param category_id CategoriesID
+ * @param choose_specs An array of specifications
  * @returns {*}
  */
 export function editCategorySpecs(category_id, choose_specs) {
@@ -91,7 +91,7 @@ export function editCategorySpecs(category_id, choose_specs) {
 }
 
 /**
- * 删除分类
+ * Delete the classification
  * @param ids
  * @returns {*}
  */
@@ -104,8 +104,8 @@ export function deleteCategory(ids) {
 }
 
 /**
- * 获取分类关联的参数
- * @param category_id 分类ID
+ * Gets the parameters of the classification association
+ * @param category_id CategoriesID
  * @returns {*}
  */
 export function getCategoryParams(category_id) {
@@ -116,7 +116,7 @@ export function getCategoryParams(category_id) {
 }
 
 /**
- * 获取分类子集
+ * Acquisition of classification subsets
  * @param parent_id
  */
 export function getCategoryChildren(parent_id = 0) {
@@ -128,7 +128,7 @@ export function getCategoryChildren(parent_id = 0) {
 }
 
 /**
- * 获取品牌列表
+ * Get a list of brands
  * @param params
  * @returns {Promise<any>}
  */
@@ -142,7 +142,7 @@ export function getBrandList(params) {
 }
 
 /**
- * 添加品牌
+ * Add a brand
  * @param params
  */
 export function addBrand(params) {
@@ -154,7 +154,7 @@ export function addBrand(params) {
 }
 
 /**
- * 获取品牌详情
+ * Get brand details
  * @param id
  */
 export function getBrandDetail(id) {
@@ -165,7 +165,7 @@ export function getBrandDetail(id) {
 }
 
 /**
- * 编辑品牌
+ * Edit the brand
  * @param id
  * @param params
  */
@@ -178,7 +178,7 @@ export function editBrand(id, params) {
 }
 
 /**
- * 删除品牌
+ * Delete the brand
  * @param ids
  * @returns {Promise<any>}
  */
@@ -191,7 +191,7 @@ export function deleteBrand(ids) {
 }
 
 /**
- * 添加参数组
+ * Add parameter group
  * @param params
  * @returns {*}
  */
@@ -204,7 +204,7 @@ export function addParamsGroup(params) {
 }
 
 /**
- * 修改参数组
+ * Modify parameter set
  * @param group_id
  * @param params
  * @returns {*}
@@ -218,7 +218,7 @@ export function editParamsGroup(group_id, params) {
 }
 
 /**
- * 删除参数组
+ * Delete parameter set
  * @param group_id
  * @returns {*}
  */
@@ -230,7 +230,7 @@ export function deleteParamsGroup(group_id) {
 }
 
 /**
- * 参数组排序
+ * Parameter group sort
  * @param group_id
  * @param sort_type
  * @returns {*}
@@ -244,7 +244,7 @@ export function sortParamsGroup(group_id, sort_type) {
 }
 
 /**
- * 获取参数组详情
+ * Gets parameter group details
  * @param id
  * @returns {*}
  */
@@ -256,7 +256,7 @@ export function getParamsGroupDetail(id) {
 }
 
 /**
- * 添加参数
+ * Add parameters
  * @param params
  * @returns {*}
  */
@@ -269,7 +269,7 @@ export function addParams(params) {
 }
 
 /**
- * 编辑参数
+ * Edit parameters
  * @param id
  * @param params
  * @returns {*}
@@ -283,7 +283,7 @@ export function editParams(id, params) {
 }
 
 /**
- * 删除参数
+ * Delete the parameter
  * @param id
  * @returns {*}
  */
@@ -295,7 +295,7 @@ export function deleteParams(id) {
 }
 
 /**
- * 参数排序
+ * Parameters of the sort
  * @param param_id
  * @param sort_type
  * @returns {*}
@@ -309,7 +309,7 @@ export function sortParams(param_id, sort_type) {
 }
 
 /**
- * 获取参数详情
+ * Get parameter details
  * @param id
  * @returns {*}
  */
@@ -321,7 +321,7 @@ export function getParamDetail(id) {
 }
 
 /**
- * 获取规格列表
+ * Get specification list
  * @param params
  */
 export function getSpecs(params) {
@@ -334,7 +334,7 @@ export function getSpecs(params) {
 }
 
 /**
- * 添加规格
+ * Add the specification
  * @param params
  */
 export function addSpec(params) {
@@ -346,7 +346,7 @@ export function addSpec(params) {
 }
 
 /**
- * 编辑规格
+ * Edit the specifications
  * @param id
  * @param params
  */
@@ -359,7 +359,7 @@ export function eidtSpec(id, params) {
 }
 
 /**
- * 删除规格
+ * Delete the specifications
  * @param ids
  * @returns {*}
  */
@@ -372,8 +372,8 @@ export function deleteSpecs(ids) {
 }
 
 /**
- * 获取规格值
- * @param spec_id 规格ID
+ * Get specification value
+ * @param spec_id specificationsID
  * @returns {*}
  */
 export function getSpecValues(spec_id) {
@@ -384,7 +384,7 @@ export function getSpecValues(spec_id) {
 }
 
 /**
- * 保存规格值
+ * Save specification values
  * @param spec_id
  * @param value_list
  * @returns {Promise<any>}

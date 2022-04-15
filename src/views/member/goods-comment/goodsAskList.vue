@@ -14,16 +14,16 @@
           >
             <template slot="advanced-content">
               <el-form ref="advancedForm" :model="advancedForm" label-width="80px">
-                <el-form-item label="商品名称">
+                <el-form-item label="Name">
                   <el-input size="medium" v-model="advancedForm.goods_name" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="会员名称">
+                <el-form-item label="Member name">
                   <el-input size="medium" v-model="advancedForm.member_name" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="回复状态">
-                  <el-select v-model="advancedForm.reply_status" placeholder="请选择" clearable>
-                    <el-option label="已回复" value="1"/>
-                    <el-option label="未回复" value="0"/>
+                <el-form-item label="Reply to state">
+                  <el-select v-model="advancedForm.reply_status" placeholder="Please select" clearable>
+                    <el-option label="Have to reply" value="1"/>
+                    <el-option label="Did not return" value="0"/>
                   </el-select>
                 </el-form-item>
               </el-form>
@@ -32,38 +32,38 @@
         </div>
       </div>
       <template slot="table-columns">
-        <el-table-column prop="member_name" label="会员名称"/>
-        <el-table-column label="商品名称">
+        <el-table-column prop="member_name" label="Member name"/>
+        <el-table-column label="Name">
           <template slot-scope="scope">
             <a :href="MixinBuyerDomain + '/goods/' + scope.row.goods_id" class="goods-name" target="_blank">{{ scope.row.goods_name }}</a>
           </template>
         </el-table-column>
-        <el-table-column prop="create_time" :formatter="MixinUnixToDate" label="咨询日期"/>
-        <el-table-column prop="content" label="咨询内容" width="350"/>
-        <el-table-column label="审核状态">
+        <el-table-column prop="create_time" :formatter="MixinUnixToDate" label="The date"/>
+        <el-table-column prop="content" label="Consulting content" width="350"/>
+        <el-table-column label="Review the status">
           <template slot-scope="scope">{{ scope.row.auth_status | statusFilter }}</template>
         </el-table-column>
-        <el-table-column label="操作" width="300">
+        <el-table-column label="Operation" width="300">
           <template slot-scope="scope">
             <el-button
               v-if="scope.row.auth_status === 'WAIT_AUDIT'"
               size="mini"
               type="primary"
-              @click="handleExamine(scope.$index, scope.row)">审核</el-button>
+              @click="handleExamine(scope.$index, scope.row)">audit</el-button>
             <el-button
               v-if="scope.row.auth_status === 'PASS_AUDIT'"
               size="mini"
               type="primary"
               :disabled="scope.row.reply_status === 1"
-              @click="handleReply(scope.$index, scope.row)">回复</el-button>
+              @click="handleReply(scope.$index, scope.row)">reply</el-button>
             <el-button
               size="mini"
               type="primary"
-              @click="handleViewAsk(scope.$index, scope.row)">查看</el-button>
+              @click="handleViewAsk(scope.$index, scope.row)">To view</el-button>
             <el-button
               size="mini"
               type="danger"
-              @click="handleDeleteAsk(scope.$index, scope.row)">删除</el-button>
+              @click="handleDeleteAsk(scope.$index, scope.row)">delete</el-button>
           </template>
         </el-table-column>
       </template>
@@ -80,12 +80,12 @@
       </el-pagination>
     </en-table-layout>
     <el-dialog
-      title="提示"
+      title="prompt"
       :visible.sync="dialogReviewVisible"
       width="50%"
     >
       <el-form ref="reviewAskForm" :model="reviewAsk">
-        <el-form-item label="咨询内容：">
+        <el-form-item label="Consulting content：">
           <br>
           <span style="color: #409EFF;overflow:hidden;word-break: break-word;">{{ reviewAsk.content }}</span>
         </el-form-item>
@@ -97,55 +97,55 @@
         </template>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogReviewVisible = false">确 定</el-button>
+        <el-button type="primary" @click="dialogReviewVisible = false">save</el-button>
       </span>
     </el-dialog>
     <el-dialog
-      title="回复咨询"
+      title="Reply to consulting"
       :visible.sync="dialogReplyVisible"
       width="50%"
     >
       <el-form ref="replyForm" :model="replyForm">
-        <el-form-item label="咨询内容：">
+        <el-form-item label="Consulting content：">
           <br>
           <span style="color: #409EFF;overflow:hidden;word-break: break-word;">{{ replyForm.content }}</span>
         </el-form-item>
         <el-form-item
-          label="回复内容:"
+          label="Reply content:"
           prop="reply"
-          :rules="{ required: true, message: '请填写回复内容' ,trigger: 'blur' }">
-          <el-input type="textarea" :maxlength="500" rows="5" placeholder="回复内容最多500个字" v-model="replyForm.reply"></el-input>
+          :rules="{ required: true, message: 'Please fill in the reply' ,trigger: 'blur' }">
+          <el-input type="textarea" :maxlength="500" rows="5" placeholder="Most replies500A word" v-model="replyForm.reply"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer">
-        <el-button @click="dialogReplyVisible = false">取 消</el-button>
-        <el-button type="primary" @click="confirmReply">确 定</el-button>
+        <el-button @click="dialogReplyVisible = false">cancel</el-button>
+        <el-button type="primary" @click="confirmReply">save</el-button>
       </div>
     </el-dialog>
     <el-dialog
-      title="审核"
+      title="audit"
       :visible.sync="dialogConsultationAudit"
       width="50%"
     >
       <el-form :model="auditInformation">
-        <el-form-item label="咨询人名称：">
+        <el-form-item label="Name of consultant：">
           <span>{{auditInformation.member_name}}</span>
         </el-form-item>
-        <el-form-item label="商品名称：">
+        <el-form-item label="Name：">
           <a :href="MixinBuyerDomain + '/goods/' + auditInformation.goods_id" class="goods-name" target="_blank">{{auditInformation.goods_name}}</a>
         </el-form-item>
-        <el-form-item label="咨询日期">
+        <el-form-item label="The date">
           <span>{{auditInformation.create_time | unixToDate}}</span>
         </el-form-item>
-        <el-form-item label="咨询内容">
+        <el-form-item label="Consulting content">
           <span style="word-break:break-all;">{{auditInformation.content}}</span>
         </el-form-item>
-        <el-form-item label="审核：">
-          <el-radio v-model="auth_status" label="PASS_AUDIT">审核通过</el-radio>
-          <el-radio v-model="auth_status" label="REFUSE_AUDIT">审核拒绝</el-radio>
+        <el-form-item label="audit：">
+          <el-radio v-model="auth_status" label="PASS_AUDIT">approved</el-radio>
+          <el-radio v-model="auth_status" label="REFUSE_AUDIT">Audit refused to</el-radio>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitExamine" >审核</el-button>
+          <el-button type="primary" @click="submitExamine" >audit</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -160,38 +160,38 @@
     name: 'goodsAskList',
     data() {
       return {
-        // 列表loading状态
+        // List loading status
         loading: false,
-        // 列表参数
+        // A list of parameters
         params: {
           page_no: 1,
           page_size: 10
         },
-        // 列表数据
+        // The list of data
         tableData: '',
-        // 查看的详情
+        // View details
         reviewAsk: {},
-        /** 回复表单 */
+        /** Reply form*/
         replyForm: {
-          /** 咨询问题 */
+          /** Ask questions*/
           content: '',
 
-          /** 回复内容 */
+          /** Reply content*/
           reply: ''
         },
-        // 查看详情 dialog
+        // Dialog for details
         dialogReviewVisible: false,
-        // 回复框操作 dialog
+        // The reply box manipulates the dialog
         dialogReplyVisible: false,
-        // 关键字
+        // keyword
         keyword: '',
-        // 高级搜索
+        // Advanced search
         advancedForm: {},
-        // 审核 dialog
+        // Review the dialog
         dialogConsultationAudit: false,
-        // 审核信息
+        // Audit information
         auditInformation: {},
-        // 审核状态
+        // Review the status
         auth_status: 'PASS_AUDIT'
       }
     },
@@ -201,45 +201,45 @@
     filters: {
       statusFilter(val) {
         switch (val) {
-          case 'WAIT_AUDIT': return '审核中'
-          case 'PASS_AUDIT': return '审核通过'
-          case 'REFUSE_AUDIT': return '审核未通过'
+          case 'WAIT_AUDIT': return 'In the review'
+          case 'PASS_AUDIT': return 'approved'
+          case 'REFUSE_AUDIT': return 'The audit is not approved.'
         }
       }
     },
     methods: {
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_AskList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_AskList()
       },
 
-      /** 查看咨询详情 */
+      /** See consulting details*/
       handleViewAsk(index, row) {
         this.reviewAsk = row
         this.dialogReviewVisible = true
       },
 
-      /** 回复 */
+      /** reply*/
       handleReply(index, row) {
         this.dialogReplyVisible = true
         this.replyForm = {
           ask_id: row.ask_id,
-          /** 咨询问题 */
+          /** Ask questions*/
           content: row.content,
 
-          /** 回复内容 */
+          /** Reply content*/
           reply: row.reply
         }
       },
 
-      /** 确认回复 */
+      /** Confirmation reply*/
       confirmReply() {
         this.$refs['replyForm'].validate((valid) => {
           if (valid) {
@@ -247,43 +247,43 @@
               reply_content: this.replyForm.reply
             }
             API_Member.replyConsultationList(this.replyForm.ask_id, _params).then(() => {
-              this.$message.success('回复成功')
+              this.$message.success('Reply to success')
               this.dialogReplyVisible = false
               this.GET_AskList()
             })
           }
         })
       },
-      /** 查看审核 */
+      /** View audit*/
       handleExamine(index, row) {
         this.auditInformation = row
         this.dialogConsultationAudit = true
       },
-      /** 提交咨询审核 */
+      /** Submit for consultation and review*/
       submitExamine() {
         API_Member.examineConsultation(this.auditInformation.ask_id, this.auth_status).then(respone => {
-          this.$message.success('审核成功！')
+          this.$message.success('Review the success！')
           this.dialogConsultationAudit = false
           this.GET_AskList()
         }).catch(() => {})
       },
-      /** 删除咨询 */
+      /** Delete the consulting*/
       handleDeleteAsk(index, row) {
-        this.$confirm('确定要删除这条咨询吗？', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Are you sure you want to delete this consultation？', 'prompt', { type: 'warning' }).then(() => {
           API_Member.deleteMemberAsk(row.ask_id).then(() => {
-            this.$message.success('删除成功！')
+            this.$message.success('Delete the success！')
             this.GET_AskList()
           })
         }).catch(() => {})
       },
 
-      /** 回复时间 */
+      /** Recovery time*/
       replyLabel() {
         const ask = this.reviewAsk
-        return `商家于[${Foundation.unixToDate(ask.reply_time)}]${ask.reply_status === 1 ? '审核通过' : '审核未通过'}并回复：`
+        return `Businesses in[${Foundation.unixToDate(ask.reply_time)}]${ask.reply_status === 1 ? 'approved' : 'The audit is not approved.'}And the reply：`
       },
 
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       searchEvent(keyword) {
         this.params.keyword = keyword
         Object.keys(this.advancedForm).forEach(key => delete this.params[key])
@@ -291,7 +291,7 @@
         this.GET_AskList()
       },
 
-      /** 高级搜索事件触发 */
+      /** Advanced search event triggered*/
       advancedSearchEvent() {
         const { advancedForm } = this
         Object.keys(advancedForm).forEach(key => {
@@ -304,7 +304,7 @@
         this.GET_AskList()
       },
 
-      /** 获取咨询列表 */
+      /** Get a consultation list*/
       GET_AskList() {
         this.loading = true
         API_Member.getMemberAsks(this.params).then(response => {

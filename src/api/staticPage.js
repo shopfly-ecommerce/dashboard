@@ -1,11 +1,11 @@
 /**
- * 静态页相关API
+ * Static page correlationAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取静态页生成地址
+ * Gets the static page generation address
  */
 export function getStaticPageAddress() {
   return request({
@@ -15,7 +15,7 @@ export function getStaticPageAddress() {
 }
 
 /**
- * 保存静态页生成地址
+ * Save the static page generation address
  * @param params
  */
 export function saveStaticPageAddress(params) {
@@ -27,7 +27,7 @@ export function saveStaticPageAddress(params) {
 }
 
 /**
- * 生成静态页
+ * Generate static pages
  * @param params
  */
 export function createStaticPage(params) {

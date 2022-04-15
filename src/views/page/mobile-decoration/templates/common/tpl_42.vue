@@ -14,7 +14,7 @@
   export default {
     name: 'tpl_42',
     mixins: [mixin],
-    title: '文本模块',
+    title: 'Text module',
     dataTpl: {
       tpl_id: 42,
       blockList: [

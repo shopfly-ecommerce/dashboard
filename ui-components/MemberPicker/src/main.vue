@@ -5,22 +5,22 @@
     :close-on-press-escape="false"
     append-to-body
     width="805px">
-    <div slot="title" class="member-picker-title">会员选择器</div>
+    <div slot="title" class="member-picker-title">Member selector</div>
     <div class="member-picker-body">
       <div class="member-picker-search">
         <div class="item-search">
-          <span>搜索范围</span>
-          <el-select v-model="params.sex" clearable placeholder="选择性别">
-            <el-option label="男" :value="1"/>
-            <el-option label="女" :value="0"/>
+          <span>A search scope</span>
+          <el-select v-model="params.sex" clearable placeholder="Sex selection">
+            <el-option label="male" :value="1"/>
+            <el-option label="female" :value="0"/>
           </el-select>
-          <el-input v-model="params.keyword" :placeholder="'请输入关键字，例如：用户名或手机号'" clearable class="inline-input"/>
-          <el-button @click="() => { GET_MemberList(true) }">搜索</el-button>
+          <el-input v-model="params.keyword" :placeholder="'Please enter a keyword, for example：User name or mobile number'" clearable class="inline-input"/>
+          <el-button @click="() => { GET_MemberList(true) }">search</el-button>
         </div>
         <!--<div class="item-search">-->
-          <!--<span>查找会员</span>-->
-          <!--<el-input v-model="params.goods_ids" placeholder="请输入会员编号，多个编号用逗号隔开，中英文都可以。" clearable class="inline-input member-ids"/>-->
-          <!--<el-button @click="handleSearchMultipleGoods">查找</el-button>-->
+          <!--<span>Looking for members</span>-->
+          <!--<el-input v-model="params.goods_ids" placeholder="Please enter your membership number. please separate multiple numbers with commas, both in Chinese and English." clearable class="inline-input member-ids"/>-->
+          <!--<el-button @click="handleSearchMultipleGoods">To find the</el-button>-->
         <!--</div>-->
       </div>
       <div class="member-picker-content">
@@ -38,7 +38,7 @@
               <div class="member-price">{{ member.mobile }}</div>
             </div>
             <div class="member-mask">
-              <div class="mask-check" :title="isSelected(member) ? '取消选择会员' : '选择会员'" @click="handleClickItem(member, index)"><i></i></div>
+              <div class="mask-check" :title="isSelected(member) ? 'Unselect member' : 'Select the member'" @click="handleClickItem(member, index)"><i></i></div>
             </div>
           </div>
           <el-button
@@ -48,7 +48,7 @@
             :loading="loading"
             @click="handleLoadMore"
             class="load-more"
-          >加载更多</el-button>
+          >To load more</el-button>
         </div>
         <div class="selected-list" :id="'member-picker-selected-' + _uid">
           <transition-group name="slide-fade">
@@ -67,7 +67,7 @@
                 <div class="member-price">{{ member.mobile }}</div>
               </div>
               <div class="member-mask">
-                <div class="mask-check" title="取消选择会员" @click="handleRemoveItem(member, index)"><i></i></div>
+                <div class="mask-check" title="Unselect member" @click="handleRemoveItem(member, index)"><i></i></div>
               </div>
             </div>
           </transition-group>
@@ -76,13 +76,13 @@
     </div>
     <div slot="footer" class="member-picker-footer">
       <div class="upload-status-num">
-        最多可选个数：<span>{{ limit < 1 ? '无限制' : limit }}</span>
-        已选个数：<span>{{ selectedNum }}</span>
-        还可选个数：<span>{{ limit < 1 ? '无限制' : limit - selectedNum }}</span>
+        Maximum number of choices：<span>{{ limit < 1 ? 'unlimited' : limit }}</span>
+        The number of the selected：<span>{{ selectedNum }}</span>
+        Also optional number：<span>{{ limit < 1 ? 'unlimited' : limit - selectedNum }}</span>
       </div>
       <span>
-        <el-button @click="dialogVisible = false">取 消</el-button>
-      <el-button type="primary" @click="handleConfirm">确 定</el-button>
+        <el-button @click="dialogVisible = false">cancel</el-button>
+      <el-button type="primary" @click="handleConfirm">save</el-button>
       </span>
     </div>
   </el-dialog>

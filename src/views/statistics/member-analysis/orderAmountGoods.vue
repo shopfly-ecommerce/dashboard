@@ -7,9 +7,9 @@
       :tableData="tableData.data"
     >
       <template slot="table-columns">
-        <el-table-column type="index" width="150" label="排名"/>
-        <el-table-column prop="member_name" label="会员昵称"/>
-        <el-table-column prop="goods_num" label="下单商品数量"/>
+        <el-table-column type="index" width="150" label="ranking"/>
+        <el-table-column prop="member_name" label="Members nickname"/>
+        <el-table-column prop="goods_num" label="Quantity of goods ordered"/>
       </template>
     </en-table-layout>
   </div>
@@ -25,7 +25,7 @@
     data() {
       return {
         loading: false,
-        /** 列表数据 */
+        /** The list of data*/
         tableData: ''
       }
     },
@@ -42,7 +42,7 @@
       }
     },
     methods: {
-      /** 获取会员下单量 */
+      /** Get member orders*/
       GET_MemberAmountGoods() {
         if (this.curTab !== 'goods' || this.loading) return
         this.loading = true
@@ -55,10 +55,10 @@
           const { data, name, localName } = responses[0].series
           const { xAxis } = responses[0]
           this.echarts.setOption(echartsOptions({
-            titleText: '会员下单商品数TOP' + xAxis.length,
+            titleText: 'Number of items placed by membersTOP' + xAxis.length,
             tooltipFormatter: function(params) {
               params = params[0]
-              return `会员名称：${localName[params.dataIndex]}<br/>${params.marker}${params.seriesName}：${params.value}`
+              return `Member name：${localName[params.dataIndex]}<br/>${params.marker}${params.seriesName}：${params.value}`
             },
             seriesName: name,
             seriesData: data,

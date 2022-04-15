@@ -6,21 +6,21 @@
       :loading="loading"
     >
       <template slot="table-columns">
-        <el-table-column prop="create_time" :formatter="MixinUnixToDate" label="咨询日期"/>
-        <el-table-column prop="content" label="咨询内容" width="500"/>
-        <el-table-column label="审核状态">
+        <el-table-column prop="create_time" :formatter="MixinUnixToDate" label="The date"/>
+        <el-table-column prop="content" label="Consulting content" width="500"/>
+        <el-table-column label="Review the status">
           <template slot-scope="scope">{{ scope.row.auth_status | statusFilter }}</template>
         </el-table-column>
-        <el-table-column label="操作" width="150">
+        <el-table-column label="Operation" width="150">
           <template slot-scope="scope">
             <el-button
               size="mini"
               type="primary"
-              @click="handleViewAsk(scope.$index, scope.row)">查看</el-button>
+              @click="handleViewAsk(scope.$index, scope.row)">To view</el-button>
             <el-button
               size="mini"
               type="danger"
-              @click="handleDeleteAsk(scope.$index, scope.row)">删除</el-button>
+              @click="handleDeleteAsk(scope.$index, scope.row)">delete</el-button>
           </template>
         </el-table-column>
       </template>
@@ -38,12 +38,12 @@
       </el-pagination>
     </en-table-layout>
     <el-dialog
-      title="查看咨询详情"
+      title="See consulting details"
       :visible.sync="dialogReviewVisible"
       width="50%"
     >
       <el-form :model="reviewAsk">
-        <el-form-item label="咨询内容：">
+        <el-form-item label="Consulting content：">
           <br>
           <span style="color: #409EFF">{{ reviewAsk.content }}</span>
         </el-form-item>
@@ -55,7 +55,7 @@
         </template>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogReviewVisible = false">确 定</el-button>
+        <el-button type="primary" @click="dialogReviewVisible = false">save</el-button>
       </span>
     </el-dialog>
   </div>
@@ -70,19 +70,19 @@
     props: ['member-id'],
     data() {
       return {
-        // 列表loading状态
+        // List loading status
         loading: false,
-        // 列表参数
+        // A list of parameters
         params: {
           page_no: 1,
           page_size: 10,
           member_id: this.memberId
         },
-        // 列表数据
+        // The list of data
         tableData: '',
-        // 查看咨询dialog
+        // View Consultation Dialog
         dialogReviewVisible: false,
-        // 查看的详情
+        // View details
         reviewAsk: {}
       }
     },
@@ -98,48 +98,48 @@
     filters: {
       statusFilter(val) {
         switch (val) {
-          case 'WAIT_AUDIT': return '审核中'
-          case 'PASS_AUDIT': return '审核通过'
-          case 'REFUSE_AUDIT': return '审核未通过'
+          case 'WAIT_AUDIT': return 'In the review'
+          case 'PASS_AUDIT': return 'approved'
+          case 'REFUSE_AUDIT': return 'The audit is not approved.'
         }
       }
     },
     methods: {
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_MemberListAsk()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_MemberListAsk()
       },
 
-      /** 查看咨询 */
+      /** Check the consulting*/
       handleViewAsk(index, row) {
         this.reviewAsk = row
         this.dialogReviewVisible = true
       },
 
-      /** 删除咨询 */
+      /** Delete the consulting*/
       handleDeleteAsk(index, row) {
-        this.$confirm('确定要删除这个咨询吗？', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Are you sure you want to delete this consultation？', 'prompt', { type: 'warning' }).then(() => {
           API_Member.deleteMemberAsk(row.ask_id).then(() => {
-            this.$message.success('删除成功！')
+            this.$message.success('Delete the success！')
             this.GET_MemberListAsk()
           })
         }).catch(() => {})
       },
 
-      /** 回复时间 */
+      /** Recovery time*/
       replyLabel() {
         const ask = this.reviewAsk
-        return `商家于[${Foundation.unixToDate(ask.reply_time)}]${ask.reply_status === 1 ? '审核通过' : '审核未通过'}并回复：`
+        return `Businesses in[${Foundation.unixToDate(ask.reply_time)}]${ask.reply_status === 1 ? 'approved' : 'The audit is not approved.'}And the reply：`
       },
 
-      /** 获取会员咨询列表 */
+      /** Get a list of member inquiries*/
       GET_MemberListAsk() {
         this.loading = true
         API_Member.getMemberAsks(this.params).then(response => {

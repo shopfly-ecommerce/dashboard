@@ -18,7 +18,7 @@
   export default {
     name: 'tpl_24',
     mixins: [mixin],
-    title: '左一右二图片模块',
+    title: 'Left one right two picture module',
     dataTpl: {
       tpl_id: 24,
       blockList: [

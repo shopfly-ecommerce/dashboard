@@ -6,7 +6,7 @@
           type="text"
           v-model="searchKeywords[columnIndex]"
           class="input-search"
-          placeholder="输入关键词查找"
+          placeholder="Input keyword search"
           @input="handleSearchKeywordChange(columnIndex)"
         >
         <i class="icon-search"></i>
@@ -14,7 +14,7 @@
       <div class="inner-column">
         <a href="javascript:;" class="add-column" @click="handleClickAdd(columnIndex)">
           <i class="icon-add"></i>
-          添加{{ ['一', '二', '三', '四', '五', '六'][columnIndex] }}级{{ typeText }}
+          add{{ ['one', 'two', 'three', 'four', 'five', 'six'][columnIndex] }}level{{ typeText }}
         </a>
         <div
           v-for="(item, itemIndex) in column"
@@ -42,7 +42,7 @@
           type="text"
           v-model="searchKeywords[placeLevel]"
           class="input-search"
-          placeholder="输入关键词查找"
+          placeholder="Input keyword search"
           @input="handleSearchKeywordChange(placeLevel)"
         >
         <i class="icon-search"></i>
@@ -50,7 +50,7 @@
       <div class="inner-column">
         <a href="javascript:;" class="add-column" @click="handleClickAdd(placeLevel)">
           <i class="icon-add"></i>
-          添加{{ ['一', '二', '三', '四', '五', '六'][placeLevel] }}级{{ typeText }}
+          add{{ ['one', 'two', 'three', 'four', 'five', 'six'][placeLevel] }}level{{ typeText }}
         </a>
       </div>
     </div>

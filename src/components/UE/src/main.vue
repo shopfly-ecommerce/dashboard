@@ -11,10 +11,10 @@
     name: 'UE',
     data() {
       return {
-        /** 编辑器实例 */
+        /** Editor instance*/
         editor: null,
 
-        /** 每个编辑器生成不同的id,以防止冲突 */
+        /** Each editor generates a differentid,To prevent conflict.*/
         randomId: 'editor_1' + parseInt(Math.random() * 10000 + 1),
 
         ready: false
@@ -43,7 +43,7 @@
       this.initEditor()
     },
     methods: {
-      /** 初始化编辑器 */
+      /** Initialize the editor*/
       initEditor() {
         this.$nextTick(() => {
           this.editor = window.UE.getEditor(this.randomId, this.config)

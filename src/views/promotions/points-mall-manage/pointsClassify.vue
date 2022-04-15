@@ -2,7 +2,7 @@
   <div>
     <en-grade-editor
       ref="gradeEditor"
-      type-text="积分分类"
+      type-text="Integral classification"
       :api="gradeApi"
       :btns="itemBtns"
       :maxLevel="1"
@@ -10,20 +10,20 @@
       @add-click="handleAddPoints"
     />
     <el-dialog
-      :title="pointsForm.id ? '编辑积分分类' : '添加积分分类'"
+      :title="pointsForm.id ? 'Edit integral classification' : 'Add integral classification'"
       :visible.sync="dialogPointsVisible"
       width="500px"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
       <el-form :model="pointsForm" :rules="pointsRules" ref="pointsForm" label-width="120px">
-        <el-form-item label="分类名称" prop="name">
+        <el-form-item label="name" prop="name">
           <el-input v-model="pointsForm.name" :maxlength="20" clearable></el-input>
         </el-form-item>
-        <el-form-item label="分类排序" prop="category_order">
+        <el-form-item label="sort" prop="category_order">
           <el-input-number v-model="pointsForm.category_order" controls-position="right" :min="0" :max="99999999"/>
         </el-form-item>
-        <el-form-item label="分类图片" prop="image">
+        <el-form-item label="Image" prop="image">
           <el-upload
             :action="MixinUploadApi"
             :on-remove="delGiftImg"
@@ -31,14 +31,14 @@
             :limit="1"
             :file-list="categroy_image"
             list-type="picture">
-            <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">建议上传jpg/png文件，且不超过1MB</div>
+            <el-button size="small" type="primary">upload</el-button>
+            <div slot="tip" class="el-upload__tip">Recommended to uploadjpg/pngFile, and not exceeding1MB</div>
           </el-upload>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogPointsVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitPointsForm">确 定</el-button>
+        <el-button @click="dialogPointsVisible = false">cancel</el-button>
+        <el-button type="primary" @click="submitPointsForm">save</el-button>
       </span>
     </el-dialog>
   </div>
@@ -56,37 +56,37 @@
     data() {
       return {
         loading: false,
-        // 层级编辑器获取下级的API
+        // The hierarchy editor gets the lower-level API
         gradeApi: 'seller/promotion/exchange-cats/@id/children',
-        // 积分分类 表单
+        // Integral classification form
         pointsForm: {},
-        // 积分分类 图片
+        // Integral classification picture
         categroy_image: [],
-        // 积分分类 表单规则
+        // Rules for classifying forms of credits
         pointsRules: {
-          name: [this.MixinRequired('请输入分类名称！')],
-          image: [this.MixinRequired('请上传分类图片！')]
+          name: [this.MixinRequired('Please enter the classification name！')],
+          image: [this.MixinRequired('Please upload classified pictures！')]
         },
         itemBtns: [
-          { text: '编辑', onClick: this.handleEditPointsClassify },
-          { text: '删除', onClick: this.handleDeletePointsClassify, color: 'red' }
+          { text: 'edit', onClick: this.handleEditPointsClassify },
+          { text: 'delete', onClick: this.handleDeletePointsClassify, color: 'red' }
         ],
-        // 积分分类 dialog
+        // Integral classification dialog
         dialogPointsVisible: false
       }
     },
     methods: {
-      // 图片上传成功
+      // Picture uploaded successfully
       handleUploadSuccess(res) {
         this.$set(this.pointsForm, 'image', res.url)
         this.$refs['pointsForm'].validateField('image')
       },
-      /** 图片移除之后 */
+      /** Once the image is removed*/
       delGiftImg() {
         this.categroy_image = []
         this.pointsForm.image = ''
       },
-      /** 添加积分分类 */
+      /** Add integral classification*/
       handleAddPoints(level, parent, parentArray) {
         this.pointsForm = {
           parent_id: parent ? parent.id : 0
@@ -94,22 +94,22 @@
         this.categroy_image = []
         this.dialogPointsVisible = true
       },
-      /** 编辑积分分类 */
+      /** Edit integral classification*/
       handleEditPointsClassify(cat) {
         this.pointsForm = this.MixinClone(cat)
         this.categroy_image = this.pointsForm.image ? [{ name: 'image', url: this.pointsForm.image }] : []
         this.dialogPointsVisible = true
       },
-      /** 删除积分分类 */
+      /** Delete integral classification*/
       handleDeletePointsClassify(cat) {
-        this.$confirm('确定要删除这个积分分类吗？', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Are you sure you want to delete this integral category？', 'prompt', { type: 'warning' }).then(() => {
           API_Promotion.deleteExchangeCat(cat.category_id).then(() => {
-            this.$message.success('删除成功！')
+            this.$message.success('Delete the success！')
             this.$refs['gradeEditor'].refresh('delete')
           })
         }).catch(() => {})
       },
-      /** 积分分类表单提交 */
+      /** Credits classification form submission*/
       submitPointsForm() {
         this.$refs['pointsForm'].validate((valid) => {
           if (valid) {
@@ -117,18 +117,18 @@
             if (id) {
               API_Promotion.editExhcangeCat(id, this.pointsForm).then(response => {
                 this.dialogPointsVisible = false
-                this.$message.success('修改成功！')
+                this.$message.success('Modify the success！')
                 this.$refs['gradeEditor'].refresh('add', response)
               })
             } else {
               API_Promotion.addExchangeCat(this.pointsForm).then(response => {
                 this.dialogPointsVisible = false
-                this.$message.success('添加成功！')
+                this.$message.success('Add a success！')
                 this.$refs['gradeEditor'].refresh('add')
               })
             }
           } else {
-            this.$message.error('表单填写有误，请核对！')
+            this.$message.error('There is an error in the form. Please check it！')
             return false
           }
         })

@@ -1,11 +1,11 @@
 /**
- * 咨询管理API
+ * Management consultingAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取咨询列表
+ * Get a consultation list
  * @param params
  * @returns {Promise<any>}
  */
@@ -19,7 +19,7 @@ export function getConsultationList(params) {
 }
 
 /**
- * 回复咨询
+ * Reply to consulting
  * @param id
  * @param params
  * @returns {Promise<any>}

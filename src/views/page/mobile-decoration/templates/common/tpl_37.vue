@@ -34,7 +34,7 @@
   export default {
     name: 'tpl_37',
     mixins: [mixin],
-    title: '商品模块',
+    title: 'The commodity module',
     dataTpl: {
       tpl_id: 37,
       blockList: [

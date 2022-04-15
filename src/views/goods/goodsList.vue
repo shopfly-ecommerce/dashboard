@@ -8,13 +8,13 @@
       :loading="loading">
       <div slot="toolbar" class="inner-toolbar">
         <div class="toolbar-btns">
-          <!--商品状态 上架 下架-->
+          <!--State of goods on and off the shelves-->
           <div class="conditions">
-            <span>商品状态：</span>
+            <span>Status：</span>
             <el-select
               class="choose-machine"
               v-model="params.market_enable"
-              placeholder="请选择商品状态"
+              placeholder=" select status"
               @change="changeGoodsStatus"
               clearable>
               <el-option
@@ -24,89 +24,89 @@
                 :value="item.value"></el-option>
             </el-select>
           </div>
-          <!--商品类型-->
+          <!--Type-->
           <div class="conditions" style="margin-left:10px;">
-            <span>商品类型：</span>
+            <span>Type：</span>
             <el-select
               class="choose-machine"
               v-model="params.goods_type"
-              placeholder="请选择商品类型"
+              placeholder="select  type"
               @change="changeGoodsType"
               clearable>
-              <el-option key="NORMAL" label="正常商品" value="NORMAL"/>
-              <el-option key="POINT" label="积分商品" value="POINT"/>
+              <el-option key="NORMAL" label="Normal goods" value="NORMAL"/>
+              <el-option key="POINT" label="Integral goods" value="POINT"/>
             </el-select>
           </div>
-          <el-button @click="publishGoods" type="primary" style="margin-left: 10px">发布商品</el-button>
-          <el-button @click="gotoRecycle"  type="primary">回收站</el-button>
+          <el-button @click="publishGoods" type="primary" style="margin-left: 10px">Add product</el-button>
+          <el-button @click="gotoRecycle"  type="primary">Draft</el-button>
         </div>
         <div class="toolbar-search">
-          <en-table-search @search="searchEvent" placeholder="请输入商品名称"/>
+          <en-table-search @search="searchEvent" placeholder="Please enter the name of the item"/>
         </div>
       </div>
       <template slot="table-columns">
-        <el-table-column label="图片" width="120">
+        <el-table-column label="Image" width="120">
           <template slot-scope="scope">
             <a :href="`${MixinBuyerDomain}/goods/${scope.row.goods_id}`" target="_blank">
               <img :src="scope.row.thumbnail" class="goods-image"/>
             </a>
           </template>
         </el-table-column>
-	      <el-table-column label="商品编号" prop="sn" width="80"/>
-        <el-table-column label="商品ID" prop="goods_id" width="80"/>
-        <el-table-column label="商品名称">
+	      <el-table-column label="SN" prop="sn" width="80"/>
+        <el-table-column label="productID" prop="goods_id" width="80"/>
+        <el-table-column label="Name">
           <template slot-scope="scope">
             <a :href="`${MixinBuyerDomain}/goods/${scope.row.goods_id}`" target="_blank" style="color: #00a2d4;">{{ scope.row.goods_name }}</a>
           </template>
         </el-table-column>
-        <el-table-column label="价格" width="120">
+        <el-table-column label="Price" width="120">
           <template slot-scope="scope">{{ scope.row.price | unitPrice('￥') }}</template>
         </el-table-column>
-        <el-table-column label="库存" width="80">
-          <template slot-scope="scope">{{ scope.row.quantity }}件</template>
+        <el-table-column label="Inventory" width="80">
+          <template slot-scope="scope">{{ scope.row.quantity }}a</template>
         </el-table-column>
-        <el-table-column label="可用库存" width="80">
-          <template slot-scope="scope">{{ scope.row.enable_quantity }}件</template>
+        <el-table-column label="Available" width="80">
+          <template slot-scope="scope">{{ scope.row.enable_quantity }}a</template>
         </el-table-column>
-        <el-table-column label="创建时间" width="120">
+        <el-table-column label="Last update" width="120">
           <template slot-scope="scope">{{ scope.row.create_time | unixToDate('yyyy-MM-dd hh:mm') }}</template>
         </el-table-column>
-        <el-table-column  label="状态" width="80">
+        <el-table-column  label="Status" width="80">
           <template slot-scope="scope">
-            <span v-if="scope.row.market_enable === 1">上架</span>
-            <span v-if="scope.row.market_enable === 0">下架</span>
-            <div class="under-reason" v-if="scope.row.market_enable === 0" @click="showUnderReason(scope.row)">(下架原因)</div>
+            <span v-if="scope.row.market_enable === 1">save</span>
+            <span v-if="scope.row.market_enable === 0">off</span>
+            <div class="under-reason" v-if="scope.row.market_enable === 0" @click="showUnderReason(scope.row)">(From the shelves because)</div>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="300" style="text-align: left;">
+        <el-table-column label="Operation" width="300" style="text-align: left;">
           <template slot-scope="scope">
             <el-button
               size="mini"
               type="success"
-              @click="handleEditGoods(scope.row)">编辑
+              @click="handleEditGoods(scope.row)">edit
             </el-button>
             <el-button
               size="mini"
               type="danger"
               v-if="scope.row.market_enable === 0"
-              @click="handleDeleteGoods(scope.row)">删除
+              @click="handleDeleteGoods(scope.row)">delete
             </el-button>
             <el-button
               size="mini"
               type="danger"
               v-if="scope.row.market_enable === 1"
-              @click="handleUnderGoods(scope.row)">下架
+              @click="handleUnderGoods(scope.row)">off
             </el-button>
             <el-button
               type="primary"
               size="mini"
-              @click="handleStockGoods(scope.row)">库存
+              @click="handleStockGoods(scope.row)">Inventory
             </el-button>
             <el-button
               v-if="distributionSet"
               type="primary"
               size="mini"
-              @click="handleRebate(scope.row)">返利
+              @click="handleRebate(scope.row)">rebate
             </el-button>
           </template>
         </el-table-column>
@@ -123,14 +123,14 @@
         :total="pageData.data_total">
       </el-pagination>
     </en-table-layout>
-    <!--库存编辑-->
-    <el-dialog title="库存编辑" :visible.sync="goodsStockshow" width="35%" class="pop-sku">
+    <!--Inventory editor-->
+    <el-dialog title="Inventory editor" :visible.sync="goodsStockshow" width="35%" class="pop-sku">
       <div align="center">
         <el-form :model="goodsStockData" ref="goodsStockData" v-if="goodsStocknums === 1" style="width: 50%;" label-width="100px" :rules="rules">
-          <el-form-item label="库存" prop="quantity" >
+          <el-form-item label="Inventory" prop="quantity" >
             <el-input  v-model="goodsStockData.quantity" />
           </el-form-item>
-          <el-form-item label="待发货数" >
+          <el-form-item label="Pending Shipment" >
             <el-input v-model="goodsStockData.deliver_goods_quantity"  disabled />
           </el-form-item>
         </el-form>
@@ -156,29 +156,29 @@
         </en-table-layout>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="goodsStockshow = false">取 消</el-button>
-        <el-button type="primary" @click="reserveStockGoods">确 定</el-button>
+        <el-button @click="goodsStockshow = false">cancel</el-button>
+        <el-button type="primary" @click="reserveStockGoods">save</el-button>
       </div>
     </el-dialog>
-    <!--下架原因-->
-    <el-dialog title="下架原因" :visible.sync="isShowUnderReason" width="17%" >
+    <!--From the shelves because-->
+    <el-dialog title="From the shelves because" :visible.sync="isShowUnderReason" width="17%" >
       <div align="center">{{ under_reason }}</div>
     </el-dialog>
-    <!--分销返利-->
-    <el-dialog title="分销返利" :visible.sync="isShowDisRebate" width="24%">
+    <!--Distribution rebate-->
+    <el-dialog title="Distribution rebate" :visible.sync="isShowDisRebate" width="24%">
       <el-form :model="disRebateData" label-width="100px" :rules="disRules" ref="disRebateData" status-icon>
-        <el-form-item label="1级返利" prop="grade1Rebate">
+        <el-form-item label="1Rebate level" prop="grade1Rebate">
           <el-input v-model="disRebateData.grade1Rebate">
             <template slot="prepend">¥</template>
           </el-input>
         </el-form-item>
-        <el-form-item label="2级返利" prop="grade2Rebate">
+        <el-form-item label="2Rebate level" prop="grade2Rebate">
           <el-input v-model="disRebateData.grade2Rebate">
             <template slot="prepend">¥</template>
           </el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="reserveDisSet('disRebateData')">保存</el-button>
+          <el-button type="primary" @click="reserveDisSet('disRebateData')">save</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -197,13 +197,13 @@
     data() {
       const checkQuantity = (rule, value, callback) => {
         if (!value && value !== 0) {
-          return callback(new Error('库存不能为空'))
+          return callback(new Error('Inventory cannot be empty'))
         }
         setTimeout(() => {
           if (!/^[0-9]\d*$/.test(value)) {
-            callback(new Error('请输入整数'))
+            callback(new Error('Please enter an integer'))
           } else if (!(parseInt(value) >= 0 && parseInt(value) <= 99999999)) {
-            callback(new Error('请输入0 - 99999999之间的正整数'))
+            callback(new Error('Please enter the0 - 99999999Positive integer between'))
           } else {
             callback()
           }
@@ -211,13 +211,13 @@
       }
       const checkMoney = (rule, value, callback) => {
         if (!value) {
-          return callback(new Error('返利金额不能为空'))
+          return callback(new Error('The rebate amount cannot be empty'))
         }
         setTimeout(() => {
           if (!RegExp.money.test(value)) {
-            callback(new Error('请输入正确的金额'))
+            callback(new Error('Please enter the correct amount'))
           } else if (parseFloat(value) < 0 || parseFloat(value) > 99999999) {
-            callback(new Error('请输入0~99999999之间的金额'))
+            callback(new Error('Please enter the0~99999999Amount between'))
           } else {
             callback()
           }
@@ -225,90 +225,90 @@
       }
 
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10,
-          // 商品类型 默认为'' NORMAL 正常商品 POINT 积分商品
+          // The default item type is " NORMAL NORMAL item POINT POINT item
           goods_type: '',
           ...this.$route.query
         },
 
-        /** 列表数据 */
+        /** The list of data*/
         tableData: [],
 
-        /** 列表分页数据 */
+        /** List paging data*/
         pageData: [],
 
-        /** 商品状态列表 */
+        /** Commodity status list*/
         goodsStatusList: [
-          { value: 0, label: '未出售（已下架）' },
-          { value: 1, label: '出售中（已上架）' }
+          { value: 0, label: 'off（unsold）' },
+          { value: 1, label: 'on（on sale）' }
         ],
-        /** 当前商品id*/
+        /** The current commodityid*/
         goodsId: '',
 
-        /** 商品库存显示*/
+        /** Commodity inventory display*/
         goodsStockshow: false,
 
-        /** 是否显示下架原因 */
+        /** Whether to show the reason for removal*/
         isShowUnderReason: false,
 
-        /** 下架原因 */
+        /** From the shelves because*/
         under_reason: '',
 
-        /** 库存商品数量*/
+        /** Quantity of goods in stock*/
         goodsStocknums: 0,
 
-        /** 商品库存列表数据*/
+        /** Commodity inventory list data*/
         goodsStockData: null,
 
-        /** 商品库存列表表头数据 */
+        /** Commodity inventory list header data*/
         goodsStockTitle: [],
 
-        /** 要合并的列的位置数组 */
+        /** An array of positions for the columns to be merged*/
         concactArray: [],
 
-        /** 校验规则 */
+        /** Validation rules*/
         rules: {
           quantity: [
             { validator: checkQuantity, trigger: 'blur' }
           ]
         },
 
-        /** 店铺信息 */
+        /** Store information*/
         shopInfo: this.$store.getters.shopInfo,
 
-        /** 分销设置是否开启 1开启 0关闭 */
+        /** Whether the distribution Settings are enabled1open0close*/
         distributionSet: 0,
 
-        /** 是否显示分销返利弹框 */
+        /** Whether to display the distribution rebate pop-up box*/
         isShowDisRebate: false,
 
-        /** 分销返利数据 */
+        /** Distribution rebate data*/
         disRebateData: {
-          /** 商品id */
+          /** productid */
           goods_id: 0,
 
-          /** 1级返利 */
+          /** 1Rebate level*/
           grade1Rebate: 0,
 
-          /** 2级返利 */
+          /** 2Rebate level*/
           grade2Rebate: 0
 
         },
 
-        /** 分销返利校验规则 */
+        /** Distribution rebate check rules*/
         disRules: {
           grade1Rebate: [
-            { required: true, message: '1级返利金额不能为空', trigger: 'blur' },
+            { required: true, message: '1The amount of class ii rebate cannot be empty', trigger: 'blur' },
             { validator: checkMoney, trigger: 'blur' }
           ],
           grade2Rebate: [
-            { required: true, message: '2级返利金额不能为空', trigger: 'blur' },
+            { required: true, message: '2The amount of class ii rebate cannot be empty', trigger: 'blur' },
             { validator: checkMoney, trigger: 'blur' }
           ]
         }
@@ -327,30 +327,30 @@
       this.getDistributionSet()
     },
     methods: {
-      /** 库存边界限制 */
+      /** Stock boundary limit*/
       checkQuantity(value) {
         if (!value && value !== 0) {
-          this.$message.error('库存不能为空')
+          this.$message.error('Inventory cannot be empty')
         } else if (!RegExp.integer.test(value) && parseInt(value) !== 0) {
-          this.$message.error('请输入整数')
+          this.$message.error('Please enter an integer')
         } else if (!(parseInt(value) >= 0 && parseInt(value) <= 99999999)) {
-          this.$message.error('请输入0 - 99999999之间的正整数')
+          this.$message.error('Please enter the0 - 99999999Positive integer between')
         }
       },
 
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_GoodsList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_GoodsList()
       },
 
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       searchEvent(data) {
         this.params = {
           ...this.params,
@@ -359,7 +359,7 @@
         this.GET_GoodsList()
       },
 
-      /** 切换上下架状态*/
+      /** Switch up and down state*/
       changeGoodsStatus(val) {
         delete this.params.market_enable
         if (val !== '' && val !== -1) {
@@ -371,17 +371,17 @@
         this.GET_GoodsList()
       },
 
-      /** 下架*/
+      /** off*/
       handleUnderGoods(row) {
-        this.$confirm('确认下架此商品, 是否继续?', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Confirm off this item, Whether or not to continue?', 'prompt', { type: 'warning' }).then(() => {
           API_goods.underGoods(row.goods_id, {}).then(() => {
-            this.$message.success('下架成功')
+            this.$message.success('The successful')
             this.GET_GoodsList()
           })
         })
       },
 
-      /** 切换商品类型 */
+      /** Switching Product Types*/
       changeGoodsType(val) {
         delete this.params.goods_type
         if (val !== '') {
@@ -392,7 +392,7 @@
         }
         this.GET_GoodsList()
       },
-      /** 显示下架原因 */
+      /** Show reason for removal*/
       showUnderReason(row) {
         this.isShowUnderReason = false
         this.isShowUnderReason = true
@@ -412,33 +412,33 @@
         })
       },
 
-      /** 发布商品*/
+      /** Add product*/
       publishGoods() {
         this.$router.push({ name: 'goodPublish', params: { callback: this.GET_GoodsList }})
       },
 
-      /** 跳转回收站*/
+      /** Jump to the recycle bin*/
       gotoRecycle() {
         this.$router.push({ path: '/goods/recycleStation' })
       },
 
-      /** 编辑商品 isdraft 商品列表1*/
+      /** Edit commodityisdraft Products1*/
       handleEditGoods(row) {
         this.$router.push({ name: 'goodPublish', params: { goodsid: row.goods_id, isdraft: 1, callback: this.GET_GoodsList }})
       },
 
-      /** 删除商品 */
+      /** Delete the goods*/
       handleDeleteGoods(row) {
-        this.$confirm('确认删除此商品, 是否继续?', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Confirm deletion of this item, Whether or not to continue?', 'prompt', { type: 'warning' }).then(() => {
           const _ids = [row.goods_id].toString()
           API_goods.deleteGoods(_ids).then(() => {
             this.GET_GoodsList()
-            this.$message.success('删除商品成功！')
+            this.$message.success('Goods deleted successfully！')
           })
         })
       },
 
-      /** 合并数据相同的单元格 */
+      /** Merge cells with the same data*/
       arraySpanMethod({ row, column, rowIndex, columnIndex }) {
         if (columnIndex < this.goodsStockTitle.length - 3) {
           const _row = this.concactArray[rowIndex][columnIndex]
@@ -450,10 +450,10 @@
         }
       },
 
-      /** 计算要合并列的位置 */
+      /** Calculate the position of the column to be merged*/
       concactArrayCom(index, item) {
         let _isMerge = false
-        /** 循环列 先循环第一列 若相同则合并 再循环第二列 依次循环 若不相同 则不合并并终止此列循环开始下一列循环 */
+        /** If the first column is the same, it will be merged and then the second column will be recycled in turn. If the second column is not the same, it will not be merged and the column cycle will be terminated and the next column cycle will start*/
         let _currnetRow = []
         for (let i = 0, _len = this.goodsStockTitle.length - 3; i < _len; i++) {
           if (this.goodsStockTitle[i].prop === 'sku_id') {
@@ -477,28 +477,28 @@
         this.concactArray.push(_currnetRow)
       },
 
-      /** 库存 */
+      /** Inventory*/
       handleStockGoods(row) {
         this.goodsId = row.goods_id
         this.goodsStockshow = true
         API_goods.getGoodsStockList(row.goods_id, {}).then((response) => {
           this.goodsStockTitle = this.goodsStockData = []
           this.goodsStocknums = response.length
-          // 构造待发货字段
+          // Construct the field for shipment
           if (response.length > 1) {
             this.$nextTick(() => {
               response.forEach((key) => {
-                // 构造待发货字段
+                // Construct the field for shipment
                 this.$set(key, 'deliver_goods_quantity', parseInt(key.quantity) - parseInt(key.enable_quantity))
-                // 构造表头
+                // Construct the header
                 let _skus = key.spec_list.map(elem => {
                   return { label: elem.spec_name, prop: elem.spec_name }
                 })
                 this.goodsStockTitle = _skus.concat([
-                  { label: '规格id', prop: 'sku_id' },
-                  { label: '库存', prop: 'quantity' },
-                  { label: '待发货数', prop: 'deliver_goods_quantity' }])
-                // 构造表结构
+                  { label: 'specificationsid', prop: 'sku_id' },
+                  { label: 'Inventory', prop: 'quantity' },
+                  { label: 'Pending Shipment', prop: 'deliver_goods_quantity' }])
+                // Structural table structure
                 let _skuData = key.spec_list.map(elem => {
                   let _map = new Map().set(elem.spec_name, elem.spec_value)
                   let obj = Object.create(null)
@@ -514,7 +514,7 @@
                 }
                 this.goodsStockData.push(Object.assign(_key, ..._skuData))
               })
-              // 计算表格合并的位置
+              // Calculate the position of the table merge
               this.concactArray = []
               this.goodsStockData.forEach((key, index) => {
                 this.concactArrayCom(index, key)
@@ -522,7 +522,7 @@
             })
           } else {
             response.forEach((key) => {
-              // 构造待发货字段
+              // Construct the field for shipment
               this.$set(key, 'deliver_goods_quantity', parseInt(key.quantity) - parseInt(key.enable_quantity))
             })
             this.goodsStockData = response[0]
@@ -530,7 +530,7 @@
         })
       },
 
-      /** 保存库存商品 */
+      /** Keep goods in stock*/
       reserveStockGoods() {
         let _params = []
         if (Array.isArray(this.goodsStockData)) {
@@ -550,46 +550,46 @@
           return !(parseInt(key.quantity_count) >= 0 && parseInt(key.quantity_count) < 99999999) || !/^[0-9]\d*$/.test(key.quantity_count)
         })
         if (_res) {
-          this.$message.error('库存须为0 - 99999999之间的整数')
+          this.$message.error('Inventory should be0 - 99999999Integer between')
           return
         }
         API_goods.reserveStockGoods(this.goodsId, _params).then(() => {
           this.goodsStockshow = false
-          this.$message.success('库存商品保存成功')
+          this.$message.success('Inventory items saved successfully')
           this.GET_GoodsList()
         })
       },
-      /** 获取分销设置 */
+      /** Get distribution Settings*/
       getDistributionSet() {
         API_goods.getDistributionSet().then(response => {
           this.distributionSet = response.message
         })
       },
-      /** 返利 获取返利信息*/
+      /** Rebates Get rebate information*/
       handleRebate(row) {
         // setTimeout(() => { this.$refs['disRebateData'].resetFields() })
         API_goods.getDistributionInfo(row.goods_id).then(response => {
           this.isShowDisRebate = true
           this.disRebateData = {
-            /** 商品id */
+            /** productid */
             goods_id: response.goods_id || row.goods_id,
 
-            /** 1级返利 */
+            /** 1Rebate level*/
             grade1Rebate: response.grade1_rebate,
 
-            /** 2级返利 */
+            /** 2Rebate level*/
             grade2Rebate: response.grade2_rebate
           }
         })
         this.$nextTick(() => this.$refs['disRebateData'] && this.$refs['disRebateData'].resetFields())
       },
-      /** 保存分销返利信息 */
+      /** Save distribution rebate information*/
       reserveDisSet(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             API_goods.setDistributionInfo(this.disRebateData).then(() => {
               this.isShowDisRebate = false
-              this.$message.success('当前商品分销返利金额修改成功')
+              this.$message.success('The rebate amount of current commodity distribution has been successfully modified')
             })
           }
         })
@@ -681,7 +681,7 @@
 
     -webkit-line-clamp:2;
   }
-  /*下架原因*/
+  /*From the shelves because*/
   .under-reason {
     color: red;
     cursor: pointer;

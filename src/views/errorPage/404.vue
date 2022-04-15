@@ -9,8 +9,8 @@
       </div>
       <div class="bullshit">
         <div class="bullshit__headline">{{ message }}</div>
-        <div class="bullshit__info">请检查您输入的网址是否正确，请点击以下按钮返回主页或者发送错误报告</div>
-        <a href="/" class="bullshit__return-home">返回首页</a>
+        <div class="bullshit__info">Please check whether the url you entered is correct. Please click the following button to return to the home page or send an error report</div>
+        <a href="/" class="bullshit__return-home">Return to the home page</a>
       </div>
     </div>
   </div>
@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     message() {
-      return '特朗普说这个页面你不能进......'
+      return 'Trump said you cant go on this page......'
     }
   }
 }

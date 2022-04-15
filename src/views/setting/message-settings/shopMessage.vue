@@ -6,22 +6,22 @@
       :loading="loading"
     >
       <template slot="table-columns">
-        <el-table-column prop="tpl_code" label="消息模板代码"/>
-        <el-table-column prop="tpl_name" label="消息模板名称"/>
-        <el-table-column label="操作">
+        <el-table-column prop="tpl_code" label="Message template code"/>
+        <el-table-column prop="tpl_name" label="Message template name"/>
+        <el-table-column label="Operation">
           <template slot-scope="scope">
             <el-button
               size="mini"
               type="primary"
-              @click="handleEditSiteMessage(scope.$index, scope.row)">站内信</el-button>
+              @click="handleEditSiteMessage(scope.$index, scope.row)">Stand inside letter</el-button>
             <el-button
               size="mini"
               type="primary"
-              @click="handleEditSmsMessage(scope.$index, scope.row)">短信</el-button>
+              @click="handleEditSmsMessage(scope.$index, scope.row)">SMS</el-button>
             <el-button
               size="mini"
               type="primary"
-              @click="handleEditEmailMessage(scope.$index, scope.row)">邮件</el-button>
+              @click="handleEditEmailMessage(scope.$index, scope.row)">mail</el-button>
           </template>
         </el-table-column>
       </template>
@@ -38,18 +38,18 @@
       </el-pagination>
     </en-table-layout>
     <el-dialog
-      title="修改消息模板"
+      title="Modify the message template"
       :visible.sync="dialogVisible" width="500px"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
       <el-form :model="messageForm" label-width="130px">
         <template v-if="type === 'SITE'">
-          <el-form-item label="站内消息开启状态">
-            <el-radio v-model="messageForm.notice_state" label="OPEN">开启</el-radio>
-            <el-radio v-model="messageForm.notice_state" label="CLOSED">关闭</el-radio>
+          <el-form-item label="Station message open status">
+            <el-radio v-model="messageForm.notice_state" label="OPEN">open</el-radio>
+            <el-radio v-model="messageForm.notice_state" label="CLOSED">close</el-radio>
           </el-form-item>
-          <el-form-item label="站内消息模板内容">
+          <el-form-item label="Content of the message template within the site">
             <el-input
               type="textarea"
               :autosize="{ minRows: 3, maxRows: 5 }"
@@ -59,11 +59,11 @@
           </el-form-item>
         </template>
         <template v-if="type === 'SMS'">
-          <el-form-item label="短信开启状态">
-            <el-radio v-model="messageForm.sms_state" label="OPEN">开启</el-radio>
-            <el-radio v-model="messageForm.sms_state" label="CLOSED">关闭</el-radio>
+          <el-form-item label="SMS enabled status">
+            <el-radio v-model="messageForm.sms_state" label="OPEN">open</el-radio>
+            <el-radio v-model="messageForm.sms_state" label="CLOSED">close</el-radio>
           </el-form-item>
-          <el-form-item label="短信模板内容">
+          <el-form-item label="Text message template content">
             <el-input
               type="textarea"
               :autosize="{ minRows: 3, maxRows: 5 }"
@@ -73,11 +73,11 @@
           </el-form-item>
         </template>
         <template v-if="type === 'EMAILL'">
-          <el-form-item label="邮件开启状态">
-            <el-radio v-model="messageForm.email_state" label="OPEN">开启</el-radio>
-            <el-radio v-model="messageForm.email_state" label="CLOSED">关闭</el-radio>
+          <el-form-item label="Email open status">
+            <el-radio v-model="messageForm.email_state" label="OPEN">open</el-radio>
+            <el-radio v-model="messageForm.email_state" label="CLOSED">close</el-radio>
           </el-form-item>
-          <el-form-item label="邮件模板内容">
+          <el-form-item label="Mail template content">
             <el-input
               type="textarea"
               :autosize="{ minRows: 3, maxRows: 5 }"
@@ -88,8 +88,8 @@
         </template>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitMessageTemplate">确 定</el-button>
+        <el-button @click="dialogVisible = false">cancel</el-button>
+        <el-button type="primary" @click="submitMessageTemplate">save</el-button>
       </div>
     </el-dialog>
   </div>
@@ -102,21 +102,21 @@
     name: 'shopMessage',
     data() {
       return {
-        // 列表loading状态
+        // List loading status
         loading: false,
-        // 列表参数
+        // A list of parameters
         params: {
           page_no: 1,
           page_size: 10,
           type: 'SHOP'
         },
-        // 修改类型
+        // Modify the type
         type: 'SITE',
-        // 列表数据
+        // The list of data
         tableData: '',
-        // 消息模板 表单
+        // Message template form
         messageForm: {},
-        // 消息模板 dialog
+        // Message template dialog
         dialogVisible: false
       }
     },
@@ -124,48 +124,48 @@
       this.GET_MessageSettingList()
     },
     methods: {
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_MessageSettingList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_MessageSettingList()
       },
 
-      /** 设置站内信 */
+      /** Set up the station message*/
       handleEditSiteMessage(index, row) {
         this.type = 'SITE'
         this.messageForm = this.MixinClone(row)
         this.dialogVisible = true
       },
-      /** 设置短信 */
+      /** Set the message*/
       handleEditSmsMessage(index, row) {
         this.type = 'SMS'
         this.messageForm = this.MixinClone(row)
         this.dialogVisible = true
       },
-      /** 设置邮件 */
+      /** Set up the mail*/
       handleEditEmailMessage(index, row) {
         this.type = 'EMAILL'
         this.messageForm = this.MixinClone(row)
         this.dialogVisible = true
       },
 
-      /** 提交消息模板表单 */
+      /** Submit the message template form*/
       submitMessageTemplate() {
         const { id } = this.messageForm
         API_Message.editMessageTemplate(id, this.messageForm).then(response => {
           this.dialogVisible = false
-          this.$message.success('消息模板修改成功！')
+          this.$message.success('Message template modified successfully！')
           this.MixinSetTableData(this.tableData, 'id', id, response)
         })
       },
 
-      /** 获取短信网关列表 */
+      /** Gets the list of SMS gateways*/
       GET_MessageSettingList() {
         this.loading = true
         API_Message.getMessageTemplate(this.params).then(response => {

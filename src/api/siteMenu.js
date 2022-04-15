@@ -1,11 +1,11 @@
 /**
- * 导航栏相关API
+ * Navigation bar correlationAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取导航菜单列表
+ * Gets the navigation menu list
  * @param params
  */
 export function getSiteMenuList(params) {
@@ -18,7 +18,7 @@ export function getSiteMenuList(params) {
 }
 
 /**
- * 添加导航菜单
+ * Add navigation menu
  * @param client_type
  * @param params
  */
@@ -34,7 +34,7 @@ export function addSiteMenu(client_type = 'PC', params) {
 }
 
 /**
- * 获取导航菜单详情
+ * Get navigation menu details
  * @param id
  */
 export function getSiteMenuDetail(id) {
@@ -45,7 +45,7 @@ export function getSiteMenuDetail(id) {
 }
 
 /**
- * 修改导航菜单
+ * Modify the navigation menu
  * @param id
  * @param parmas
  */
@@ -58,7 +58,7 @@ export function editSiteMenu(id, parmas) {
 }
 
 /**
- * 删除导航菜单
+ * Delete navigation menu
  * @param id
  */
 export function deleteSiteMenu(id) {
@@ -69,7 +69,7 @@ export function deleteSiteMenu(id) {
 }
 
 /**
- * 导航排序
+ * Navigation sorting
  * @param id
  * @param sort_type [up|down]
  */

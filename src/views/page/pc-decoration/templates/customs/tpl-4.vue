@@ -5,12 +5,12 @@
         <template v-if="isEdit">
           <div class="edit-mask title" @click="handleEditTitle(columnIndex)">
             <button type="button" class="mask-btn-floor">
-              <svg-icon icon-class="pen-leather"></svg-icon>编辑
+              <svg-icon icon-class="pen-leather"></svg-icon>edit
             </button>
           </div>
           <div class="edit-mask tag" @click="handleEditTags(columnIndex)">
             <button type="button" class="mask-btn-floor">
-              <svg-icon icon-class="pen-leather"></svg-icon>编辑
+              <svg-icon icon-class="pen-leather"></svg-icon>edit
             </button>
           </div>
         </template>
@@ -74,33 +74,33 @@
   import mixin from '../mixin'
 
   export default {
-    name: 'tpl-4', // 模块名称
+    name: 'tpl-4', // The name of the module
     mixins: [mixin],
-    title: '模块4', // 模块标题
-    dataTpl: { // 默认数据结构
-      tpl_id: 4, // 模块ID
-      tpl_type: 'ADV', // 模块类型，默认为ADV。（目前只支持ADV）
-      columnList: [ // 数据列
+    title: 'The module4', // The module标题
+    dataTpl: { // Default data structure
+      tpl_id: 4, // The moduleID
+      tpl_type: 'ADV', // Module type, default isADV。（Currently only supportedADV）
+      columnList: [ // Data column
         {
-          // 当前列数据的标题
-          title: '大图楼层',
-          // 当前列数据的标题栏背景渐变色
+          // The title of the current column data
+          title: 'A larger floor',
+          // The title bar background of the current column data fades
           titleColors: ['#333377', '#488bad'],
-          // mixin.methods.emptyBlock方法用于创建空数据，第一个参数为数据块个数，第二个参数为区块类型
-          // 区块类型目前只有【TEXT=文本、IMAGE=图片】
-          // 当前列数据中的标签
+          // The mixin.methods.emptyBlock method is used to create empty data, with the first argument being the number of data blocks and the second argument being the block type
+          // The block type is currently only [TEXT= TEXT, IMAGE= IMAGE]
+          // The label in the current column data
           tagList: mixin.methods.emptyBlock(2, 'TEXT'),
-          // 当前列数据中的图片块，15表示要创建15个空数据块
+          // Image block in the current column data, 15 represents 15 empty blocks to be created
           blockList: mixin.methods.emptyBlock(1, 'IMAGE')
         },
         {
-          title: '四小图',
+          title: 'Four insets',
           titleColors: ['#333377', '#488bad'],
           tagList: mixin.methods.emptyBlock(2, 'TEXT'),
           blockList: mixin.methods.emptyBlock(4, 'IMAGE')
         },
         {
-          title: '一大三小',
+          title: 'A big list',
           titleColors: ['#333377', '#488bad'],
           tagList: mixin.methods.emptyBlock(2, 'TEXT'),
           blockList: mixin.methods.emptyBlock(4, 'IMAGE')

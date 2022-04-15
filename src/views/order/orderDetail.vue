@@ -3,10 +3,10 @@
     <div class="order-info" v-if="orderDetail">
       <!--accordion-->
       <el-collapse  class="order-collapse" :value="['order', 'promotions', 'other']">
-        <!--订单信息-->
-        <el-collapse-item title="订单信息" name="order">
+        <!--The order information-->
+        <el-collapse-item title="The order information" name="order">
           <div class="order-item">
-            <span class="item-name">收货地址：</span>
+            <span class="item-name">Shipping address：</span>
             <span class="item-value">
               {{ orderDetail.ship_province }}
               {{ orderDetail.ship_city }}
@@ -16,172 +16,172 @@
             </span>
           </div>
           <div class="order-item">
-            <span class="item-name">收货人：</span>
+            <span class="item-name">The consignee：</span>
             <span class="item-value">{{ orderDetail.ship_name }}</span>
           </div>
           <div class="order-item">
-            <span class="item-name">联系电话：</span>
+            <span class="item-name">Contact phone number：</span>
             <span class="item-value">{{ orderDetail.ship_mobile }}</span>
           </div>
           <hr>
-          <!--订单编号 付款方式 下单时间-->
+          <!--Order No. Payment Terms Order time-->
           <div class="order-item">
-            <span class="item-name">订单编号：</span>
+            <span class="item-name">Order no.：</span>
             <span class="item-value">{{ orderDetail.sn }}</span>
           </div>
           <div class="order-item">
-            <span class="item-name">付款方式：</span>
+            <span class="item-name">Payment method：</span>
             <span class="item-value">{{ orderDetail.payment_type | paymentTypeFilter }}</span>
           </div>
           <div class="order-item">
-            <span class="item-name">付款渠道：</span>
-            <span class="item-value">{{ orderDetail.payment_method_name || '无' }}</span>
+            <span class="item-name">Payment channel：</span>
+            <span class="item-value">{{ orderDetail.payment_method_name || 'There is no' }}</span>
           </div>
           <div class="order-item">
-            <span class="item-name">下单时间：</span>
+            <span class="item-name">Create time：</span>
             <span class="item-value">{{ orderDetail.create_time | unixToDate }}</span>
           </div>
           <hr>
-          <!--相关费用-->
+          <!--Related fees-->
           <div class="order-item">
-            <span class="item-name">商品总价：</span>
+            <span class="item-name">Price：</span>
             <span class="item-value">{{ orderDetail.goods_price | unitPrice('¥') }}</span>
           </div>
           <div class="order-item">
-            <span class="item-name">运费：</span>
+            <span class="item-name">freight：</span>
             <span class="item-value">{{ orderDetail.shipping_price | unitPrice('¥') }}</span>
           </div>
           <div class="order-item">
-            <span class="item-name">订单总价：</span>
+            <span class="item-name">Total：</span>
             <span class="item-value">{{ orderDetail.order_price | unitPrice('¥') }}</span>
           </div>
         </el-collapse-item>
-        <!--促销信息-->
-        <el-collapse-item title="促销信息" name="promotions" v-if="orderDetail.cash_back || orderDetail.gift_point || orderDetail.coupon_price">
+        <!--Promotional information-->
+        <el-collapse-item title="Promotional information" name="promotions" v-if="orderDetail.cash_back || orderDetail.gift_point || orderDetail.coupon_price">
           <div class="order-item" v-if="orderDetail.cash_back">
-            <span class="item-name">返现金额：</span>
+            <span class="item-name">Cashback amount：</span>
             <span class="item-value">-{{ orderDetail.cash_back | unitPrice('¥') }}</span>
           </div>
           <div class="order-item" v-if="orderDetail.coupon_price">
-            <span class="item-name">优惠券抵扣：</span>
+            <span class="item-name">Coupon deduction：</span>
             <span class="item-value">-{{ orderDetail.coupon_price | unitPrice('¥') }}</span>
           </div>
           <div class="order-item" v-if="orderDetail.use_point">
-            <span class="item-name">积分抵扣：</span>
-            <span class="item-value">-{{ orderDetail.use_point }}积分</span>
+            <span class="item-name">Points deduction：</span>
+            <span class="item-value">-{{ orderDetail.use_point }}point</span>
           </div>
           <div class="order-item" v-if="orderDetail.gift_point">
-            <span class="item-name">赠送积分：</span>
+            <span class="item-name">Present integral：</span>
             <span class="item-value">{{ orderDetail.gift_point }}</span>
           </div>
         </el-collapse-item>
-        <!--其他信息（发票、备注）-->
-        <el-collapse-item title="其他信息（发票、备注）" name="other">
+        <!--Other information（invoice、note）-->
+        <el-collapse-item title="Other information（invoice、note）" name="other">
           <div class="order-item">
-            <span class="item-name">订单备注：</span>
-            <span class="item-value" style="overflow: hidden;word-break: break-word;">{{ orderDetail.remark || '无' }}</span>
+            <span class="item-name">The order note：</span>
+            <span class="item-value" style="overflow: hidden;word-break: break-word;">{{ orderDetail.remark || 'There is no' }}</span>
           </div>
           <div class="order-item" v-if="orderDetail.cancel_reason">
-            <span class="item-name">取消原因：</span>
+            <span class="item-name">Cancel the reason：</span>
             <span class="item-value" style="overflow: hidden;word-break: break-word;">{{ orderDetail.cancel_reason }}</span>
           </div>
           <div class="order-item">
-            <span class="item-name">送货时间：</span>
+            <span class="item-name">Delivery time：</span>
             <span class="item-value">{{ orderDetail.receive_time }}</span>
           </div>
           <template v-if="orderDetail.receipt_history">
             <div class="order-item">
-              <span class="item-name">发票类型：</span>
+              <span class="item-name">Invoice type：</span>
               <span class="item-value">{{ orderDetail.receipt_history.receipt_type }}</span>
             </div>
             <div class="order-item">
-              <span class="item-name">发票抬头：</span>
+              <span class="item-name">The invoice looked up：</span>
               <span class="item-value">{{ orderDetail.receipt_history.receipt_title }}</span>
             </div>
             <div v-if="orderDetail.receipt_history.tax_no" class="order-item">
-              <span class="item-name">税号：</span>
+              <span class="item-name">ein：</span>
               <span class="item-value">{{ orderDetail.receipt_history.tax_no }}</span>
             </div>
             <div class="order-item">
-              <span class="item-name">发票内容：</span>
+              <span class="item-name">The invoice content：</span>
               <span class="item-value">{{ orderDetail.receipt_history.receipt_content }}</span>
             </div>
           </template>
         </el-collapse-item>
       </el-collapse>
-      <!--订单状态 / 物流信息-->
+      <!--Status/ Logistics information-->
       <div class="order-status-info">
-        <!--订单状态-->
+        <!--Status-->
         <div v-if="logisticsStatus">
           <div class="order-status">
-            <i class="el-icon-check"></i>  订单状态：{{ orderDetail.order_status_text }}
+            <i class="el-icon-check"></i>  Status：{{ orderDetail.order_status_text }}
           </div>
           <div class="order-item">
-            <span class="item-name"> 订单备注：</span>
-            <span class="item-value" style="overflow: hidden;word-break: break-word;">{{ orderDetail.remark || '无' }}</span>
+            <span class="item-name"> The order note：</span>
+            <span class="item-value" style="overflow: hidden;word-break: break-word;">{{ orderDetail.remark || 'There is no' }}</span>
           </div>
           <div class="order-item">
-            <span class="item-name">送货时间：</span>
+            <span class="item-name">Delivery time：</span>
             <span class="item-value">{{ orderDetail.receive_time }}</span>
           </div>
           <template v-if="orderDetail.receipt_history">
             <div class="order-item">
-              <span class="item-name">发票类型：</span>
+              <span class="item-name">Invoice type：</span>
               <span class="item-value">{{ orderDetail.receipt_history.receipt_type }}</span>
             </div>
             <div class="order-item">
-              <span class="item-name">发票抬头：</span>
+              <span class="item-name">The invoice looked up：</span>
               <span class="item-value">{{ orderDetail.receipt_history.receipt_title }}</span>
             </div>
             <div v-if="orderDetail.receipt_history.tax_no" class="order-item">
-              <span class="item-name"> 税 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 号：</span>
+              <span class="item-name"> tax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No.：</span>
               <span class="item-value">{{ orderDetail.receipt_history.tax_no }}</span>
             </div>
             <div class="order-item">
-              <span class="item-name">发票内容：</span>
+              <span class="item-name">The invoice content：</span>
               <span class="item-value">{{ orderDetail.receipt_history.receipt_content }}</span>
             </div>
           </template>
           <div class="order-item" v-if="isLooklogistics">
-            <span class="item-name">物流信息：</span>
+            <span class="item-name">Logistics information：</span>
             <span class="item-value">
-            <el-button type="text" @click="looklogistics">点击查看</el-button>
+            <el-button type="text" @click="looklogistics">Click to view</el-button>
           </span>
           </div>
         </div>
-        <!--物流信息-->
+        <!--Logistics information-->
         <div v-if="!logisticsStatus">
           <en-table-layout
             :tableData="logisticsData"
             :loading="loading">
             <div slot="toolbar" class="inner-toolbar">
-              <span style="line-height: 35px;">物流信息</span>
+              <span style="line-height: 35px;">Logistics information</span>
             </div>
             <template slot="table-columns">
-              <!--公司名称-->
-              <el-table-column prop="name" label="公司名称"/>
-              <!--物流单号-->
-              <el-table-column label="物流单号">
+              <!--The name of the company-->
+              <el-table-column prop="name" label="The name of the company"/>
+              <!--Logistics single number-->
+              <el-table-column label="Logistics single number">
                 <template slot-scope="scope">
                   <el-input v-model="scope.row.ship_no" @change="() => { scope.row.ship_no = scope.row.ship_no.trim() }" :maxlength="20"></el-input>
                 </template>
               </el-table-column>
-              <!--是否支持电子面单-->
-              <el-table-column label="是否支持电子面单">
+              <!--Whether electronic planes are supported-->
+              <el-table-column label="Whether electronic planes are supported">
                 <template slot-scope="scope">
-                  <span v-if="scope.row.is_waybill === 0">不支持电子面单</span>
+                  <span v-if="scope.row.is_waybill === 0">Electronic planes are not supported</span>
                   <el-button
                     type="text"
                     v-if="scope.row.is_waybill === 1"
-                    @click="produceElectronicSurface(scope.row)">生成电子面单</el-button>
+                    @click="produceElectronicSurface(scope.row)">Generate an electron plane</el-button>
                 </template>
               </el-table-column>
-              <!--操作-->
-              <el-table-column label="操作" width="150">
+              <!--Operation-->
+              <el-table-column label="Operation" width="150">
                 <template slot-scope="scope">
                   <el-button
                     plain type="primary"
-                    @click="deliverGoods(scope.row)">发货
+                    @click="deliverGoods(scope.row)">The delivery
                   </el-button>
                 </template>
               </el-table-column>
@@ -189,40 +189,40 @@
           </en-table-layout>
         </div>
         <div class="opera-btn">
-          <el-button v-if="isShowEditShipName" plain type="info" @click="adjustConsignee" >修改收货人信息</el-button>
-          <el-button v-if="isShowEditOrderPrice" plain type="info" @click="adjustPrice" >调整价格</el-button>
+          <el-button v-if="isShowEditShipName" plain type="info" @click="adjustConsignee" >Modify consignee information</el-button>
+          <el-button v-if="isShowEditOrderPrice" plain type="info" @click="adjustPrice" >Adjust the price</el-button>
           <el-button
             plain
             type="info"
             size="mini"
             v-if="orderDetail.order_operate_allowable_vo.allow_pay"
             @click="confirmPay"
-          >确认收款</el-button>
+          >Confirm receipt</el-button>
           <el-button
             plain
             type="info"
             size="mini"
             v-if="orderDetail.order_operate_allowable_vo.allow_cancel"
             @click="cancelOrder"
-          >取消订单</el-button>
+          >Cancel the order</el-button>
         </div>
       </div>
     </div>
-    <!--订单状态 步骤条-->
+    <!--Order status step bar-->
     <el-steps  align-center style="margin-top: 20px;" simple>
       <el-step v-for="item in stepList" :title="item.text" :key="item.text" :status="item.show_status"></el-step>
     </el-steps>
-    <!--商品列表-->
+    <!--Products-->
     <div>
       <el-table :data="productList" :header-cell-style="{textAlign: 'center'}">
-        <el-table-column label="商品列表" width="180">
+        <el-table-column label="Products" width="180">
           <template slot-scope="scope">
             <a :href="`${MixinBuyerDomain}/goods/${scope.row.goods_id}`" target="_blank">
               <img :src="scope.row.goods_image" class="goods-image"/>
             </a>
           </template>
         </el-table-column>
-        <el-table-column label="商品名称">
+        <el-table-column label="Name">
           <template slot-scope="scope">
             <a :href="`${MixinBuyerDomain}/goods/${scope.row.goods_id}`" target="_blank" style="color: #00a2d4;">{{ scope.row.name }}</a>
             <p class="sku-spec">{{ scope.row | formatterSkuSpec }}</p>
@@ -231,41 +231,41 @@
             </p>
           </template>
         </el-table-column>
-        <el-table-column label="单价（元）" width="150">
+        <el-table-column label="Price（USD）" width="150">
           <template slot-scope="scope">{{ scope.row.original_price | unitPrice('￥') }}</template>
         </el-table-column>
-        <el-table-column prop="num" label="数量" width="120"/>
-        <el-table-column label="小计" width="120">
+        <el-table-column prop="num" label="Quantity" width="120"/>
+        <el-table-column label="subtotal" width="120">
           <template slot-scope="scope">{{ (scope.row.original_price * scope.row.num) | unitPrice('￥') }}</template>
         </el-table-column>
       </el-table>
     </div>
-    <!--赠品列表-->
+    <!--Gift list-->
     <div v-if="orderDetail && orderDetail.gift_list && orderDetail.gift_list.length">
       <el-table :data="orderDetail.gift_list" :header-cell-style="{textAlign: 'center'}">
-        <el-table-column label="赠品列表" width="180">
+        <el-table-column label="Gift list" width="180">
           <template slot-scope="scope">
             <a :href="scope.row.gift_img" target="_blank">
               <img :src="scope.row.gift_img" class="goods-image"/>
             </a>
           </template>
         </el-table-column>
-        <el-table-column label="赠品名称" >
+        <el-table-column label="Name of gift" >
           <template slot-scope="scope">
             <a :href="scope.row.gift_img" target="_blank">{{ scope.row.gift_name }}</a>
           </template>
         </el-table-column>
-        <el-table-column label="赠品价格" width="150">
+        <el-table-column label="Present price" width="150">
           <template slot-scope="scope">{{ scope.row.gift_price | unitPrice('￥') }}</template>
         </el-table-column>
         <el-table-column label="" width="120"/>
         <el-table-column label="" width="120"/>
       </el-table>
     </div>
-    <!--调整价格 / 修改收货人信息-->
+    <!--Adjust the price/ Modify consignee information-->
     <el-dialog :title="dialogTitle" :visible.sync="orderDetailShow" :width="dialogWidth">
       <div align="center">
-        <!--调整订单总价-->
+        <!--Adjust the total price of order-->
         <el-form
           v-show="triggerStatus === 1"
           status-icon
@@ -273,12 +273,12 @@
           :rules="orderRules"
           label-position="right">
           <el-form-item prop="adjustedPrice">
-            <el-input placeholder="请输入订单总价" v-model="adjustedPrice" @change="() => { adjustedPrice = adjustedPrice.trim() }">
+            <el-input placeholder="Please enter the total price of the order" v-model="adjustedPrice" @change="() => { adjustedPrice = adjustedPrice.trim() }">
               <template slot="prepend">¥</template>
             </el-input>
           </el-form-item>
         </el-form>
-        <!--修改收货人信息-->
+        <!--Modify consignee information-->
         <el-form
           :model="ConsigneeForm"
           ref="ConsigneeForm"
@@ -287,42 +287,42 @@
           v-show="triggerStatus === 2"
           label-position="right"
           label-width="120px">
-          <el-form-item label="收货人：" prop="ship_name" >
-            <el-input  v-model="ConsigneeForm.ship_name" @change="() => { ConsigneeForm.ship_name = ConsigneeForm.ship_name.trim() }" maxlength="20" placeholder="限20字"></el-input>
+          <el-form-item label="The consignee：" prop="ship_name" >
+            <el-input  v-model="ConsigneeForm.ship_name" @change="() => { ConsigneeForm.ship_name = ConsigneeForm.ship_name.trim() }" maxlength="20" placeholder="limit20word"></el-input>
           </el-form-item>
-          <el-form-item label="手机：" prop="ship_mobile" >
+          <el-form-item label="Mobile phone：" prop="ship_mobile" >
             <el-input  v-model.number="ConsigneeForm.ship_mobile" maxlength="11" ></el-input>
           </el-form-item>
-          <el-form-item label="配送地区：" prop="region" class="area-select">
+          <el-form-item label=" ：" prop="region" class="area-select">
             <en-region-picker :api="MixinRegionApi" :default="areas" @changed="handleChangeArea"></en-region-picker>
           </el-form-item>
-          <el-form-item label="详细地址：" prop="ship_addr" >
-            <el-input  v-model="ConsigneeForm.ship_addr" @change="() => { ConsigneeForm.ship_addr = ConsigneeForm.ship_addr.trim() }" placeholder="限20字" maxlength="20"></el-input>
+          <el-form-item label="Detailed address：" prop="ship_addr" >
+            <el-input  v-model="ConsigneeForm.ship_addr" @change="() => { ConsigneeForm.ship_addr = ConsigneeForm.ship_addr.trim() }" placeholder="limit20word" maxlength="20"></el-input>
           </el-form-item>
-          <el-form-item label="送货时间：" prop="receive_time" style="text-align: left;">
-            <el-select v-model="ConsigneeForm.receive_time" placeholder="请选择">
-              <el-option label="任意时间" value="任意时间"></el-option>
-              <el-option label="仅工作日" value="仅工作日"></el-option>
-              <el-option label="仅休息日" value="仅休息日"></el-option>
+          <el-form-item label="Delivery time：" prop="receive_time" style="text-align: left;">
+            <el-select v-model="ConsigneeForm.receive_time" placeholder="Please select">
+              <el-option label="At any time" value="At any time"></el-option>
+              <el-option label="Only working days" value="Only working days"></el-option>
+              <el-option label="Only holiday" value="Only holiday"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="订单备注：" prop="remark">
-            <el-input  type="textarea" rows="4" v-model="ConsigneeForm.remark" placeholder="限200字" maxlength="200"></el-input>
+          <el-form-item label="The order note：" prop="remark">
+            <el-input  type="textarea" rows="4" v-model="ConsigneeForm.remark" placeholder="limit200word" maxlength="200"></el-input>
           </el-form-item>
         </el-form>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="cancelOrderDetail">取 消</el-button>
-        <el-button type="primary" @click="reserveOrderDetail">确 定</el-button>
+        <el-button @click="cancelOrderDetail">cancel</el-button>
+        <el-button type="primary" @click="reserveOrderDetail">save</el-button>
       </div>
     </el-dialog>
-    <!--查看物流信息-->
+    <!--View logistics information-->
     <el-dialog :visible.sync="logisticsShow" width="400px" align="center">
       <div slot="title">
-        <h3 style="margin: 10px 0;">物流信息</h3>
+        <h3 style="margin: 10px 0;">Logistics information</h3>
         <div class="logistics-base">
-          <span>物流公司：{{ logisticsName }}</span>
-          <span>快递单号：{{ logisticsNo }}</span>
+          <span>Logistics company：{{ logisticsName }}</span>
+          <span>Courier number：{{ logisticsNo }}</span>
         </div>
       </div>
       <div class="logistics-info">
@@ -336,15 +336,15 @@
               :description="row.context"/>
           </el-steps>
         </div>
-        <div v-else>暂无物流信息，请您耐心等待！</div>
+        <div v-else>There is no logistics information, please wait patiently！</div>
       </div>
     </el-dialog>
-    <!--电子面单-->
-    <el-dialog title="电子面单" :visible.sync="electronicSurfaceShow" width="30%" align="center">
-      <!--主体-->
+    <!--Electronic surface single-->
+    <el-dialog title="Electronic surface single" :visible.sync="electronicSurfaceShow" width="30%" align="center">
+      <!--The main body-->
       <div class="electronic-surface" ref="electronicSurface" id="electronicSurface"></div>
       <div slot="footer" align="right">
-        <el-button type="primary" @click="handlePrint">打印</el-button>
+        <el-button type="primary" @click="handlePrint">print</el-button>
       </div>
     </el-dialog>
   </div>
@@ -364,149 +364,149 @@ export default {
     [CategoryPicker.name]: CategoryPicker
   },
   data() {
-    /** 金额 */
+    /** The amount of*/
     const checkMoney = (rule, value, callback) => {
       if (!this.adjustedPrice && this.adjustedPrice !== 0) {
-        return callback(new Error('订单总价不能为空'))
+        return callback(new Error('The total price of the order cannot be empty'))
       }
       setTimeout(() => {
         if (!RegExp.money.test(this.adjustedPrice)) {
-          callback(new Error('请填写正确的金额'))
+          callback(new Error('Please fill in the correct amount'))
         } else {
           callback()
         }
       }, 1000)
     }
-    /** 手机号 */
+    /** Mobile phone no.*/
     const checkPhone = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error('手机号不能为空'))
+        return callback(new Error('The cell phone number cannot be empty'))
       }
       setTimeout(() => {
         if (!RegExp.mobile.test(value)) {
-          callback(new Error('请填写正确的手机号'))
+          callback(new Error('Please fill in the correct cell phone number'))
         } else {
           callback()
         }
       }, 1000)
     }
     return {
-      /** 列表loading状态 */
+      /** The list ofloadingStatus*/
       loading: false,
 
-      /** 订单详情数据 */
+      /** Order details data*/
       orderDetail: null,
 
-      /** 订单sn */
+      /** The ordersn */
       sn: '',
 
-      /** 产品列表 */
+      /** Product list*/
       productList: [],
 
-      /** 是否可以查看物流信息 默认不可以*/
+      /** Check whether the logistics information can be viewed. By default, no*/
       isLooklogistics: false,
 
-      /** 是否显示修改收货人信息按钮 默认不显示*/
+      /** Display The button for modifying consignee information is not displayed by default*/
       isShowEditShipName: false,
 
-      /** 是否显示调整价格按钮  默认不显示*/
+      /** Display price adjustment button Is not displayed by default*/
       isShowEditOrderPrice: false,
 
-      /** 是否显示确认收款按钮 默认不显示 */
+      /** The confirm payment button is not displayed by default*/
       isShowConfirmReceive: false,
 
-      /** 订单状态/物流信息状态显示 */
+      /** Status/Logistics information status display*/
       logisticsStatus: true,
 
-      /** 物流信息 */
+      /** Logistics information*/
       logisticsData: [],
 
-      /** 物流信息弹框是否显示 */
+      /** Whether the logistics information pop-up box is displayed*/
       logisticsShow: false,
 
-      /** 是否显示调整价格/修改收货人信息显示 */
+      /** Whether to display adjustment prices/Modify the consignee information display*/
       orderDetailShow: false,
 
-      /** 发货物流信息 */
+      /** Delivery logistics information*/
       logisticsInfoList: [],
 
-      /** 物流快递名称 */
+      /** Name of Logistics Express*/
       logisticsName: '',
 
-      /** 物流快递单号 */
+      /** Logistics express tracking number*/
       logisticsNo: '',
 
-      /** 弹框标题 */
-      dialogTitle: '调整订单总价',
+      /** Bounced title*/
+      dialogTitle: 'Adjust the total price of order',
 
-      /** 弹框宽度 */
+      /** Bounced width*/
       dialogWidth: '25%',
 
-      /** 触发状态 1调整订单总价 2修改收货人信息*/
+      /** State trigger1Adjust the total price of order2Modify consignee information*/
       triggerStatus: -1,
 
-      /** 被调整的价格 */
+      /** The adjusted price*/
       adjustedPrice: 0,
 
-      /** 收货人信息 */
+      /** Consignee information*/
       ConsigneeForm: {
-        /** 收货人 */
+        /** The consignee*/
         ship_name: '',
 
-        /** 手机号码 */
+        /** Mobile phone number*/
         ship_mobile: '',
 
-        /** 地区 */
+        /** region*/
         region: '',
 
-        /** 详细地址 */
+        /** Detailed address*/
         ship_addr: '',
 
-        /** 送货时间 */
+        /** Delivery time*/
         receive_time: '',
 
-        /** 备注 */
+        /** note*/
         remark: ''
       },
 
-      /** 地区信息*/
+      /** Regional information*/
       areas: [],
 
-      /** 步骤list*/
+      /** stepslist*/
       stepList: [],
 
-      /** 是否显示电子面单 */
+      /** Whether to display an electronic sheet*/
       electronicSurfaceShow: false,
 
-      /** 校验规则 */
+      /** Validation rules*/
       orderRules: {
-        /** 调整价格 */
+        /** Adjust the price*/
         adjustedPrice: [
           { validator: checkMoney, trigger: 'blur' }
         ],
 
-        /** 收货人 */
+        /** The consignee*/
         ship_name: [
-          { required: true, message: '请填写收货人姓名', trigger: 'blur' }
+          { required: true, message: 'Please fill in the name of the consignee', trigger: 'blur' }
         ],
 
-        /** 手机号 */
+        /** Mobile phone no.*/
         ship_mobile: [
-          { required: true, message: '请填写手机号', trigger: 'blur' },
+          { required: true, message: 'Please fill in your cell phone number', trigger: 'blur' },
           { validator: checkPhone, trigger: 'blur' }
         ],
 
-        /** 详细地址 */
+        /** Detailed address*/
         ship_addr: [
-          { required: true, message: '请填写详细地址', trigger: 'blur' },
-          { mix: 5, max: 100, message: '详细地址为5～100个字符', trigger: 'blur' }
+          { required: true, message: 'Please fill in the detailed address', trigger: 'blur' },
+          { mix: 5, max: 100, message: 'The detailed address is5～100A character', trigger: 'blur' }
         ]
       }
     }
   },
   filters: {
     paymentTypeFilter(val) {
-      return val === 'ONLINE' ? '在线支付' : '货到付款'
+      return val === 'ONLINE' ? 'Online payment' : 'Cash on delivery'
     }
   },
   beforeRouteUpdate(to, from, next) {
@@ -523,45 +523,45 @@ export default {
     this.GET_OrderDetail()
   },
   methods: {
-    /** 获取订单详情信息 */
+    /** Get order details*/
     GET_OrderDetail() {
       this.loading = true
       API_order.getOrderDetail(this.sn).then(response => {
         this.loading = false
-        // 订单信息
+        // The order information
         this.orderDetail = response
-        // 商品信息
+        // Commodity information
         this.productList = this.orderDetail.order_sku_list
-        // 物流信息 快递单号 快递公司
+        // Logistics information express tracking No. Express company
         this.logisticsNo = this.orderDetail.ship_no
         this.logisticsName = this.orderDetail.logi_name
-        // 修改收货人信息地区选择器信息
+        // Modify consignee information area selector information
         this.areas = [this.orderDetail.ship_province_id, this.orderDetail.ship_city_id,
           this.orderDetail.ship_county_id || -1, this.orderDetail.ship_town_id || -1]
-        // 步骤条信息
+        // Step bar information
         this.getStepList()
-        // 是否可发货
+        // Can you deliver the goods?
         if (this.orderDetail.order_operate_allowable_vo.allow_ship) {
           this.getLogisticsCompanies()
         } else {
           this.logisticsStatus = true
         }
 
-        // 是否可以修改收货人信息
+        // Can the consignees information be modified
         this.isShowEditShipName = !!this.orderDetail.order_operate_allowable_vo.allow_edit_consignee
 
-        // 是否可以调整价格
+        // Can you adjust the price
         this.isShowEditOrderPrice = !!this.orderDetail.order_operate_allowable_vo.allow_edit_price
 
-        // 是否可以确认收款
+        // Can we confirm the receipt
         this.isShowConfirmReceive = !!this.orderDetail.order_operate_allowable_vo.allow_pay
 
-        // 是否可以查看物流信息
+        // Can you check the logistics information
         this.isLooklogistics = !!this.orderDetail.order_operate_allowable_vo.allow_check_express
       })
     },
 
-    /** 获取订单步骤条信息 */
+    /** Gets the order step bar information*/
     getStepList() {
       API_order.getStepList(this.sn).then(response => {
         this.stepList = response
@@ -581,7 +581,7 @@ export default {
       })
     },
 
-    /** 获取物流公司信息列表 */
+    /** Get a list of logistics company information*/
     getLogisticsCompanies() {
       API_logistics.getExpressCompanyList({ page_size: 998 }).then(response => {
         this.logisticsData = response.data
@@ -595,7 +595,7 @@ export default {
       })
     },
 
-    /** 查看物流信息*/
+    /** View logistics information*/
     looklogistics() {
       this.logisticsShow = false
       const _params = {
@@ -610,23 +610,23 @@ export default {
       })
     },
 
-    /** 调整价格 */
+    /** Adjust the price*/
     adjustPrice() {
-      this.dialogTitle = '调整订单总价'
+      this.dialogTitle = 'Adjust the total price of order'
       this.dialogWidth = '15%'
       this.orderDetailShow = true
       this.triggerStatus = 1
       this.adjustedPrice = this.orderDetail.order_price
     },
 
-    /** 生成电子面单 */
+    /** Generate an electron plane*/
     produceElectronicSurface(row) {
       const _params = {
         order_sn: this.sn,
         logistics_id: row.id,
         logistics_name: row.name
       }
-      this.$confirm('确认生成电子面单?', '提示', { type: 'warning' }).then(() => {
+      this.$confirm('Verify that the electronic plane sheet is generated?', 'prompt', { type: 'warning' }).then(() => {
         API_order.generateElectronicSurface(_params).then((response) => {
           this.electronicSurfaceShow = true
           // this.logisticsData.forEach(key => {
@@ -642,122 +642,122 @@ export default {
       })
     },
 
-    /** 打印电子面单 */
+    /** Print the electronic sheet*/
     handlePrint() {
       Print({
         printable: 'electronicSurface',
         type: 'html',
-        // 继承原来的所有样式
+        // Inherit all the original styles
         targetStyles: ['*']
       })
     },
 
-    /** 发货 */
+    /** The delivery*/
     deliverGoods(row) {
       if (!row.ship_no) {
-        this.$message.error('请填写快递单号')
+        this.$message.error('Please fill in the tracking number')
         return
       } else if (!/^[A-Za-z0-9]+$/.test(row.ship_no)) {
-        this.$message.error('快递单号不符合规则，请输入字母或者数字')
+        this.$message.error('The tracking number does not conform to the rules, please enter letters or Numbers')
         return
       }
       const _params = {
-        /** 发货单号 */
+        /** Invoice no.*/
         ship_no: row.ship_no,
-        /** 物流公司id */
+        /** Logistics companyid */
         logi_id: row.id,
-        /** 物流公司名称 */
+        /** Name of logistics Company*/
         logi_name: row.name
       }
-      this.$confirm('确认发货?', '提示', { type: 'warning' }).then(() => {
+      this.$confirm('Confirm the delivery?', 'prompt', { type: 'warning' }).then(() => {
         API_order.deliveryGoods(this.sn, _params).then(() => {
-          this.$message.success('发货成功')
+          this.$message.success('Successful delivery')
           this.GET_OrderDetail()
         })
       })
     },
 
-    /** 操作地区选择器改变时 触发*/
+    /** Triggered when the operation locale selector changes*/
     handleChangeArea(val) {
       this.ConsigneeForm.region = val.last_id
     },
 
-    /** 修改收货人信息 */
+    /** Modify consignee information*/
     adjustConsignee() {
-      this.dialogTitle = '修改收货人信息'
+      this.dialogTitle = 'Modify consignee information'
       this.dialogWidth = '25%'
       this.orderDetailShow = true
       this.triggerStatus = 2
-      /** 为收货人信息赋予数据信息 */
+      /** Assign data information to consignee information*/
       this.ConsigneeForm = {
-        /** 收货人 */
+        /** The consignee*/
         ship_name: this.orderDetail.ship_name,
 
-        /** 手机号码 */
+        /** Mobile phone number*/
         ship_mobile: this.orderDetail.ship_mobile,
 
-        /** 详细地址 */
+        /** Detailed address*/
         ship_addr: this.orderDetail.ship_addr,
 
-        /** 送货时间 */
+        /** Delivery time*/
         receive_time: this.orderDetail.receive_time,
 
-        /** 备注 */
+        /** note*/
         remark: this.orderDetail.remark
       }
     },
 
-    /** 取消保存 */
+    /** Cancel the save*/
     cancelOrderDetail() {
       this.orderDetailShow = false
       this.triggerStatus = -1
     },
 
-    /** 确认收款 */
+    /** Confirm receipt*/
     confirmPay() {
-      this.$confirm('确定要确认收款吗？', '提示', { type: 'warning' }).then(() => {
+      this.$confirm('Are you sure you want to confirm the receipt？', 'prompt', { type: 'warning' }).then(() => {
         API_order.confirmPay(this.sn, this.orderDetail.order_price).then(response => {
-          this.$message.success('订单确认收款成功！')
+          this.$message.success('Order confirmation and payment received successfully！')
           this.GET_OrderDetail()
         })
       }).catch(() => {})
     },
 
-    /** 取消订单 */
+    /** Cancel the order*/
     cancelOrder() {
-      this.$confirm('确定要取消这个订单吗？', '提示', { type: 'warning' }).then(() => {
+      this.$confirm('Are you sure to cancel this order？', 'prompt', { type: 'warning' }).then(() => {
         API_order.cancleOrder(this.sn).then(() => {
-          this.$message.success('订单取消成功！')
+          this.$message.success('Order cancelled successfully！')
           this.GET_OrderDetail()
         })
       }).catch(() => {})
     },
 
-    /** 保存按钮 */
+    /** Save button*/
     reserveOrderDetail() {
       this.orderDetailShow = false
-      if (this.triggerStatus === 2) { // 修改收货人信息
+      if (this.triggerStatus === 2) { // Modify consignee information
         API_order.updateConsigneeInfo(this.sn, this.ConsigneeForm).then(() => {
-          this.$message.success('收货人信息修改成功')
+          this.$message.success('The consignees information has been modified successfully')
           this.GET_OrderDetail()
         })
-      } else if (this.triggerStatus === 1) { // 调整价格
+      } else if (this.triggerStatus === 1) { // Adjust the price
         const _params = {
           order_price: this.adjustedPrice
         }
         API_order.updateOrderPrice(this.sn, _params).then(() => {
-          this.$message.success('价格修改成功')
+          this.$message.success('Price modification successful')
           this.GET_OrderDetail()
         })
       }
       this.triggerStatus = -1
     },
 
-    /** 确认收款 */
+    /** Confirm receipt*/
     confirmReceive() {
-      this.$confirm('确认执行此操作?', '提示', { type: 'warning' }).then(() => {
+      this.$confirm('Verify that you do this?', 'prompt', { type: 'warning' }).then(() => {
         API_order.confirmGetAmount(this.sn, { pay_price: this.orderDetail.order_price }).then(() => {
-          this.$message.success('收款成功！')
+          this.$message.success('Payment success！')
           this.GET_OrderDetail()
         })
       })
@@ -767,12 +767,12 @@ export default {
 </script>
 
 <style type="text/scss" lang="scss" scoped>
-/*背景颜色*/
+/*The background color*/
 .order-detail-container {
   background-color: #fff;
 }
 
-/*订单信息*/
+/*The order information*/
 .order-info {
   width:100%;
   display: flex;
@@ -782,7 +782,7 @@ export default {
   div.order-collapse {
     width:25%;
     border: 1px solid #e5e5e5;
-    /*折叠面板*/
+    /*Folded panel*/
     .el-collapse-item {
       /deep/ .el-collapse-item__header {
         text-align: left;
@@ -809,7 +809,7 @@ export default {
         }
       }
     }
-    /* 订单信息中的名值对布局 */
+    /* Name and value pair layout in order information*/
     .order-item {
       display: flex;
       flex-wrap: nowrap;
@@ -828,7 +828,7 @@ export default {
     }
   }
 
-  /*** 订单状态 */
+  /*** Status*/
   div.order-status-info{
     width:75%;
     padding:0 20px;
@@ -868,7 +868,7 @@ export default {
   }
 }
 
-/*商品列表*/
+/*Products*/
 .d-header {
   padding: 10px 0 10px 20px;
   font-size: 14px;
@@ -882,7 +882,7 @@ export default {
   }
 }
 
-/*地区选择器*/
+/*Area selector*/
 /deep/.area-select {
   .el-form-item__content {
     text-align: left;
@@ -896,7 +896,7 @@ export default {
   text-align: center;
 }
 
-/*商品图片大小*/
+/*Product picture size*/
 .goods-image {
   width: 50px;
   height: 50px;
@@ -905,7 +905,7 @@ export default {
 /deep/ .el-dialog__footer {
   padding-top: 0;
 }
-/*物流信息*/
+/*Logistics information*/
 .logistics-base {
   width: 100%;
   display: flex;
@@ -926,7 +926,7 @@ export default {
   }
 }
 
-/*电子面单*/
+/*Electronic surface single*/
 /deep/ .electronic-surface {
   border: 1px solid #ddd;
   padding: 5px;

@@ -1,12 +1,12 @@
 /**
- * 会员管理API
+ * Member managementAPI
  */
 
 import request from '@/utils/request'
 import md5 from 'js-md5'
 
 /**
- * 获取会员列表
+ * Get membership list
  * @param params
  */
 export function getMemberList(params) {
@@ -19,7 +19,7 @@ export function getMemberList(params) {
 }
 
 /**
- * 添加会员
+ * Add member
  * @param params
  */
 export function addMember(params) {
@@ -33,7 +33,7 @@ export function addMember(params) {
 }
 
 /**
- * 获取会员详情
+ * Obtain Membership details
  * @param id
  */
 export function getMemberDetail(id) {
@@ -44,7 +44,7 @@ export function getMemberDetail(id) {
 }
 
 /**
- * 修改会员
+ * Modify the member
  * @param id
  * @param params
  */
@@ -60,7 +60,7 @@ export function editMember(id, params) {
 }
 
 /**
- * 删除会员
+ * Delete members
  * @param id
  */
 export function deleteMember(id) {
@@ -71,7 +71,7 @@ export function deleteMember(id) {
 }
 
 /**
- * 获取会员回收站列表
+ * Get a list of member recycle bin
  * @param params
  */
 export function getRecycleMemberList(params) {
@@ -84,7 +84,7 @@ export function getRecycleMemberList(params) {
 }
 
 /**
- * 恢复会员
+ * To restore the member
  * @param id
  */
 export function recycleMember(id) {
@@ -95,7 +95,7 @@ export function recycleMember(id) {
 }
 
 /**
- * 获取会员收货地址列表
+ * Gets a member shipping address list
  * @param member_id
  * @param params
  */
@@ -109,7 +109,7 @@ export function getMemberAddress(member_id, params) {
 }
 
 /**
- * 获取会员咨询列表
+ * Get a list of member inquiries
  * @param params
  */
 export function getMemberAsks(params) {
@@ -122,7 +122,7 @@ export function getMemberAsks(params) {
 }
 
 /**
- * 删除会员咨询
+ * Delete member consultation
  * @param ask_id
  */
 export function deleteMemberAsk(ask_id) {
@@ -133,7 +133,7 @@ export function deleteMemberAsk(ask_id) {
 }
 
 /**
- * 获取会员评论列表
+ * Get a list of member comments
  * @param params
  */
 export function getMemberComments(params) {
@@ -146,7 +146,7 @@ export function getMemberComments(params) {
 }
 
 /**
- * 删除会员评论
+ * Delete member comments
  * @param comment_id
  */
 export function deleteMemberComments(comment_id) {
@@ -157,7 +157,7 @@ export function deleteMemberComments(comment_id) {
 }
 
 /**
- * 修改会员消费积分
+ * Modify member consumption points
  * @param member_id
  * @param point
  */
@@ -170,7 +170,7 @@ export function editMemberConsumPoint(member_id, point) {
 }
 
 /**
- * 获取会员积分列表
+ * Get a list of member credits
  * @param params
  */
 export function getMemberPointList(params) {
@@ -183,7 +183,7 @@ export function getMemberPointList(params) {
 }
 
 /**
- * 回复咨询
+ * Reply to consulting
  * @param id
  * @param params
  * @returns {Promise<any>}
@@ -198,7 +198,7 @@ export function replyConsultationList(ask_id, params) {
 }
 
 /**
- * 审核咨询
+ * Audit consultation
  * @param comment_id
  */
 export function examineConsultation(ask_id, params) {

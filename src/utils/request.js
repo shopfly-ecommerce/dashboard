@@ -8,23 +8,23 @@ import checkToken from '@/utils/checkToken'
 import { api } from '~/ui-domain'
 const qs = require('qs')
 
-// 创建axios实例
+// createaxiosThe instance
 const service = axios.create({
-  baseURL: api.address, // 基础api
-  timeout: 5000, // 请求超时时间
+  baseURL: api.address, // basisapi
+  timeout: 5000, // Request timeout
   httpsAgent: new https.Agent({
     rejectUnauthorized: false
   }),
   paramsSerializer: params => qs.stringify(params, { arrayFormat: 'repeat' })
 })
 
-// request拦截器
+// requestThe interceptor
 service.interceptors.request.use(config => {
   if (/\/uploaders/.test(config.url)) {
     config.timeout = 60000
   }
 
-  // 如果是put/post请求，用qs.stringify序列化参数
+  // For put/ Post requests, use Qs.Stringify to serialize the parameter
   const is_put_post = config.method === 'put' || config.method === 'post'
   const is_json = config.headers['Content-Type'] === 'application/json'
   const is_file = config.headers['Content-Type'] === 'multipart/form-data'
@@ -36,12 +36,12 @@ service.interceptors.request.use(config => {
   }
 
   // Do something before request is sent
-  /** 配置全屏加载 */
+  /** Configure full screen loading*/
   if (config.loading !== false) {
     const { loading } = config
     const is_num = typeof (config.loading) === 'number'
     if (is_num) config.loading_num = true
-    // 为API请求缓存做准备处理
+    // Prepare processing for the API request cache
     // config.loading = () => {
     //   return Loading.service({
     //     lock: true,
@@ -60,7 +60,7 @@ service.interceptors.request.use(config => {
   const uuid = Storage.getItem('seller_uuid')
   config.headers['uuid'] = uuid
 
-  // 获取访问Token
+  // Get access Token
   let accessToken = Storage.getItem('seller_access_token')
   if (accessToken) {
     config.headers['Authorization'] = accessToken
@@ -71,7 +71,7 @@ service.interceptors.request.use(config => {
   Promise.reject(error)
 })
 
-// respone拦截器
+// responeThe interceptor
 service.interceptors.response.use(
   async response => {
     await closeLoading(response)
@@ -88,7 +88,7 @@ service.interceptors.response.use(
       return
     }
     if (error.config && error.config.message !== false) {
-      let _message = error.code === 'ECONNABORTED' ? '连接超时，请稍候再试！' : '网络错误，请稍后再试！'
+      let _message = error.code === 'ECONNABORTED' ? 'Connection timeout, please try again later！' : 'Network error, please try again later！'
       Vue.prototype.$message.error(error_data.message || _message)
     }
     return Promise.reject(error)
@@ -96,8 +96,8 @@ service.interceptors.response.use(
 )
 
 /**
- * 关闭全局加载
- * 延迟200毫秒关闭，以免晃眼睛
+ * Turn off global loading
+ * delay200Millisecond off to avoid eye movement
  * @param target
  */
 const closeLoading = (target) => {
@@ -112,7 +112,7 @@ const closeLoading = (target) => {
 }
 
 export default function request(options) {
-  // 如果是请求【刷新token、登录、退出】不需要检查token，直接请求。
+  // If it is a request [refresh token, login, exit], there is no need to check token, direct request.
   if (/seller\/check\/token|seller\/login|seller\/members\/logout/.test(options.url)) {
     return service(options)
   }

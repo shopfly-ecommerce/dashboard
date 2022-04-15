@@ -1,11 +1,11 @@
 /**
- * 优惠券相关API
+ * Coupon relatedAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取优惠券模型列表
+ * Get a list of coupon models
  * @param params
  * @returns {Promise<any>}
  */
@@ -19,8 +19,8 @@ export function getCouponsList(params) {
 }
 
 /**
- * 按照优惠券状态查询优惠券列表
- * @param status 0 全部 1 有效 2 失效 数字类型
+ * Query the coupon list by coupon status
+ * @param status 0 all1 effective2 Dead digit type
  */
 export function getCouponsStatusList(status = 1) {
   return request({
@@ -31,7 +31,7 @@ export function getCouponsStatusList(status = 1) {
 }
 
 /**
- * 删除优惠券
+ * Delete coupons
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -47,7 +47,7 @@ export function deleteCoupons(ids, params) {
 }
 
 /**
- * 保存优惠券 更新操作
+ * Save coupon update operation
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -63,7 +63,7 @@ export function modifyCoupons(ids, params) {
 }
 
 /**
- * 新增优惠券
+ * New coupons
  * @param params
  * @returns {Promise<any>}
  * @constructor
@@ -78,7 +78,7 @@ export function addCoupons(params) {
 }
 
 /**
- * 查询一个优惠券的详情
+ * Check out the details of a coupon
  * @param id
  * @param params
  * @returns {Promise<any>}

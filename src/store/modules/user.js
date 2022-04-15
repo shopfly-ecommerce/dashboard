@@ -14,7 +14,7 @@ export const state = {
 // mutations
 export const mutations = {
   /**
-   * 设置用户信息
+   * Set user information
    * @param state
    * @param user
    * @constructor
@@ -26,7 +26,7 @@ export const mutations = {
     Storage.setItem('seller_uid', user.uid, { expires })
   },
   /**
-   * 设置访问令牌
+   * Set the access token
    * @param state
    * @param token
    * @constructor
@@ -36,7 +36,7 @@ export const mutations = {
     Storage.setItem('seller_access_token', token, { expires })
   },
   /**
-   * 设置刷新令牌
+   * Sets the refresh token
    * @param state
    * @param token
    * @constructor
@@ -44,14 +44,14 @@ export const mutations = {
   SET_REFRESH_TOKEN: (state, token) => {
     const expires = new Date(jwt_decode(token).exp * 1000)
     Storage.setItem('seller_refresh_token', token, { expires })
-    // 同时延长用户信息失效时间
+    // At the same time extend the user information invalidation time
     const user = Storage.getItem('seller_user')
     const uid = Storage.getItem('seller_uid')
     Storage.setItem('seller_user', user, { expires })
     Storage.setItem('seller_uid', uid, { expires })
   },
   /**
-   * 移除用户信息
+   * Remove user information
    * @param state
    * @constructor
    */
@@ -61,7 +61,7 @@ export const mutations = {
     Storage.removeItem('seller_uid')
   },
   /**
-   * 移除访问令牌
+   * Remove the access token
    * @param state
    * @constructor
    */
@@ -69,7 +69,7 @@ export const mutations = {
     Storage.removeItem('seller_access_token')
   },
   /**
-   * 移除刷新令牌
+   * Removes the refresh token
    * @param state
    * @constructor
    */
@@ -77,7 +77,7 @@ export const mutations = {
     Storage.removeItem('seller_refresh_token')
   },
   /**
-   * 设置店铺信息
+   * Set store information
    * @param state
    * @param shopInfo
    * @constructor
@@ -87,7 +87,7 @@ export const mutations = {
     Storage.setItem('seller_shop', JSON.stringify(shopInfo), { expires: 30 })
   },
   /**
-   * 移除店铺信息
+   * Remove store information
    * @param state
    * @constructor
    */
@@ -100,7 +100,7 @@ export const mutations = {
 // actions
 export const actions = {
   /**
-   * 用户名登录
+   * User name login
    * @param commit
    * @param params
    * @returns {Promise<any>}
@@ -118,7 +118,7 @@ export const actions = {
     })
   },
   /**
-   * 获取店铺信息
+   * Access to store information
    * @param commit
    * @returns {Promise<any>}
    */
@@ -131,7 +131,7 @@ export const actions = {
     })
   },
   /**
-   * 登出
+   * logout
    * @param dispatch
    * @returns {Promise<any>}
    */
@@ -144,7 +144,7 @@ export const actions = {
     })
   },
   /**
-   * 设置访问令牌
+   * Set the access token
    * @param commit
    * @param token
    */
@@ -152,7 +152,7 @@ export const actions = {
     commit('SET_ACCESS_TOKEN', token)
   },
   /**
-   * 设置刷新令牌
+   * Sets the refresh token
    * @param commit
    * @param token
    */
@@ -160,7 +160,7 @@ export const actions = {
     commit('SET_REFRESH_TOKEN', token)
   },
   /**
-   * 前端退出
+   * The front-end exit
    * @param commit
    */
   fedLogoutAction: ({ commit }) => {

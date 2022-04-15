@@ -5,22 +5,22 @@
     :close-on-press-escape="false"
     append-to-body
     width="500px">
-    <div slot="title" class="text-picker-title">文本选择器</div>
+    <div slot="title" class="text-picker-title">Text selector</div>
     <div class="text-picker-body">
       <div class="text-picker-content">
         <el-form :model="textForm" :rules="textRules" ref="textForm" label-width="100px" style="width: 425px">
-          <el-form-item label="文本内容" prop="text">
+          <el-form-item label="The text content" prop="text">
             <el-input
               type="textarea"
               :autosize="{ minRows: 2, maxRows: 4}"
               :minlength="minlength"
               :maxlength="maxlength"
-              :placeholder="'请输入文本内容，长度' + minlength + '-' + maxlength + ''"
+              :placeholder="'Please enter the text content, length' + minlength + '-' + maxlength + ''"
               v-model="textForm.text">
             </el-input>
           </el-form-item>
-          <el-form-item label="操作" prop="opt_value">
-            <el-select v-model="textForm.opt_type" placeholder="请选择" style="width: 120px">
+          <el-form-item label="Operation" prop="opt_value">
+            <el-select v-model="textForm.opt_type" placeholder="Please select" style="width: 120px">
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -28,14 +28,14 @@
                 :value="item.value">
               </el-option>
             </el-select>
-            <el-input placeholder="请输入内容" v-model="textForm.opt_value" style="width: 200px"/>
+            <el-input placeholder="Please enter content" v-model="textForm.opt_value" style="width: 200px"/>
           </el-form-item>
         </el-form>
       </div>
     </div>
     <div slot="footer" class="text-picker-footer">
-      <el-button @click="visible = false">取 消</el-button>
-      <el-button type="primary" @click="handleConfirm">确 定</el-button>
+      <el-button @click="visible = false">cancel</el-button>
+      <el-button type="primary" @click="handleConfirm">save</el-button>
     </div>
   </el-dialog>
 </template>
@@ -48,29 +48,29 @@
         type: Boolean,
         default: false
       },
-      // 默认数据
+      // The default data
       defaultData: {
         type: Object,
         default: () => ({})
       },
-      // 操作参数
+      // Operating parameters
       options: {
         type: Array,
         default: () => [
-          { text: '无操作', value: 'NONE' },
-          { text: '链接地址', value: 'URL' },
-          { text: '关键字', value: 'KEYWORD' },
-          { text: '商品序号', value: 'GOODS' },
-          //{ text: '店铺编号', value: 'SHOP' },
-          { text: '商品分类', value: 'CATEGORY' }
+          { text: 'No operation', value: 'NONE' },
+          { text: 'The link address', value: 'URL' },
+          { text: 'keyword', value: 'KEYWORD' },
+          { text: 'Product serial number', value: 'GOODS' },
+          // {text: SHOP id , value: SHOP},
+          { text: 'Category', value: 'CATEGORY' }
         ]
       },
-      // 文本最小长度
+      // Minimum text length
       minlength: {
         type: Number,
         default: 1
       },
-      // 文本最大程度
+      // Text Max
       maxlength: {
         type: Number,
         default: 100
@@ -82,10 +82,10 @@
         textForm: {},
         textRules: {
           text: [
-            { required: true, message: '请输入文本内容！', trigger: 'blur' }
+            { required: true, message: 'Please enter the text content！', trigger: 'blur' }
           ],
           opt_value: [
-            { required: false, message: '请输入操作值！', trigger: 'blur' }
+            { required: false, message: 'Please enter the operation value！', trigger: 'blur' }
           ]
         }
       }
@@ -112,7 +112,7 @@
             this.$emit('confirm', this.textForm)
             this.$emit('close')
           } else {
-            this.$message.error('表单填写有误，请核对！')
+            this.$message.error('There is an error in the form. Please check it！')
             return false
           }
         })

@@ -1,22 +1,22 @@
 <template>
     <el-form :model="contactForm" label-width="130px" style="width: 500px;min-height: 500px;" :rules="contactRules" ref="contactForm">
-      <el-form-item label="手机" prop="phone">
+      <el-form-item label="Mobile phone" prop="phone">
         <el-input v-model="contactForm.phone" :maxlength="11"></el-input>
       </el-form-item>
       <el-form-item v-if="!MixinIsIM" label="QQ" prop="qq">
         <el-input v-model="contactForm.qq" :maxlength="50"></el-input>
       </el-form-item>
-      <el-form-item label="邮箱" prop="email">
+      <el-form-item label="email" prop="email">
         <el-input v-model="contactForm.email" :maxlength="50"></el-input>
       </el-form-item>
-      <el-form-item label="地址" class="form-item-region" prop="region">
+      <el-form-item label="address" class="form-item-region" prop="region">
         <en-region-picker :api="MixinRegionApi" :default="defaultRegion" @changed="(object) => { contactForm.region = object.last_id; regionObj = object }"/>
       </el-form-item>
-      <el-form-item label="详细地址" prop="address">
+      <el-form-item label="Detailed address" prop="address">
         <el-input v-model="contactForm.address" :maxlength="50"></el-input>
       </el-form-item>
       <el-form-item label="">
-        <el-button type="primary" @click="submitEditGoodsSetting('contactForm')">保存设置</el-button>
+        <el-button type="primary" @click="submitEditGoodsSetting('contactForm')">Save Settings</el-button>
       </el-form-item>
     </el-form>
 </template>
@@ -28,17 +28,17 @@
       name: 'SystemSettingContact',
       data() {
         return {
-          // 联系方式表单
+          // Contact form
           contactForm: {},
           regionObj: {},
-          // 表单规则
+          // Rules of the form
           contactRules: {
             phone: [
-              this.MixinRequired('请输入手机号！'),
+              this.MixinRequired('Please enter your cell phone number！'),
               {
                 validator: (rule, value, callback) => {
                   if (!RegExp.mobile.test(value)) {
-                    callback(new Error('手机格式有误！'))
+                    callback(new Error('Incorrect phone format！'))
                   } else {
                     callback()
                   }
@@ -46,24 +46,24 @@
               }
             ],
             email: [
-              this.MixinRequired('请输入邮箱！'),
+              this.MixinRequired('Please enter email address！'),
               {
                 validator: (rule, value, callback) => {
                   if (value !== 0 && !value) {
                     callback()
                   } else if (!RegExp.email.test(value)) {
-                    callback(new Error('邮箱格式有误！'))
+                    callback(new Error('The mailbox format is incorrect！'))
                   } else {
                     callback()
                   }
                 }
               }
             ],
-            qq: this.MixinIsIM ? [] : [this.MixinRequired('请输入QQ！')],
-            region: [this.MixinRequired('请输入地址！')],
-            address: [this.MixinRequired('请输入详细地址！')]
+            qq: this.MixinIsIM ? [] : [this.MixinRequired('Please enter theQQ！')],
+            region: [this.MixinRequired('Please enter address！')],
+            address: [this.MixinRequired('Please enter the detailed address！')]
           },
-          // 地区id数组
+          // Locale ID array
           defaultRegion: null
         }
       },
@@ -95,7 +95,7 @@
               }
               const params = this.MixinClone({ ...this.contactForm, ...regionParams })
               API_SystemSetting.editContactSettings(params).then(() => {
-                this.$message.success('修改成功！')
+                this.$message.success('Modify the success！')
               })
             }
           })

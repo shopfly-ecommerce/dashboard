@@ -1,5 +1,5 @@
 /**
- * 价格区间设置组件
+ * Price range setting component
  */
 
 import Vue from 'vue'

@@ -17,7 +17,7 @@
   export default {
     name: 'tpl_31',
     mixins: [mixin],
-    title: '四列单行小图模块',
+    title: 'Four column single row small graph module',
     dataTpl: {
       tpl_id: 31,
       blockList: [

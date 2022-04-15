@@ -1,17 +1,17 @@
 <template>
   <div class="bg-shop-summary">
     <ul>
-      <li><span>近30天下单金额 </span>:<span>{{ shopSurvey.order_money }}</span></li>
-      <li><span>近30天下单会员数</span>:<span>{{ shopSurvey.order_member }}</span></li>
-      <li><span>近30天下单量</span>:<span>{{ shopSurvey.order_num }}</span></li>
-      <li><span>近30天下单商品数</span>:<span>{{ shopSurvey.order_goods }}</span></li>
-      <li><span>平均客单价</span>:<span>{{ shopSurvey.average_member_money }}</span></li>
+      <li><span>nearly30World order amount</span>:<span>{{ shopSurvey.order_money }}</span></li>
+      <li><span>nearly30Number of single members worldwide</span>:<span>{{ shopSurvey.order_member }}</span></li>
+      <li><span>nearly30All the orders</span>:<span>{{ shopSurvey.order_num }}</span></li>
+      <li><span>nearly30Number of single goods in the world</span>:<span>{{ shopSurvey.order_goods }}</span></li>
+      <li><span>Average customer unit price</span>:<span>{{ shopSurvey.average_member_money }}</span></li>
     </ul>
     <ul>
-      <li><span>平均价格</span>:<span>{{ shopSurvey.average_goods_money }}</span></li>
-      <li><span>商品收藏量</span>:<span>{{ shopSurvey.goods_collect }}</span></li>
-      <li><span>商品总数</span>:<span>{{ shopSurvey.total_goods }}</span></li>
-      <li><span>下单高峰期</span>:<span>{{ shopSurvey.order_fastigium }}</span></li>
+      <li><span>The average price</span>:<span>{{ shopSurvey.average_goods_money }}</span></li>
+      <li><span>Merchandise collection</span>:<span>{{ shopSurvey.goods_collect }}</span></li>
+      <li><span>The total number of goods</span>:<span>{{ shopSurvey.total_goods }}</span></li>
+      <li><span>Rush hour</span>:<span>{{ shopSurvey.order_fastigium }}</span></li>
     </ul>
     <div>
       <div ref="salesStatistics" id="salesStatistics" :style="{height: tableHeight + 'px'}"></div>
@@ -25,28 +25,28 @@
     name: 'generalityOverview',
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 店铺概况*/
+        /** Store profile*/
         shopSurvey: {},
 
         tableHeight: document.body.clientHeight / 3 * 2
       }
     },
     created() {
-      // 获取店铺概况信息
+      // Get store profile information
       API_shopStatistics.getShopSurvey().then(response => {
         this.loading = false
-        /** 店铺概况信息 */
+        /** Store Profile Information*/
         this.shopSurvey = response
       })
-      // 获取图表信息
+      // Get chart information
       API_shopStatistics.getShopSurveyCharts().then(response => {
         this.loading = false
         this.sesalChart.setOption({
           noDataLoadingOption: {
-            text: '无数据',
+            text: 'No data',
             effect: 'bubble',
             effectOption: {
               effect: {
@@ -54,7 +54,7 @@
               }
             }
           },
-          title: { text: '最近30天销售统计', x: 'center' },
+          title: { text: 'Recently,30Daily sales statistics', x: 'center' },
           tooltip: { trigger: 'axis' },
           legend: { orient: 'vertical', data: [{ name: response.series.name, textStyle: { borderColor: '#7CB5EC' }}], bottom: '10px' },
           color: ['#7CB5EC'],
@@ -68,29 +68,29 @@
             }
           },
           xAxis: {
-            name: '日期',
+            name: 'The date of',
             type: 'category',
             boundaryGap: false,
             data: response.xAxis.reverse()
           },
           yAxis: {
-            name: '下单金额（元）',
+            name: 'Place the order amount（USD）',
             type: 'value'
           },
           series: [
             {
-              name: '下单金额',
+              name: 'Place the order amount',
               type: 'line',
               data: response.series.data.reverse(),
               markPoint: {
                 data: [
-                  { type: 'max', name: '最大值' },
-                  { type: 'min', name: '最小值' }
+                  { type: 'max', name: 'The maximum' },
+                  { type: 'min', name: 'The minimum value' }
                 ]
               },
               markLine: {
                 data: [
-                  { type: 'average', name: '平均值' }
+                  { type: 'average', name: 'The average' }
                 ]
               }
             }
@@ -105,20 +105,20 @@
       })
     },
     methods: {
-      /** 窗口缩放时计算table高度 */
+      /** Calculated when the window is zoomedtablehighly*/
       countTableHeight() {
         this.tableHeight = document.body.clientHeight / 3 * 2
-        /** 图表刷新 */
+        /** The chart to refresh*/
         setTimeout(this.sesalChart.resize)
       },
 
-      /** 获取最近30天日期信息 */
+      /** For the recent30Day date information*/
       GetDateStr(DayCount) {
         const dd = new Date()
-        // 获取DayCount前的日期
+        // Gets the date before DayCount
         dd.setDate(dd.getDate() - DayCount)
         const y = dd.getFullYear()
-        // 获取当前月份的日期
+        // Gets the date of the current month
         const m = dd.getMonth() + 1
         var d = dd.getDate()
         return y + '-' + m + '-' + d

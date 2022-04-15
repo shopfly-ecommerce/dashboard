@@ -1,11 +1,11 @@
 /**
- * 发票相关API
+ * The invoice relevantAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取发票历史
+ * Obtain invoice history
  * @param params
  * @returns {Promise<any>}
  */
@@ -19,7 +19,7 @@ export function getHistoryReceiptList(params) {
 }
 
 /**
- * 获取历史发票订单详情
+ * Obtain historical invoice order details
  * @param id
  */
 export function getHistoryReceiptDetail(id) {

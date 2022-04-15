@@ -1,11 +1,11 @@
 /**
- * 促销相关API
+ * Sales relatedAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取积分分类下级
+ * Get the sub-level of the integral classification
  * @param parent_id
  */
 export function getExchangeCatsChildren(parent_id = 0) {
@@ -16,7 +16,7 @@ export function getExchangeCatsChildren(parent_id = 0) {
 }
 
 /**
- * 添加积分兑换分类
+ * Add the points exchange category
  * @param params
  */
 export function addExchangeCat(params) {
@@ -28,7 +28,7 @@ export function addExchangeCat(params) {
 }
 
 /**
- * 获取积分兑换分类详情
+ * Get bonus point exchange classification details
  * @param id
  */
 export function getExchangeCatsDetail(id) {
@@ -39,7 +39,7 @@ export function getExchangeCatsDetail(id) {
 }
 
 /**
- * 编辑积分兑换分类
+ * Edit points exchange classification
  * @param id
  * @param params
  */
@@ -52,7 +52,7 @@ export function editExhcangeCat(id, params) {
 }
 
 /**
- * 删除积分兑换分类
+ * Delete the points exchange category
  * @param id
  */
 export function deleteExchangeCat(id) {
@@ -63,7 +63,7 @@ export function deleteExchangeCat(id) {
 }
 
 /**
- * 获取积分商品列表
+ * Gets a list of credits
  * @param params
  */
 export function getExchangeGoods(params) {

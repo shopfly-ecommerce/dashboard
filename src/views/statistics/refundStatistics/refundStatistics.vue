@@ -3,7 +3,7 @@
     <el-card>
       <div slot="header" class="chart-header">
         <div class="chart-header-item">
-          <span>查询周期：</span>
+          <span>Query cycle：</span>
           <en-year-month-picker @changed="handleYearMonthChanged"/>
         </div>
       </div>
@@ -41,29 +41,29 @@
       }
     },
     methods: {
-      /** 年月发生改变 */
+      /** The years have changed*/
       handleYearMonthChanged(object) {
         this.params.year = object.year
         this.params.month = object.month
         this.params.cycle_type = object.type
       },
-      /** 获取退款金额统计 */
+      /** Get refund amount statistics*/
       GET_RefundStatistics() {
         this.loading = true
         const { cycle_type } = this.params
-        const date_type = cycle_type === 'MONTH' ? '月' : '年'
+        const date_type = cycle_type === 'MONTH' ? 'month' : 'years'
         API_Statistics.getRefundStatistics(this.params).then(response => {
           this.loading = false
           const { data, name, localName } = response.series
           const { xAxis } = response
           this.echarts.setOption(echartsOptions({
-            titleText: `退款金额统计（${date_type}）`,
+            titleText: `Refund Amount Statistics（${date_type}）`,
             tooltipFormatter: (params) => {
               params = params[0]
-              return `日期：${params.dataIndex + 1}${cycle_type === 'MONTH' ? '日' : '月'}<br/>${params.marker}退款金额：￥${Foundation.formatPrice(params.value)}`
+              return `The date of：${params.dataIndex + 1}${cycle_type === 'MONTH' ? 'day' : 'month'}<br/>${params.marker}The refund amount：￥${Foundation.formatPrice(params.value)}`
             },
             xAxisData: xAxis,
-            seriesName: '退款金额',
+            seriesName: 'The refund amount',
             seriesData: data
           }))
           this.echarts.resize()

@@ -1,66 +1,66 @@
 import axios from 'axios'
 
-/** 数据缓存 */
+/** Data cache*/
 class ItemCache {
   constructor(data, timeout) {
-    // 缓存数据
+    // Cache data
     this.data = new Map()
-    // 超时时间
+    // timeout
     this.time = timeout
-    // 缓存数据创建的时间 大致设定为数据获得的时间
+    // The cache data creation time is roughly set to the data acquisition time
     this.cacheTime = (new Date()).getTime()
   }
 }
 
 class ExpriesCache {
-  // 定义静态数据map来作为缓存池
+  // Define a static data map to act as a cache pool
   static cacheMap = new Map()
-  // 数据是否超时
+  // Whether the data has timed out
   static isOverTime(name) {
     const data = ExpriesCache.cacheMap.get(name)
-    // 没有数据 一定超时
+    // No data must time out
     if (!data) return true
-    // 获取系统当前时间戳
+    // Gets the current timestamp of the system
     const currentTime = (new Date()).getTime()
-    // 获取当前时间与存储时间的过去的秒数
+    // Gets the number of seconds past the current time and the storage time
     const overTime = (currentTime - data.cacheTime) / 1000
-    // 如果过去的秒数大于当前的超时时间，也返回null让其去服务端取数据
+    // If the number of seconds passed is greater than the current timeout, null is also returned to fetch the data from the server
     if (Math.abs(overTime) > data.timeout) {
-      // 此代码可以没有，不会出现问题，但是如果有此代码，再次进入该方法就可以减少判断。
+      // This code may not exist, and there will be no problem, but if there is this code, re-entering the method can reduce the judgment.
       ExpriesCache.cacheMap.delete(name)
       return true
     }
-    // 不超时
+    // No timeout
     return false
   }
-  // 当前data在 cache 中是否超时
+  // Is the current data timeout in the cache
   static has(name) {
     return !ExpriesCache.isOverTime(name)
   }
-  // 删除 cache 中的 data
+  // Deletes data from the cache
   static delete(name) {
     return ExpriesCache.cacheMap.delete(name)
   }
-  // 获取
+  // To obtain
   static get(name) {
     const isDataOverTiem = ExpriesCache.isOverTime(name)
-    // 如果 数据超时，返回null，但是没有超时，返回数据，而不是 ItemCache 对象
+    // If the data has timed out, null is returned, but there is no timeout, and the data is returned instead of the ItemCache object
     return isDataOverTiem ? null : ExpriesCache.cacheMap.get(name).data
   }
-  // 默认存储20分钟
+  // The default storage is 20 minutes
   static set(name, data, timeout = 1200) {
-    // 设置 itemCache
+    // Set the itemCache
     const itemCache = new ItemCache(data, timeout)
-    // 缓存
+    // The cache
     ExpriesCache.cacheMap.set(name, itemCache)
   }
 }
 
-// 数据存储
+// Data is stored
 export const cache = {
-  // 数据
+  // data
   data: new Map(),
-  // 缓存时间 10分钟
+  // Cache for 10 minutes
   time: 1200,
   set(key, data, bol = false) {
     if (bol) {
@@ -86,7 +86,7 @@ export const cache = {
 }
 
 /**
- * 生成唯一的key
+ * Generate uniquekey
  * @param url
  * @param params
  * @returns {*}
@@ -100,20 +100,20 @@ function generateKey(url, params = {}) {
     url += `?${JSON.stringify(sortedParams)}`
     return url
   } catch (_) {
-    return new Error('生成唯一key值发生错误')
+    return new Error('Generate a uniquekeyValue error')
   }
 }
 
 /**
- * 增加缓存数据 建议只给get增加缓存
+ * You are advised to add cached data onlygetIncrease the cache
  * @param options
  * @returns {Function}
  */
 export default (options = {}) => config => {
   const { url, method, params, data } = config
-  // 是否进行本地存储
+  // Whether to store locally
   const { local = false } = options
-  // 建立索引 index为请求索引 indexData为响应索引
+  // Create index index for request index index data for response index
   let index
   if (method === 'get') {
     index = generateKey(url, params)
@@ -121,21 +121,21 @@ export default (options = {}) => config => {
     index = generateKey(url, data)
   }
   const indexData = index + '-data'
-  // 获得数据
+  // Get the data
   let response = cache.get(indexData)
   let responsePromise = cache.get(index)
   // let response = ExpriesCache.get(indexData)
   // let responsePromise = ExpriesCache.get(index)
-  // 检测缓存是否过期
+  // Checks if the cache is expired
   if (response) {
-    return Promise.resolve(JSON.parse(JSON.stringify(response))) // 对象是引用，为了防止污染数据源
+    return Promise.resolve(JSON.parse(JSON.stringify(response))) // An object is a reference to prevent contamination of the data source
   } else if (!responsePromise) {
     responsePromise = (async() => {
       try {
         const response = await axios.defaults.adapter(config)
         // ExpriesCache.set(indexData, response, 10)
         cache.set(indexData, response, local)
-        return Promise.resolve(JSON.parse(JSON.stringify(response))) // 同时发送多次一样的请求，没办法防止污染数据源，只有业务中去实现
+        return Promise.resolve(JSON.parse(JSON.stringify(response))) // Sending the same request many times at the same time, there is no way to prevent the pollution of the data source, only to implement in the business
       } catch (reason) {
         // ExpriesCache.delete(index)
         // ExpriesCache.delete(indexData)

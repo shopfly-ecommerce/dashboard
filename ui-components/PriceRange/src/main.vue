@@ -1,8 +1,8 @@
 <template>
   <div style="display: inline-block;">
-    <el-button size="mini" @click="handleSetPriceRange">设置价格区间</el-button>
+    <el-button size="mini" @click="handleSetPriceRange">Set a price range</el-button>
     <el-dialog
-      title="设置价格区间"
+      title="Set a price range"
       :visible.sync="dialogVisible"
       width="450px"
       :close-on-click-modal="false"
@@ -10,7 +10,7 @@
     >
       <el-form label-width="50px" class="price-range-form">
         <template v-for="(item, index) in priceRange">
-          <el-form-item :label="'第' + (index + 1) + '组'">
+          <el-form-item :label="'The first' + (index + 1) + 'group'">
             <el-input-number size="mini" v-model="item[0]" disabled :controls="false"></el-input-number>
              -
             <el-input-number size="mini" v-model="item[1]" :disabled="index !== priceRange.length - 1" :controls="false"></el-input-number>
@@ -22,8 +22,8 @@
         </template>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button size="small" @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" size="small" @click="handleConfirm">确 定</el-button>
+        <el-button size="small" @click="dialogVisible = false">cancel</el-button>
+        <el-button type="primary" size="small" @click="handleConfirm">save</el-button>
       </span>
     </el-dialog>
   </div>
@@ -33,12 +33,12 @@
   export default {
     name: 'EnPriceRange',
     props: {
-      // 最大区间组数
+      // Maximum number of interval groups
       maxRange: {
         type: Number,
         default: 10
       },
-      // 默认区间
+      // The default interval
       defaultRange: {
         type: Array,
         default: () => [[0, 100]]
@@ -51,14 +51,14 @@
       }
     },
     created() {
-      // 开局校验传入默认价格区间
+      // The opening check is passed in the default price range
       if (this.defaultRange.length > this.maxRange) {
-        throw new Error('传入默认价格区间长度大于最大长度限制！')
+        throw new Error('The passed default price range length is greater than the maximum length limit！')
       }
       this.defaultRange.forEach((item, index) => {
         let preRange = this.defaultRange[index - 1]
         if (item[0] >= item[1] || preRange && preRange[0] >= item[0]) {
-          throw new Error('传入默认价格区间格式有误！')
+          throw new Error('The format of the default price range passed in is incorrect！')
         }
       })
     },
@@ -66,33 +66,33 @@
       handleSetPriceRange() {
         this.dialogVisible = true
       },
-      /** 增加一个区间 */
+      /** Add an interval*/
       handleAddRange() {
-        // 如果超过或等于最大个数，或最后一个值没校验通过，则不增加
+        // If the value exceeds or equals the maximum value, or the last value fails the check, the value is not increased
         if (this.priceRange.length >= this.maxRange || !this.validLastVal()) return
-        // 取最后一个数组
+        // Take the last array
         let priceRange = this.priceRange
         let last_range = priceRange[priceRange.length - 1]
-        // 如果最后一组第二个值为空、为0或小于等于前一个值，则不增加
-        // 新增数组第一个值为前一组第一个值1，第二个值默认为前一个值+1
+        // If the second value of the last set is null, 0, or less than or equal to the previous value, it is not incremented
+        // The first value of the new array is 1, and the second value defaults to the previous value +1
         this.priceRange.push([last_range[1], last_range[1] + 1])
       },
-      /** 删除一个区间 */
+      /** Delete an interval*/
       handleDeleteRange() {
-        // 如果还剩一个，则不删除
+        // If there is one left, it will not be deleted
         if (this.priceRange.length <= 1) return
         this.priceRange.pop()
       },
-      // 校验最后一个数是否符合要求
+      // Verify that the last number meets the requirement
       validLastVal() {
         let priceRange = this.priceRange
         let last_range = priceRange[priceRange.length - 1]
         return !!(last_range[1] && last_range[1] > last_range[0])
       },
-      /** 确认回调 */
+      /** Confirm the callback*/
       handleConfirm() {
         if (!this.validLastVal()) {
-          this.$message.error('最后一个区间的第二个值需要大于第一个值！')
+          this.$message.error('The second value of the last interval needs to be greater than the first value！')
           return false
         }
         this.$emit('changed', JSON.parse(JSON.stringify(this.priceRange)))

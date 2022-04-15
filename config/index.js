@@ -6,18 +6,18 @@ const path = require('path')
 
 module.exports = {
   /**
-   * 分销功能开关
-   * 如果您需要开启分销相关功能，请设置为true
+   * Distribution function switch
+   * Set this parameter to enable distribution functionstrue
    */
   distribution: true,
   /**
-   * 直播功能开关
-   * 如果您需要开启直播相关功能，请设置为true
+   * Live broadcast function switch
+   * If you need to enable live-broadcast functions, set this parameter totrue
    */
   liveVideo: false,
   /**
-   * IM功能开关
-   * 如果您需要开启IM相关功能，请设置为true
+   * IMFunction of the switch
+   * If you need to enableIMSet related functions totrue
    */
   im: false,
   dev: {

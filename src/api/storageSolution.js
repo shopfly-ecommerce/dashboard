@@ -1,11 +1,11 @@
 /**
- * 储存方案相关API
+ * Storage scheme correlationAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取储存方案列表
+ * Gets a list of storage schemes
  * @param params
  */
 export function getStorageSolutionList(params) {
@@ -18,7 +18,7 @@ export function getStorageSolutionList(params) {
 }
 
 /**
- * 编辑储存方案
+ * Edit storage scheme
  * @param bean
  * @param params
  */
@@ -32,7 +32,7 @@ export function editStorageSolution(bean, params) {
 }
 
 /**
- * 获取储存方案配置项
+ * Gets the storage scheme configuration item
  * @param code
  * @returns {*}
  */
@@ -44,7 +44,7 @@ export function getStorageSolutionConfig(code) {
 }
 
 /**
- * 开启储存方案
+ * Open storage scheme
  * @param bean
  * @returns {*}
  */

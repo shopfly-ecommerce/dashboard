@@ -1,17 +1,17 @@
 /**
- * 一些常用的基础方法
- * unixToDate    将unix时间戳转换为指定格式
- * dateToUnix    将时间转unix时间戳
- * deepClone     对一个对象进行深拷贝
- * formatPrice   货币格式化
- * secrecyMobile 手机号隐私保护
- * randomString  随机生成指定长度的字符串
+ * Some common basic methods
+ * unixToDate    willunixThe timestamp is converted to the specified format
+ * dateToUnix    Transfer timeunixThe time stamp
+ * deepClone     Make a deep copy of an object
+ * formatPrice   Currency formatting
+ * secrecyMobile Privacy protection of mobile phone number
+ * randomString  Generates a random string of the specified length
  */
 
 /**
- * 将unix时间戳转换为指定格式
- * @param unix   时间戳【秒】
- * @param format 转换格式
+ * willunixThe timestamp is converted to the specified format
+ * @param unix   The time stamp【seconds】
+ * @param format Transformation format
  * @returns {*|string}
  */
 export function unixToDate(unix, format) {
@@ -34,9 +34,9 @@ export function unixToDate(unix, format) {
 }
 
 /**
- * 将时间转unix时间戳
+ * Transfer timeunixThe time stamp
  * @param date
- * @returns {number} 【秒】
+ * @returns {number} 【seconds】
  */
 export function dateToUnix(date) {
   let newStr = date.replace(/:/g, '-')
@@ -54,7 +54,7 @@ export function dateToUnix(date) {
 }
 
 /**
- * 对一个对象进行深拷贝
+ * Make a deep copy of an object
  * @param object
  * @returns {*}
  */
@@ -77,7 +77,7 @@ export function deepClone(object) {
 }
 
 /**
- * 货币格式化
+ * Currency formatting
  * @param price
  * @returns {string}
  */
@@ -87,8 +87,8 @@ export function formatPrice(price) {
 }
 
 /**
- * 手机号隐私保护
- * 隐藏中间四位数字
+ * Privacy protection of mobile phone number
+ * Hide the middle four digits
  * @param mobile
  * @returns {*}
  */
@@ -101,7 +101,7 @@ export function secrecyMobile(mobile) {
 }
 
 /**
- * 随机生成指定长度的字符串
+ * Generates a random string of the specified length
  * @param length
  * @returns {string}
  */
@@ -117,7 +117,7 @@ export function randomString(length) {
 }
 
 /**
- * 计算传秒数的倒计时【天、时、分、秒】
+ * Calculates the countdown of transmission seconds【day、when、points、seconds】
  * @param seconds
  * @returns {{day : *, hours : *, minutes : *, seconds : *}}
  */
@@ -135,7 +135,7 @@ export function countTimeDown(seconds) {
 }
 
 /**
- * 计算当前时间到第二天0点的倒计时[秒]
+ * Calculate the current time to the next day0Countdown to dot[seconds]
  * @returns {number}
  */
 export function theNextDayTime() {

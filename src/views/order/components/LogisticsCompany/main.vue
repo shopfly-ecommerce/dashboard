@@ -4,13 +4,13 @@
     :tableData="logisticsTableData"
     :loading="loading">
     <template slot="table-columns">
-      <!--物流公司-->
-      <el-table-column prop="name" label="物流公司"/>
-      <!--公司状态-->
-      <el-table-column label="公司状态">
+      <!--Logistics company-->
+      <el-table-column prop="name" label="Logistics company"/>
+      <!--State of the company-->
+      <el-table-column label="State of the company">
         <template slot-scope="scope">
-          <span v-if="!scope.row.shop_id">未选择</span>
-          <span v-if="scope.row.shop_id" class="company-choosed">已选择</span>
+          <span v-if="!scope.row.shop_id">Not to choose</span>
+          <span v-if="scope.row.shop_id" class="company-choosed">Has chosen</span>
         </template>
       </el-table-column>
     </template>
@@ -30,18 +30,18 @@
     },
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 物流公司列表参数 */
+        /** Logistics company list parameters*/
         logisticsParams: {},
 
-        /** 物流公司列表数据 */
+        /** Logistics company list data*/
         logisticsTableData: [],
 
         closeOnClickModal: false,
 
-        /** 物流公司弹框显示 */
+        /** Logistics company pop-up display*/
         logisticsModelShow: false
       }
     },
@@ -55,7 +55,7 @@
       this.GET_logisticsList()
     },
     methods: {
-      /** 获取物流公司信息*/
+      /** Access logistics company information*/
       GET_logisticsList() {
         this.loading = true
         API_logistics.getExpressCompanyList({}).then(response => {
@@ -64,7 +64,7 @@
         })
       },
 
-      /** 监听弹框关闭 */
+      /** The monitor shell is closed*/
       closed() {
         this.$emit('logstictisClosed', false)
       }

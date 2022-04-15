@@ -5,12 +5,12 @@
     :loading="loading"
   >
     <template slot="table-columns">
-      <el-table-column prop="name" label="收货人"/>
-      <el-table-column :formatter="formatterAddress" label="所在地区"/>
-      <el-table-column prop="addr" label="详细地址"/>
-      <el-table-column prop="mobile" label="手机号码"/>
-      <el-table-column label="默认">
-        <template slot-scope="scope">{{ scope.row.def_addr ? '是' : '否' }}</template>
+      <el-table-column prop="name" label="The consignee"/>
+      <el-table-column :formatter="formatterAddress" label="In the area"/>
+      <el-table-column prop="addr" label="Detailed address"/>
+      <el-table-column prop="mobile" label="Mobile phone number"/>
+      <el-table-column label="default">
+        <template slot-scope="scope">{{ scope.row.def_addr ? 'is' : 'no' }}</template>
       </el-table-column>
     </template>
 
@@ -36,16 +36,16 @@
     props: ['member-id'],
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
 
-        /** 列表数据 */
+        /** The list of data*/
         tableData: ''
       }
     },
@@ -59,23 +59,23 @@
       }
     },
     methods: {
-      /** 格式化地址 */
+      /** Formatted address*/
       formatterAddress(row, column, cellValue, index) {
         return `${row.province}${row.city}${row.county}${row.town}`
       },
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_MemberListAddress()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_MemberListAddress()
       },
 
-      /** 获取会员列表 */
+      /** Get membership list*/
       GET_MemberListAddress() {
         this.loading = true
         API_Member.getMemberAddress(this.memberId, this.params).then(response => {

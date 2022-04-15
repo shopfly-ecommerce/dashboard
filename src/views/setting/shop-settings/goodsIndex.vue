@@ -5,8 +5,8 @@
       :disabled="status === 'DOING'"
       :loading="status === 'DOING'"
       @click="handleCreateGoodsIndex"
-    >{{ status === 'doing' ? '生成中' : '生成' }}</el-button>
-    <el-button type="danger" @click="handleStopGoodsIndex">停止</el-button>
+    >{{ status === 'doing' ? 'In the generated' : 'generate' }}</el-button>
+    <el-button type="danger" @click="handleStopGoodsIndex">stop</el-button>
     <div class="progress-box">
       <el-progress :text-inside="true" :stroke-width="18" :percentage="percentage" :status="status"/>
       <p :class="['progress-text', status === 'EXCEPTION' && 'error']">{{ status_text }}</p>
@@ -23,31 +23,31 @@
     data() {
       return {
         percentage: 0,
-        // DOING("进行中"), SUCCESS("成功"), EXCEPTION("异常")
+        // DOING(DOING), SUCCESS(DOING), EXCEPTION(DOING)
         status: '',
         status_text: '',
-        // 任务Id
+        // Task Id
         task_id: 'GOODS_INDEX_INIT',
 
-        /** 定时器  */
+        /** The timer*/
         timer: null
       }
     },
     created() {
-      /** 检查是否有商品索引生成任务 */
+      /** Check if there is a commodity index generation task*/
       API_Task.hasTask(this.task_id).then(this.GET_Progress)
     },
     methods: {
-      /** 生成商品索引 */
+      /** Generate commodity index*/
       handleCreateGoodsIndex() {
         this.percentage = 0
-        this.$confirm('确定要生成商品索引吗？', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Are you sure you want to generate the item index？', 'prompt', { type: 'warning' }).then(() => {
           API_Goods.initSearchIndex().then(response => {
             this.GET_Progress()
           })
         }).catch(() => {})
       },
-      /** 停止生成 */
+      /** Stop producing*/
       handleStopGoodsIndex() {
         API_Task.clearTask(this.task_id).then(() => {
           this.status = 'SCUESS'
@@ -56,7 +56,7 @@
           this.timer = null
         })
       },
-      /** 获取生成进度 */
+      /** Get build progress*/
       GET_Progress() {
         API_Task.getProgressById(this.task_id).then(response => {
           const { percentage, status, text } = response

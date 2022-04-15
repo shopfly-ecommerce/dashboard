@@ -5,19 +5,19 @@
     :loading="loading"
   >
     <template slot="table-columns">
-      <el-table-column label="商品图片">
+      <el-table-column label="Commodity images">
         <template slot-scope="scope">
           <a :href="MixinBuyerDomain + '/goods/' + scope.row.goods_id" class="goods-name" target="_blank"><img :src="scope.row.thumbnail" :alt="scope.row.goods_name" class="goods-image"></a>
         </template>
       </el-table-column>
-      <el-table-column prop="sn" label="商品编号"/>
-      <el-table-column label="商品名称" width="400">
+      <el-table-column prop="sn" label="SN"/>
+      <el-table-column label="Name" width="400">
         <template slot-scope="{ row }">
           <a :href="MixinBuyerDomain + '/goods/' + row.goods_id" class="goods-name" target="_blank">{{ row.goods_name }}</a>
         </template>
       </el-table-column>
-      <el-table-column prop="price" :formatter="MixinFormatPrice" label="商品价格"/>
-      <el-table-column label="商品状态">
+      <el-table-column prop="price" :formatter="MixinFormatPrice" label="Price"/>
+      <el-table-column label="Status">
         <template slot-scope="scope">{{ scope.row.market_enable | statusFilter }}</template>
       </el-table-column>
     </template>
@@ -43,17 +43,17 @@
     name: 'pointsGoods',
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10,
           goods_type: 'POINT'
         },
 
-        /** 列表数据 */
+        /** The list of data*/
         tableData: ''
       }
     },
@@ -63,26 +63,26 @@
     filters: {
       statusFilter(val) {
         switch (val) {
-          case 0: return '已下架'
-          case 1: return '售卖中'
-          case 2: return '预览商品'
+          case 0: return 'unsold'
+          case 1: return 'In the sale'
+          case 2: return 'Preview the goods'
         }
       }
     },
     methods: {
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_PointGoodsList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_PointGoodsList()
       },
 
-      /** 获取会员列表 */
+      /** Get membership list*/
       GET_PointGoodsList() {
         this.loading = true
         API_Goods.getGoodsList(this.params).then(response => {

@@ -1,6 +1,6 @@
 /**
- * 倒计时组件
- * 随选随用
+ * Countdown module
+ * Increases with the increasing choice
  */
 import Vue from 'vue'
 import CountDownBtn from './src/main'

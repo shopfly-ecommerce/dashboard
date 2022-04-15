@@ -1,11 +1,11 @@
 /**
- * 短信网关相关API
+ * SMS gateway correlationAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取短信网关列表
+ * Gets the list of SMS gateways
  * @param params
  */
 export function getSmsGatewayList(params) {
@@ -18,9 +18,9 @@ export function getSmsGatewayList(params) {
 }
 
 /**
- * 修改短信网关参数
- * @param id 短信网关ID
- * @param params 短信网关参数
+ * Modify the SMS gateway parameters
+ * @param id SMS gatewayID
+ * @param params SMS gateway parameters
  * @returns {*}
  */
 export function editSmsGateway(id, params) {
@@ -33,7 +33,7 @@ export function editSmsGateway(id, params) {
 }
 
 /**
- * 开启短信网关
+ * Open SMS gateway
  * @param bean
  * @returns {*}
  */

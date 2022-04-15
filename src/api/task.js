@@ -1,11 +1,11 @@
 /**
- * 进度相关API
+ * Progress of the relatedAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 查看是否有任务正在进行
+ * Check to see if any tasks are in progress
  * @param task_id
  */
 export function hasTask(task_id) {
@@ -18,7 +18,7 @@ export function hasTask(task_id) {
 }
 
 /**
- * 获取进度条
+ * Get progress bar
  * @param task_id
  */
 export function getProgressById(task_id) {
@@ -30,7 +30,7 @@ export function getProgressById(task_id) {
 }
 
 /**
- * 清除任务
+ * Remove the task
  * @param task_id
  */
 export function clearTask(task_id) {

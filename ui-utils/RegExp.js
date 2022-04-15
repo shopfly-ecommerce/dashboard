@@ -1,43 +1,43 @@
 /**
- * 各种正则表达式
- * mobile   手机号
- * email    电子邮箱
- * password 密码【6-20位】
- * integer  正整数【不包含0】
- * money    金钱
- * TINumber 纳税识别号
- * IDCard   身份证
- * userName 账户名称【汉字、字母、数字、“-”、“_”的组合】
+ * Various regular expressions
+ * mobile   Mobile phone no.
+ * email    email
+ * password password【6-20position】
+ * integer  Positive integer【Does not contain0】
+ * money    money
+ * TINumber Tax identification number
+ * IDCard   Id card
+ * userName The name of the account【Chinese characters、The letter、digital、“-”、“_The combination of"】
  * URL      URL
- * TEL      固定电话
+ * TEL      Fixed telephone
  */
 
-// 手机号
+// Mobile phone no.
 export const mobile = /^0?(13[0-9]|14[0-9]|15[0-9]|16[0-9]|17[0-9]|18[0-9]|19[0-9])[0-9]{8}$/
 
-// 电子邮箱
+// email
 export const email = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
 
-// 密码【6-20位 包括特殊字符】
+// password【6-20Bits include special characters】
 export const password = /^[A-Za-z0-9!#$%^&*.~,]{6,20}$/
 
-// 正整数【不包含0】
+// Positive integer【Does not contain0】
 export const integer = /^[1-9]\d*$/
 
-// 正整数【包含0】
+// Positive integer【contains0】
 export const positiveInteger = /^[0-9]\d*$/
 
-// 金钱
+// money
 export const money = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/
 
-// 纳税识别号
+// Tax identification number
 // let TINumber = /^\d{15}$|^\d{18}$|^\d{20}$/
 export const TINumber = /(^[a-zA-Z0-9]{15}$)|(^[a-zA-Z0-9]{18}$)|(^[a-zA-Z0-9]{20}$)/
 
-// 身份证
+// Id card
 export const IDCard = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/
 
-// 账户名称【汉字、字母、数字、“-”、“_”的组合】以其开头并且匹配一个或任意多个
+// The name of the account【Chinese characters、The letter、digital、“-”、“_The combination of"】Starts with it and matches one or more of them
 export const userName = /^[A-Za-z0-9_\-\u4e00-\u9fa5]+$/
 
 // URL
@@ -46,5 +46,5 @@ export const URL = /^(https?|ftp):\/\/([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((2
 // httpUrl
 export const httpUrl = /^((http)?:\/\/)[^\s]+/
 
-// 固话
+// fixed-line
 export const TEL = /0\d{2,3}-\d{7,8}/

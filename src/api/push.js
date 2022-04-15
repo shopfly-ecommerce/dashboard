@@ -1,12 +1,12 @@
 /**
  * Created by Andste on 2018/6/29.
- * 推送相关API
+ * Push relatedAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取推送设置
+ * Get push Settings
  */
 export function getPushSettings() {
   return request({
@@ -16,7 +16,7 @@ export function getPushSettings() {
 }
 
 /**
- * 修改推送设置
+ * Modify push Settings
  * @param params
  */
 export function editPushSettings(params) {
@@ -28,7 +28,7 @@ export function editPushSettings(params) {
 }
 
 /**
- * 商品推送
+ * Goods delivery
  * @param title
  * @param goods_ids
  */

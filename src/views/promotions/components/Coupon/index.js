@@ -1,5 +1,5 @@
 /**
- * 添加/修改 优惠券
+ * add/Modify coupons
  */
 import Vue from 'vue'
 import Coupon from './main'

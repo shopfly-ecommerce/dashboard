@@ -8,9 +8,9 @@
       border
     >
       <template slot="table-columns">
-        <el-table-column prop="order_num" label="购买频次"/>
-        <el-table-column prop="member_num" label="下单会员数量"/>
-        <el-table-column prop="percent" label="人数占比"/>
+        <el-table-column prop="order_num" label="Purchase frequency"/>
+        <el-table-column prop="member_num" label="Number of single members"/>
+        <el-table-column prop="percent" label="The number of"/>
       </template>
     </en-table-layout>
   </div>
@@ -25,7 +25,7 @@
     data() {
       return {
         loading: false,
-        /** 列表数据 */
+        /** The list of data*/
         tableData: ''
       }
     },

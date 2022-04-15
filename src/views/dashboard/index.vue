@@ -1,30 +1,30 @@
 <template>
   <div class="dashboard-container" v-loading="loading">
     <el-row :gutter="20" type="flex" justify="space-around">
-      <!--店铺 商品提示-->
+      <!--Store merchandise tips-->
       <el-col  :span="12">
         <el-card class="box-card">
           <div>
-            <h1>店铺及商品提示</h1>
-            <h2>您需要关注的店铺信息以及待处理事项</h2>
+            <h1>Shop and merchandise tips</h1>
+            <h2>The store information you need to pay attention to and the pending issues</h2>
           </div>
           <div class="store-index-content">
-            <p class="store-rompt" @click="toGoodsManager(1)">出售中的商品：
+            <p class="store-rompt" @click="toGoodsManager(1)">Goods on sale：
               <span style="color: red;">{{dashBoardData.market_goods}}</span>
             </p>
             <div>
-              <el-tag type="success" @click.native="toGoodsManager(0)">仓库待上架货品  {{dashBoardData.pending_goods}}</el-tag>
-              <el-tag type="success" @click.native="toConsumerMsg">待回复的咨询 {{dashBoardData.pending_member_ask}}</el-tag>
+              <el-tag type="success" @click.native="toGoodsManager(0)">The warehouse is ready to stock{{dashBoardData.pending_goods}}</el-tag>
+              <el-tag type="success" @click.native="toConsumerMsg">Inquiries to be replied to{{dashBoardData.pending_member_ask}}</el-tag>
             </div>
           </div>
         </el-card>
       </el-col>
-      <!--商城公告-->
+      <!--notes-->
       <el-col :span="12">
         <el-card class="box-card">
           <div>
-            <h1>商城公告</h1>
-            <h2>您可以关注商城公告，以便能更快的了解商城的信息</h2>
+            <h1>notes</h1>
+            <h2>You can pay attention to the mall announcement, in order to be able to understand the mall information faster</h2>
           </div>
           <p class="store-bulletin" v-for="row in shop_announcement">》
             <a @click="showArticleContext(row)" :title="row.content">{{row.article_name}}</a>
@@ -33,30 +33,30 @@
       </el-col>
     </el-row>
     <el-row :gutter="20" type="flex" justify="space-around">
-      <!--交易提示-->
+      <!--Trading tips-->
       <el-col  :span="12">
         <el-card class="box-card">
           <div>
-            <h1>交易提示</h1>
-            <h2>您需要立即处理的交易订单</h2>
+            <h1>Trading tips</h1>
+            <h2>The transaction order that you need to process immediately</h2>
           </div>
           <div class="store-index-content">
-            <p class="store-rompt" @click="toOrderList('ALL')">所有的订单：<span style="color: red;">{{dashBoardData.all_orders_num}}</span></p>
+            <p class="store-rompt" @click="toOrderList('ALL')">All orders：<span style="color: red;">{{dashBoardData.all_orders_num}}</span></p>
             <div>
-              <el-tag type="success" @click.native="toOrderList('WAIT_PAY')"> 待付款  {{dashBoardData.wait_pay_order_num}}</el-tag>
-              <el-tag type="success" @click.native="toOrderList('WAIT_SHIP')">待发货  {{dashBoardData.wait_ship_order_num}}</el-tag>
-              <el-tag type="success" @click.native="toOrderList('WAIT_ROG')"> 待收货  {{dashBoardData.wait_delivery_order_num}}</el-tag>
-              <el-tag type="success" @click.native="toRefundOrderList()">     申请售后 {{dashBoardData.after_sale_order_num}}</el-tag>
+              <el-tag type="success" @click.native="toOrderList('WAIT_PAY')"> For the payment{{dashBoardData.wait_pay_order_num}}</el-tag>
+              <el-tag type="success" @click.native="toOrderList('WAIT_SHIP')">To send the goods{{dashBoardData.wait_ship_order_num}}</el-tag>
+              <el-tag type="success" @click.native="toOrderList('WAIT_ROG')"> For the goods{{dashBoardData.wait_delivery_order_num}}</el-tag>
+              <el-tag type="success" @click.native="toRefundOrderList()">     Apply for after sales{{dashBoardData.after_sale_order_num}}</el-tag>
             </div>
           </div>
         </el-card>
       </el-col>
-      <!--平台联系方式-->
+      <!--Platform contact Information-->
       <el-col :span="12">
         <el-card class="box-card">
           <div>
-            <h1>平台联系方式</h1>
-            <h2>可以致电平台联系电话或将建议、问题提交到平台邮箱中</h2>
+            <h1>Platform contact Information</h1>
+            <h2>You can call the platform to contact the number or will advise、The problem is submitted to the platform mailbox</h2>
           </div>
           <ul class="platform-concate">
             <li v-if="concat"><span>{{ concat.article_name }} </span>：<span v-html="concat.content"></span></li>
@@ -76,52 +76,52 @@ import * as API_shop from '@/api/shop'
 export default {
   name: 'dashboard',
   mounted() {
-    /** 获取首页统计信息 */
+    /** Get home page statistics*/
     this.GET_DashBoard()
 
-    /** 获取首页商城公告 */
+    /** Get home mall announcement*/
     this.GET_Notice()
 
-    /** 获取首页联系方式 */
+    /** Get home contact information*/
     this.GET_Concate()
 
     window.onresize = this.countTableHeight
   },
   data() {
     return {
-      /** 加载中*/
+      /** In the load*/
       loading: false,
 
-      /** 商家基本信息 */
+      /** Basic information of merchants*/
       shop_info: this.$store.getters.shopInfo,
 
-      /** 首页统计数据*/
+      /** Home page statistics*/
       dashBoardData: {},
 
-      /** 商城公告*/
+      /** notes*/
       shop_announcement: [],
 
-      /** 平台联系方式*/
+      /** Platform contact Information*/
       concat: null,
 
-      /** 商家图标*/
+      /** Merchants icon*/
       fileList: [],
 
-      /** 视图高度*/
+      /** Height of the view*/
       tableHeight: (document.body.clientHeight - 84 - 80 - 80 - 20 - 20 - 4) / 2,
 
-      /** 当前商城公告名称 */
+      /** The current mall announcement name*/
       currentName: '',
 
-      /** 当前商城公告内容 */
+      /** Current mall announcement content*/
       currentContent: '',
 
-      /** 是否显示商城公告 默认不显示 */
+      /** Display Mall bulletin By default, the bulletin is not displayed*/
       isShowArticle: false
     }
   },
   computed: {
-    /** 用户信息 */
+    /** The user information*/
     user_info() {
       return this.$store.getters.user
     }
@@ -135,12 +135,12 @@ export default {
     this.shop_info = this.$store.getters.shopInfo
   },
   methods: {
-    /** 窗口缩放时计算table高度 */
+    /** Calculated when the window is zoomedtablehighly*/
     countTableHeight() {
       this.tableHeight = (document.body.clientHeight - 84 - 80 - 80 - 20 - 20 - 4) / 2
     },
 
-    /** 获得首页统计信息*/
+    /** Get home page statistics*/
     GET_DashBoard() {
       this.loading = true
       API_Dashboard.getDashboardData().then(response => {
@@ -149,7 +149,7 @@ export default {
       })
     },
 
-    /** 获取首页 商城公告 */
+    /** Get home mall announcement*/
     GET_Notice() {
       this.loading = true
       const category_type = 'NOTICE'
@@ -159,7 +159,7 @@ export default {
       })
     },
 
-    /** 获取首页 平台联系方式 */
+    /** Get home platform contact information*/
     GET_Concate() {
       this.loading = true
       API_Dashboard.getConcate({ position: 'CONTACT_INFORMATION' }).then((response) => {
@@ -168,16 +168,16 @@ export default {
       })
     },
 
-    /** 店铺LOGO上传 */
+    /** The storeLOGOupload*/
     // toChangeShopIcon() {
     //   this.$refs.uploadBtn.click()
     // },
 
-    /** 图片上传之前的校验 */
+    /** Verify images before uploading*/
     handleShopLogoBefore(file) {
       const isImage = file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png'
       if (!isImage) {
-        this.$message.error('上传头像图片只能是 JPG、JPEG或PNG格式!')
+        this.$message.error('Profile pictures can only be uploadedJPG、JPEGorPNGFormat!')
         return isImage
       }
       return new Promise((resolve, reject) => {
@@ -188,11 +188,11 @@ export default {
             let width = image.width
             let height = image.height
             if (width > 300 || width < 200) {
-              this.$message.error('图片宽度必须在200~300之间！')
+              this.$message.error('The image width must be within200~300between！')
               reject()
             }
             if (height > 100 || height < 50) {
-              this.$message.error('图片高度必须在50~100之间！')
+              this.$message.error('The image height must be within50~100between！')
               reject()
             }
             resolve()
@@ -203,17 +203,17 @@ export default {
       })
     },
 
-    /** 上传成功后的钩子 更换图片 置空存储数组*/
+    /** After a successful upload the hook replaces the picture empty storage array*/
     uploaded(response) {
       this.shop_info.shop_logo = response.url
       this.fileList = []
       API_shop.updateShopLogo({ logo: response.url }).then(() => {
-        this.$message.success('店铺LOGO修改成功')
+        this.$message.success('The storeLOGOModify the success')
         this.$store.dispatch('getShopInfoAction')
       })
     },
 
-    /** 跳转商品列表*/
+    /** Jump to the list of items*/
     toGoodsManager(goodsStatus) {
       const result = this.$store.getters.addRouters.some(key => {
         if (key.name === 'goods' && key.children) {
@@ -224,11 +224,11 @@ export default {
       if (result) {
         this.$router.push({ path: '/goods/goodsList', query: { market_enable: goodsStatus }})
       } else {
-        this.$message.error('权限不足，无法查看')
+        this.$message.error('Insufficient permissions to view')
       }
     },
 
-    /** 跳转买家留言 待回复的咨询 */
+    /** Jump buyer message to reply to the consultation*/
     toConsumerMsg() {
       const result = this.$store.getters.addRouters.some(key => {
         if (key.name === 'member' && key.children) {
@@ -239,10 +239,10 @@ export default {
       if (result) {
         this.$router.push({ path: '/member/goodsComment/goods-ask-list' })
       } else {
-        this.$message.error('权限不足，无法查看')
+        this.$message.error('Insufficient permissions to view')
       }
     },
-    /** 跳转订单列表*/
+    /** Jump to order list*/
     toOrderList(orderStatus) {
       const result = this.$store.getters.addRouters.some(key => {
         if (key.name === 'order' && key.children) {
@@ -253,11 +253,11 @@ export default {
       if (result) {
         this.$router.push({ path: '/order/orderList', query: { order_status: orderStatus }})
       } else {
-        this.$message.error('权限不足，无法查看')
+        this.$message.error('Insufficient permissions to view')
       }
     },
 
-    /** 跳转维权订单*/
+    /** Jump rights order*/
     toRefundOrderList() {
       const result = this.$store.getters.addRouters.some(key => {
         if (key.name === 'order' && key.children) {
@@ -268,11 +268,11 @@ export default {
       if (result) {
         this.$router.push({ path: '/order/refundList' })
       } else {
-        this.$message.error('权限不足，无法查看')
+        this.$message.error('Insufficient permissions to view')
       }
     },
 
-    /** 显示商城公告 */
+    /** Display Mall Announcement*/
     showArticleContext(row) {
       this.currentName = row.article_name
       this.currentContent = row.content
@@ -301,7 +301,7 @@ export default {
     border-radius: 4px;
   }
 
-  /*商家基本信息*/
+  /*Basic information of merchants*/
   div.grid-content {
     display: flex;
     flex-direction: row;
@@ -345,11 +345,11 @@ export default {
       }
     }
 
-    /*商家信息*/
+    /*Business information*/
     .shop-info {
       flex-grow: 40;
       padding-top: 30px;
-      /*商家主营信息*/
+      /*Merchants Main information*/
       .shop-info-basic {
         display: flex;
         flex-direction: row;
@@ -377,7 +377,7 @@ export default {
 
   }
 
-  /* 店铺商品提示/交易订单提示*/
+  /* Store merchandise tips/Trade Order Reminder*/
   h1 {
     border-left: 3px solid #28b779;
     font: 16px/18px "microsoft yahei";
@@ -385,13 +385,13 @@ export default {
     margin-bottom: 4px;
     padding-left: 6px;
   }
-  /*副标题*/
+  /*subtitle*/
   h2 {
     color: #aaa;
     font: 12px/16px "microsoft yahei";
     margin: 10px 0;
   }
-  /* 店铺/交易提示内容 */
+  /* The store/Content of Trade Notice*/
   .store-index-content {
     margin: 20px 0;
     overflow: hidden;
@@ -405,12 +405,12 @@ export default {
       border: 1px solid #fbeed5;
       cursor: pointer;
     }
-    /** 标签 */
+    /** The label*/
     .el-tag {
       cursor: pointer;
     }
   }
-  /*商城公告*/
+  /*notes*/
   .store-bulletin {
     color: #aaa;
     cursor: pointer;
@@ -421,7 +421,7 @@ export default {
     }
   }
 
-  /*平台联系方式*/
+  /*Platform contact Information*/
   .platform-concate {
     padding: 0;
     li {

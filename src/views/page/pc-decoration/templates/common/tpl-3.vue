@@ -5,12 +5,12 @@
         <template v-if="isEdit">
           <div class="edit-mask title" @click="handleEditTitle(columnIndex)">
             <button type="button" class="mask-btn-floor">
-              <svg-icon icon-class="pen-leather"></svg-icon>编辑
+              <svg-icon icon-class="pen-leather"></svg-icon>edit
             </button>
           </div>
           <div class="edit-mask tag" @click="handleEditTags(columnIndex)">
             <button type="button" class="mask-btn-floor">
-              <svg-icon icon-class="pen-leather"></svg-icon>编辑
+              <svg-icon icon-class="pen-leather"></svg-icon>edit
             </button>
           </div>
         </template>
@@ -61,25 +61,25 @@
   export default {
     name: 'tpl-3',
     mixins: [mixin],
-    title: '模块3',
+    title: 'The module3',
     dataTpl: {
       tpl_id: 3,
       tpl_type: 'ADV',
       columnList: [
         {
-          title: '标题',
+          title: ' title',
           titleColors: ['#3aaba9', '#299b9a'],
           tagList: mixin.methods.emptyBlock(0, 'TEXT'),
           blockList: mixin.methods.emptyBlock(5, 'IMAGE')
         },
         {
-          title: '标题',
+          title: ' title',
           titleColors: ['#568e7d', '#447e6c'],
           tagList: mixin.methods.emptyBlock(0, 'TEXT'),
           blockList: mixin.methods.emptyBlock(5, 'IMAGE')
         },
         {
-          title: '标题',
+          title: ' title',
           titleColors: ['#5a7259', '#425f41'],
           tagList: mixin.methods.emptyBlock(0, 'TEXT'),
           blockList: mixin.methods.emptyBlock(5, 'IMAGE')

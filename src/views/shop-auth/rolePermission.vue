@@ -1,14 +1,14 @@
 <template>
   <div class="permission-container">
     <el-form :model="permissionForm" :rules="permissionRules" ref="permissionForm" label-width="200px" class="demo-ruleForm">
-      <el-form-item label="角色名称" prop="role_name">
+      <el-form-item label="Character name" prop="role_name">
         <el-input v-model="permissionForm.role_name"></el-input>
       </el-form-item>
-      <el-form-item label="角色描述" prop="role_describe">
-        <el-input v-model="permissionForm.role_describe" placeholder="最多200字" :maxlength="200"></el-input>
+      <el-form-item label="Role description" prop="role_describe">
+        <el-input v-model="permissionForm.role_describe" placeholder="most200word" :maxlength="200"></el-input>
       </el-form-item>
-      <el-form-item label="角色权限" prop="permission">
-        <el-checkbox :indeterminate="allIndeterminate" v-model="allCheck" @change="handleCheckAll">全部选择</el-checkbox>
+      <el-form-item label="Role authorization" prop="permission">
+        <el-checkbox :indeterminate="allIndeterminate" v-model="allCheck" @change="handleCheckAll">Select all</el-checkbox>
         <div v-for="(item, index) in permissions" :key="item.identifier" class="level_1">
           <el-row :gutter="20">
             <el-col :span="4">
@@ -46,7 +46,7 @@
         </div>
       </el-form-item>
       <el-form-item label="">
-        <el-button type="primary" size="small" style="margin-top: 15px" @click="saveRolePermission">保存设置</el-button>
+        <el-button type="primary" size="small" style="margin-top: 15px" @click="saveRolePermission">Save Settings</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -60,21 +60,21 @@
     name: 'rolePermission',
     data() {
       return {
-        /** 权限 表单 */
+        /** Permission form*/
         permissionForm: {
           role_name: ''
         },
-        /** 权限 表单规则 */
+        /** Permission form rules*/
         permissionRules: {
           role_name: [
-            this.MixinRequired('请输入角色名称！'),
-            { min: 1, max: 10, message: '长度在 1 到 10 个字符', trigger: 'blur' }
+            this.MixinRequired('Please enter a role name！'),
+            { min: 1, max: 10, message: 'The length of1 to10 A character', trigger: 'blur' }
           ]
         },
         permissions: [],
-        // 全选状态
+        // All state
         allCheck: false,
-        // 全选不确定状态
+        // Choose all uncertain states
         allIndeterminate: false
       }
     },
@@ -93,12 +93,12 @@
       role_id: 'GET_RolePermission'
     },
     methods: {
-      /** 全选 */
+      /** Select all*/
       handleCheckAll(checked) {
         this.allIndeterminate = false
         this.$set(this, 'permissions', this.setPermissionsCheck(this.permissions, checked))
       },
-      /** 选择 */
+      /** choose*/
       handleCheckboxChanged(item, parent) {
         if (item.children && item.children.length) {
           this.$set(item, 'children', this.setPermissionsCheck(item.children, item.checked))
@@ -106,7 +106,7 @@
         this.countAllPermissions()
         this.countParentChecked()
       },
-      /** 设置权限状态 */
+      /** Set permission state*/
       setPermissionsCheck(permissions, checked) {
         const perm = this.MixinClone(permissions)
         perm.map(item => {
@@ -118,14 +118,14 @@
         })
         return perm
       },
-      /** 检测是否有不确定性 */
+      /** Test for uncertainty*/
       checkIndeterminate(permissions) {
         if (!Array.isArray(permissions)) return false
         const _len = permissions.length
         const __len = permissions.filter(item => item.checked).length
         return (__len !== 0) && (_len !== __len)
       },
-      /** 获取所有权限展开后的长度、被选中的长度 */
+      /** Gets the length of all permissions expanded、The selected length*/
       countAllPermissions(permissions) {
         permissions = permissions || this.permissions
         const _list = []
@@ -139,7 +139,7 @@
         this.allIndeterminate = (length_checked !== 0) && (length !== length_checked)
         return _list
       },
-      /** 计算所有父辈的选中状态 */
+      /** Calculates the selection status of all parents*/
       countParentChecked(permissions) {
         permissions = permissions || this.permissions
         permissions.forEach(item => {
@@ -151,7 +151,7 @@
           }
         })
       },
-      /** 保存角色权限 */
+      /** Save Role Permissions*/
       saveRolePermission() {
         this.$refs['permissionForm'].validate(valid => {
           if (valid) {
@@ -163,7 +163,7 @@
               ? API_Auth.addRole(params).then(() => saveSuccess())
               : API_Auth.editRole(this.role_id, params).then(() => saveSuccess())
             const saveSuccess = () => {
-              this.$message.success('保存成功！')
+              this.$message.success('Save success！')
               this.$route.params.callback()
               this.$store.dispatch('delCurrentViews', {
                 view: this.$route,
@@ -171,15 +171,15 @@
               })
             }
           } else {
-            this.$message.error('表单填写有误，请检查！')
+            this.$message.error('The form is filled incorrectly, please check！')
             return false
           }
         })
       },
-      /** 获取权限菜单树 */
+      /** Gets the permissions menu tree*/
       GET_RolePermission() {
         API_Menus.getMenusChildren().then(res => {
-          // 如果this.role_id 不为0，说明是编辑。
+          // If this.role_id is not 0, it is edit.
           if (this.role_id !== 0) {
             API_Auth.getRoleDetail(this.role_id).then(response => {
               this.role_id = response.role_id
@@ -195,7 +195,7 @@
           }
         })
       },
-      /** 展开路由的identifier */
+      /** Expanded routingidentifier */
       expandRouters(menus) {
         const routers = []
         menus.forEach(item => {
@@ -206,7 +206,7 @@
         })
         return routers
       },
-      /** 递归筛选被选中的路由 */
+      /** Recursive filtering of selected routes*/
       filterRoleRouter(routers, ids) {
         const _routers = []
         routers.forEach(item => {

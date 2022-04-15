@@ -1,11 +1,11 @@
 /**
- * 退款单API
+ * Refund singleAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取退款/货单列表
+ * To get a refund/Invoice list
  * @param params
  * @returns {Promise<any>}
  */
@@ -19,7 +19,7 @@ export function getRefundList(params) {
 }
 
 /**
- * 退款/货 详情
+ * A refund/Details of the goods
  * @param sn
  * @returns {Promise<any>}
  */
@@ -32,7 +32,7 @@ export function getRefundDetails(sn) {
 }
 
 /**
- * 卖家审核退款/退货
+ * Seller review and refund/Return of the goods
  * @param sn
  * @param params
  * @returns {Promise<any>}
@@ -47,7 +47,7 @@ export function refundAuth(sn, params) {
 }
 
 /**
- * 卖家执行退款
+ * Seller executes refund
  * @param sn
  * @param params
  * @returns {Promise<any>}
@@ -62,7 +62,7 @@ export function toRefund(sn, params) {
 }
 
 /**
- * 入库操作
+ * Warehouse operation
  * @param sn
  * @param params
  * @returns {Promise<any>}
@@ -78,7 +78,7 @@ export function wareHousing(sn, params) {
 }
 
 /**
- * 获取退款统计
+ * Obtain refund statistics
  * @param params
  */
 export function getRefundStatistics(params) {
@@ -91,7 +91,7 @@ export function getRefundStatistics(params) {
 }
 
 /**
- * 导出Excel
+ * exportExcel
  * @param params
  */
 export function exportRefundExcel(params) {

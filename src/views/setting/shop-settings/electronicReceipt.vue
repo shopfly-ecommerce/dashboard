@@ -6,19 +6,19 @@
       :loading="loading"
     >
       <template slot="table-columns">
-        <el-table-column prop="name" label="电子面单公司"/>
-        <el-table-column label="启用状态">
+        <el-table-column prop="name" label="Electronic face sheet Company"/>
+        <el-table-column label="enabled">
           <template slot-scope="scope">
-            {{ scope.row.open === 1 ? '已开启' : '已关闭' }}
-            <el-button v-if="scope.row.open === 0" type="text" @click="handleOpenExpressPlatform(scope.$index, scope.row)">开启</el-button>
+            {{ scope.row.open === 1 ? 'Has been open' : 'closed' }}
+            <el-button v-if="scope.row.open === 0" type="text" @click="handleOpenExpressPlatform(scope.$index, scope.row)">open</el-button>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="Operation">
           <template slot-scope="scope">
             <el-button
               size="mini"
               type="primary"
-              @click="handleEditElectronicReceipt(scope.$index, scope.row)">设置</el-button>
+              @click="handleEditElectronicReceipt(scope.$index, scope.row)">Set up the</el-button>
           </template>
         </el-table-column>
       </template>
@@ -35,7 +35,7 @@
       </el-pagination>
     </en-table-layout>
     <el-dialog
-      title="电子面单设置"
+      title="Electron plane setting"
       :visible.sync="dialogVisible"
       width="500px"
       :close-on-click-modal="false"
@@ -51,8 +51,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitElectronicReceiptForm">确 定</el-button>
+        <el-button @click="dialogVisible = false">cancel</el-button>
+        <el-button type="primary" @click="submitElectronicReceiptForm">save</el-button>
       </div>
     </el-dialog>
   </div>
@@ -65,18 +65,18 @@
     name: 'electronicReceipt',
     data() {
       return {
-        // 列表loading状态
+        // List loading status
         loading: false,
-        // 列表参数
+        // A list of parameters
         params: {
           page_no: 1,
           page_size: 10
         },
-        // 列表数据
+        // The list of data
         tableData: '',
-        // 电子面单设置 dialog
+        // Electronic plane sheet sets dialog
         dialogVisible: false,
-        // 电子面单设置 表单
+        // Electronic menu setup form
         electronicReceiptForm: {}
       }
     },
@@ -84,35 +84,35 @@
       this.GET_ElectronicReceiptList()
     },
     methods: {
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_ElectronicReceiptList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_ElectronicReceiptList()
       },
 
-      /** 修改电子面单设置 */
+      /** Modify electronic panel Settings*/
       handleEditElectronicReceipt(index, row) {
         this.electronicReceiptForm = this.MixinClone(row)
         this.dialogVisible = true
       },
 
-      /** 设置电子面单 表单提交 */
+      /** Set up e-face single form submission*/
       submitElectronicReceiptForm() {
         const { bean } = this.electronicReceiptForm
         API_ElectronicReceipt.editElectronicReceipt(bean, this.electronicReceiptForm).then(response => {
           this.dialogVisible = false
           this.MixinSetTableData(this.tableData, 'bean', bean, response)
-          this.$message.success('修改成功！')
+          this.$message.success('Modify the success！')
         })
       },
 
-      /** 获取电子面单列表 */
+      /** Gets the electronic surface list*/
       GET_ElectronicReceiptList() {
         this.loading = true
         API_ElectronicReceipt.getElectronicReceiptList(this.params).then(response => {

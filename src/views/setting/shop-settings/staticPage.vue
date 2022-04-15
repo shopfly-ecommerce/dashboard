@@ -1,13 +1,13 @@
 <template>
   <div class="static-page-container">
     <el-form :model="pageForm" :rules="pageRules" ref="pageForm" label-width="160px" style="width: 500px;">
-      <el-form-item label="PC静态页服务地址" prop="static_page_address">
+      <el-form-item label="PCStatic page service address" prop="static_page_address">
         <el-input v-model="pageForm.static_page_address">
           <el-button slot="append" icon="el-icon-check" @click="handleSaveAddress('pc')"></el-button>
         </el-input>
       </el-form-item>
-      <el-form-item label="要生成的页面">
-        <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+      <el-form-item label="The page to generate">
+        <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">Select all</el-checkbox>
         <el-checkbox-group v-model="checkedPages" @change="handleCheckedCitiesChange">
           <el-checkbox v-for="page in pages" :label="page" :key="page.value">{{ page.text }}</el-checkbox>
         </el-checkbox-group>
@@ -16,8 +16,8 @@
           :disabled="status === 'DOING'"
           :loading="status === 'DOING'"
           @click="handleCreateStaticPage"
-        >{{ status === 'DOING' ? '生成中' : '生成' }}</el-button>
-        <el-button type="danger" @click="handleStopStaticPage">停止</el-button>
+        >{{ status === 'DOING' ? 'In the generated' : 'generate' }}</el-button>
+        <el-button type="danger" @click="handleStopStaticPage">stop</el-button>
       </el-form-item>
       <el-form-item label="">
         <el-progress :text-inside="true" :stroke-width="18" :percentage="percentage" :status="status"/>
@@ -32,9 +32,9 @@
   import * as API_Task from '@/api/task'
 
   const pageOptions = [
-    { text: '首页', value: 'INDEX' },
-    { text: '商品页', value: 'GOODS' },
-    { text: '帮助中心', value: 'HELP' }
+    { text: 'Home', value: 'INDEX' },
+    { text: 'Commodity page', value: 'GOODS' },
+    { text: 'Help center', value: 'HELP' }
   ]
   export default {
     name: 'staticPage',
@@ -48,39 +48,39 @@
         pages: pageOptions,
         isIndeterminate: true,
         task_id: 'PAGE_CREATE',
-        // 静态页 表单
+        // Static page form
         pageForm: {
           address: ''
         },
-        // 静态页 表单规则
+        // Static page form rules
         pageRules: {
-          static_page_address: [this.MixinRequired('PC静态页服务地址不能为空！')]
+          static_page_address: [this.MixinRequired('PCThe static page service address cannot be empty！')]
         },
-        /** 定时器 */
+        /** The timer*/
         timer: null
       }
     },
     created() {
-      /** 检查是否有静态页生成任务 */
+      /** Check if there is a static page generation task*/
       API_Task.hasTask(this.task_id).then(response => {
         this.status = 'DOING'
         this.GET_Progress()
       })
-      /** 获取静态页生成地址 */
+      /** Gets the static page generation address*/
       API_StaticPage.getStaticPageAddress().then(response => {
         this.pageForm = response || {}
       })
     },
     methods: {
-      /** 保存静态页地址 */
+      /** Save the static page address*/
       handleSaveAddress(type) {
         this.$refs['pageForm'].validate((valid) => {
           if (valid) {
             API_StaticPage.saveStaticPageAddress(this.pageForm).then(response => {
-              this.$message.success('保存成功！')
+              this.$message.success('Save success！')
             })
           } else {
-            this.$message.error('请输入静态页服务地址！')
+            this.$message.error('Please enter the static page service address！')
             return false
           }
         })
@@ -94,13 +94,13 @@
         this.checkAll = checkedCount === this.pages.length
         this.isIndeterminate = checkedCount > 0 && checkedCount < this.pages.length
       },
-      /** 生成静态页 */
+      /** Generate static pages*/
       handleCreateStaticPage() {
         if (this.checkedPages.length === 0) {
-          this.$message.error('请选择要生成的页面！')
+          this.$message.error('Select the page you want to generate！')
           return false
         }
-        this.$confirm('确定要生成静态页吗？', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Are you sure you want to generate static pages？', 'prompt', { type: 'warning' }).then(() => {
           const choose = this.checkedPages.map(item => item.value)
           const params = { choose_pages: choose }
           this.percentage = 0
@@ -109,7 +109,7 @@
           })
         }).catch(() => {})
       },
-      /** 停止生成静态页 */
+      /** Stop generating static pages*/
       handleStopStaticPage() {
         API_Task.clearTask(this.task_id).then(() => {
           this.status = 'SCUESS'
@@ -118,7 +118,7 @@
           this.timer = null
         })
       },
-      /** 获取生成进度 */
+      /** Get build progress*/
       GET_Progress() {
         API_Task.getProgressById(this.task_id).then(response => {
           const { text, status, percentage } = response
@@ -128,7 +128,7 @@
           if (status === 'DOING') {
             this.timer = setTimeout(this.GET_Progress, 1000)
           } else if (status === 'SUCCESS') {
-            this.$message.success('静态页生成完成！')
+            this.$message.success('Static page generation is complete！')
           }
         })
       }

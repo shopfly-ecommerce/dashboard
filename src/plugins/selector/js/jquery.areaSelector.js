@@ -1,5 +1,5 @@
 /*
- *  地区选择器
+ *  Area selector
  *  @author: chenxiaobo
  *  @date: 2017-9-18
  */
@@ -176,17 +176,17 @@ let areaHTML =
 \
 			<div class='area-selector-container'>\
 				<div class='head'>\
-					选择可配送区域\
+					Select a distribution area\
 				</div>\
 				<div class='body'>\
 					<div class='area-left'>\
-						<h3> <span id='chooseAll'>全选</span> 可选省、市、区</h3>\
+						<h3> <span id='chooseAll'>Select all</span> Optional province、The city、area</h3>\
 						<ul>\
 						</ul>\
 					</div>\
-					<button type='button' class='btn btn-default'>添加</button>\
+					<button type='button' class='btn btn-default'>add</button>\
 					<div class='area-right'>\
-						<h3> <span id='cancelChooseAll'>移除全部</span> 已选省、市、区</h3>\
+						<h3> <span id='cancelChooseAll'>Remove all</span> The selected provinces、The city、area</h3>\
 						<ul>\
 \
 						</ul>\
@@ -194,15 +194,15 @@ let areaHTML =
 				</div>\
 				<div class='foot'>\
 					<div>\
-						<button type='button' class='btn btn-primary confirm'>确认</button>\
-						<button type='button' class='btn btn-default cancel'>取消</button>\
+						<button type='button' class='btn btn-primary confirm'>confirm</button>\
+						<button type='button' class='btn btn-default cancel'>cancel</button>\
 					</div>\
 				</div>\
 				<div class='model' style='display: none;'>\
 					<li>\
 						<div class='item'>\
 							<span class='open-close'>+</span>\
-							<span class='name'>河南省</span>\
+							<span class='name'>Henan province</span>\
 							<span class='delete'>x</span>\
 						</div>\
 						<ul style='display: none;'></ul>\
@@ -211,33 +211,33 @@ let areaHTML =
             </div>\
             </div><div class='cover'></div>"
 
-// ---------------------------------------全局变量---------------------------------------
-let areaData = [{}] // 所有,省市县数据.
-let areaDOM = $(areaHTML) // DOM数据,后续操作全部基于此DOM
-let confirmCallback = null // 全局回调变量
-let hideDialogFunc  //在关闭Dialog后，动态修改顶层dialogVisible的属性值，做到和效果同步。
+// ---------------------------------------The global variable---------------------------------------
+let areaData = [{}] // all,Provincial and county data.
+let areaDOM = $(areaHTML) // DOMdata,Subsequent operations are all based on thisDOM
+let confirmCallback = null // Global callback variables
+let hideDialogFunc  //In the closedDialogAfter that, change the top layer dynamicallydialogVisibleAttribute value, and achieve synchronization with the effect.
 
 // ---------------------------------------END-------------------------------------------
 
-// ---------------------------------------公共方法---------------------------------------
+// ---------------------------------------Public methods---------------------------------------
 
-// 绑定DOM事件
+// The bindingDOMThe event
 let bindEventListener = function() {
-  // 监听 +/- 的点击
+  // Listen for the +/- click
   areaDOM.find('.model li > div .open-close').on('click', function(e) {
-    // 阻止冒泡
+    // To prevent a bubble
     e = e || window.event
     e.stopPropagation()
 
     let parent = $(this).parent()
     let parentNext = parent.next()
 
-    // 如果点击了第三层的名称span,没有ul
+    // If you click the name span of layer 3, there is no UL
     if (parent.hasClass('depth-three')) {
       return
     }
-    // 切换显示状态
-    // 如果子节点为展开状态.
+    // Toggle display state
+    // If the child node is in an expanded state.
     if (parentNext.css('display') === 'block') {
       $(this).text('+')
       parentNext.hide()
@@ -246,9 +246,9 @@ let bindEventListener = function() {
       parentNext.show()
     }
 
-    // 根据邮编,渲染下层数据
+    // Render the underlying data according to the zip code
 
-    // 如果已经存在下层数据,说明渲染过了.return
+    // If the underlying data already exists, it is rendered. Return
     if (parentNext.children().length > 0) {
       return
     }
@@ -263,79 +263,79 @@ let bindEventListener = function() {
         .closest('li')
         .hasClass('depth-one')
     ) {
-      // 渲染第二层
+      // Render the second layer
       renderDepthTwoData(regionID, parentNext)
     } else {
-      // 渲染第三层
+      // Render layer 3
       renderDepthThreeData(regionID, depthOneID, parentNext)
     }
   })
 
-  // 地区全选/取消全选事件
+  // Select all/cancel all events by district
   areaDOM.find('#chooseAll').click(function() {
     if ($('.area-left .depth-one').length <= 0) {
       return
     }
-    if ($(this).text() === '全选') {
+    if ($(this).text() === 'Select all') {
       $('.area-left .depth-one>div.item').each(function() {
         if (!$(this).parent().hasClass('selected')) {
           toggleSelectedStyle($(this).closest('li'))
         }
       })
-      $('#chooseAll').text('取消全选')
+      $('#chooseAll').text('To cancel all')
     } else {
       $('.area-left .depth-one>div.item').each(function() {
         if ($(this).parent().hasClass('selected')) {
           toggleSelectedStyle($(this).closest('li'))
         }
       })
-      $('#chooseAll').text('全选')
+      $('#chooseAll').text('Select all')
     }
   })
 
-  // 移除全部事件
+  // Remove all events
   areaDOM.find('#cancelChooseAll').click(function() {
     $('.area-right .delete').each(function() {
       appearanceAtLeft($(this).closest('li'))
     })
   })
 
-  // 监听 li子div元素 的点击
+  // Listen for the click of the li subdiv element
   areaDOM.find('.model li > div').click(function() {
     toggleSelectedStyle($(this).closest('li'))
   })
 
-  // 删除. 右边的地区,在左边对应位置复现.
+  // Delete. The region on the right is reproduced at the corresponding position on the left.
   areaDOM.find('.model .delete').click(function(e) {
-    // 阻止冒泡
+    // To prevent a bubble
     e = e || window.event
     e.stopPropagation()
 
-    // 复现
+    // repetition
     appearanceAtLeft($(this).closest('li'))
   })
 
-  // 添加 按钮监听点击
+  // Add a button to listen for clicks
   areaDOM.find('.body button').click(function() {
-    // 添加操作前的预处理
+    // Preprocessing before adding operations
     markSelectedArea()
 
-    // 开始添加
+    // Start adding
     addDomToRight()
   })
 
-  // 确认 点击事件
+  // Confirm click event
   $('.area-selector-container .foot .confirm').click(function() {
     $(this)
       .closest('.area-container')
       .css('display', 'none')
     $('.cover').css('display', 'none')
-    // 执行回调,把已选数据传递出去.
+    // Perform a callback to pass the selected data.
     confirmCallback(getJSON())
     hideDialogFunc();
   })
 
-  // 取消 点击事件
+  // Unclick event
   $('.area-selector-container .foot .cancel').click(function() {
     $(this)
       .closest('.area-container')
@@ -345,14 +345,14 @@ let bindEventListener = function() {
   })
 }
 
-// 左边div元素绑定点击事件.
+// On the leftdivElement binding click events.
 let bindClickListener = function(which) {
   which.click(function() {
     toggleSelectedStyle(which.closest('li'))
   })
 }
 
-// 请求并初次渲染数据.(仅渲染第一层,省级)
+// Request and first render the data.(Render only the first layer,At the provincial level)
 let requestAndFirstRenderData = function(api, isfilter = true, filterData = []) {
   request({url: api, method: 'get'}).then(response => {
     let _areaData = areaData = response
@@ -362,7 +362,7 @@ let requestAndFirstRenderData = function(api, isfilter = true, filterData = []) 
     if (isfilter && filterData.length) {
       _areaData = handleFilter(areaData, filterData)
     }
-    // 遍历各省插入到HTML中
+    // Iterate through the provinces and insert them into the HTML
     let li
     _areaData.forEach(function(province) {
       li = areaDOM.find('.model li').clone(true)
@@ -373,13 +373,13 @@ let requestAndFirstRenderData = function(api, isfilter = true, filterData = []) 
       li.find('div .name').text(province.local_name)
       areaDOM.find('.body .area-left > ul').append(li)
     })
-    // 隐藏已选元素
+    // Hide the selected element
     $("div.area-left").find("li").each(function(){
       $(this).css("display", $(this).attr("is-show"))
     })
   })
 }
-// 为数据添加过滤标记
+// Add a filter tag to the data
 let handleFilter = function (data, filterData) {
   data.forEach(function(key){
     if (filterData.includes(key.id)) {
@@ -392,18 +392,18 @@ let handleFilter = function (data, filterData) {
   return data
 }
 
-// 渲染第二层数据,市级
-// regionID: 省级邮编,根据这个判断如果属于本省的市,则渲染.
-// where: 渲染出来的li,插入到哪里
+// Render the second layer of data,The municipal
+// regionID: Provincial postal code,According to this judgment, if it belongs to the city of the province,The rendering.
+// where: Renderedli,Where to insert
 let renderDepthTwoData = function(regionID, where) {
-  // 遍历各市,插入到HTML中
+  // Iterate through the cities and insert into the HTML
   let li
   areaData.forEach(function(province) {
-    // 找到用户点击的省份的对象
+    // Find the object for the province the user clicked on
     if (province.id == regionID) {
       province.children.forEach(function(city) {
         li = areaDOM.find('.model li').clone(true)
-        //如果用户点击的+在右边那块.则清除掉div的click事件
+        // If the user clicks the + on the right one. Clears the divs click event
         if (where.closest('.area-right').length === 1) {
           li.find('div').off('click')
         }
@@ -423,27 +423,27 @@ let renderDepthTwoData = function(regionID, where) {
       })
     }
   })
-  // 隐藏已选元素
+  // Hide the selected element
   $("div.area-left").find("li").each(function(){
     $(this).css("display", $(this).attr("is-show"))
   })
 }
 
-// 渲染第三层数据,县级
-// regionID: 市级邮编,根据这个判断如果属于本市的县区,则渲染.
-// where: 渲染出来的li,插入到哪里
+// Render layer 3 data,At the county level
+// regionID: City, zip code,According to this judgment if belongs to the county district of the city,The rendering.
+// where: Renderedli,Where to insert
 let renderDepthThreeData = function(regionID, depthOneID, where) {
-  // 遍历各市,插入到HTML中
+  // Iterate through the cities and insert into the HTML
   let li
   areaData.forEach(function(province) {
-    // 找到对应省份
+    // Find the corresponding province
     if (province.id == depthOneID) {
       province.children.forEach(function(city) {
-        // 找到对应市
+        // Find the corresponding market
         if (city.id == regionID) {
           city.children.forEach(function(county) {
             li = areaDOM.find('.model li').clone(true)
-            //如果用户点击的+在右边那块.则清除掉div的click事件
+            // If the user clicks the + on the right one. Clears the divs click event
             if (where.closest('.area-right').length === 1) {
               li.find('div').off('click')
             }
@@ -465,22 +465,22 @@ let renderDepthThreeData = function(regionID, depthOneID, where) {
       })
     }
   })
-  // 隐藏已选元素
+  // Hide the selected element
   $("div.area-left").find("li").each(function(){
     $(this).css("display", $(this).attr("is-show"))
   })
 }
 
-// 切换自身和children的样式,是否被选择,选择则去掉.没有则添加.
+// Switch the sum of itselfchildrenThe style of the,Whether or not to be selected,Select to get rid of.If not, add.
 let toggleSelectedStyle = function(item) {
-  // 切换自身的样式
+  // Toggle its own style
   if (item.hasClass('selected')) {
     item.addClass('unselected').removeClass('selected')
     item
       .find('li')
       .addClass('unselected')
       .removeClass('selected')
-    // 同时切换+/-符号的样式
+    // Also switch the +/- symbol style
     item.find('.open-close').removeClass('icon-grey')
   } else {
     item.addClass('selected').removeClass('unselected')
@@ -488,14 +488,14 @@ let toggleSelectedStyle = function(item) {
       .find('li')
       .addClass('selected')
       .removeClass('unselected')
-    // 同时切换+/-符号的样式
+    // Also switch the +/- symbol style
     item.find('.open-close').addClass('icon-grey')
   }
-  // 第一层li的话,返回
+  // For layer 1 li, go back
   if (item.hasClass('depth-one')) {
     return
   }
-  // 如果所有兄弟元素包括自己全为已选.父已选
+  // If all sibling elements including themselves are selected. The father has chosen
   if (
     item.parent().children('.selected').length ===
     item.parent().children().length
@@ -505,34 +505,34 @@ let toggleSelectedStyle = function(item) {
       .parent('li')
       .removeClass('unselected')
       .addClass('selected')
-    // 同时切换+/-符号的样式
+    // Also switch the +/- symbol style
     item
       .parent('ul')
       .prev()
       .find('.open-close')
       .addClass('icon-grey')
   } else {
-    // 其他情况,父皆不选:
-    // 如果所有兄弟元素包括自己全为不选.
-    // 所有兄弟元素包括自己 有选又不选
+    // In other cases, the father does not choose:
+    // If all sibling elements including themselves are not selected.
+    // All sibling elements include optional and optional
     item
       .parent('ul')
       .parent('li')
       .removeClass('selected')
       .addClass('unselected')
-    // 同时切换+/-符号的样式
+    // Also switch the +/- symbol style
     item
       .parent('ul')
       .prev()
       .find('.open-close')
       .removeClass('icon-grey')
   }
-  // 如果用户点击的是第二层.return;
-  // 后面的代码是用户点击第三层才执行的.
+  // If the user clicks on layer 2. Return;
+  // The code that follows is executed when the user clicks on layer 3.
   if (item.hasClass('depth-two')) {
     return
   }
-  // 因为很可能第二层发生改变,还需要改变第一层的样式
+  // Since the second layer is likely to change, you will also need to change the style of the first layer
   let depthOne = item.closest('.depth-one').children('ul')
   if (depthOne.children('.selected').length === depthOne.children().length) {
     depthOne
@@ -555,93 +555,93 @@ let toggleSelectedStyle = function(item) {
   }
 }
 
-// 遍历,对前两层的区域做 独特的 标记.
+// traverse,Make unique marks for the areas on the first two floors.
 // data-all = all/part
-// 第一/二层的li元素,每一个都可能有三种状态.
-// 1.没有data-all属性: 表示children中全部没有被选择
-// 2.data-all==='all', children中全部被选择
-// 3.data-all==='part', children中部分被选择
+// The first/On the second floorliThe element,Each of these can have three states.
+// 1.There is nodata-allattribute: saidchildren中全部There is no被选择
+// 2.data-all==='all', childrenAll of them are selected
+// 3.data-all==='part', childrenThe middle part is selected
 let markSelectedArea = function() {
-  // 从第二层开始处理.
+  // Start with the second layer.
   areaDOM.find('.body .area-left li.depth-two').each(function() {
-    // 每次开始前都先清除之前的data-all属性,如果存在的话.
+    // Clear the previous data-all attribute, if any, before each start.
     $(this).removeAttr('data-all')
 
     let ul = $(this).children('ul')
     let children = ul.children()
 
-    // children为0, 看自身状态
+    // Children is 0, look at their state
     if (children.length === 0) {
       if ($(this).hasClass('selected')) {
-        // 标记自身
+        // Tagged themselves
         $(this).attr('data-all', 'all')
       }
     } else {
-      // children不为0, 看children状态
-      // children 全选
+      // Children is not 0. Look at the state of children
+      // The children all
       if (ul.children('.selected').length === children.length) {
         $(this).attr('data-all', 'all')
       } else if (ul.children('.unselected').length === children.length) {
-        // children 全不选
-        // 什么都不做
+        // The children dont choose
+        // Nothing
       } else {
-        // children 部分选择
+        // Children partial selection
         $(this).attr('data-all', 'part')
       }
     }
   })
-  // 处理第一层
+  // Treatment of the first layer
   areaDOM.find('.body .area-left li.depth-one').each(function() {
-    // 每次开始前都先清除之前的data-all属性,如果存在的话.
+    // Clear the previous data-all attribute, if any, before each start.
     $(this).removeAttr('data-all')
 
     let ul = $(this).children('ul')
     let children = ul.children()
 
-    // children为0, 看自身状态
+    // Children is 0, look at their state
     if (children.length === 0) {
       if ($(this).hasClass('selected')) {
-        // 标记自身
+        // Tagged themselves
         $(this).attr('data-all', 'all')
       }
     } else {
-      // children不为0, 看children状态
-      // children 全选
+      // Children is not 0. Look at the state of children
+      // The children all
       if (ul.children('[data-all=all]').length === children.length) {
         $(this).attr('data-all', 'all')
       } else if (ul.children('[data-all]').length === 0) {
-        // children 不存在data-all属性
-        // 什么都不做
+        // Children does not have the data-all attribute
+        // Nothing
       } else {
-        // children 存在data-all===all 或者 data-all===part 或者两者都存在
+        // Children exist data-all===all or data-all===part or both
         $(this).attr('data-all', 'part')
       }
     }
   })
 }
 
-// 根据标记,选择性的cloneDOM,添加到右边.
+// According to the tag,selectivecloneDOM,Add to the right.
 let addDomToRight = function() {
-  // 遍历第一层li
+  // Iterate through the first layer li
   areaDOM.find('.body .area-left li.depth-one').each(function() {
-    // 如果当前li不存在data-all属性.
+    // If the data-all attribute does not currently exist for LI.
     if (!$(this).attr('data-all')) {
       return
     }
 
-    // 右边,DOM
+    // The right side, the DOM
     let right = $(this)
       .closest('.area-left')
       .siblings('.area-right')
       .children('ul')
 
     if ($(this).attr('data-all') === 'all') {
-      // 取消样式和click事件
+      // Unstyle and click events
       $(this).removeClass('selected')
       $(this)
         .find('li')
         .removeClass('selected')
-      // 取消图标白色样式
+      // Unstyle the icon white
       $(this)
         .find('.open-close')
         .removeClass('icon-grey')
@@ -654,58 +654,58 @@ let addDomToRight = function() {
       )
 
       if (depthOneDOM.length === 0) {
-        // 如果全选并且右边不存在.
+        // If you pick them all and the right hand side doesnt exist.
         right.append($(this))
       } else {
-        // 如果全选并且右边存在
-        // 遍历第二层, 插入到右边对应的第一层的ul下面
+        // If you choose all of them and the right hand side exists
+        // Iterate through the second layer and insert it to the right under the ul of the corresponding first layer
         $(this)
           .find('li.depth-two')
           .each(function() {
             depthOneDOM.children('ul').append($(this))
           })
-        // 遍历完成后,删除当前li;
+        // After the traversal is complete, delete the current LI;
         $(this).remove()
       }
       return
     }
 
-    // 如果全选且右边已经存在当前li  或者 部分被选择
+    // If all is selected and the right hand side already exists the current li or part is selected
     if ($(this).attr('data-all') === 'part') {
-      // 克隆第一层的特定li
+      // Clone the specific Li of the first layer
       let liCloned = $(this).clone(true)
-      // 各自处理li的DOM;
+      // Handle LIs DOM separately;
       dealLiDOM($(this), liCloned)
 
-      // 取消图标样式
+      // Unstyle ICONS
       liCloned.find('.open-close').removeClass('icon-grey')
 
-      // 不能简单的添加到右边
+      // Cannot simply be added to the right
       // right.append(liCloned);
-      // 把克隆过的添加到右边.
+      // Add the cloned ones to the right.
       appendOperation(right, liCloned)
     }
   })
-  // 显示右边已选数据
+  // Displays the selected data on the right
   $(".area-right").find("li").each(function(){
     $(this).css("display", "block")
   })
 }
 
-// 根据来源不同,分别处理(删除不需要的DOM)li的DOM.(第一层)
+// Depending on the source,Each handle(Delete those you dont needDOM)litheDOM.(The first layer)
 let dealLiDOM = function(li, li_cloned) {
-  // 源li
-  // 遍历第二层li
+  // The source of li
+  // Iterate through the second layer li
   li
     .children('ul')
     .children('li')
     .each(function() {
       if ($(this).attr('data-all') === 'all') {
-        // 源li删除
+        // Source li deleted
         $(this).remove()
         return
       }
-      // 遍历第三层li
+      // Iterate through the third layer li
       $(this)
         .find('li')
         .each(function() {
@@ -715,33 +715,33 @@ let dealLiDOM = function(li, li_cloned) {
         })
     })
 
-  // 克隆li
-  // 遍历第二层li
+  // Cloning of li
+  // Iterate through the second layer li
   li_cloned
     .children('ul')
     .children('li')
     .each(function() {
-      // 不存在 data-all 属性
+      // There is no data-all attribute
       if (!$(this).attr('data-all')) {
-        // 克隆li删除
+        // Clone LI delete
         $(this).remove()
         return
       }
-      // 删除点击事件.(父,自身,子)
+      // Delete the click event (parent, self, child).
       $(this)
         .closest('ul')
         .prev()
         .off('click')
       $(this)
         .find('div')
-        .off('click') // 包括自身和children
-      // 移除class
+        .off('click') // Including itself andchildren
+      // Remove the class
       $(this).removeClass('selected')
       $(this)
         .find('li')
         .removeClass('selected')
 
-      // 遍历第三层li
+      // Iterate through the third layer li
       $(this)
         .find('li')
         .each(function() {
@@ -752,207 +752,207 @@ let dealLiDOM = function(li, li_cloned) {
     })
 }
 
-// 把DOM添加到右边的区域.
-// 如果已存在,则合并.
-// theLiDOM: 克隆猴的第一层的特定Li
+// theDOMAdd to the area on the right.
+// If it already exists,The merger.
+// theLiDOM: The first layer of cloned monkeys is specificLi
 let appendOperation = function(rightDOM, theLiDOM) {
-  // 如果当前li在右边的第一层DOM中未发现.
-  // 根据邮编判断
+  // If the current Li is not found in the first layer of DOM on the right.
+  // According to the zip code
   let depthOneDOM = rightDOM.find(
     '.depth-one[region-id=' + theLiDOM.attr('region-id') + ']'
   )
   if (depthOneDOM.length === 0) {
-    // 直接添加
+    // Added directly
     rightDOM.append(theLiDOM)
     return
   }
 
-  // 当前li在右边的第一层DOM中存在.
-  // 右边那个第一层liDOM: depthOneDOM
-  // 遍历当前li的第二层,接着判断
+  // Currently Li exists in the first layer of DOM on the right.
+  // The first layer liDOM on the right: depthOneDOM
+  // Iterate through the second layer of the current LI, and then determine
   theLiDOM.find('li.depth-two').each(function() {
     let depthTwoDOM = depthOneDOM.find(
       '.depth-two[region-id=' + $(this).attr('region-id') + ']'
     )
-    // 如果当前第二层li在右边对应地方不存在
+    // If the current layer li does not exist on the right
     if (depthTwoDOM.length === 0) {
-      // 直接添加
+      // Added directly
       depthOneDOM.children('ul').append($(this))
-      // 结束当前循环
+      // End the current loop
       return
     }
 
-    // 如果第二层也在右边对应第一层里存在
-    // 遍历并判断第三层
+    // If the second layer also exists on the right side of the first layer
+    // Go through and determine the third layer
     $(this)
       .find('li.depth-three')
       .each(function() {
         let depthThreeDOM = depthTwoDOM.find(
           '.depth-three[region-id=' + $(this).attr('region-id') + ']'
         )
-        // 如果当前第三层li在右边对应地方不存在
+        // If the current tier 3 Li does not exist on the right
         if (depthThreeDOM.length === 0) {
-          // 添加
+          // add
           depthTwoDOM.children('ul').append($(this))
         }
 
-        // 存在的话,什么都不做.
+        // If there is, do nothing.
       })
   })
 }
 
-// 在左边对应位置复现将被删除的地区
+// The region to be deleted is reproduced in the corresponding position on the left
 let appearanceAtLeft = function(which) {
-  // 左边DOM
+  // On the left side of the DOM
   let leftDOM = which
     .closest('.area-right')
     .siblings('.area-left')
     .children('ul')
-  // 用户点击的是第一层
+  // The user is clicking on the first layer
   if (which.hasClass('depth-one')) {
     let leftParentOne = leftDOM.find(
       '.depth-one[region-id=' + which.attr('region-id') + ']'
     )
-    // 该li在左边不存在
+    // The li does not exist on the left
     if (leftParentOne.length === 0) {
-      // 绑定回点击事件
+      // Bind back to the click event
       which.find('div').each(function() {
         bindClickListener($(this))
       })
-      // 转换样式
+      // Transformation style
       toggleSelectedStyle(which)
-      // 直接添加
+      // Added directly
       leftDOM.prepend(which)
       // ------------------
-      // PS: 关于数据恢复原状.就是说排序的问题. 可以在渲染数据时,利用attr设置好顺序. 后面每次有变化就排下序.
+      // PS: About data restoration. You can use ATTr to set the order when rendering data. Every time theres a change, its sorted.
       // ------------------
     } else {
-      // 第一层在左边存在
-      // 遍历判断第二层
+      // The first layer exists on the left
+      // Traversal determines the second layer
       which.find('li.depth-two').each(function() {
         let leftParentTwo = leftParentOne.find(
           '.depth-two[region-id=' + $(this).attr('region-id') + ']'
         )
-        // 当前第二层DOM在左边对应位置不存在
+        // The current second layer of DOM does not exist at the corresponding position on the left
         if (leftParentTwo.length === 0) {
-          // 绑定回点击事件
+          // Bind back to the click event
           $(this)
             .find('div')
             .each(function() {
               bindClickListener($(this))
-              // 转换样式
+              // Transformation style
               toggleSelectedStyle($(this).closest('li'))
             })
           leftParentOne.children('ul').prepend($(this))
         } else {
-          // 当前第二层在左边对应位置存在
-          // 遍历判断第三层
+          // The current second layer exists at the corresponding position on the left
+          // Iterate through the third layer
           $(this)
             .find('li.depth-three')
             .each(function() {
-              // 第三层在左边不存在
+              // The third layer doesnt exist on the left
               if (
                 leftParentTwo.find(
                   '.depth-three[region-id=' + $(this).attr('region-id') + ']'
                 ).length === 0
               ) {
-                // 绑定回点击事件
+                // Bind back to the click event
                 let cloneLi = $(this).clone(true)
                 cloneLi.find('div').each(function() {
                   bindClickListener($(this))
-                  // 转换样式
+                  // Transformation style
                   toggleSelectedStyle($(this).closest('li'))
                 })
                 leftParentTwo.children('ul').prepend(cloneLi)
               }
-              // 存在则忽略
+              // Existence ignores
             })
         }
       })
-      // 移除剩下的第一层DOM.
+      // Remove the remaining first layer of DOM.
       which.remove()
     }
   } else if (which.hasClass('depth-two')) {
-    // 用户点击的是第二层
-    // 获取父,第一层DOM
+    // The user clicks on the second layer
+    // Get the parent, the first layer of DOM
     let parentDepthOne = which.closest('li.depth-one')
-    // 在左边查找当前元素的第一层DOM
+    // On the left, look for the first layer of the DOM for the current element
     let leftParentOne = leftDOM.find(
       '.depth-one[region-id=' + parentDepthOne.attr('region-id') + ']'
     )
-    // 如果父第一层在左边不存在
+    // If the first parent layer does not exist on the left
     if (leftParentOne.length === 0) {
-      // 先克隆下
+      // Under the first cloned
       let cloneParent = parentDepthOne.clone(true)
-      // 清空父第一层DOM的所有children,只添加当前第二层DOM
+      // Empty all children of the parent first-layer DOM, adding only the current second-layer DOM
       cloneParent
         .children('ul')
         .empty()
         .prepend(which)
-      // 绑定回点击事件
+      // Bind back to the click event
       cloneParent.find('div').each(function() {
         bindClickListener($(this))
       })
-      // 转换样式
+      // Transformation style
       toggleSelectedStyle(cloneParent)
-      // 添加父第一层
+      // Add the parent layer 1
       leftDOM.prepend(cloneParent)
       return
     }
-    // 第一层在左边存在;
+    // The first layer exists on the left;
 
     let leftDepthTwo = leftParentOne.find(
       '.depth-two[region-id=' + which.attr('region-id') + ']'
     )
-    // 当前第二层在左边不存在
+    // The current second layer does not exist on the left
     if (leftDepthTwo.length === 0) {
       let whichCloned = which.clone(true)
-      // 绑定回点击事件
+      // Bind back to the click event
       whichCloned.find('div').each(function() {
         bindClickListener($(this))
-        // 转换样式
+        // Transformation style
         toggleSelectedStyle($(this).closest('li'))
       })
-      // 直接添加
+      // Added directly
       leftParentOne.children('ul').prepend(whichCloned)
     } else {
-      // 如果当前第二层在左边存在
-      // 遍历第三层,判断
+      // If the current layer exists on the left
+      // Go through the third layer, judge
       which.find('li.depth-three').each(function() {
-        // 当前第三层在左边不存在
+        // The current third layer does not exist on the left
         if (
           leftDepthTwo.find(
             '.depth-three[region-id=' + $(this).attr('region-id') + ']'
           ).length === 0
         ) {
-          // 绑定回点击事件
+          // Bind back to the click event
           $(this)
             .find('div')
             .each(function() {
               bindClickListener($(this))
-              // 转换样式
+              // Transformation style
               toggleSelectedStyle($(this).closest('li'))
             })
-          // 直接添加
+          // Added directly
           leftDepthTwo.children('ul').prepend($(this))
         }
       })
     }
 
-    // 如果父第一层节点没有节点.删除
+    // If the parent first-tier node has no nodes. delete
     if (which.siblings().length === 0) {
       which.closest('li.depth-one').remove()
     } else {
-      // 删除剩下的第二层DOM
+      // Delete the remaining second layer of DOM
       which.remove()
     }
   } else {
-    // 用户点击的是第三层
-    // 获取父,第二层DOM和第一层DOM
+    // The user is clicking on layer 3
+    // Gets the parent, the second layer DOM, and the first layer DOM
     let parentDepthTwo = which.closest('li.depth-two')
     let parentDepthOne = which.closest('li.depth-one')
 
-    // 父第一层,父第二层DOM,在左侧对应的DOM
+    // The parent layer 1, the parent layer 2 DOM, the corresponding DOM on the left
     let leftParentOne = leftDOM.find(
       '.depth-one[region-id=' + parentDepthOne.attr('region-id') + ']'
     )
@@ -960,13 +960,13 @@ let appearanceAtLeft = function(which) {
       '.depth-two[region-id=' + parentDepthTwo.attr('region-id') + ']'
     )
 
-    // 如果父第一层在左边不存在
+    // If the first parent layer does not exist on the left
     if (leftParentOne.length === 0) {
-      // 克隆下parent数据
+      // Clone the Parent data
       let cloneParentDepthTwo = parentDepthTwo.clone(true)
       let cloneParentDepthOne = parentDepthOne.clone(true)
 
-      // 清空无用DOM,只有当前DOM子类
+      // Empty the DOM, only the current DOM subclass
       cloneParentDepthTwo
         .children('ul')
         .empty()
@@ -975,66 +975,66 @@ let appearanceAtLeft = function(which) {
         .children('ul')
         .empty()
         .prepend(cloneParentDepthTwo)
-      // 绑定回点击事件
+      // Bind back to the click event
       cloneParentDepthOne.find('div').each(function() {
         bindClickListener($(this))
       })
-      // 转换样式
+      // Transformation style
       toggleSelectedStyle(cloneParentDepthOne)
       leftDOM.prepend(cloneParentDepthOne)
 
-      // 如果当前第三层DOM没有兄弟, 移除当前第三层DOM的父li
+      // If the current third-tier DOM has no brothers, remove the current third-tier DOMs parent li
       if (which.siblings().length === 0) {
         parentDepthTwo.remove()
       }
-      // 移除之后, 如果父第一层DOM下没有子数据,移除.
+      // After removal, if there are no children under the first layer of the DOM, remove.
       if (parentDepthOne.find('li.depth-two').length === 0) {
         parentDepthOne.remove()
       }
     } else if (leftParentTwo.length === 0) {
-      // 如果父第一层在左边存在,但父第二层不存在
+      // If the first parent layer exists on the left, but the second parent layer does not
 
-      // 克隆第二层DOM, 并清除无用DOM,只有当前第三层DOM
+      // Clone the second layer of DOM and remove the unwanted DOM, only the current third layer of DOM
       let cloneParentDepthTwo = parentDepthTwo.clone(true)
       cloneParentDepthTwo
         .children('ul')
         .empty()
         .prepend(which)
-      // 绑定回点击事件
+      // Bind back to the click event
       cloneParentDepthTwo.find('div').each(function() {
         bindClickListener($(this))
       })
-      // 转换样式
+      // Transformation style
       toggleSelectedStyle(cloneParentDepthTwo)
-      // 添加到左边对应第一层
+      // Add to the left corresponding to the first layer
       leftParentOne.children('ul').prepend(cloneParentDepthTwo)
 
-      // 移除之后, 如果父第二层DOM下没有子数据,移除本身
+      // After removal, if there is no child data under the parent second layer of the DOM, remove itself
       if (parentDepthTwo.find('li.depth-three').length === 0) {
         parentDepthTwo.remove()
       }
-      // 移除之后, 如果父第一层DOM下没有子数据,移除.
+      // After removal, if there are no children under the first layer of the DOM, remove.
       if (parentDepthOne.find('li.depth-two').length === 0) {
         parentDepthOne.remove()
       }
     } else {
-      // 如果父第一层在左边存在,父第二层也存在
+      // If the first parent layer exists on the left, the second parent layer also exists
 
-      // 绑定回点击事件
+      // Bind back to the click event
       which.find('div').each(function() {
         bindClickListener($(this))
       })
-      // 转换样式
+      // Transformation style
       toggleSelectedStyle(which)
-      // 如果父第一层在左边存在,父第二层也存在
-      // 直接添加到对应的位置.
+      // If the first parent layer exists on the left, the second parent layer also exists
+      // Add directly to the corresponding location.
       leftParentTwo.children('ul').prepend(which)
 
-      // 判断是否还有其他子元素,没有的话,删除父第二层DOM
+      // Determine if there are any other child elements; if not, delete the parent second layer of the DOM
       if (parentDepthTwo.find('li').length === 0) {
         parentDepthTwo.remove()
       }
-      //判断是否要删除第一层DOM
+      // Determine if you want to delete the first layer of DOM
       if (parentDepthOne.find('li').length === 0) {
         parentDepthOne.remove()
       }
@@ -1048,35 +1048,35 @@ let cloneData = function(data) {
   return tempObj
 }
 
-// 遍历获取已选择的区域的数据.
+// Traversal gets the data for the selected region.
 let getJSON = function() {
   let dataArray = []
-  // 解决全选省级
-  // 遍历省份
+  // Solve all elected provincial level
+  // Traverse the provinces
   areaDOM.find('.area-right li.depth-one').each(function() {
     let provinceID = Number($(this).attr('region-id'))
-    // 如果左边不存在该省份, 就把该省份及下面市县数据全部添加进来.
+    // If the province does not exist on the left, add the province and all the cities and counties below.
     if (areaDOM.find('.area-left li.depth-one[region-id=' + provinceID + ']').length === 0) {
-      // 从源数据,把下面市/县数据挨个添加进来
+      // From the source, add the lower market/county data one by one
       areaData.forEach(function(province) {
-        // 找到特定省份
+        // Find specific provinces
         if (province.id !== provinceID) {
           return
         }
-        // 首先把当前省份添加进来
+        // Start by adding the current province
         dataArray.push(cloneData(province))
 
         if (!province.children || province.children.length === 0) {
-          // 跳出当前循环
+          // Out of the loop
           return
         }
 
         province.children.forEach(function(city) {
           dataArray.push(cloneData(city))
 
-          // 遍历县级数据, 挨个添加进来.
+          // Iterate over the county level data, adding in one by one.
           if (!city.children || city.children.length === 0) {
-            // 跳出当前循环
+            // Out of the loop
             return
           }
           city.children.forEach(function(county) {
@@ -1085,50 +1085,50 @@ let getJSON = function() {
         })
       })
 
-      // 移除当前省级DOM,省的影响到后面
+      // Remove the current provincial DOM, which affects the following
       $(this).remove()
     }
   })
-  // 遍历市级
+  // Traverse city
   areaDOM.find('.area-right li.depth-two').each(function() {
     let cityID = Number($(this).attr('region-id'))
-    // 如果左边不存在对应市, 说明全选了市
-    // 把所有县级数据添加进来
+    // If there is no corresponding city on the left hand side, all cities have been selected
+    // Add in all the county level data
     if (areaDOM.find('.area-left li.depth-two[region-id=' + cityID + ']').length === 0) {
       let provinceID = Number($(this).closest('li.depth-one').attr('region-id'))
-      // 从源数据,把县数据添加进来
+      // From the source data, add the county data
       areaData.forEach(function(province) {
-        // 找到特定省份
+        // Find specific provinces
         if (province.id !== provinceID) {
           return
         }
         if (!province.children || province.children.length === 0) {
-          // 跳出当前循环
+          // Out of the loop
           return
         }
 
         province.children.forEach(function(city) {
           if (city.id !== cityID) {
-            // 不是对应 市, 跳出当前循环
+            // Not corresponding market, out of the current cycle
             return
           }
           dataArray.push(cloneData(city))
-          // 没有县级数据
+          // No county level data
           if (!city.children || city.children.length === 0) {
-            // 跳出当前循环
+            // Out of the loop
             return
           }
-          // 遍历县级数据.
+          // Iterate through the county level data.
           city.children.forEach(function(county) {
             dataArray.push(cloneData(county))
           })
         })
       })
-      // 移除当前市级DOM,省的影响到后面
+      // Remove the current municipal DOM, the province affects the latter
       $(this).remove()
     }
   })
-  // 遍历县级
+  // Traverse the county
   areaDOM.find('.area-right li.depth-three').each(function() {
     let countyID = Number($(this).attr('region-id'))
     let cityID = Number(
@@ -1150,7 +1150,7 @@ let getJSON = function() {
         return
       }
 
-      // 遍历市
+      // Traverse city,
       province.children.forEach(function(city) {
         if (city.id !== cityID) {
           return
@@ -1171,13 +1171,13 @@ let getJSON = function() {
   return dataArray
 }
 
-// 处理默认数据
+// Working with default data
 let startDefault = function(sourceData) {
   if (!sourceData) {
     return
   }
-  // 划分源数据为三部分, level 1 , level 2 , level 3
-  // 其中level 1,2 只留id
+  // The source data is divided into three parts, level 1, Level 2 and Level 3
+  // Where level 1 and 2 leave only id
   let divideData = function(data) {
     let levelOne = [],
       levelTwo = [],
@@ -1197,9 +1197,9 @@ let startDefault = function(sourceData) {
   let dividedData = divideData(sourceData)
 
   /*
-        * 处理level 3 数据, 增加第一层数据的id
-        * 即p_p_regions_id
-        * 然后如果检测到此父级地区全选的话, 删除这些相关第三层数据.
+        * To deal withlevel 3 data, 增加第一层data的id
+        * namelyp_p_regions_id
+        * Then, if the parent region is all selected is detected, Delete the relevant layer 3 data.
         */
   let dealLevelThreeData = function(completeData, data, levelTwoData) {
     let levelTwoArray = levelTwoData.map(function(tempObj) {
@@ -1207,11 +1207,11 @@ let startDefault = function(sourceData) {
     })
 
     return data.filter(function(tempObj) {
-      // 如果level 3数据的父级id在level 2数据中,说明一定是用户全选了level 2地区.
-      // 因为用户只选择level 3地区,不会获取到他的parent地区数据.
-      // 而只有全选,才会获取parent地区和所有children地区数据.
+      // If the parent ID of the Level 3 data is in the Level 2 data, the user must have selected all the Level 2 loci.
+      // Because the user selects only the Level 3 locale, he will not get his Parent locale data.
+      // Only if you select all will you get the Parent locale and all children locale data.
       if (levelTwoArray.indexOf(tempObj.parent_id) >= 0) {
-        // 存在
+        // There are
         return false
       }
 
@@ -1222,9 +1222,9 @@ let startDefault = function(sourceData) {
         }
 
         levelOne.children.forEach(function(levelTwo) {
-          // 找到第三层数据的父级数据
+          // Find the parent data for tier 3 data
           if (levelTwo.id === tempObj.parent_id) {
-            // 给当前第三层增加属性. 直连第一层.
+            // Adds a property to the current third layer. Connect directly to the first layer.
             tempObj.p_p_regions_id = levelOne.id
             ok = true
           }
@@ -1236,14 +1236,14 @@ let startDefault = function(sourceData) {
   }
 
   /*
-         * 处理level 2 数据,
-         * 如果检测到此父级地区全选的话, 删除这些相关第二层数据.
+         * To deal withlevel 2 data,
+         * If all of the parent regions are detected, Delete the relevant layer 2 data.
          */
   let dealLevelTwoData = function(completeData, levelTwo, levelOne) {
     return levelTwo.filter(function(tempObj) {
-      // 与 dealLevelThreeData 同理
-      // 检测到parent是全选.
-      // 丢掉此level 2数据.
+      // With dealLevelThreeData similarly
+      // Parent detected is full selected.
+      // Drop this level 2 data.
       if (levelOne.indexOf(tempObj.parent_id) >= 0) {
         return false
       }
@@ -1258,15 +1258,15 @@ let startDefault = function(sourceData) {
       areaDOM.find('.area-left li.depth-one[region-id=' + 1 + ']').length === 1
     ) {
       clearInterval(setTime)
-      // 遍历初始化省份
+      // Iterate through the initialization provinces
       dividedData[0].forEach(function(provinceID) {
         areaDOM
           .find('.area-left li.depth-one[region-id=' + provinceID + '] > div')
           .click()
       })
-      // 遍历初始化市
+      // Traverse the initialization city
       dividedData[1].forEach(function(city) {
-        // 找到特定省/市
+        // Find the specific province/city
         let provinceDOM = areaDOM.find(
           '.area-left li.depth-one[region-id=' + city.parent_id + ']'
         )
@@ -1280,13 +1280,13 @@ let startDefault = function(sourceData) {
         )
         cityDOM.children('div').click()
       })
-      // 遍历初始化县
+      // Iterate over the initialization county
       dividedData[2].forEach(function(county) {
-        // 找到特定省/市/县
+        // Find the specific province/city/county
         let provinceDOM = areaDOM.find(
           '.area-left li.depth-one[region-id=' + county.p_p_regions_id + ']'
         )
-        // 如果不存在市级数据,说明还没有点击过 +
+        // If municipal data does not exist, the + has not been clicked
         if (provinceDOM.find('li.depth-two').length === 0) {
           provinceDOM
             .children('div')
@@ -1296,7 +1296,7 @@ let startDefault = function(sourceData) {
         let cityDOM = provinceDOM.find(
           'li.depth-two[region-id=' + county.parent_id + ']'
         )
-        // 如果不存在县级数据,说明还没有点击过 +
+        // If county level data does not exist, the + has not been clicked
         if (cityDOM.find('li.depth-three').length === 0) {
           cityDOM
             .children('div')
@@ -1308,32 +1308,32 @@ let startDefault = function(sourceData) {
         )
         countyDOM.children('div').click()
       })
-      // 程序点击添加按钮
+      // Program click the Add button
       areaDOM.find('.body > button').click()
     }
   }, 500)
 }
 export default {
   show: function(options) {
-    // 把回调函数赋值给全局变量
+    // Assigns a callback function to a global variable
     confirmCallback = options.confirm
     hideDialogFunc = options.callHideDialog
-    // 如果选择器已经存在,只是没显示
+    // If the selector already exists, it is not displayed
     areaDOM.css('display', 'block')
     $('.cover').css('display', 'block')
     if ($('.area-container').length === 1) {
-      // 如果不是第一次调用选择器
-      // 清空已存在数据,重新加载渲染
+      // If the selector is not called the first time
+      // Empty the existing data and reload the render
       $('.area-container .area-left > ul').empty()
       $('.area-container .area-right > ul').empty()
     } else {
       $('body').append(areaDOM)
-      // 需要在数据渲染之前执行.
+      // It needs to be executed before the data is rendered.
       bindEventListener()
-      // 设置cover遮罩层的高度为body的高
+      // Set the height of the cover mask layer to be the height of the body
       $('.cover').css('height', document.documentElement.clientHeight)
     }
-    areaDOM.find('#chooseAll').text('全选')
+    areaDOM.find('#chooseAll').text('Select all')
     requestAndFirstRenderData(options.api, options.isfilter = true, options.filterData)
     startDefault(options.defaultData)
   }

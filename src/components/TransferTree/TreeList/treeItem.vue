@@ -1,6 +1,6 @@
 <template>
     <li>
-      <!--图标 & 当前项数据-->
+      <!--icon& Current item data-->
       <div :class="[model.isSelected ? 'is-selected' : '']" >
        <span @click="toggle(model)">
          <i v-if="isFolder" :class="[model.isSelected ? (open ? 'el-icon-minus': 'el-icon-plus') : (open ? 'el-icon-remove': 'el-icon-circle-plus')]"></i>
@@ -8,7 +8,7 @@
        </span>
         <span class="name-label" @click="handleChoose(model)"> {{ model.local_name }} </span>
       </div>
-      <!--子项数据-->
+      <!--Item data-->
       <collapse-transition>
         <ul style="padding-left: 18px"  v-show="open" v-if="isFolder">
           <en-tree-item
@@ -27,13 +27,13 @@
   export default {
     name: 'EnTreeItem',
     props: {
-      /** 当前节点 */
+      /** The current node*/
       model: {
         type: Object,
         default: {}
       },
 
-      /** 当前节点的父节点 */
+      /** The parent of the current node*/
       parentNode: {
         type: Object,
         default: () => ({})
@@ -48,41 +48,41 @@
       }
     },
     computed: {
-      isFolder() { // 是否有子项
+      isFolder() { // Student: Is there a subterm
         return this.model.children && !Array.isArray(this.model.children)
       }
     },
     methods: {
-      // 展开/关闭
+      // Expand/close
       toggle() {
-        if (this.isFolder) { // 如果存在子项 则展开/ 关闭
+        if (this.isFolder) { // Expand if there are subitems/ close
           this.open = !this.open
         }
       },
-      handleChoose(model) { // 选中/不选中 model为当前项
+      handleChoose(model) { // The selected/不The selectedmodelFor the current item
         model.isSelected = !model.isSelected
-        // 如果当前项存在后代节点 则后代节点一并选中/不选中
+        // If the current item has descendant nodes, the descendants are selected/unselected
         let stack = []
         stack.push(model)
         let item
         while (stack.length) {
           item = stack.shift()
-          // 如果当前节点的兄弟节点 全部跟当前节点状态一样 则父节点保持同步
+          // The parent node remains in sync if all of its siblings are in the same state as the current node
           item.isSelected = model.isSelected
           if (this.parentNode && this.parentNode.children) {
-            let result = true // 默认同步
+            let result = true // The default synchronization
             for (let i in this.parentNode.children) {
               if (this.parentNode.children[i].isSelected !== model.isSelected) {
                 result = false
               }
             }
-            if (result) { // 同步
+            if (result) { // synchronous
               this.parentNode.isSelected = model.isSelected
             } else {
               this.parentNode.isSelected = false
             }
           }
-          // 如果该节点有子节点，继续添加进入栈顶
+          // If the node has children, continue adding to the top of the stack
           if (item && item.children && !Array.isArray(item.children)) {
             for (let i in item.children) {
               stack.push(item.children[i])
@@ -91,7 +91,7 @@
         }
         this.$emit('selectCaputure', model, this.parentNode)
       },
-      onselected(model, parentNode) { // 监听响应 选中之后进行计算现在选中之后的数据
+      onselected(model, parentNode) { // Listen for the response after it is selected to calculate the data after it is now selected
         this.$emit('selectCaputure', model, parentNode)
       }
     }

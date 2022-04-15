@@ -3,18 +3,18 @@
     <el-card>
       <div slot="header" class="chart-header">
         <div class="chart-header-item">
-          <span>查询周期：</span>
+          <span>Query cycle：</span>
           <en-year-month-picker @changed="handleYearMonthChanged"/>
         </div>
       </div>
       <el-tabs v-model="cur_tab" type="card">
-        <el-tab-pane label="订单量" name="order">
+        <el-tab-pane label="The order quantity" name="order">
           <order-amount-order :params="params" :cur-tab="cur_tab"/>
         </el-tab-pane>
-        <el-tab-pane label="订单商品量" name="goods">
+        <el-tab-pane label="Order quantity" name="goods">
           <order-amount-goods :params="params" :cur-tab="cur_tab"/>
         </el-tab-pane>
-        <el-tab-pane label="订单金额" name="price">
+        <el-tab-pane label="Amount" name="price">
           <order-amount-price :params="params" :cur-tab="cur_tab"/>
         </el-tab-pane>
       </el-tabs>
@@ -45,7 +45,7 @@
       }
     },
     methods: {
-      /** 年月份发生变化 */
+      /** The months of the year change*/
       handleYearMonthChanged(object) {
         this.params.year = object.year
         this.params.month = object.month

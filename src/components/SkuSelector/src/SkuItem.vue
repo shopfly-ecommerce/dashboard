@@ -2,8 +2,8 @@
   <div class="sku-item-content">
     <el-form  :model="skuForm" @submit.native.prevent>
       <div v-for="(item, $index) in skuInfo" :key="$index">
-        <el-form-item label="规格名：">
-          <el-select v-model="item.spec_id" placeholder="请选择规格项名称" @change="_ => handleSelectSkuItem($index, {spec_id: _})">
+        <el-form-item label="name：">
+          <el-select v-model="item.spec_id" placeholder="Please select a specification item name" @change="_ => handleSelectSkuItem($index, {spec_id: _})">
             <el-option
               v-for="sku in skuData"
               :key="sku.value"
@@ -11,12 +11,12 @@
               :value="sku.spec_id">
             </el-option>
           </el-select>
-          <el-checkbox v-if="$index === 0 " v-model="checkedImage" @change="handleChangeImage">添加规格图片</el-checkbox>
+          <el-checkbox v-if="$index === 0 " v-model="checkedImage" @change="handleChangeImage">Add picture</el-checkbox>
           <div class="empty"></div>
           <el-button type="danger" size="mini" @click="handleCloseSkuItem($index)" icon="el-icon-delete"></el-button>
         </el-form-item>
-        <el-form-item label="规格值：">
-          <!--规格值文本列表-->
+        <el-form-item label="values：">
+          <!--Specification value text list-->
           <div  v-for="(val, index) in item.value_list" :key="index" style="padding: 10px 10px 10px 0;">
             <el-autocomplete
               class="inline-input"
@@ -26,7 +26,7 @@
               value-key="spec_value"
               :fetch-suggestions="querySearchSkuValue"
               :maxlength="30"
-              placeholder="请选择规格值名称"
+              placeholder="Please select a specification value name"
               @focus="getActiveSkuValue(index, $index ,item, val)"
               @keyup.enter.native="editSkuIValue(item, val, $index, index)"
               @blur.naitve="editSkuIValue(item, val, $index, index)"
@@ -35,7 +35,7 @@
                 <el-button type="danger" size="mini" @click="handleCloseSkuValue($index, index)" icon="el-icon-delete"></el-button>
               </template>
             </el-autocomplete>
-            <!--规格值图片 上传列表-->
+            <!--Specification value Picture upload list-->
             <div v-show="$index === 0 && checkedImage">
               <el-upload
                 class="avatar-uploader"
@@ -60,11 +60,11 @@
               </el-upload>
             </div>
           </div>
-          <el-button type="text"  size="mini" style="margin-left: 10px;"  class="add-btn-skuval" @click="addSpec($index, item)">添加规格值</el-button>
+          <el-button type="text"  size="mini" style="margin-left: 10px;"  class="add-btn-skuval" @click="addSpec($index, item)">Add value</el-button>
         </el-form-item>
       </div>
     </el-form>
-    <el-button type="primary" size="mini" @click="addSkuItem">添加规格项目</el-button>
+    <el-button type="primary" size="mini" @click="addSkuItem">Add  item</el-button>
   </div>
 </template>
 
@@ -74,13 +74,13 @@
   export default {
     name: 'SkuItem',
     props: {
-      /** 商城分类ID */
+      /** Mall classificationID */
       categoryId: {
         type: Number,
         default: 0
       },
 
-      /** 商品规格信息 */
+      /** Product specification information*/
       productSkuInfo: {
         type: Array,
         default: () => {
@@ -90,46 +90,46 @@
     },
     data() {
       return {
-        /** 表单数据*/
+        /** The form data*/
         skuForm: {},
 
-        /** 请求数据*/
+        /** The request data*/
         skuData: [],
 
-        /** 要提交的规格数据*/
+        /** Specification data to be submitted*/
         skuInfo: [],
 
-        /** 当前规格项下的规格值列表*/
+        /** A list of specification values under the current specification item*/
         specList: [],
 
-        /** 是否添加规格图片*/
+        /** Whether to add a specification image*/
         checkedImage: false,
 
-        /** 当前规格项索引 */
+        /** Current specification item index*/
         activeSkuItemIndex: 0,
 
-        /** 当前规格项 */
+        /** Current specification item*/
         activeSkuItem: {},
 
-        /** 当前规格值索引 */
+        /** Current specification value index*/
         activeSkuValIndex: 0,
 
-        /** 当前规格值 */
+        /** Current specification value*/
         activeSkuVal: {},
 
-        /** 开始上传为true */
+        /** Start uploading astrue */
         upLoadStatus: false,
 
-        /** 是否显示进度条 */
+        /** Whether to display the progress bar*/
         isShowProgress: false,
 
-        /** 当前百分比 */
+        /** Current percentage*/
         currentPercent: 0,
 
-        /** 定时器 */
+        /** The timer*/
         timer: null,
 
-        /** 上传状态 true 可上传 false 不可上传 默认可上传*/
+        /** Upload statustrue Can uploadfalse 不Can upload默认Can upload*/
         uploadStatus: true
       }
     },
@@ -143,8 +143,8 @@
     },
     methods: {
       /**
-       * @fixTime 2020-07-17 下午11:29
-       * 控制规格名 禁止随意输入，只能选择
+       * @fixTime 2020-07-17 In the afternoon11:29
+       * Control specification name cannot be entered at random. You can only select it
        * **/
       specNameInput(index, newValue, oldItem) {
         if (this.skuInfo[index].spec_id === oldItem.spec_id && oldItem.spec_id) {
@@ -152,7 +152,7 @@
         }
       },
 
-      /** 根据分类id获取规格信息*/
+      /** According to the classificationidGet specification information*/
       getSkuInfoByCategory() {
         if (this.categoryId && this.categoryId > 0) {
           API_goodsSku.getCategorySkuList(this.categoryId, {}).then(response => {
@@ -161,9 +161,9 @@
         }
       },
 
-      /** 获取编辑时的skuInfo信息 */
+      /** Gets theskuInfoinformation*/
       getSkuInfo() {
-        /** 下拉列表数据(skuData)存在时 检测productSkuInfo中对应的规格(spec_id)项 并且赋值于skuInfo中对应的规格项信息（描述 + 名称） */
+        /** Drop down list data(skuData)Existence detectionproductSkuInfoIn the corresponding specification(spec_id)Item and assign toskuInfoIn the corresponding specification项信息（ describe+ The name of the） */
         if (this.categoryId && this.categoryId > 0) {
           API_goodsSku.getCategorySkuList(this.categoryId, {}).then(response => {
             this.skuData = response
@@ -179,43 +179,43 @@
                   })
                 })
               }
-              /** 如果存在图片则进行显示 */
+              /** Display pictures if they exist*/
               if (this.skuInfo[0].value_list[0].spec_type === 1) {
                 this.checkedImage = true
               }
-              /** 触发一次数据转换（规格选择数据=> 规格表格数据） */
+              /** Trigger a data conversion（Specification selection data=> Specification table data） */
               this.$emit('updateSkuInfo', this.skuInfo)
             }
           })
         }
       },
 
-      /** 规格项 */
+      /** Specification items*/
 
-      /** 添加规格项 */
+      /** Add specification item*/
       addSkuItem() {
         this.$set(this.skuInfo, this.skuInfo.length, {})
       },
 
-      /** 移除当前规格项 进行数据变化*/
+      /** Delete current specifications to change data*/
       handleCloseSkuItem($index) {
         this.skuInfo.splice($index, 1)
         this.$emit('updateSkuInfo', this.skuInfo)
       },
 
-      /** 获取当前 规格项索引 */
+      /** Gets the index of the current specification*/
       getActiveSkuItem($index, item) {
         this.activeSkuItemIndex = $index
         this.activeSkuItem = cloneObj(item)
       },
 
-      /** 点击查询输入规格项建议*/
+      /** Click Query to enter specification item suggestions*/
       querySearchSkuItem(queryString, cb) {
         /**
-         * @fixTime 2020-07-17 下午11:29
-         *    控制规格名 禁止随意输入，只能选择
+         * @fixTime 2020-07-17 In the afternoon11:29
+         *    Control specification name cannot be entered at random. You can only select it
          * @fixDesc
-         *    此处修复为当用户选择后，不能选择其他的规格名
+         *    Fixed that the user cannot select another specification name after selecting it
          * **/
         const restaurants = this.skuData.map((key) => { return key })
         // const results = queryString ? restaurants.filter(this.createFilterSkuItem(queryString)) : restaurants
@@ -223,30 +223,30 @@
         cb(results)
       },
 
-      /** 筛选符合输入信息的规格项 */
+      /** Filter the specifications that match the input information*/
       createFilterSkuItem(queryString) {
         return (restaurant) => {
           return (restaurant.spec_name.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
         }
       },
 
-      /** 选择规格项时触发  */
+      /** Triggered when a specification item is selected*/
       handleSelectSkuItem($index, item) {
         this.activeSkuItemIndex = $index
         const items = this.skuData.find(sku => {
           return sku.spec_id === item.spec_id
         })
-        /** 当前规格项是否为选择项 */
+        /** Whether the current specification item is an option*/
         if (this.activeSkuItem.spec_id === item.spec_id) {
           return
         }
-        /** 检测当前规格项是否已经存在且不止一次 */
+        /** Checks if the current specification item already exists more than once*/
         const _skuInfo = this.skuInfo.filter((key) => {
           return key.spec_id === item.spec_id
         })
         if (_skuInfo.length > 1) {
-          this.$message.error('当前规格项已存在，请重新选择或者编辑！')
-          /** 置空当前项 */
+          this.$message.error('The current specification item already exists, please re-select or edit it！')
+          /** Leave the preceding paragraph blank*/
           if (!this.skuInfo[this.activeSkuItemIndex].spec_id) {
             this.$set(this.skuInfo[this.activeSkuItemIndex], 'spec_name', '')
           } else {
@@ -259,13 +259,13 @@
           }
           return
         }
-        /** 更新skuInfo数据 */
+        /** updateskuInfodata*/
         this.$set(this.skuInfo[this.activeSkuItemIndex], 'spec_id', items.spec_id)
         this.$set(this.skuInfo[this.activeSkuItemIndex], 'spec_memo', items.spec_memo)
         this.$set(this.skuInfo[this.activeSkuItemIndex], 'spec_name', items.spec_name)
         this.$set(this.skuInfo[this.activeSkuItemIndex], 'value_list', [])
 
-        /** 设置当前规格值列表 */
+        /** Sets the list of current specification values*/
         this.skuData.filter(key => {
           if (item.spec_id === key.spec_id) {
             this.specList = key.value_list || []
@@ -274,45 +274,45 @@
         this.$emit('updateSkuInfo', this.skuInfo)
       },
 
-      /** 编辑规格项结束时触发添加事件 blur */
+      /** The add event is triggered at the end of editing the specification itemblur */
       editSkuItem(item, $index, type) {
-        /** 检测是否为空 检测到item.spec_id存在  则说明是选择而非编辑的终止方法的执行 */
+        /** Check whether null is detecteditem.spec_idThe presence indicates that the execution of the termination method is selected, not edited*/
         if (!item.spec_name || item.spec_id) {
           return
         }
-        /** 判断规格项的值是否已选择 */
+        /** Determines whether the value of the specification item has been selected*/
         const _items = this.skuInfo.filter(key => {
           return key.spec_name === item.spec_name
         })
 
-        /** 如果已经选择则提示已存在 不允许添加 */
+        /** If it is selected, it indicates that it already exists and cannot be added*/
         if (_items.length > 1) {
-          this.$message.error('当前规格项已选择，请选择其他规格项')
+          this.$message.error('The current specification item is selected. Please select another specification item')
           return
         }
 
-        /** 判断当前规格项已存在 */
+        /** Verify that the current specification item exists*/
         const _isexit = this.skuData.filter(key => {
           return key.spec_name === item.spec_name
         })
 
         if (_isexit) {
-          this.$message.error('当前规格名不存在，请重新选择或者编辑！')
+          this.$message.error('The current specification name does not exist. Please reselect or edit it！')
           return
         }
 
-        /** 如果已经存在则提示已存在 不允许添加 */
+        /** If it already exists, the system displays a message indicating that it already exists and cannot be added*/
         if (_isexit.length >= 1) {
-          this.$message.error('当前规格项已存在，请选择')
+          this.$message.error('The current specification item already exists, please select')
           this.$set(this.skuInfo[this.activeSkuItemIndex], 'spec_name', '')
           return
         }
       },
 
-      /** 选中/不选中 添加规格图片 是否显示上传组件*/
+      /** The selected/不The selected添加规格图片是否显示上传组件*/
       handleChangeImage(val) {
         this.checkedImage = val
-        /** 如果 图片按钮不显示 则置空图片列表中的所有图片数据 并且spec_type设置为0 */
+        /** If the image button is not displayed, empty all image data in the image list andspec_typeSet to0 */
         if (!val) {
           this.skuInfo.forEach(key => {
             if (key.value_list) {
@@ -326,12 +326,12 @@
         }
       },
 
-      /** 规格值 */
+      /** values*/
 
-      /** 添加当前规格项的规格值*/
+      /** Adds the specification value for the current specification item*/
       addSpec($index, item) {
         if (!this.skuInfo[$index] || !this.skuInfo[$index].spec_id || !this.skuInfo[$index].value_list) {
-          this.$message.warning('请选择规格项')
+          this.$message.warning('Please select the specification item')
           return
         }
         this.activeSkuItemIndex = $index
@@ -345,12 +345,12 @@
         })
       },
 
-      /** 获取当前规格值索引 赋值当前对应规格项的规格值下拉列表*/
+      /** Obtain the current specification value Index Assign the current specification value drop - down list*/
       getActiveSkuValue(index, $index, item, val) {
         this.activeSkuValIndex = index
         this.activeSkuVal = cloneObj(val)
         this.activeSkuItemIndex = $index
-        /** 设置当前规格值列表 */
+        /** Sets the list of current specification values*/
         this.skuData.filter(key => {
           if (item.spec_id === key.spec_id) {
             this.specList = key.value_list || []
@@ -358,46 +358,46 @@
         })
       },
 
-      /** 点击查询输入规格值建议*/
+      /** Click Query to enter specification value suggestions*/
       querySearchSkuValue(queryString, cb) {
         const restaurants = this.specList.map((key) => { return key })
         const results = queryString ? restaurants.filter(this.createFilterSkuVal(queryString)) : restaurants
         cb(results)
       },
 
-      /** 筛选符合输入信息的规格值 */
+      /** Filter the specification values that match the input information*/
       createFilterSkuVal(queryString) {
         return (restaurant) => {
           return (restaurant.spec_value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
         }
       },
 
-      /** 移除当前规格值 */
+      /** Removes the current specification value*/
       handleCloseSkuValue($index, index) {
         this.skuInfo[$index].value_list.splice(index, 1)
         this.$emit('updateSkuInfo', this.skuInfo)
       },
 
-      /** 选择规格值时触发 */
+      /** Triggered when a specification value is selected*/
       handleSelectSkuValue(val) {
-        /** 当前规格值是否为选择项 */
+        /** Whether the current specification value is an option*/
         if (this.activeSkuVal.spec_value_id === val.spec_value_id) {
           return
         }
-        /** 检测是否已存在*/
+        /** Check if it already exists*/
         const _value_list = this.skuInfo[this.activeSkuItemIndex].value_list.filter((key) => {
           if (key.spec_value) {
             return key.spec_value === val.spec_value
           }
         })
         if (_value_list.length > 1) {
-          this.$message.error('当前规格值已存在，请重新选择或者编辑！')
+          this.$message.error('The current specification value already exists, please re-select or edit it！')
           if (!this.skuInfo[this.activeSkuItemIndex].value_list[this.activeSkuValIndex].spec_value_id) {
             this.$set(this.skuInfo[this.activeSkuItemIndex].value_list[this.activeSkuValIndex], 'spec_value', '')
           }
           return
         }
-        /** 更新skuInfo数据 */
+        /** updateskuInfodata*/
         let _arr = cloneObj(this.skuInfo[this.activeSkuItemIndex])
         this.$set(_arr.value_list[this.activeSkuValIndex], 'spec_id', val.spec_id)
         this.$set(_arr.value_list[this.activeSkuValIndex], 'spec_name', _arr.spec_name)
@@ -408,40 +408,40 @@
         this.$emit('updateSkuInfo', this.skuInfo)
       },
 
-      /** 编辑规格值时触发 */
+      /** Triggered when editing a specification value*/
       editSkuIValue(item, val, $index, index) {
-        /** 检测是否为空 检测是否有spec_value_id值 如果有则说明是选择而非编辑的终止方法的执行 */
+        /** Check whether it is null Check whether it existsspec_value_idValue, if any, indicates that the execution of the termination method is selected rather than edited*/
         if (!val.spec_value || val.spec_value_id) {
           return
         }
-        /** 检测是否已选*/
+        /** Check if it is selected*/
         const _value_list = this.skuInfo[this.activeSkuItemIndex].value_list.filter((key) => {
           if (key.spec_value) {
             return key.spec_value === val.spec_value
           }
         })
         if (_value_list.length > 1) {
-          this.$message.error('当前规格值已选，请重新选择！')
+          this.$message.error('The current specification value has been selected, please reselect！')
           if (!this.skuInfo[this.activeSkuItemIndex].value_list[this.activeSkuValIndex].spec_value_id) {
             this.$set(this.skuInfo[this.activeSkuItemIndex].value_list[this.activeSkuValIndex], 'spec_value', '')
           }
           return
         }
 
-        /** 判断当前规格值已存在 */
+        /** Verify that the current specification value already exists*/
         const _isexit = this.specList.filter(key => {
           return key.spec_value === val.spec_value
         })
         if (_isexit) {
-          this.$message.error('规格值不能编辑，请重新选择！')
+          this.$message.error('Specification value cannot be edited, please reselect！')
           if (!this.skuInfo[this.activeSkuItemIndex].value_list[this.activeSkuValIndex].spec_value_id) {
             this.$set(this.skuInfo[this.activeSkuItemIndex].value_list[this.activeSkuValIndex], 'spec_value', '')
           }
           return
         }
-        /** 如果已经存在则提示已存在 不允许添加 */
+        /** If it already exists, the system displays a message indicating that it already exists and cannot be added*/
         if (_isexit.length >= 1) {
-          this.$message.error('当前规格值已存在，请选择')
+          this.$message.error('The current specification value already exists, please select')
           if (!this.skuInfo[this.activeSkuItemIndex].value_list[this.activeSkuValIndex].spec_value_id) {
             this.$set(this.skuInfo[this.activeSkuItemIndex].value_list[this.activeSkuValIndex], 'spec_value', '')
           }
@@ -449,24 +449,24 @@
         }
       },
 
-      /** 图片上传之前的校验  */
+      /** Verify images before uploading*/
       beforeImgUpload(file) {
         const isType = file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png'
         const isLt1M = file.size / 1024 / 1024 < 1
 
         if (!isType) {
-          this.$message.error('上传头像图片只能是 JPG/JPEG/PNG 格式!')
+          this.$message.error('Profile pictures can only be uploadedJPG/JPEG/PNG Format!')
         }
         if (!isLt1M) {
-          this.$message.error('上传商品相册图片大小不能超过 1MB!')
+          this.$message.error('The size of the picture in the uploaded product album should not exceed1MB!')
         }
         return isType && isLt1M
       },
 
-      /** 点击已上传的图片 或者 i标签 */
+      /** Click on the uploaded image oriThe label*/
       handleClickImg(index) {
         if (!this.uploadStatus) {
-          this.$message.warning('正在上传，请稍侯。。。')
+          this.$message.warning('Uploading now, please wait a moment...')
           return
         }
         this.currentPercent = 0
@@ -474,9 +474,9 @@
         this.activeSkuItemIndex = 0
       },
 
-      /** 删除当前图片 */
+      /** Delete current image*/
       handleDeleteImg(index) {
-        /** 更新skuInfo数据 */
+        /** updateskuInfodata*/
         if (this.activeSkuItemIndex === 0) {
           let _arr = cloneObj(this.skuInfo[this.activeSkuItemIndex])
           this.$set(_arr.value_list[index], 'spec_image', '')
@@ -486,9 +486,9 @@
         }
       },
 
-      /** 文件正在上传时的钩子 */
+      /** Hook when a file is being uploaded*/
       upLoading(event, file, fileList) {
-        this.uploadStatus = false // 正在上传 不可继续操作上传
+        this.uploadStatus = false // Uploading cannot continue
         this.upLoadStatus = true
         this.timer = setInterval(() => {
           if (this.currentPercent < 100) {
@@ -504,14 +504,14 @@
         this.isShowProgress = true
       },
 
-      /** 文件上传成功之后的钩子 */
+      /** Hooks after successful file upload*/
       getImgUrl(response, file, fileList) {
         this.upLoadStatus = false
         clearInterval(this.timer)
         this.timer = null
         this.currentPercent = 100
         this.isShowProgress = false
-        /** 更新skuInfo数据 */
+        /** updateskuInfodata*/
         if (this.activeSkuItemIndex === 0) {
           let _arr = cloneObj(this.skuInfo[this.activeSkuItemIndex])
           this.$set(_arr.value_list[this.activeSkuValIndex], 'spec_image', response.url)
@@ -519,7 +519,7 @@
           this.$set(this.skuInfo, this.activeSkuItemIndex, _arr)
           this.$emit('updateSkuInfo', this.skuInfo)
         }
-        this.uploadStatus = true // 上传完成 可继续操作上传
+        this.uploadStatus = true // After the upload is complete, continue uploading
       }
     }
   }
@@ -531,25 +531,25 @@
     }
   }
 
-  /** 规格值列表 */
+  /** Specification Value List*/
   .sku-value-list {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: flex-start;
   }
-  /** 关闭按钮*/
+  /** Close button*/
   .close-sku-item {
     cursor: pointer;
   }
-  /*表单结构*/
+  /*Structure of the form*/
   .el-form {
     border: 1px solid #e5e5e5;
     padding: 10px;
     .el-form-item {
       padding: 5px 10px;
     }
-    /** 规格项 */
+    /** Specification items*/
     .el-form-item:first-child {
       background-color: #f8f8f8;
       cursor: pointer;
@@ -576,7 +576,7 @@
         }
       }
     }
-    /*规格值*/
+    /*values*/
     .el-form-item:last-child {
       display: flex;
       flex-direction: row;
@@ -593,7 +593,7 @@
           margin-left: 10px;
           outline: none;
         }
-        /** 待上传图片 */
+        /** Image to be uploaded*/
         img.sku-image {
           width: 120px;
           height: 120px;
@@ -624,7 +624,7 @@
     position: relative;
     width: 120px;
     height: 120px;
-    /*圆形进度条*/
+    /*Circular progress bar*/
     .progress-circle {
       position: absolute;
       width: 100px;
@@ -636,7 +636,7 @@
         color: #fff;
       }
     }
-    /** 为规格图添加删除功能 */
+    /** Add delete functionality to the specification diagram*/
     .el-upload-img-actions {
       position: absolute;
       width: 120px;
@@ -662,7 +662,7 @@
     }
   }
 
-  /*禁止编辑时的样式覆盖*/
+  /*Disables style overwriting while editing*/
   /deep/ input.el-input.is-disabled {
     background-color: #fff !important;
     border-color: #e4e7ed;

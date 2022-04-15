@@ -1,48 +1,48 @@
 <template>
   <el-dialog :title="couponTitle" :visible.sync="couponShow" width="30%">
     <el-form :model="couponForm" ref="couponForm" label-position="right" :rules="rules"  label-width="120px">
-      <el-form-item label="优惠券名称：" prop="title">
+      <el-form-item label="Coupon name：" prop="title">
         <el-input
           auto-complete="off"
           v-model="couponForm.title"
           @change="couponForm.title = couponForm.title.trim()"
-          placeholder="请输入10个以内的汉字"
+          placeholder="Please enter the10Chinese characters within 10"
           maxLength="10"
           label-width="100"></el-input>
       </el-form-item>
-      <el-form-item label="优惠券面额：" prop="coupon_price">
-        <el-input placeholder="请输入优惠券面额,长度最多8个字符" maxLength="8" v-model="couponForm.coupon_price">
+      <el-form-item label="Coupon face value：" prop="coupon_price">
+        <el-input placeholder="Please enter coupon denomination,The length of the most8A character" maxLength="8" v-model="couponForm.coupon_price">
           <template slot="prepend">¥</template>
         </el-input>
       </el-form-item>
-      <el-form-item label="买家需消费：" prop="coupon_threshold_price">
-        <el-input placeholder="请输入内容,长度最多8个字符" maxlength="8" v-model="couponForm.coupon_threshold_price">
+      <el-form-item label="Buyers need to consume：" prop="coupon_threshold_price">
+        <el-input placeholder="Please enter content,The length of the most8A character" maxlength="8" v-model="couponForm.coupon_threshold_price">
           <template slot="prepend">¥</template>
         </el-input>
       </el-form-item>
-      <el-form-item label="使用期限：" style="text-align: left" prop="coupon_time_limit">
+      <el-form-item label="Use period：" style="text-align: left" prop="coupon_time_limit">
         <el-date-picker
           v-model="couponForm.coupon_time_limit"
           type="daterange"
           range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          start-placeholder="Start date"
+          end-placeholder="End date"
           clearable
           :default-time="[MixinDefaultTime]"
           :picker-options="{disabledDate(time) { return time.getTime() < Date.now() - 8.64E7 }}">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="发行量：" prop="create_num">
+      <el-form-item label="circulation：" prop="create_num">
         <el-input v-model="couponForm.create_num" maxlength="8" label-width="100"></el-input>
       </el-form-item>
-      <el-form-item label="每人限领：" prop="limit_num">
+      <el-form-item label="Each limit get：" prop="limit_num">
         <el-input v-model="couponForm.limit_num" maxlength="8"  label-width="100"></el-input>
-        <p>提示：如果每人限领数量为0，代表不限制会员领取优惠券数量</p>
+        <p>prompt：If the limit is per person0, which means that there is no limit on the number of coupons members can receive</p>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="handleCancelCoupon">取 消</el-button>
-      <el-button type="primary" @click="handleReserveCoupon">确 定</el-button>
+      <el-button @click="handleCancelCoupon">cancel</el-button>
+      <el-button type="primary" @click="handleReserveCoupon">save</el-button>
     </div>
   </el-dialog>
 </template>
@@ -55,57 +55,57 @@
     data() {
       const checkCouponPrice = (rule, value, callback) => {
         if (!value) {
-          callback(new Error('请输入优惠券面额'))
+          callback(new Error('Please enter coupon denomination'))
         } else if (!RegExp.money.test(value)) {
-          callback(new Error('请输入正确的面额'))
+          callback(new Error('Please enter the correct denomination'))
         } else {
           callback()
         }
       }
       const checkCouponThresholdPrice = (rule, value, callback) => {
         if (!value) {
-          callback(new Error('请输入消费门槛金额'))
+          callback(new Error('Please enter the threshold amount'))
         } else if (!RegExp.money.test(value)) {
-          callback(new Error('请输入正确的金额'))
+          callback(new Error('Please enter the correct amount'))
         } else {
           callback()
         }
       }
       const checkCreateNum = (rule, value, callback) => {
         if (!value) {
-          callback(new Error('请输入发行量'))
+          callback(new Error('Please enter circulation'))
         } else if (!RegExp.integer.test(value)) {
-          callback(new Error('请输入正整数'))
+          callback(new Error('Please enter a positive integer'))
         } else if (parseInt(value) < parseInt(this.couponForm.limit_num)) {
-          callback(new Error('每人限领数量不得大于发行量'))
+          callback(new Error('No more than the quantity of circulation per person'))
         } else {
           callback()
         }
       }
       const checkLimitNum = (rule, value, callback) => {
         if (!value && parseInt(value) !== 0) {
-          callback(new Error('请输入每人限领数量'))
+          callback(new Error('Please enter the limit per person'))
         } else if (!RegExp.integer.test(value) && parseInt(value) !== 0) {
-          callback(new Error('请输入正整数'))
+          callback(new Error('Please enter a positive integer'))
         } else if (parseInt(value) > parseInt(this.couponForm.create_num)) {
-          callback(new Error('每人限领数量不得大于发行量'))
+          callback(new Error('No more than the quantity of circulation per person'))
         } else {
           callback()
         }
       }
 
       return {
-        /** 是否显示优惠券弹框 */
+        /** Whether to display coupon pop-ups*/
         couponShow: false,
 
-        /** 日期选择器选项 */
+        /** Date picker options*/
         pickoptions: {
           disabledDate: (time) => {
             return time.getTime() < Date.now()
           }
         },
 
-        /** 优惠券表单*/
+        /** Coupon form*/
         couponForm: {
           title: '',
           coupon_price: '',
@@ -115,40 +115,40 @@
           limit_num: ''
         },
 
-        /** 表单校验规则 */
+        /** Form check rule*/
         rules: {
-          /** 优惠券名称 */
+          /** Coupon name*/
           title: [
-            { required: true, message: '请输入优惠券名称', trigger: 'blur' }
+            { required: true, message: 'Please enter the name of the coupon', trigger: 'blur' }
           ],
 
-          /** 优惠券面额 */
+          /** Coupon face value*/
           coupon_price: [
-            { required: true, message: '请输入优惠券面额', trigger: 'blur' },
+            { required: true, message: 'Please enter coupon denomination', trigger: 'blur' },
             { validator: checkCouponPrice, trigger: 'blur' }
           ],
 
-          /** 消费门槛 */
+          /** The consumption threshold*/
           coupon_threshold_price: [
-            { required: true, message: '请输入消费门槛', trigger: 'blur' },
+            { required: true, message: 'Please enter the consumption threshold', trigger: 'blur' },
             { validator: checkCouponThresholdPrice, trigger: 'blur' }
           ],
 
-          /** 使用期限 */
+          /** Use period*/
           coupon_time_limit: [
-            { required: true, message: '请输入使用期限', trigger: 'blur' },
+            { required: true, message: 'Please enter the term of use', trigger: 'blur' },
             { type: 'array', trigger: 'blur' }
           ],
 
-          /** 发行量 */
+          /** circulation*/
           create_num: [
-            { required: true, message: '请输入优惠券发行量', trigger: 'blur' },
+            { required: true, message: 'Please enter coupon quantity', trigger: 'blur' },
             { validator: checkCreateNum, trigger: 'blur' }
           ],
 
-          /** 每人限领 */
+          /** Each limit get*/
           limit_num: [
-            { required: true, message: '请输入限领数量', trigger: 'blur' },
+            { required: true, message: 'Please enter the limit quantity', trigger: 'blur' },
             { validator: checkLimitNum, trigger: 'blur' }
           ]
         }
@@ -156,17 +156,17 @@
     },
     computed: {
       couponTitle() {
-        return this.currentcouponId ? '编辑优惠券' : '新增优惠券'
+        return this.currentcouponId ? 'Edit coupons' : 'New coupons'
       }
     },
     props: {
-      /** 是否显示优惠券弹框 */
+      /** Whether to display coupon pop-ups*/
       couponModelShow: {
         type: Boolean,
         default: false
       },
 
-      /** 当前优惠券Id */
+      /** Current couponId */
       currentcouponId: {
         type: [Number, String],
         default: () => {
@@ -187,29 +187,29 @@
           this.GET_couponDetails()
         } else {
           this.couponForm = {
-            /** 优惠券名称*/
+            /** Coupon name*/
             title: '',
 
-            /** 优惠券面额（元）*/
+            /** Coupon face value（USD）*/
             coupon_price: '',
 
-            /** 使用限制（元）*/
+            /** Use restrictions（USD）*/
             coupon_threshold_price: '',
 
-            /** 使用时限 */
+            /** Use time limit*/
             coupon_time_limit: [],
 
-            /** 发行量（个） */
+            /** circulation（a） */
             create_num: '',
 
-            /** 每人限领 */
+            /** Each limit get*/
             limit_num: ''
           }
         }
       }
     },
     methods: {
-      /** 查询一个优惠券详情 */
+      /** Query a coupon for details*/
       GET_couponDetails() {
         API_coupon.getCouponDetails(this.currentcouponId, {}).then(response => {
           this.couponForm = {
@@ -219,12 +219,12 @@
         })
       },
 
-      /** 取消 */
+      /** cancel*/
       handleCancelCoupon() {
         this.$emit('saveCoupon', false)
       },
 
-      /** 保存优惠券*/
+      /** Save coupons*/
       handleReserveCoupon() {
         this.$refs['couponForm'].validate((valid) => {
           if (valid) {
@@ -234,23 +234,23 @@
               end_time: this.couponForm.coupon_time_limit[1] / 1000
             }
             delete _params.coupon_time_limit
-            this.$confirm('优惠券生效后不可编辑，是否确认？', '提示', { type: 'warning' }).then(() => {
+            this.$confirm('The coupon is not editable after it takes effect, please confirm？', 'prompt', { type: 'warning' }).then(() => {
               if (this.currentcouponId) {
                 API_coupon.modifyCoupons(this.currentcouponId, _params).then(() => {
                   this.couponShow = false
-                  this.$message.success('保存成功！')
+                  this.$message.success('Save success！')
                   this.$emit('saveCoupon', true)
                 })
               } else {
                 API_coupon.addCoupons(_params).then(() => {
                   this.couponShow = false
-                  this.$message.success('保存成功！')
+                  this.$message.success('Save success！')
                   this.$emit('saveCoupon', true)
                 })
               }
             }).catch(() => {})
           } else {
-            this.$message.error('表单存在错误，请修改')
+            this.$message.error('There is an error in the form. Please modify it')
           }
         })
       }

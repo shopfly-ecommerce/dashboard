@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <el-form :model="articleForm" :rules="articleRules" ref="articleForm" label-width="100px">
-      <el-form-item label="文章名称" prop="article_name" style="width: 500px">
+      <el-form-item label="The article name" prop="article_name" style="width: 500px">
         <el-input v-model="articleForm.article_name"></el-input>
       </el-form-item>
-      <el-form-item label="文章分类" prop="category_id">
+      <el-form-item label="The article classification" prop="category_id">
         <el-cascader
           :options="articleCategoryTree"
           :props="{children: 'children',label: 'name',value: 'id'}"
@@ -14,14 +14,14 @@
           change-on-select
         ></el-cascader>
       </el-form-item>
-      <el-form-item label="文章排序" prop="sort">
+      <el-form-item label="The article sorted" prop="sort">
         <el-input-number v-model="articleForm.sort" controls-position="right" :min="0" :max="99999"></el-input-number>
       </el-form-item>
-      <el-form-item label="文章内容" prop="content">
+      <el-form-item label="The article content" prop="content">
         <UE ref="ue" :defaultMsg="articleForm.content"></UE>
       </el-form-item>
       <el-form-item label="">
-        <el-button type="primary" @click="submitArticleForm">保存文章</el-button>
+        <el-button type="primary" @click="submitArticleForm">Save the paper</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -37,33 +37,33 @@
     data() {
       const checkCategory = (rule, value, callback) => {
         if (!value && value === 0) {
-          callback(new Error('请选择文章分类！'))
+          callback(new Error('Please select the article category！'))
         } else {
           callback()
         }
       }
       const { article_id, category } = this.$route.params
       return {
-        // 如果是修改，则有值
+        // If it is a modification, there is a value
         article_id,
-        // 分类树
+        // Classification tree
         articleCategoryTree: [],
-        // 添加、修改文章 表单
+        // Add and modify article forms
         articleForm: {
           article_name: '',
           content: '',
           category_id: 0
         },
-        // 添加、修改文章 表单规则
+        // Add and modify article form rules
         articleRules: {
-          article_name: [this.MixinRequired('请输入文章名称！')],
+          article_name: [this.MixinRequired('Please enter the name of the article！')],
           category_id: [
-            { required: true, message: '请输入文章分类', trigger: 'blur' },
+            { required: true, message: 'Please enter the article category', trigger: 'blur' },
             { validator: checkCategory, trigger: 'blur' }
           ],
-          content: [this.MixinRequired('请输入文章内容！')]
+          content: [this.MixinRequired('Please enter the content of the article！')]
         },
-        // 级联选择器默认值
+        // Cascading selector default
         defaultCascaderValue: []
       }
     },
@@ -109,17 +109,17 @@
       })
     },
     methods: {
-      /** 当分类改变时 */
+      /** When the classification changes*/
       handleCascaderChange(data) {
         this.articleForm.category_id = data[data.length - 1]
       },
-      /** 添加、编辑文章 表单提交 */
+      /** add、Edit the article form submission*/
       submitArticleForm() {
         this.articleForm.content = this.$refs['ue'].getUEContent()
         this.$refs['articleForm'].validate((valid) => {
           if (valid) {
             const saveScuess = () => {
-              this.$message.success('保存成功！')
+              this.$message.success('Save success！')
               this.$route.params.callback()
               this.$store.dispatch('delCurrentViews', {
                 view: this.$route,
@@ -133,12 +133,12 @@
               API_Article.addArticle(this.articleForm).then(saveScuess)
             }
           } else {
-            this.$message.error('表单填写有误，请核对！')
+            this.$message.error('There is an error in the form. Please check it！')
             return false
           }
         })
       },
-      /** 获取文章详情 */
+      /** Get article details*/
       Get_ArticleData() {
         API_Article.getArticleDetail(this.article_id).then(response => {
           this.articleForm = response

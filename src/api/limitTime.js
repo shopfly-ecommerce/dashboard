@@ -1,11 +1,11 @@
 /**
- * 限时活动相关API
+ * Time-limited activities are relatedAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取限时活动列表
+ * Gets a list of time-limited activities
  * @param params
  * @returns {Promise<any>}
  */
@@ -19,7 +19,7 @@ export function getLimitTimeActivityList(params) {
 }
 
 /**
- * 获取限时活动商品列表
+ * Gets a list of time-limited active items
  * @param params
  * @returns {Promise<any>}
  */
@@ -33,7 +33,7 @@ export function getLimitTimeGoodsList(params) {
 }
 
 /**
- * 获取限时活动详情
+ * Get details of time-limited activities
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -48,7 +48,7 @@ export function getLimitTimeActivityDetails(ids, params) {
 }
 
 /**
- * 查询一个限时抢购入库的已经申请的商品
+ * Query a flash sale for an item that has been applied for storage
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -62,7 +62,7 @@ export function getLimitTimeAlreadyActivityDetails(ids) {
 }
 
 /**
- * 限时活动报名
+ * Limited time activity registration
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -79,7 +79,7 @@ export function signUpLimitTimeActivity(params) {
 }
 
 /**
- * 增加限时抢购
+ * Increase flash sales
  * @param params
  */
 export function addSeckill(params) {
@@ -92,7 +92,7 @@ export function addSeckill(params) {
 }
 
 /**
- * 修改限时抢购
+ * Modify flash sales
  * @param id
  * @param params
  */
@@ -106,7 +106,7 @@ export function editSeckill(id, params) {
 }
 
 /**
- * 发布限时抢购
+ * Issue flash sales
  * @param seckill_id
  * @param params
  */

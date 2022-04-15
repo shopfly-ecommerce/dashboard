@@ -6,14 +6,14 @@
     >
       <div slot="toolbar" class="inner-toolbar">
         <div class="toolbar-btns">
-          <el-button size="mini" type="primary" @click="handleliveVideoGoods">编辑商品</el-button>
+          <el-button size="mini" type="primary" @click="handleliveVideoGoods">Edit commodity</el-button>
         </div>
         <div class="toolbar-search">
-          <en-table-search @search="searchEvent" placeholder="请输入关键字"/>
+          <en-table-search @search="searchEvent" placeholder="Please enter the keywords"/>
         </div>
       </div>
       <template slot="table-columns">
-        <el-table-column label="商品名称">
+        <el-table-column label="Name">
           <template slot-scope="scope">
             <div class="goods-info">
               <div class="goods-image" style="margin: 0 20px;">
@@ -25,25 +25,25 @@
                 <div class="goods-name">
                   <a :href="`${MixinBuyerDomain}/goods/${scope.row.goods_id}`" target="_blank" style="color: #00a2d4;"><span v-html="scope.row.name">{{ scope.row.name }}</span></a>
                 </div>
-                <span>商品编号:{{scope.row.sn}}</span>
+                <span>SN:{{scope.row.sn}}</span>
               </div>
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="规格SKU">
+        <el-table-column label="specificationsSKU">
           <template slot-scope="scope">
             <span>{{ getSkuList(scope.row.specs) }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="商品价格">
+        <el-table-column label="Price">
           <template slot-scope="scope">{{ scope.row.price | unitPrice('￥') }}</template>
         </el-table-column>
-        <el-table-column label="操作" width="350">
+        <el-table-column label="Operation" width="350">
           <template slot-scope="scope">
             <el-button
               size="mini"
               type="primary"
-              @click="handleDeleteLiveVideoGoods(scope.$index, scope.row)">删除</el-button>
+              @click="handleDeleteLiveVideoGoods(scope.$index, scope.row)">delete</el-button>
           </template>
         </el-table-column>
       </template>
@@ -59,7 +59,7 @@
         :total="tableData.data_total">
       </el-pagination>
     </en-table-layout>
-    <!--商品选择器-->
+    <!--Commodity selector-->
     <en-goods-sku-picker
       type="seller"
       goods-type="NORMAL"
@@ -89,16 +89,16 @@
     },
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
 
-        /** 商品列表数据 */
+        /** Commodity list data*/
         tableData: {
           data: [],
           page_no: 1,
@@ -108,19 +108,19 @@
 
         roomId: this.$route.params.room_id,
 
-        /** 商品选择器最大长度*/
+        /** Maximum length of commodity selector*/
         maxsize: 0,
 
-        /** 商品选择器列表api*/
+        /** Product selector listapi*/
         goodsApi: `${api.live}/seller/live-video/goods/sku`,
 
-        /** 商城分类api */
+        /** Mall classificationapi */
         categoryApi: 'seller/goods/category/0/children',
 
-        /** 回显数据使用 */
+        /** Echo data usage*/
         multipleApi: 'seller/goods/skus/@ids/details',
 
-        /** 显示/隐藏商品选择器 */
+        /** According to/Hide the product selector*/
         showDialog: false
       }
     },
@@ -141,24 +141,24 @@
       this.GET_LiveVideoGoodsList()
     },
     methods: {
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_LiveVideoGoodsList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_LiveVideoGoodsList()
       },
 
-      /** 编辑直播商品 */
+      /** Edit live merchandise*/
       handleliveVideoGoods() {
         this.showDialog = true
       },
 
-      /** 保存商品选择器选择的商品 */
+      /** Save the item selected by the commodity selector*/
       refreshFunc(val) {
         val.forEach(key => {
           API_Live.bindLiveVideoGoods(this.roomId, key.we_chat_goods_id).then(response => {
@@ -168,7 +168,7 @@
         })
       },
 
-      /** 获取规格列表 */
+      /** Get specification list*/
       getSkuList(val) {
         const _val = typeof val === 'string' ? JSON.parse(val) : val
         if (_val) {
@@ -182,7 +182,7 @@
         return '/'
       },
 
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       searchEvent(keyword) {
         this.params.page_no = 1
         this.params = {
@@ -194,21 +194,21 @@
         this.GET_LiveVideoGoodsList()
       },
 
-      /** 删除直播商品 */
+      /** Delete live broadcast products*/
       handleDeleteLiveVideoGoods(index, row) {
-        this.$confirm('确定要删除此商品吗？', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('Are you sure you want to delete this item？', 'prompt', {
+          confirmButtonText: 'save',
+          cancelButtonText: 'cancel',
           type: 'warning'
         }).then(() => {
           API_Live.deleteLiveVideoGoods(row.id).then(() => {
             this.GET_LiveVideoGoodsList()
-            this.$message.success('删除成功！')
+            this.$message.success('Delete the success！')
           })
         })
       },
 
-      /** 获取直播商品列表 */
+      /** Get a list of live merchandise*/
       GET_LiveVideoGoodsList() {
         this.loading = true
         API_Live.getLiveVideoGoods(this.roomId, this.params).then(response => {

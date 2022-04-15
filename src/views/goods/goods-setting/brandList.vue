@@ -7,38 +7,38 @@
     >
       <div slot="toolbar" class="inner-toolbar">
         <div class="toolbar-btns">
-          <el-button size="mini" type="primary" icon="el-icon-circle-plus-outline" @click="handleAddBrand">添加</el-button>
+          <el-button size="mini" type="primary" icon="el-icon-circle-plus-outline" @click="handleAddBrand">add</el-button>
         </div>
         <div class="toolbar-search">
-          <en-table-search @search="searchEvent" placeholder="请输入品牌名称"/>
+          <en-table-search @search="searchEvent" placeholder="Please enter the brand name"/>
         </div>
       </div>
       <template slot="table-columns">
         <!--<el-table-column type="selection" width="100"/>-->
-        <!--品牌图片-->
-        <el-table-column label="品牌图片" width="150">
+        <!--Image-->
+        <el-table-column label="Image" width="150">
           <template slot-scope="scope">
             <img :src="scope.row.logo" class="goods-image"/>
           </template>
         </el-table-column>
-        <!--品牌名称-->
-        <el-table-column prop="name" label="品牌名称" />
-        <!--操作-->
-        <el-table-column label="操作" width="150">
+        <!-- name-->
+        <el-table-column prop="name" label=" name" />
+        <!--Operation-->
+        <el-table-column label="Operation" width="150">
           <template slot-scope="scope">
             <el-button
               size="mini"
               type="primary"
-              @click="handleEditBrand(scope.$index, scope.row)">修改</el-button>
+              @click="handleEditBrand(scope.$index, scope.row)">edit</el-button>
             <el-button
               size="mini"
               type="danger"
-              @click="handleDeleteBrand(scope.$index, scope.row)">删除</el-button>
+              @click="handleDeleteBrand(scope.$index, scope.row)">delete</el-button>
           </template>
         </el-table-column>
       </template>
       <!--<template slot="pagination-toolbar">
-        <el-button type="danger" size="mini" @click="deleteTheBrand">删除选中</el-button>
+        <el-button type="danger" size="mini" @click="deleteTheBrand">Delete the selected</el-button>
       </template>-->
       <el-pagination
         v-if="tableData"
@@ -53,18 +53,18 @@
       </el-pagination>
     </en-table-layout>
     <el-dialog
-      :title="brandForm.brand_id ? '编辑品牌' : '添加品牌'"
+      :title="brandForm.brand_id ? 'Edit the brand' : 'Add a brand'"
       :visible.sync="dialogBrandVisible"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
       width="500px"
     >
       <el-form :model="brandForm" :rules="brandRules" ref="brandForm" label-width="100px">
-        <!--品牌名称-->
-        <el-form-item label="品牌名称" prop="name">
+        <!-- name-->
+        <el-form-item label=" name" prop="name">
           <el-input v-model="brandForm.name"></el-input>
         </el-form-item>
-        <el-form-item label="品牌图片" prop="logo">
+        <el-form-item label="Image" prop="logo">
           <el-upload
             :action="MixinUploadApi"
             list-type="picture"
@@ -74,14 +74,14 @@
             :multiple="false"
             :limit="1"
           >
-            <el-button size="small" type="primary">点击上传</el-button>
-            <span slot="tip" class="el-upload__tip">&nbsp;建议上传jpg/png文件，且不超过1MB</span>
+            <el-button size="small" type="primary">upload</el-button>
+            <span slot="tip" class="el-upload__tip">&nbsp;Recommended to uploadjpg/pngFile, and not exceeding1MB</span>
           </el-upload>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogBrandVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitBrandForm('brandForm')">确 定</el-button>
+        <el-button @click="dialogBrandVisible = false">cancel</el-button>
+        <el-button type="primary" @click="submitBrandForm('brandForm')">save</el-button>
       </span>
     </el-dialog>
   </div>
@@ -94,32 +94,32 @@
     name: 'brandList',
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
-        /** 列表数据 */
+        /** The list of data*/
         tableData: '',
-        /** 被选数据 */
+        /** The selected data*/
         selectedData: [],
 
-        // 添加、修改品牌 dialog
+        // Add and modify brand Dialogs
         dialogBrandVisible: false,
 
-        /** 存储上传的图片*/
+        /** Stores uploaded images*/
         fileList: [],
-        /** 添加、修改品牌 表单 */
+        /** add、Modify the brand form*/
         brandForm: {},
-        /** 添加、修改品牌 表单规则 */
+        /** add、Modify brand form rules*/
         brandRules: {
           name: [
-            this.MixinRequired('请输入品牌名称！'),
-            { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' }
+            this.MixinRequired('Please enter the brand name！'),
+            { min: 1, max: 20, message: 'The length of1 to20 A character', trigger: 'blur' }
           ],
-          logo: [this.MixinRequired('请上传品牌logo！')]
+          logo: [this.MixinRequired('Please upload the brandlogo！')]
         }
       }
     },
@@ -131,29 +131,29 @@
         this.$set(this.brandForm, 'logo', res.url)
         this.$refs['brandForm'].validateField('logo')
       },
-      /** 图片移除之后 */
+      /** Once the image is removed*/
       delGiftImg() {
         this.fileList = []
         this.brandForm.logo = ''
       },
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_BrandList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_BrandList()
       },
 
-      /** 当选择项发生变化 */
+      /** When the selection changes*/
       handleSelectionChange(val) {
         this.selectedData = val.map(item => item.brand_id)
       },
 
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       searchEvent(data) {
         this.params.page_no = 1
         this.params.name = data
@@ -161,37 +161,37 @@
         this.GET_BrandList()
       },
 
-      /** 修改品牌操作 */
+      /** Modify brand operation*/
       handleEditBrand(index, row) {
         this.brandForm = this.MixinClone(row)
         this.fileList = this.brandForm.logo ? [{ name: 'brand_image', url: this.brandForm.logo }] : []
         this.dialogBrandVisible = true
       },
-      /** 删除品牌操作 */
+      /** Delete brand operation*/
       handleDeleteBrand(index, row) {
-        this.$confirm('确定要删除这个品牌吗？', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Are you sure you want to delete this brand？', 'prompt', { type: 'warning' }).then(() => {
           this.DELETE_Brand(row.brand_id)
         }).catch(() => {})
       },
-      /** 删除选中品牌操作 */
+      /** Delete the selected brand action*/
       deleteTheBrand() {
         if (this.selectedData.length < 1) {
-          this.$message.error('您未选中任何品牌！')
+          this.$message.error('You did not select any brand！')
         } else {
-          this.$confirm('确定要删除这些品牌吗？', '提示', { type: 'warning' }).then(() => {
+          this.$confirm('Are you sure you want to delete these brands？', 'prompt', { type: 'warning' }).then(() => {
             this.DELETE_Brand(this.selectedData)
           }).catch(() => {})
         }
       },
 
-      /** 添加品牌触发事件 */
+      /** Add a brand trigger event*/
       handleAddBrand() {
         this.brandForm = {}
         this.fileList = []
         this.dialogBrandVisible = true
       },
 
-      /** 添加、修改品牌 表单提交 */
+      /** add、Modify the brand form submission*/
       submitBrandForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -199,25 +199,25 @@
             if (!brand_id) {
               API_brand.addBrand(this.brandForm).then(response => {
                 this.dialogBrandVisible = false
-                this.$message.success('添加成功！')
+                this.$message.success('Add a success！')
                 this.$refs[formName].resetFields()
                 this.GET_BrandList()
               })
             } else {
               API_brand.editBrand(brand_id, this.brandForm).then(response => {
-                this.$message.success('保存成功！')
+                this.$message.success('Save success！')
                 this.dialogBrandVisible = false
                 this.$refs[formName].resetFields()
                 this.MixinSetTableData(this.tableData, 'brand_id', brand_id, response)
               })
             }
           } else {
-            this.$message.error('表单填写有误，请检查！')
+            this.$message.error('The form is filled incorrectly, please check！')
             return false
           }
         })
       },
-      /** 获取品牌列表 */
+      /** Get a list of brands*/
       GET_BrandList() {
         this.loading = true
         API_brand.getBrandList(this.params).then(response => {
@@ -226,10 +226,10 @@
         }).catch(() => { this.loading = false })
       },
 
-      /** 删除品牌 */
+      /** Delete the brand*/
       DELETE_Brand(ids) {
         API_brand.deleteBrand(ids).then(() => {
-          this.$message.success('删除成功！')
+          this.$message.success('Delete the success！')
           this.GET_BrandList()
         })
       }

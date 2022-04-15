@@ -1,11 +1,11 @@
 /**
- * 区域分析API
+ * Regional analysisAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 区域分析列表
+ * Area analysis list
  * @param params
  * @returns {Promise<any>}
  */

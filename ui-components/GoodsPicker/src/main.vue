@@ -5,22 +5,22 @@
     :close-on-press-escape="false"
     append-to-body
     width="805px">
-    <div slot="title" class="goods-picker-title">商品选择器</div>
+    <div slot="title" class="goods-picker-title">Commodity selector</div>
     <div class="goods-picker-body">
       <div class="goods-picker-search">
         <div class="item-search">
-          <span>搜索范围</span>
+          <span>A search scope</span>
           <en-category-picker
             @changed="(category) => { params.category_path = category ? category.category_path : '' }"
             :api="categoryApi"
-            placeholder="商品分类"
+            placeholder="Category"
             clearable
           />
-          <el-input v-model="params.keyword" :placeholder="'请输入关键字，例如：商品名称'" clearable class="inline-input"/>
-          <el-button @click="() => { GET_GoodsList(true) }">搜索</el-button>
+          <el-input v-model="params.keyword" :placeholder="'Please enter a keyword, for example：Name'" clearable class="inline-input"/>
+          <el-button @click="() => { GET_GoodsList(true) }">search</el-button>
         </div>
         <div class="item-search">
-          <span>查找商品</span>
+          <span>To find the goods</span>
           <el-select
             v-model="params.goods_ids"
             multiple
@@ -28,12 +28,12 @@
             allow-create
             default-first-option
             reserve-keyword
-            placeholder="输入商品ID后按回车添加，可添加多个"
+            placeholder="Input the commodityIDPress Enter to add more"
             popper-class="params-ids-select-dropdown"
             class="inline-input goods-ids"
             @change="handleGoodsIdsChange"
           ></el-select>
-          <el-button @click="handleSearchMultipleGoods">查找</el-button>
+          <el-button @click="handleSearchMultipleGoods">To find the</el-button>
         </div>
       </div>
       <div class="goods-picker-content">
@@ -51,8 +51,8 @@
               <div class="goods-price">{{ goods.goods_price | formatPrice }}</div>
             </div>
             <div class="goods-mask">
-              <a :href="buyerDomain + '/goods/' + goods.goods_id" target="_blank" class="mask-view" title="查看详情"><i></i></a>
-              <div class="mask-check" title="选择商品" @click="handleClickItem(goods, index)"><i></i></div>
+              <a :href="buyerDomain + '/goods/' + goods.goods_id" target="_blank" class="mask-view" title="Check the details"><i></i></a>
+              <div class="mask-check" title="Choose goods" @click="handleClickItem(goods, index)"><i></i></div>
             </div>
           </div>
           <el-button
@@ -62,7 +62,7 @@
             :loading="loading"
             @click="handleLoadMore"
             class="load-more"
-          >加载更多</el-button>
+          >To load more</el-button>
         </div>
         <div class="selected-list" :id="'goods-picker-selected-' + _uid">
           <transition-group name="slide-fade">
@@ -81,8 +81,8 @@
                 <div class="goods-price">{{ goods.goods_price | formatPrice }}</div>
               </div>
               <div class="goods-mask">
-                <a :href="buyerDomain + '/goods/' + goods.goods_id" target="_blank" class="mask-view" title="查看详情"><i></i></a>
-                <div class="mask-check" title="取消选择商品" @click="handleRemoveItem(goods, index)"><i></i></div>
+                <a :href="buyerDomain + '/goods/' + goods.goods_id" target="_blank" class="mask-view" title="Check the details"><i></i></a>
+                <div class="mask-check" title="Deselect merchandise" @click="handleRemoveItem(goods, index)"><i></i></div>
               </div>
             </div>
           </transition-group>
@@ -91,13 +91,13 @@
     </div>
     <div slot="footer" class="goods-picker-footer">
       <div class="upload-status-num">
-        最多可选个数：<span>{{ limit < 1 ? '无限制' : limit }}</span>
-        已选个数：<span>{{ selectedNum }}</span>
-        还可选个数：<span>{{ limit < 1 ? '无限制' : limit - selectedNum }}</span>
+        Maximum number of choices：<span>{{ limit < 1 ? 'unlimited' : limit }}</span>
+        The number of the selected：<span>{{ selectedNum }}</span>
+        Also optional number：<span>{{ limit < 1 ? 'unlimited' : limit - selectedNum }}</span>
       </div>
       <span>
-        <el-button @click="dialogVisible = false">取 消</el-button>
-      <el-button type="primary" @click="handleConfirm">确 定</el-button>
+        <el-button @click="dialogVisible = false">cancel</el-button>
+      <el-button type="primary" @click="handleConfirm">save</el-button>
       </span>
     </div>
   </el-dialog>

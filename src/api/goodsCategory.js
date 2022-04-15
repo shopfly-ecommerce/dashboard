@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 /**
- * 删除 商品分组
+ * Deleting commodity Groups
  * @param params
  * @returns {Promise<any>}
  * @constructor
@@ -15,7 +15,7 @@ export function deleteGoodsCategory(params) {
 }
 
 /**
- * 商品分组 添加
+ * Grouping of goods
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -29,7 +29,7 @@ export function addGoodsCategory(params) {
 }
 
 /**
- * 商品分组 编辑
+ * Commodity group editing
  * @param params
  * @returns {Promise<any>}
  * @constructor
@@ -43,7 +43,7 @@ export function updateGoodsCategory(ids, params) {
 }
 
 /**
- * 发布商品 查询商品品类 分级查询（商城商品品类）
+ * Release product query Product category query（Mall product category）
  * @param ids
  * @param params
  * @returns {Promise<any>}

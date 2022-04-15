@@ -1,11 +1,11 @@
 /**
- * 电子面单相关API
+ * Electron plane dependenceAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取电子面单列表
+ * Gets the electronic surface list
  * @param params
  */
 export function getElectronicReceiptList(params) {
@@ -18,7 +18,7 @@ export function getElectronicReceiptList(params) {
 }
 
 /**
- * 获取电子面单详情
+ * Get e-menu details
  * @param bean
  */
 export function getElectronicReceiptDetail(bean) {
@@ -29,7 +29,7 @@ export function getElectronicReceiptDetail(bean) {
 }
 
 /**
- * 编辑电子面单
+ * Edit electronic menu
  * @param bean
  * @param params
  */
@@ -43,7 +43,7 @@ export function editElectronicReceipt(bean, params) {
 }
 
 /**
- * 开启电子面单
+ * Turn on the electronic plane
  * @param bean
  */
 export function openElectronicReceipt(bean) {

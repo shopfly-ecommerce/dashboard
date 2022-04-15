@@ -1,11 +1,11 @@
 /**
- * 收藏统计API
+ * Collect statisticsAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取收藏图表数据
+ * Get the favorite chart data
  * @param params
  * @returns {Promise<any>}
  */
@@ -18,7 +18,7 @@ export function getCollectionStatistics() {
 }
 
 /**
- * 获取商品列表信息
+ * Get item list information
  * @param params
  * @returns {Promise<any>}
  */

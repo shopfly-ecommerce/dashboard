@@ -1,11 +1,11 @@
 /**
- * 文章相关API
+ * The article relatedAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取文章分类
+ * Get article classification
  */
 export function getArticleCategory(params) {
   return request({
@@ -17,7 +17,7 @@ export function getArticleCategory(params) {
 }
 
 /**
- * 获取文章分类子项
+ * Gets the article classification subitem
  * @param id
  */
 export function getArticleCategoryChildren(id = 0) {
@@ -29,7 +29,7 @@ export function getArticleCategoryChildren(id = 0) {
 }
 
 /**
- * 添加文章分类
+ * Add article categories
  * @param params
  */
 export function addArticleCategory(params) {
@@ -41,7 +41,7 @@ export function addArticleCategory(params) {
 }
 
 /**
- * 获取文章分类详情
+ * Get article classification details
  * @param id
  */
 export function getArticleCategoryDetail(id) {
@@ -52,7 +52,7 @@ export function getArticleCategoryDetail(id) {
 }
 
 /**
- * 编辑文章分类
+ * Edit article classification
  * @param id
  * @param params
  */
@@ -65,7 +65,7 @@ export function editArticleCategory(id, params) {
 }
 
 /**
- * 删除文章分类列表
+ * Delete the list of article categories
  * @param id
  */
 export function deleteAritcleCategory(id) {
@@ -76,7 +76,7 @@ export function deleteAritcleCategory(id) {
 }
 
 /**
- * 获取文章分类树
+ * Gets the article classification tree
  */
 export function getAritcleCategoryTree() {
   return request({
@@ -86,7 +86,7 @@ export function getAritcleCategoryTree() {
 }
 
 /**
- * 获取文章列表
+ * Get a list of articles
  * @param params
  */
 export function getArticleList(params) {
@@ -99,7 +99,7 @@ export function getArticleList(params) {
 }
 
 /**
- * 添加文章
+ * Add the article
  * @param params
  */
 export function addArticle(params) {
@@ -111,7 +111,7 @@ export function addArticle(params) {
 }
 
 /**
- * 获取文章详情
+ * Get article details
  * @param id
  */
 export function getArticleDetail(id) {
@@ -122,7 +122,7 @@ export function getArticleDetail(id) {
 }
 
 /**
- * 修改文章
+ * Modify the article
  * @param id
  * @param params
  */
@@ -135,7 +135,7 @@ export function editArticle(id, params) {
 }
 
 /**
- * 删除文章
+ * Delete articles
  * @param id
  */
 export function deleteArticle(id) {

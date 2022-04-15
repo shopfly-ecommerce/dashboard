@@ -1,8 +1,8 @@
 <template>
   <div style="display: inline-block">
-    <el-select v-if="optional" :disabled="disableddate" v-model="date_type" placeholder="请选择" style="width: 100px">
-      <el-option label="按月" value="month"/>
-      <el-option label="按年" value="year"/>
+    <el-select v-if="optional" :disabled="disableddate" v-model="date_type" placeholder="Please select" style="width: 100px">
+      <el-option label="On a monthly basis" value="month"/>
+      <el-option label="According to the years" value="year"/>
     </el-select>
     <el-date-picker
       style="width: 130px"
@@ -13,7 +13,7 @@
       :clearable="clearable"
       :type="date_type"
       :value-format="date_type === 'month' ? 'yyyy-MM' : 'yyyy'"
-      :placeholder="date_type === 'month' ? '选择月份' : '选择年份'"
+      :placeholder="date_type === 'month' ? 'Select month' : 'Select the year'"
       :picker-options="{disabledDate(time) { return time.getTime() > Date.now() }}">
     </el-date-picker>
   </div>
@@ -66,14 +66,14 @@
       this.handleDateChange()
     },
     methods: {
-      /** 获取当前年份 */
+      /** Get the current year*/
       getCurrentYear() {
         return {
           o: new Date().getFullYear() + '',
           l_o: new Date().getFullYear() - 1 + ''
         }
       },
-      /** 获取当前年月 */
+      /** Get current year*/
       getCurrentYearMonth() {
         let _cy = new Date().getFullYear() + ''
         let _l_cy = new Date().getFullYear() - 1 + ''
@@ -90,7 +90,7 @@
           l_o: _l_cy + '-' + _l_cm
         }
       },
-      /** 日期发生改变 */
+      /** Date change*/
       handleDateChange() {
         let is_year = this.date_type === 'year'
         let val = this.date_val

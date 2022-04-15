@@ -1,12 +1,12 @@
 addExpress/**
- * 快递公司相关API
+ * Express company relatedAPI
  */
 
 import request from '@/utils/request'
 import qs from 'qs'
 
 /**
- * 获取物流公司列表
+ * Get a list of logistics companies
  * @param params
  */
 export function getExpressList(params) {
@@ -19,7 +19,7 @@ export function getExpressList(params) {
 }
 
 /**
- * 添加物流公司
+ * Add logistics Company
  * @param params
  */
 export function addExpress(params) {
@@ -36,7 +36,7 @@ export function addExpress(params) {
 }
 
 /**
- * 删除物流公司
+ * Delete logistics company
  * @param id
  */
 export function deleteExpress(id) {
@@ -47,7 +47,7 @@ export function deleteExpress(id) {
 }
 
 /**
- * 获取物流公司详情
+ * Get details of logistics company
  * @param id
  */
 export function getExpressDetail(id) {
@@ -58,7 +58,7 @@ export function getExpressDetail(id) {
 }
 
 /**
- * 修改物流公司
+ * Modify logistics company
  * @param id
  * @param params
  */

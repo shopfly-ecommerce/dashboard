@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 /**
- * 获取商品详情统计列表
+ * Get a statistical list of product details
  * @param params
  * @returns {Promise<any>}
  */

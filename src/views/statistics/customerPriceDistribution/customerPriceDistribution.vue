@@ -3,22 +3,22 @@
     <el-card>
       <div slot="header" class="chart-header">
         <div class="chart-header-item">
-          <span>查询周期：</span>
+          <span>Query cycle：</span>
           <en-year-month-picker @changed="handleYearMonthChanged" :disableddate="cur_tab === 'frequency'" :disabled="cur_tab === 'frequency'"/>
         </div>
         <div v-if="cur_tab === 'price'" class="chart-header-item">
-          <span>价格区间：</span>
+          <span>A price range：</span>
           <en-price-range :default-range="priceRange" @changed="(range) => { priceRange = range }"/>
         </div>
       </div>
       <el-tabs v-model="cur_tab" type="card">
-        <el-tab-pane label="客单价分布" name="price">
+        <el-tab-pane label="Customer unit price distribution" name="price">
           <customer-price-distribution-price :params="params" :cur-tab="cur_tab" :price-range="priceRange"/>
         </el-tab-pane>
-        <el-tab-pane label="购买时段分布" name="period">
+        <el-tab-pane label="Purchase time distribution" name="period">
           <customer-price-distribution-period :params="params" :cur-tab="cur_tab"/>
         </el-tab-pane>
-        <el-tab-pane label="购买频次分析表" name="frequency">
+        <el-tab-pane label="Purchase frequency analysis table" name="frequency">
           <customer-price-distribution-frequency :params="params" :cur-tab="cur_tab"/>
         </el-tab-pane>
       </el-tabs>
@@ -50,7 +50,7 @@
       }
     },
     methods: {
-      /** 年月份发生变化 */
+      /** The months of the year change*/
       handleYearMonthChanged(object) {
         this.params.year = object.year
         this.params.month = object.month

@@ -1,24 +1,24 @@
 <template>
   <el-dialog :title="giftTitle" :visible.sync="giftShow" width="30%">
     <el-form :model="giftModelForm" ref="giftForm" label-position="right" :rules="rules" label-width="100px">
-      <el-form-item label="赠品名称：" prop="gift_name">
+      <el-form-item label="Name of gift：" prop="gift_name">
         <el-input
           auto-complete="off"
           v-model="giftModelForm.gift_name"
-          placeholder="不超过20个字"
+          placeholder="No more than20A word"
           @change="giftModelForm.gift_name = giftModelForm.gift_name.trim()"
           maxlength="20"
           label-width="100"></el-input>
       </el-form-item>
-      <el-form-item label="赠品价格：" prop="gift_price">
-        <el-input placeholder="请输入赠品价格,长度最多为10个字符" maxlength="10" v-model="giftModelForm.gift_price">
+      <el-form-item label="Present price：" prop="gift_price">
+        <el-input placeholder="Please enter the price of the gift,Maximum length:10A character" maxlength="10" v-model="giftModelForm.gift_price">
           <template slot="prepend">¥</template>
         </el-input>
       </el-form-item>
-      <el-form-item label="赠品库存：" prop="actual_store">
-        <el-input placeholder="请输入赠品库存,长度最多为10个字符" maxlength="10" v-model="giftModelForm.actual_store"/>
+      <el-form-item label="Merchandise inventory：" prop="actual_store">
+        <el-input placeholder="Please enter gift inventory,Maximum length:10A character" maxlength="10" v-model="giftModelForm.actual_store"/>
       </el-form-item>
-      <el-form-item label="赠品图片：" prop="enable_img">
+      <el-form-item label="Gifts pictures：" prop="enable_img">
         <el-upload
           class="upload-demo"
           :action="`${MixinUploadApi}?scene=other`"
@@ -26,13 +26,13 @@
           :on-success="uploadSuccess"
           :on-remove="delGiftImg"
           list-type="picture">
-          <el-button type="primary">点击上传</el-button>
+          <el-button type="primary">upload</el-button>
         </el-upload>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="handleCancelGifts">取 消</el-button>
-      <el-button type="primary" @click="handleReserveGifts">确 定</el-button>
+      <el-button @click="handleCancelGifts">cancel</el-button>
+      <el-button type="primary" @click="handleReserveGifts">save</el-button>
     </div>
   </el-dialog>
 </template>
@@ -43,7 +43,7 @@
   export default {
     name: 'AddGift',
     props: {
-      /** 当前赠品id */
+      /** The current giftid */
       currentGiftId: {
         type: [String, Number],
         default: () => {
@@ -51,7 +51,7 @@
         }
       },
 
-      /** 赠品弹框显示*/
+      /** Giveaway cartridge display*/
       giftModelShow: {
         type: Boolean,
         default: false
@@ -60,11 +60,11 @@
     data() {
       const checkGiftPrice = (rule, value, callback) => {
         if (!value) {
-          return callback(new Error('请输入赠品价格'))
+          return callback(new Error('Please enter the price of the gift'))
         }
         setTimeout(() => {
           if (!RegExp.money.test(value)) {
-            callback(new Error('请输入正确的价格'))
+            callback(new Error('Please enter the correct price'))
           } else {
             callback()
           }
@@ -72,11 +72,11 @@
       }
       const checkEnableStore = (rule, value, callback) => {
         if (!value) {
-          return callback(new Error('请输入库存'))
+          return callback(new Error('Please enter inventory'))
         }
         setTimeout(() => {
           if (!RegExp.integer.test(value)) {
-            callback(new Error('请输入正整数'))
+            callback(new Error('Please enter a positive integer'))
           } else {
             callback()
           }
@@ -85,43 +85,43 @@
       return {
         giftShow: false,
 
-        /** 赠品编辑表单*/
+        /** Giveaway editing form*/
         giftModelForm: {
 
-          /** 赠品名称 */
+          /** Name of gift*/
           gift_name: '',
 
-          /** 赠品图片 */
+          /** Gifts pictures*/
           gift_img: '',
 
-          /** 赠品价格 */
+          /** Present price*/
           gift_price: '',
 
-          /** 实际库存 */
+          /** The actual inventory*/
           actual_store: ''
         },
 
-        /** 存储上传的图片*/
+        /** Stores uploaded images*/
         fileList: [],
 
-        /** 校验规则 */
+        /** Validation rules*/
         rules: {
           gift_name: [
-            { required: true, message: '请输入赠品名称', trigger: 'blur' }
+            { required: true, message: 'Please enter the name of the gift item', trigger: 'blur' }
           ],
           gift_price: [
-            { required: true, message: '请输入赠品价格', trigger: 'blur' },
+            { required: true, message: 'Please enter the price of the gift', trigger: 'blur' },
             { validator: checkGiftPrice, trigger: 'blur' }
           ],
           actual_store: [
-            { required: true, message: '请输入赠品库存', trigger: 'blur' },
+            { required: true, message: 'Please enter gift inventory', trigger: 'blur' },
             { validator: checkEnableStore, trigger: 'blur' }
           ],
           enable_img: [
             { required: true,
               validator: (rule, value, callback) => {
                 if (!this.giftModelForm.gift_img) {
-                  callback(new Error('请上传赠品图片！'))
+                  callback(new Error('Please upload pictures of the gifts！'))
                 } else {
                   callback()
                 }
@@ -132,7 +132,7 @@
     },
     computed: {
       giftTitle() {
-        return this.currentGiftId ? '编辑赠品' : '新增赠品'
+        return this.currentGiftId ? 'Edit the gifts' : 'New gift'
       }
     },
     watch: {
@@ -147,16 +147,16 @@
           this.GET_giftDetails()
         } else {
           this.giftModelForm = {
-            /** 赠品名称 */
+            /** Name of gift*/
             gift_name: '',
 
-            /** 赠品图片 */
+            /** Gifts pictures*/
             gift_img: '',
 
-            /** 赠品价格 */
+            /** Present price*/
             gift_price: 0,
 
-            /** 实际库存 */
+            /** The actual inventory*/
             actual_store: 0
           }
           this.fileList = []
@@ -167,7 +167,7 @@
       this.currentGiftId && this.GET_giftDetails()
     },
     methods: {
-      /** 查询一个赠品详情 */
+      /** Inquire about details of a gift*/
       GET_giftDetails() {
         this.$nextTick(() => {
           API_Gift.getGiftDetails(this.currentGiftId, {}).then((response) => {
@@ -177,35 +177,35 @@
         })
       },
 
-      /** 取消 */
+      /** cancel*/
       handleCancelGifts() {
         this.$emit('saveGift', false)
       },
 
-      /** 保存赠品*/
+      /** Save the gift*/
       handleReserveGifts() {
         this.$refs['giftForm'].validate((valid) => {
           if (valid) {
             if (this.currentGiftId) {
-              // 更新
+              // update
               API_Gift.saveGifts(this.currentGiftId, this.giftModelForm).then(() => {
                 this.giftShow = false
-                this.$message.success('保存成功！')
+                this.$message.success('Save success！')
                 this.$emit('saveGift', true)
               })
             } else {
-              // 新增
+              // new
               API_Gift.addGifts(this.giftModelForm).then(() => {
                 this.giftShow = false
-                this.$message.success('保存成功！')
+                this.$message.success('Save success！')
                 this.giftModelForm = {
-                  /** 赠品名称 */
+                  /** Name of gift*/
                   gift_name: '',
-                  /** 赠品图片 */
+                  /** Gifts pictures*/
                   gift_img: '',
-                  /** 赠品价格 */
+                  /** Present price*/
                   gift_price: '',
-                  /** 实际库存 */
+                  /** The actual inventory*/
                   actual_store: ''
                 }
                 this.fileList = []
@@ -214,12 +214,12 @@
             }
             setTimeout(() => { this.$refs['giftForm'].resetFields() })
           } else {
-            this.$message.error('表单存在错误，请修改')
+            this.$message.error('There is an error in the form. Please modify it')
           }
         })
       },
 
-      /** 上传成功之后 */
+      /** After uploading successfully*/
       uploadSuccess(response) {
         this.giftModelForm.gift_img = response.url
         this.fileList.shift()
@@ -227,7 +227,7 @@
         this.$refs['giftForm'].validateField('enable_img')
       },
 
-      /** 图片移除之后 */
+      /** Once the image is removed*/
       delGiftImg() {
         this.fileList = []
         this.giftModelForm.gift_img = ''

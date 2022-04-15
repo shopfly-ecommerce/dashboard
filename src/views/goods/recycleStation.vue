@@ -11,54 +11,54 @@
         <el-button
           type="danger"
           :disabled="selectionids.length === 0"
-          @click="handleDeleteRecycles()">批量删除
+          @click="handleDeleteRecycles()">Batch delete
         </el-button>
         <el-button
           type="primary"
           :disabled="selectionids.length === 0"
-          @click="handlReductionRecycles()">批量还原
+          @click="handlReductionRecycles()">Mass reduction
         </el-button>
       </div>
       <div class="toolbar-search">
-        <en-table-search @search="searchEvent" placeholder="请输入商品名称" />
+        <en-table-search @search="searchEvent" placeholder="Please enter the name of the item" />
       </div>
     </div>
 
     <template slot="table-columns">
       <el-table-column type="selection"/>
-      <el-table-column label="图片" width="120">
+      <el-table-column label="Image" width="120">
         <template slot-scope="scope">
           <a :href="`${MixinBuyerDomain}/goods/${scope.row.goods_id}`" target="_blank">
             <img :src="scope.row.thumbnail" class="goods-image"/>
           </a>
         </template>
       </el-table-column>
-      <el-table-column prop="goods_name" label="商品名称">
+      <el-table-column prop="goods_name" label="Name">
         <template slot-scope="scope">
           <a :href="`${MixinBuyerDomain}/goods/${scope.row.goods_id}`" target="_blank" style="color: #00a2d4;">{{ scope.row.goods_name }}</a>
         </template>
       </el-table-column>
-      <el-table-column label="价格" width="120">
+      <el-table-column label="Price" width="120">
         <template slot-scope="scope">{{ scope.row.price | unitPrice('￥') }}</template>
       </el-table-column>
-      <el-table-column label="库存" width="120">
-        <template slot-scope="scope">{{ scope.row.quantity }}件</template>
+      <el-table-column label="Inventory" width="120">
+        <template slot-scope="scope">{{ scope.row.quantity }}a</template>
       </el-table-column>
-      <el-table-column label="可用库存" width="120">
-        <template slot-scope="scope">{{ scope.row.enable_quantity }}件</template>
+      <el-table-column label="Available" width="120">
+        <template slot-scope="scope">{{ scope.row.enable_quantity }}a</template>
       </el-table-column>
-      <el-table-column label="创建时间" width="120">
+      <el-table-column label="Last update" width="120">
         <template slot-scope="scope">{{ scope.row.create_time | unixToDate('yyyy-MM-dd hh:mm') }}</template>
       </el-table-column>
-      <el-table-column label="操作" width="180">
+      <el-table-column label="Operation" width="180">
         <template slot-scope="scope">
           <el-button
             type="primary"
-            @click="handlReductionRecycle(scope.row)">还原
+            @click="handlReductionRecycle(scope.row)">reduction
           </el-button>
           <el-button
             type="danger"
-            @click="handleDeleteRecycle(scope.$index, scope.row)">删除
+            @click="handleDeleteRecycle(scope.$index, scope.row)">delete
           </el-button>
         </template>
       </el-table-column>
@@ -89,24 +89,24 @@
     },
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10,
-          /** 表示回收站商品 */
+          /** Represents the Recycling Depot Goods*/
           disabled: 0
         },
 
-        /** 列表数据 */
+        /** The list of data*/
         tableData: [],
 
-        /** 列表分页数据 */
+        /** List paging data*/
         pageData: [],
 
-        /** 已选择的回收站商品 */
+        /** Selected recycle bin merchandise*/
         selectionids: []
       }
     },
@@ -118,47 +118,47 @@
     },
     methods: {
 
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_RecycleGoodsList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_RecycleGoodsList()
       },
 
-      /** 单个商品彻底删除操作确认 */
+      /** Complete deletion of a single commodity operation confirmation*/
       handleDeleteRecycle(index, row) {
-        this.$confirm('确认彻底删除吗，删除后可能会影响商品参与的相关活动信息？', '提示', { type: 'warning' })
+        this.$confirm('Confirm whether the product has been deleted thoroughly. The deletion may affect the relevant activity information that the product participates in？', 'prompt', { type: 'warning' })
           .then(() => this.DELETE_Recycles(row.goods_id))
           .catch(() => { })
       },
 
-      /** 批量删除 */
+      /** Batch delete*/
       handleDeleteRecycles() {
-        this.$confirm('确认彻底删除这些商品吗，删除后可能会影响商品参与的相关活动信息？', '提示', { type: 'warning' })
+        this.$confirm('Is it confirmed to delete these goods thoroughly? The deletion may affect the relevant activity information that the goods participate in？', 'prompt', { type: 'warning' })
           .then(() => this.selectionids.length !== 0 && this.DELETE_Recycles(this.selectionids))
           .catch(() => { })
       },
 
-      /**  回收站单个商品还原 */
+      /**  Recycling station for individual commodity reduction*/
       handlReductionRecycle(row) {
-        this.$confirm('确认还原吗？', '提示', { type: 'warning' })
+        this.$confirm('Confirm the restore？', 'prompt', { type: 'warning' })
           .then(() => this.ReductionGoods(row.goods_id))
           .catch(() => {})
       },
 
-      /** 批量还原 */
+      /** Mass reduction*/
       handlReductionRecycles() {
-        this.$confirm('确认彻底还原这些商品吗？', '提示', { type: 'warning' })
+        this.$confirm('Are you sure to completely restore these goods？', 'prompt', { type: 'warning' })
           .then(() => this.selectionids.length !== 0 && this.ReductionGoods(this.selectionids))
           .catch(() => { })
       },
 
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       searchEvent(data) {
         this.params = {
           ...this.params,
@@ -185,20 +185,20 @@
         this.selectionids = val.map(item => item.goods_id).toString()
       },
 
-      /** 还原回收站商品*/
+      /** Recycle goods from the recycle bin*/
       ReductionGoods(ids) {
         API_goods.RecycleReductionGoods(ids, {}).then(() => {
-          this.$message.success('还原成功')
+          this.$message.success('Reduction of success')
           this.GET_RecycleGoodsList()
         })
       },
 
-      /** 删除回收站商品 */
+      /** Delete Recycle Bin items*/
       DELETE_Recycles(ids) {
         const _ids = ids.toString()
         API_goods.RecycleDeleteGoods(_ids, {}).then(() => {
           this.GET_RecycleGoodsList()
-          this.$message.success('删除商品成功！')
+          this.$message.success('Goods deleted successfully！')
         })
       }
     }

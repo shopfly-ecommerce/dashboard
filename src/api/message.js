@@ -1,11 +1,11 @@
 /**
- * 消息相关API
+ * News related toAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取消息列表
+ * Get message list
  * @param params
  * @returns {Promise<any>}
  */
@@ -19,7 +19,7 @@ export function getMsgsList(params) {
 }
 
 /**
- * 删除消息
+ * Delete the message
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -33,7 +33,7 @@ export function deleteMsgs(ids) {
 }
 
 /**
- * 标记消息为已读
+ * Mark the message as read
  * @param ids
  * @param params
  * @returns {Promise<any>}
@@ -47,7 +47,7 @@ export function signMsgs(ids) {
 }
 
 /**
- * 获取站内消息列表
+ * Gets a list of messages within the site
  * @param params
  */
 export function getMessageList(params) {
@@ -60,7 +60,7 @@ export function getMessageList(params) {
 }
 
 /**
- * 发布新的站内消息
+ * Post new in-site messages
  * @param params
  */
 export function releaseMessage(params) {
@@ -72,7 +72,7 @@ export function releaseMessage(params) {
 }
 
 /**
- * 编辑消息模板
+ * Edit message template
  * @param id
  * @param params
  */
@@ -85,7 +85,7 @@ export function editMessageTemplate(id, params) {
 }
 
 /**
- * 获取消息模板列表
+ * Gets a list of message templates
  * @param params
  */
 export function getMessageTemplate(params) {

@@ -27,7 +27,7 @@
       }
     },
     methods: {
-      /** 获取会员下单量 */
+      /** Get member orders*/
       GET_IndustryScalePrice() {
         if (this.curTab !== 'price' || this.loading) return
         this.loading = true
@@ -44,7 +44,7 @@
             },
             yAxisType: 'category',
             yAxisData: yAxis,
-            seriesName: '下单金额'
+            seriesName: 'Place the order amount'
           }))
           this.echarts.resize()
         }).catch(() => { this.loading = false })

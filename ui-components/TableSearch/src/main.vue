@@ -24,22 +24,22 @@
             placement="top"
             width="160"
             v-model="visible_del_popover">
-            <p>确定要清空表单吗？</p>
+            <p>Are you sure you want to clear the form？</p>
             <div style="text-align: right; margin: 0">
-              <el-button size="mini" type="text" @click="visible_del_popover = false">取消</el-button>
-              <el-button type="primary" size="mini" @click="handleCleanForm">确定</el-button>
+              <el-button size="mini" type="text" @click="visible_del_popover = false">cancel</el-button>
+              <el-button type="primary" size="mini" @click="handleCleanForm">save</el-button>
             </div>
-            <el-button size="mini" type="text" slot="reference" @click="visible_del_popover = true" class="clean-form">清空</el-button>
+            <el-button size="mini" type="text" slot="reference" @click="visible_del_popover = true" class="clean-form">empty</el-button>
           </el-popover>
-          <el-button size="mini" type="text" @click="popoverVisible = false">取消</el-button>
-          <el-button type="primary" size="mini" @click="advancedSearch">确定</el-button>
+          <el-button size="mini" type="text" @click="popoverVisible = false">cancel</el-button>
+          <el-button type="primary" size="mini" @click="advancedSearch">save</el-button>
         </div>
         <el-button
           size="small"
           style="margin-left: 10px"
           slot="reference"
         >
-          高级搜索
+          Advanced search
         </el-button>
       </el-popover>
     </div>
@@ -50,7 +50,7 @@
   export default {
     name: 'EnTableSearch',
     props: {
-      // 是否为高级搜索
+      // Whether the search is advanced
       advanced: {
         type: Boolean,
         default: false
@@ -64,7 +64,7 @@
       },
       placeholder: {
         type: String,
-        default: '请输入关键字'
+        default: 'Please enter the keywords'
       }
     },
     data() {
@@ -77,17 +77,17 @@
       }
     },
     methods: {
-      /** 普通搜索 */
+      /** Ordinary search*/
       search() {
         this.popoverVisible = false
         this.$emit('search', this.$data.keyword)
       },
-      /** 高级搜索 */
+      /** Advanced search*/
       advancedSearch() {
         this.popoverVisible = false
         this.$emit('advancedSearch', this.$data.keyword)
       },
-      /** 清空表单 */
+      /** Empty form*/
       handleCleanForm(event) {
         let $parent = this.$parent.$parent
         if (!this.$parent.$parent.$refs['advancedForm']) {
@@ -103,7 +103,7 @@
         this.clearFuncs = []
         this.visible_del_popover = false
       },
-      /** 递归查找组件清空的方法 */
+      /** Recursively find a way to empty a component*/
       findClearValue(component) {
         let { clearFuncs, clearFuncNames } = this
         let { $children: $ch } = component

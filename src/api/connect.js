@@ -1,12 +1,12 @@
 /**
  * Created by Andste on 2018/6/28.
- * 信任登录相关API
+ * Trusted login correlationAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取信任登录参数
+ * Gets the trust login parameter
  */
 export function getConnect() {
   return request({
@@ -16,7 +16,7 @@ export function getConnect() {
 }
 
 /**
- * 修改信任登录参数
+ * Modify the trust login parameter
  * @param type
  * @param params
  */

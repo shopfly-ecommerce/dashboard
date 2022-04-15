@@ -3,11 +3,11 @@
     <el-card>
       <div slot="header" class="chart-header">
         <div class="chart-header-item">
-          <span>商品分类</span>
+          <span>Category</span>
           <en-category-picker clearable @changed="(category) => { params.category_id = category.category_id || 0 }"/>
         </div>
         <div class="chart-header-item">
-          <span>查询周期：</span>
+          <span>Query cycle：</span>
           <en-year-month-picker disableddate @changed="handleYearMonthChanged"/>
         </div>
       </div>
@@ -17,13 +17,13 @@
         :loading="loading"
       >
         <template slot="table-columns">
-          <el-table-column prop="category_name" label="分类名称"/>
-          <el-table-column prop="avg_price" :formatter="MixinFormatPrice" label="平均价格"/>
-          <el-table-column prop="sold_goods_num" label="有销量商品数"/>
-          <el-table-column prop="sold_num" label="销量"/>
-          <el-table-column prop="sales_money" label="销售额"/>
-          <el-table-column prop="goods_total_num" label="商品总数"/>
-          <el-table-column prop="nosales_goods_num" label="无销量商品数"/>
+          <el-table-column prop="category_name" label="name"/>
+          <el-table-column prop="avg_price" :formatter="MixinFormatPrice" label="The average price"/>
+          <el-table-column prop="sold_goods_num" label="The number of goods sold"/>
+          <el-table-column prop="sold_num" label="sales"/>
+          <el-table-column prop="sales_money" label="sales"/>
+          <el-table-column prop="goods_total_num" label="The total number of goods"/>
+          <el-table-column prop="nosales_goods_num" label="Number of items not sold"/>
         </template>
       </en-table-layout>
     </el-card>
@@ -37,9 +37,9 @@
     name: 'generalityOverview',
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10,
@@ -48,7 +48,7 @@
           cycle_type: 'MONTH',
           category_id: 0
         },
-        /** 列表数据 */
+        /** The list of data*/
         tableData: []
       }
     },
@@ -60,13 +60,13 @@
       }
     },
     methods: {
-      /** 年月份发生变化 */
+      /** The months of the year change*/
       handleYearMonthChanged(object) {
         this.params.year = object.year
         this.params.month = object.month
         this.params.cycle_type = object.type
       },
-      /** 获取概括总览数据 */
+      /** Get the summary overview data*/
       GET_GeneralityOverview() {
         this.loading = true
         API_Statistics.getGeneralityOverviewData(this.params).then(response => {

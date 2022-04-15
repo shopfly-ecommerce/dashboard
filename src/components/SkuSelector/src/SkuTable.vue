@@ -35,17 +35,17 @@
         </template>
       </el-table-column>
     </el-table>
-    <p v-if="isEditModel === 1" class="stock-tip"> 提示: 编辑商品规格时不允许进行库存编辑，请到商品列表单独维护库存 </p>
+    <p v-if="isEditModel === 1" class="stock-tip"> prompt: Inventory editing is not allowed when editing product specifications. Please go to the product list to maintain inventory separately</p>
     <div class="batch-all" v-show="tablehead && tablehead.length">
-      <span>批量设置：</span>
+      <span>Batch set：</span>
       <div v-show="isShowBatch">
-        <el-button type="text" size="mini" @click="setBatch(1)">价格</el-button>
-        <el-button v-if="isEditModel !== 1" type="text" size="mini" @click="setBatch(2)">库存</el-button>
+        <el-button type="text" size="mini" @click="setBatch(1)">Price</el-button>
+        <el-button v-if="isEditModel !== 1" type="text" size="mini" @click="setBatch(2)">Inventory</el-button>
       </div>
       <div v-show="!isShowBatch">
         <el-input v-model="batch" size="mini" style="width: 100px;"></el-input>
-        <el-button type="text" size="mini" @click="saveBatch">保存</el-button>
-        <el-button type="text" size="mini" @click="cancelBatch">取消</el-button>
+        <el-button type="text" size="mini" @click="saveBatch">save</el-button>
+        <el-button type="text" size="mini" @click="cancelBatch">cancel</el-button>
       </div>
     </div>
   </div>
@@ -56,25 +56,25 @@
   export default {
     name: 'skuTable',
     props: {
-      /** 当前模式 发布商品0 编辑商品1 编辑草稿箱商品2 */
+      /** Current mode publishes goods0 Edit commodity1 Edit draft box merchandise2 */
       isEditModel: {
         type: Number,
         default: 1
       },
 
-      /** 是否自动生成货号 */
+      /** Whether to automatically generate article number*/
       productSn: {
         type: Boolean,
         default: false
       },
 
-      /** 当前商品编号 */
+      /** Current Product No.*/
       goodsSn: {
         type: [String, Number],
         default: ['', 0]
       },
 
-      /** 列表信息 */
+      /** A list of information*/
       skuInfo: {
         type: Array,
         default: [{
@@ -86,7 +86,7 @@
         }]
       },
 
-      /** 表头信息 */
+      /** Header information*/
       tablehead: {
         type: Array,
         default: []
@@ -101,7 +101,7 @@
         })
       },
 
-      /** 自动生成货号 */
+      /** Automatically generate article number*/
       productSn() {
         if (this.productSn && this.tableData.length > 0) {
           let count = 1
@@ -109,7 +109,7 @@
             key.sn = this.goodsSn + '-00000' + count
             count++
           })
-          /** 异步更新skuInfo数据 */
+          /** Asynchronous updateskuInfodata*/
           this.$emit('skuTable', this.tableData)
         }
       }
@@ -122,45 +122,45 @@
     },
     data() {
       return {
-        /** 是否显示批量设置的值 */
+        /** Whether to display the value of the batch setting*/
         isShowBatch: true,
 
-        /** 批量设置的值 */
+        /** The value of the batch setting*/
         batch: '',
 
-        /** 当前操作的值 1价格 2库存 */
+        /** The value of the current operation1Price2Inventory*/
         activeVal: 0,
 
-        /** 列表数据 */
+        /** The list of data*/
         tableData: this.skuInfo,
 
-        /** 要合并的列的位置数组 */
+        /** An array of positions for the columns to be merged*/
         concactArray: [],
 
-        /** 固定列校验提示内容 */
-        validatatxt: '请输入0~99999999之间的数字值',
+        /** Fixed column check prompt content*/
+        validatatxt: 'Please enter the0~99999999Between the numeric values',
 
-        /** 存储未通过校验的单元格位置  */
+        /** Stores the location of a cell that did not pass the check*/
         validateError: []
       }
     },
     methods: {
 
-      /** 固定表头文本格式化 */
+      /** Fixed header text formatting*/
       labeltxt(item) {
         let _output = ''
         switch (item) {
-          case 'sn': _output = '货号'; break
-          case 'weight': _output = '重量(kg)'; break
-          case 'quantity': _output = '库存'; break
-          case 'cost': _output = '成本价'; break
-          case 'price': _output = '价格(元)'; break
+          case 'sn': _output = 'SN'; break
+          case 'weight': _output = 'Weight(kg)'; break
+          case 'quantity': _output = 'Inventory'; break
+          case 'cost': _output = 'Cost price'; break
+          case 'price': _output = 'Price(USD)'; break
           default: _output = item
         }
         return _output
       },
 
-      /** 当前表头是否属于固定表头的鉴定 */
+      /** Identification of whether the current header belongs to a fixed header*/
       checkFixed(item) {
         if (item === 'sn' || item === 'weight' || item === 'quantity' || item === 'cost' || item === 'price') {
           return false
@@ -168,7 +168,7 @@
         return true
       },
 
-      /** 合并数据相同的单元格 */
+      /** Merge cells with the same data*/
       arraySpanMethod({ row, column, rowIndex, columnIndex }) {
         if (columnIndex < this.tablehead.length - 5) {
           const _row = this.concactArray[rowIndex][columnIndex]
@@ -180,10 +180,10 @@
         }
       },
 
-      /** 计算要合并列的位置 */
+      /** Calculate the position of the column to be merged*/
       concactArrayCom(index, item) {
         let _isMerge = false
-        /** 循环列 先循环第一列 若相同则合并 再循环第二列 依次循环 若不相同 则不合并并终止此列循环开始下一列循环 */
+        /** If the first column is the same, it will be merged and then the second column will be recycled in turn. If the second column is not the same, it will not be merged and the column cycle will be terminated and the next column cycle will start*/
         let _currnetRow = []
         for (let i = 0, _len = this.tablehead.length - 5; i < _len; i++) {
           if (this.tablehead[i] === 'spec_value_id') {
@@ -207,53 +207,53 @@
         this.concactArray.push(_currnetRow)
       },
 
-      /** 检测是否未通过0-99999999之间的数字校验 */
+      /** Test whether failed0-99999999Between the digital check*/
       isValidate(index, scope) {
         return this.validateError.some(key => {
           return key[0] === index && key[1] === scope.$index
         })
       },
 
-      /** 批量设置价格*/
+      /** Batch setting price*/
       setBatch(val) {
         this.batch = ''
         this.isShowBatch = !this.isShowBatch
         this.activeVal = val
       },
 
-      /** 保存批量设置值 */
+      /** Save the batch setting values*/
       saveBatch() {
-        const _desc = this.activeVal === 1 ? '价格' : '库存'
+        const _desc = this.activeVal === 1 ? 'Price' : 'Inventory'
         const checkResult = this.activeVal === 1 ? RegExp.money.test(this.batch) : parseInt(this.batch) >= 0 && parseInt(this.batch) < 99999999 && /^[0-9]\d*$/.test(this.batch)
         if (!checkResult) {
           this.batch = ''
-          this.activeVal === 1 ? this.$message.error(`请输入一个有效的${_desc}数据，最大值不超过99999999`) : this.$message.error(`${_desc}最大值不超过99999999,${_desc}为正整数`)
+          this.activeVal === 1 ? this.$message.error(`Please enter a valid one${_desc}The data, the maximum value is not more than99999999`) : this.$message.error(`${_desc}Maximum value not exceeding99999999,${_desc}As a positive integer`)
           return
         }
-        /** 批量设置 */
+        /** Batch set*/
         this.activeVal === 1 ? this.tableData.forEach(key => { key.price = this.batch }) : this.tableData.forEach(key => { key.quantity = this.batch })
         this.isShowBatch = !this.isShowBatch
-        /** 异步更新skuInfo数据 */
+        /** Asynchronous updateskuInfodata*/
         this.$emit('skuTable', this.tableData)
       },
 
-      /** 取消批量设置值 */
+      /** Cancel the batch setting value*/
       cancelBatch() {
         this.isShowBatch = !this.isShowBatch
       },
 
-      /** 数据改变之后 抛出数据 */
+      /** Throws data after data changes*/
       updateSkuTable(index, scope, item) {
-        /** 进行自定义校验 判断是否是数字（小数也能通过）重量 */
-        if ((!/^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/.test(scope.row[item]) && item === 'weight') || parseInt(scope.row[item]) < 0 || parseInt(scope.row[item]) > 99999999) { // 校验未通过 加入错误存储列表中
+        /** Perform custom verification to check whether it is a number（Decimals can pass）Weight*/
+        if ((!/^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/.test(scope.row[item]) && item === 'weight') || parseInt(scope.row[item]) < 0 || parseInt(scope.row[item]) > 99999999) { // The verification fails and is added to the error store list
           this.validateError.push([index, scope.$index])
-          this.validatatxt = '请输入0~99999999之间的数字值'
-        } else if ((item === 'quantity' && !/^[0-9]\d*$/.test(scope.row[item])) || parseInt(scope.row[item]) < 0 || parseInt(scope.row[item]) > 99999999) { // 库存
+          this.validatatxt = 'Please enter the0~99999999Between the numeric values'
+        } else if ((item === 'quantity' && !/^[0-9]\d*$/.test(scope.row[item])) || parseInt(scope.row[item]) < 0 || parseInt(scope.row[item]) > 99999999) { // Inventory
           this.validateError.push([index, scope.$index])
-          this.validatatxt = '请输入0~99999999之间的整数'
-        } else if (((item === 'cost' || item === 'price') && !RegExp.money.test(scope.row[item])) || parseInt(scope.row[item]) < 0 || parseInt(scope.row[item]) > 99999999) { // 成本价 价格
+          this.validatatxt = 'Please enter the0~99999999Integer between'
+        } else if (((item === 'cost' || item === 'price') && !RegExp.money.test(scope.row[item])) || parseInt(scope.row[item]) < 0 || parseInt(scope.row[item]) > 99999999) { // Cost price
           this.validateError.push([index, scope.$index])
-          this.validatatxt = '请输入0~99999999之间的价格'
+          this.validatatxt = 'Please enter the0~99999999Price between'
         } else {
           this.validateError.forEach((key, _index) => {
             if (key[0] === index && key[1] === scope.$index) {
@@ -261,7 +261,7 @@
             }
           })
         }
-        /** 异步更新skuInfo数据 */
+        /** Asynchronous updateskuInfodata*/
         this.$emit('skuTable', this.tableData)
       }
     }
@@ -269,7 +269,7 @@
 </script>
 
 <style lang="scss" type="scss" scoped>
-  /** 批量设置 */
+  /** Batch set*/
   .batch-all {
     display: flex;
     flex-direction: row;
@@ -277,7 +277,7 @@
     justify-content: flex-start;
     align-items: center;
   }
-  /*带校验模块*/
+  /*Check module*/
   .input-error-model {
     display: flex;
     flex-direction: column;

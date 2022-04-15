@@ -5,7 +5,7 @@
 import request from '@/utils/request'
 
 /**
- * 获取店员列表
+ * Get a list of shop assistants
  * @param params
  */
 export function getShopAssistantList(params) {
@@ -18,7 +18,7 @@ export function getShopAssistantList(params) {
 }
 
 /**
- * 修改店员
+ * Modify the clerk
  * @param id
  * @param params
  */
@@ -31,7 +31,7 @@ export function editShopAssistant(id, params) {
 }
 
 /**
- * 删除店员
+ * To delete a clerk
  * @param id
  */
 export function deleteShopAssistant(id) {
@@ -42,7 +42,7 @@ export function deleteShopAssistant(id) {
 }
 
 /**
- * 恢复店员
+ * Restore the clerk
  * @param id
  */
 export function recoveryShopAssistant(id) {
@@ -53,7 +53,7 @@ export function recoveryShopAssistant(id) {
 }
 
 /**
- * 获取角色列表
+ * Get a list of roles
  * @param params
  */
 export function getRoleList(params) {
@@ -66,7 +66,7 @@ export function getRoleList(params) {
 }
 
 /**
- * 添加角色
+ * Adding roles
  * @param params
  */
 export function addRole(params) {
@@ -79,7 +79,7 @@ export function addRole(params) {
 }
 
 /**
- * 获取角色权限
+ * Get role permissions
  * @param id
  */
 export function getRoleDetail(id) {
@@ -90,7 +90,7 @@ export function getRoleDetail(id) {
 }
 
 /**
- * 修改角色权限
+ * Modify role permissions
  * @param id
  * @param params
  */
@@ -104,7 +104,7 @@ export function editRole(id, params) {
 }
 
 /**
- * 删除角色
+ * Delete the role
  * @param id
  */
 export function deleteRole(id) {
@@ -115,7 +115,7 @@ export function deleteRole(id) {
 }
 
 /**
- * 获取短信验证码
+ * Get the SMS verification code
  * @param mobile
  * @param params
  */
@@ -128,7 +128,7 @@ export function getSmsCode(mobile, params) {
 }
 
 /**
- * 验证手机号
+ * Verify the phone number
  * @param params
  * @param mobile
  */
@@ -141,7 +141,7 @@ export function valiPhone(mobile, params) {
 }
 
 /**
- * 添加老会员
+ * Add old members
  * @param params
  */
 export function addOldMember(params) {
@@ -153,7 +153,7 @@ export function addOldMember(params) {
 }
 
 /**
- * 添加新会员
+ * Add new members
  * @param params
  */
 export function addNewMember(params) {
@@ -165,7 +165,7 @@ export function addNewMember(params) {
 }
 
 /**
- * 获取角色具体权限
+ * Gets role-specific permissions
  * @param id
  */
 export function getRolePermission(id) {
@@ -176,7 +176,7 @@ export function getRolePermission(id) {
 }
 
 /**
- * 获取管理员列表
+ * Get the list of administrators
  * @param params
  */
 export function getAdministratorList(params) {
@@ -189,7 +189,7 @@ export function getAdministratorList(params) {
 }
 
 /**
- * 添加管理员
+ * Add administrator
  * @param params
  */
 export function addAdministrator(params) {
@@ -201,7 +201,7 @@ export function addAdministrator(params) {
 }
 
 /**
- * 修改管理员
+ * Modify administrator
  * @param id
  * @param parmas
  */
@@ -214,7 +214,7 @@ export function editAdministrator(id, parmas) {
 }
 
 /**
- * 删除管理员
+ * Delete administrator
  * @param id
  */
 export function deleteAdministrator(id) {

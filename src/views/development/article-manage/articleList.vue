@@ -13,25 +13,25 @@
     >
       <div slot="toolbar" class="inner-toolbar">
         <div class="toolbar-btns" style="line-height: 32px;font-size: 14px">
-          <span>{{ articleCategoryName || '全部'}}</span>-文章列表
+          <span>{{ articleCategoryName || 'all'}}</span>-The article lists
         </div>
         <div class="toolbar-search">
-          <el-button type="primary" size="mini" icon="el-icon-circle-plus-outline" @click="handleAddArticle">添加</el-button>
-          <en-table-search @search="searchEvent" placeholder="请输入文章名称" style="display: inline-block;margin-left: 10px"/>
+          <el-button type="primary" size="mini" icon="el-icon-circle-plus-outline" @click="handleAddArticle">add</el-button>
+          <en-table-search @search="searchEvent" placeholder="Please enter the name of the article" style="display: inline-block;margin-left: 10px"/>
         </div>
       </div>
       <template slot="table-columns">
-        <el-table-column prop="article_id" label="文章ID" width="120"/>
-        <el-table-column prop="article_name" label="文章名称"/>
-        <el-table-column prop="category_name" label="分类名称" width="175"/>
-        <el-table-column label="操作" width="150">
+        <el-table-column prop="article_id" label="The articleID" width="120"/>
+        <el-table-column prop="article_name" label="The article name"/>
+        <el-table-column prop="category_name" label="name" width="175"/>
+        <el-table-column label="Operation" width="150">
           <template slot-scope="scope">
             <el-button
               type="primary"
-              @click="handleEditArticle(scope.$index, scope.row)">修改</el-button>
+              @click="handleEditArticle(scope.$index, scope.row)">edit</el-button>
             <el-button
               type="danger"
-              @click="handleDeleteArticle(scope.$index, scope.row)">删除</el-button>
+              @click="handleDeleteArticle(scope.$index, scope.row)">delete</el-button>
           </template>
         </el-table-column>
       </template>
@@ -57,20 +57,20 @@
     name: 'articleList',
     data() {
       return {
-        // 加载中
+        // In the load
         loading: false,
-        // 参数
+        // parameter
         params: {
           page_no: 1,
           page_size: 10,
           name: '',
           category_id: ''
         },
-        // 表格数据
+        // Tabular data
         tableData: '',
-        // 文章分类树
+        // Article classification tree
         articleCategoryTree: [],
-        // 被选分类名称
+        // Selected category name
         articleCategoryName: ''
       }
     },
@@ -95,17 +95,17 @@
       })
     },
     methods: {
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_ArticleList()
       },
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_ArticleList()
       },
-      /** 添加文章 */
+      /** Add the article*/
       handleAddArticle() {
         this.$router.push({
           name: 'addArticle',
@@ -115,7 +115,7 @@
           }
         })
       },
-      /** 修改文章 */
+      /** Modify the article*/
       handleEditArticle(index, row) {
         this.$router.push({
           name: 'addArticle',
@@ -126,27 +126,27 @@
           }
         })
       },
-      /** 删除文章 */
+      /** Delete articles*/
       handleDeleteArticle(index, row) {
-        this.$confirm('确定要删除这篇文章吗？', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Are you sure you want to delete this article？', 'prompt', { type: 'warning' }).then(() => {
           API_Article.deleteArticle(row.article_id).then(() => {
-            this.$message.success('删除成功！')
+            this.$message.success('Delete the success！')
             this.GET_ArticleList()
           })
         }).catch(() => {})
       },
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       searchEvent(data) {
         this.params.name = data
         this.GET_ArticleList()
       },
-      /** 选择分类 */
+      /** Choose classification*/
       handleNodeClick(data) {
         this.params.category_id = data.id
         this.GET_ArticleList()
         this.articleCategoryName = data.name
       },
-      /** 获取文章列表 */
+      /** Get a list of articles*/
       GET_ArticleList() {
         this.loading = true
         const params = this.MixinClone(this.params)

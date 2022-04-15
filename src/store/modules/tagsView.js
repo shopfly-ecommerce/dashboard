@@ -71,7 +71,7 @@ const tagsView = {
       })
     },
     /**
-     * 关闭当前页
+     * Close the current page
      * @param commit
      * @param state
      * @param params

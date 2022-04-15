@@ -6,19 +6,19 @@
       :loading="loading"
     >
       <template slot="table-columns">
-        <el-table-column prop="name" label="平台名称"/>
-        <el-table-column label="启用状态">
+        <el-table-column prop="name" label="The name of the platform"/>
+        <el-table-column label="enabled">
           <template slot-scope="scope">
-            {{ scope.row.open === 1 ? '已开启' : '已关闭' }}
-            <el-button v-if="scope.row.open === 0" type="text" @click="handleOpenExpressPlatform(scope.$index, scope.row)">开启</el-button>
+            {{ scope.row.open === 1 ? 'Has been open' : 'closed' }}
+            <el-button v-if="scope.row.open === 0" type="text" @click="handleOpenExpressPlatform(scope.$index, scope.row)">open</el-button>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="Operation">
           <template slot-scope="scope">
             <el-button
               size="mini"
               type="primary"
-              @click="handleEditExpressPlatform(scope.$index, scope.row)">修改</el-button>
+              @click="handleEditExpressPlatform(scope.$index, scope.row)">edit</el-button>
           </template>
         </el-table-column>
       </template>
@@ -35,7 +35,7 @@
       </el-pagination>
     </en-table-layout>
     <el-dialog
-      :title="'修改快递平台 - ' + expressForm.name"
+      :title="'Modify the express delivery platform- ' + expressForm.name"
       :visible.sync="dialogVisible"
       width="30%"
       :close-on-click-modal="false"
@@ -51,8 +51,8 @@
         </template>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitExpressForm">确 定</el-button>
+        <el-button @click="dialogVisible = false">cancel</el-button>
+        <el-button type="primary" @click="submitExpressForm">save</el-button>
       </span>
     </el-dialog>
   </div>
@@ -65,18 +65,18 @@
     name: 'expressPlatformSettings',
     data() {
       return {
-        // 列表loading状态
+        // List loading status
         loading: false,
-        // 列表参数
+        // A list of parameters
         params: {
           page_no: 1,
           page_size: 10
         },
-        // 列表数据
+        // The list of data
         tableData: '',
-        // 快递平台表单
+        // Form of express platform
         expressForm: {},
-        // 修改快递平台 dialog
+        // Modify delivery platform Dialog
         dialogVisible: false
       }
     },
@@ -84,43 +84,43 @@
       this.GET_ExpressPlatformList()
     },
     methods: {
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_ExpressPlatformList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_ExpressPlatformList()
       },
 
-      /** 开启快递平台 */
+      /** Open express delivery platform*/
       handleOpenExpressPlatform(index, row) {
         API_ExpressPlatform.openExpressPlatformById(row.bean).then(response => {
-          this.$message.success('开启成功！')
+          this.$message.success('Open the success！')
           this.GET_ExpressPlatformList()
         })
       },
 
-      /** 编辑快递平台 */
+      /** Edit express platform*/
       handleEditExpressPlatform(index, row) {
         this.expressForm = this.MixinClone(row)
         this.dialogVisible = true
       },
 
-      /** 提交快递平台表单 */
+      /** Submit the form of Courier platform*/
       submitExpressForm() {
         const { bean } = this.expressForm
         API_ExpressPlatform.editExpressPlatform(bean, this.expressForm).then(response => {
           this.dialogVisible = false
-          this.$message.success('修改成功！')
+          this.$message.success('Modify the success！')
           this.MixinSetTableData(this.tableData, 'bean', bean, response)
         })
       },
 
-      /** 获取快递平台列表 */
+      /** Get a list of delivery platforms*/
       GET_ExpressPlatformList() {
         this.loading = true
         API_ExpressPlatform.getExpressPlatformList(this.params).then(response => {

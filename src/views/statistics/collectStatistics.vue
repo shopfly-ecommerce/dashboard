@@ -1,21 +1,21 @@
 <template>
   <div class="bg-shop-summary">
-    <p>本页面有关收藏统计TOP50,由高到底</p>
+    <p>This page is about collection statisticsTOP50,By high what</p>
     <div id="collectionStatistics" :style="{height: tableHeight + 'px'}"></div>
     <en-table-layout
       pagination
       :tableData="tableData"
       :loading="loading">
       <template slot="table-columns">
-        <el-table-column label="商品名称">
+        <el-table-column label="Name">
           <template slot-scope="scope">
             <a :href="`${MixinBuyerDomain}/goods/${scope.row.goods_id}`" target="_blank" style="color: #00a2d4;">{{ scope.row.goods_name }}</a>
           </template>
         </el-table-column>
-        <el-table-column label="商品价格">
+        <el-table-column label="Price">
           <template slot-scope="scope">{{ scope.row.price | unitPrice('￥') }}</template>
         </el-table-column>
-        <el-table-column prop="favorite_num" label="收藏量"></el-table-column>
+        <el-table-column prop="favorite_num" label="collection"></el-table-column>
       </template>
       <el-pagination
         slot="pagination"
@@ -42,19 +42,19 @@
     },
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
 
-        /** 列表数据 */
+        /** The list of data*/
         tableData: null,
 
-        /** 列表分页数据 */
+        /** List paging data*/
         pageData: null,
 
         tableHeight: document.body.clientHeight / 2
@@ -70,19 +70,19 @@
       })
     },
     methods: {
-      /** 窗口缩放时计算table高度 */
+      /** Calculated when the window is zoomedtablehighly*/
       countTableHeight() {
         this.tableHeight = document.body.clientHeight / 2
-        /** 图表刷新 */
+        /** The chart to refresh*/
         setTimeout(this.sesalChart.resize)
       },
 
-      /** 收藏数据*/
+      /** Collect the data*/
       GET_CollectionData() {
-        /** 收藏统计 */
+        /** Collect statistics*/
         API_collectionStatistics.getCollectionStatistics().then(response => {
           this.sesalChart.setOption({
-            title: { text: '收藏商品排行Top50', x: 'center' },
+            title: { text: 'Collection ListTop50', x: 'center' },
             tooltip: {
               trigger: 'axis',
               show: true,
@@ -102,7 +102,7 @@
               }
             },
             xAxis: {
-              name: '排名',
+              name: 'ranking',
               type: 'category',
               data: response.xAxis
             },
@@ -110,24 +110,24 @@
               type: 'value',
               minInterval: 1,
               axisLabel: {
-                formatter: '{value} 次'
+                formatter: '{value} time'
               }
             },
             series: [
               {
-                name: '收藏商品',
+                name: 'Collection product',
                 type: 'bar',
                 label: { show: true },
                 data: response.series.data,
                 markPoint: {
                   data: [
-                    { type: 'max', name: '最大值' },
-                    { type: 'min', name: '最小值' }
+                    { type: 'max', name: 'The maximum' },
+                    { type: 'min', name: 'The minimum value' }
                   ]
                 },
                 markLine: {
                   data: [
-                    { type: 'average', name: '平均值' }
+                    { type: 'average', name: 'The average' }
                   ]
                 }
               }
@@ -146,13 +146,13 @@
         })
       },
 
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_CollectionData()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_CollectionData()

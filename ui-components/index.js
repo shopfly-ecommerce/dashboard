@@ -1,5 +1,5 @@
 /**
- * 导出选择器
+ * Export selector
  */
 
 import CategoryPicker from './CategoryPicker'

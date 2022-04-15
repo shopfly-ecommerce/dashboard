@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 /**
- * 获取价格销量统计列表
+ * Gets the price sales statistics list
  * @param params
  * @returns {Promise<any>}
  */

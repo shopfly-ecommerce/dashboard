@@ -1,19 +1,19 @@
 <template>
   <div class="container">
     <el-tabs type="border-card">
-      <el-tab-pane label="站点设置">
+      <el-tab-pane label="Site set up">
         <system-settings-site/>
       </el-tab-pane>
-      <el-tab-pane label="商品设置">
+      <el-tab-pane label="Goods set">
         <system-settings-goods/>
       </el-tab-pane>
-      <el-tab-pane label="订单设置">
+      <el-tab-pane label="The order is set">
         <system-settings-order/>
       </el-tab-pane>
-      <el-tab-pane label="积分设置" class="point-pane">
+      <el-tab-pane label="Integral set" class="point-pane">
         <system-settings-point/>
       </el-tab-pane>
-      <el-tab-pane label="联系方式">
+      <el-tab-pane label="contact">
         <system-setting-contact/>
       </el-tab-pane>
     </el-tabs>

@@ -8,38 +8,38 @@
       <div slot="toolbar" class="inner-toolbar">
         <div class="toolbar-btns"></div>
         <div class="toolbar-search">
-          <en-table-search @search="searchEvent" placeholder="请输入商品名称" />
+          <en-table-search @search="searchEvent" placeholder="Please enter the name of the item" />
         </div>
       </div>
       <template slot="table-columns">
-        <el-table-column label="图片" width="120">
+        <el-table-column label="Image" width="120">
           <template slot-scope="scope">
             <a :href="`${MixinBuyerDomain}/goods/${scope.row.goods_id}`" target="_blank">
               <img :src="scope.row.thumbnail" class="goods-image"/>
             </a>
           </template>
         </el-table-column>
-        <el-table-column label="商品名称">
+        <el-table-column label="Name">
           <template slot-scope="scope">
             <a :href="`${MixinBuyerDomain}/goods/${scope.row.goods_id}`" target="_blank" style="color: #00a2d4;">{{ scope.row.goods_name }}</a>
           </template>
         </el-table-column>
-        <el-table-column label="价格" width="120">
+        <el-table-column label="Price" width="120">
           <template slot-scope="scope">{{ scope.row.price | unitPrice('￥') }}</template>
         </el-table-column>
-        <el-table-column label="库存" width="120">
-          <template slot-scope="scope">{{ scope.row.quantity }}件</template>
+        <el-table-column label="Inventory" width="120">
+          <template slot-scope="scope">{{ scope.row.quantity }}a</template>
         </el-table-column>
-        <el-table-column label="可用库存" prop="enable_quantity" width="120"  :formatter="marketQuantity"/>
-        <el-table-column label="创建时间" width="150">
+        <el-table-column label="Available" prop="enable_quantity" width="120"  :formatter="marketQuantity"/>
+        <el-table-column label="Last update" width="150">
           <template slot-scope="scope">{{ scope.row.create_time | unixToDate }}</template>
         </el-table-column>
-        <el-table-column prop="market_enable" label="状态" :formatter="marketStatus" width="80"/>
-        <el-table-column label="操作" width="150">
+        <el-table-column prop="market_enable" label="Status" :formatter="marketStatus" width="80"/>
+        <el-table-column label="Operation" width="150">
           <template slot-scope="scope">
             <el-button
               type="primary"
-              @click="handleWithdraw(scope.row)">查看
+              @click="handleWithdraw(scope.row)">To view
             </el-button>
           </template>
         </el-table-column>
@@ -57,13 +57,13 @@
         :total="pageData.data_total">
       </el-pagination>
     </en-table-layout>
-    <el-dialog title="库存信息" center :visible.sync="goodsWarningStockshow" width="40%" class="popinfo">
+    <el-dialog title="Inventory information" center :visible.sync="goodsWarningStockshow" width="40%" class="popinfo">
       <en-table-layout :tableData="goodsWarningStockDate" :loading="loading">
         <template slot="table-columns">
-          <el-table-column prop="sn" label="货号"/>
-          <el-table-column prop="goods_name" label="商品名称"/>
-          <el-table-column prop="quantity" label="库存"/>
-          <el-table-column prop="enable_quantity" label="可用库存"/>
+          <el-table-column prop="sn" label="SN"/>
+          <el-table-column prop="goods_name" label="Name"/>
+          <el-table-column prop="quantity" label="Inventory"/>
+          <el-table-column prop="enable_quantity" label="Available"/>
         </template>
       </en-table-layout>
     </el-dialog>
@@ -81,25 +81,25 @@
     },
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
 
-        /** 列表数据 */
+        /** The list of data*/
         tableData: [],
 
-        /** 列表分页数据 */
+        /** List paging data*/
         pageData: [],
 
-        /** 预警商品库存信息显示*/
+        /** Warning commodity inventory information display*/
         goodsWarningStockshow: false,
 
-        /** 预警商品库存信息*/
+        /** Warning commodity inventory information*/
         goodsWarningStockDate: null
       }
     },
@@ -108,28 +108,28 @@
     },
     methods: {
 
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_WarningGoodsList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_WarningGoodsList()
       },
 
-      /** 销售状态格式化 */
+      /** Sales status formatting*/
       marketStatus(row, column, cellValue) {
-        return row.market_enable === 1 ? '上架' : '下架'
+        return row.market_enable === 1 ? 'save' : 'off'
       },
 
       marketQuantity(row, column, cellValue) {
-        return `${row.enable_quantity}件`
+        return `${row.enable_quantity}a`
       },
 
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       searchEvent(data) {
         this.params = {
           ...this.params,
@@ -151,7 +151,7 @@
         })
       },
 
-      /** 查看库存信息 */
+      /** View inventory information*/
       handleWithdraw(row) {
         this.goodsWarningStockshow = true
         API_goods.getWarningGoodsStockList(row.goods_id).then((response) => {

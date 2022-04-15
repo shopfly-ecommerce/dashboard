@@ -1,6 +1,6 @@
 /**
  * Created by Andste on 2018/6/21.
- * 楼层标签编辑组件
+ * Floor label editing module
  */
 
 import Vue from 'vue'

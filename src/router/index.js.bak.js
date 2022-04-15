@@ -45,7 +45,7 @@ export default new Router({
 })
 
 export const asyncRouterMap = [
-  // 商品管理
+  // Commodity management
   {
     path: '/goods',
     component: Layout,
@@ -66,7 +66,7 @@ export const asyncRouterMap = [
       { path: 'good-publish', component: _import('goods/goodsPublish'), name: 'goodPublish', meta: { title: 'goodPublish' }, hidden: true }
     ]
   },
-  // 订单管理
+  // The order management
   {
 
     path: '/order',
@@ -85,7 +85,7 @@ export const asyncRouterMap = [
       { path: 'receipt-history', component: _import('order/receiptHistory'), name: 'receiptHistory', meta: { title: 'receiptHistory' }}
     ]
   },
-  // 店铺管理
+  // The store management
   {
     path: '/shop',
     component: Layout,
@@ -99,7 +99,7 @@ export const asyncRouterMap = [
       { path: 'shop-nav', component: _import('shop/shopNav'), name: 'shopNav', meta: { title: 'shopNav' }}
     ]
   },
-  // 促销管理
+  // Sales management
   {
     path: '/promotions',
     component: Layout,
@@ -120,7 +120,7 @@ export const asyncRouterMap = [
       { path: 'edit-group-buy-goods/:goods_id', component: _import('promotions/editGroupBuyGoods'), name: 'editGroupBuyGoods', meta: { title: 'editGroupBuyGoods' }, hidden: true }
     ]
   },
-  // 统计
+  // statistical
   {
     path: '/statistics',
     component: Layout,
@@ -158,7 +158,7 @@ export const asyncRouterMap = [
       { path: 'log-manage', component: _import('statistics/logManage'), name: 'logManage', meta: { title: 'logManage' }}
     ]
   },
-  // 客服管理
+  // The management of the service
   {
     path: '/customer',
     component: Layout,
@@ -170,7 +170,7 @@ export const asyncRouterMap = [
       { path: 'message', component: _import('customer-service/message'), name: 'message', meta: { title: 'message' }}
     ]
   },
-  // 设置
+  // Set up the
   {
     path: '/setting',
     component: Layout,

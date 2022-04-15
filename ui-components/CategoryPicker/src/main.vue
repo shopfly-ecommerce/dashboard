@@ -22,7 +22,7 @@
         type: String,
         default: 'seller/goods/categories/@id/children'
       },
-      /** 最大级数 */
+      /** The largest series*/
       maxLevel: {
         type: Number,
         default: 4
@@ -58,7 +58,7 @@
           this.options = response.map(item => {
             if (item.has_children) {
               item.children = [{
-                name: '加载中...',
+                name: 'In the load...',
                 disabled: true,
                 category_id: -1
               }]
@@ -68,13 +68,13 @@
         })
       },
 
-      /** 选中项发生改变 */
+      /** The selected item has changed*/
       handleItemChange(val) {
         new RegExp('@id').test(this.api) && this.GET_CategoryData(val)
         this.$emit('changed', this.findRegios(val))
       },
 
-      /** 找出对应的地区 */
+      /** Find the corresponding area*/
       findRegios(category_ids, response) {
         let _data = { children: this.options }
         category_ids.forEach((item, index) => {
@@ -84,12 +84,12 @@
             }
           })
         })
-        // 如果有传入地区数据，说明是在异步加载
+        // If there is incoming locale data, it is being loaded asynchronously
         if (response) {
           _data.children = response.map(item => {
             if (category_ids.length + 1 < this.maxLevel && item.has_children) {
               item.children = [{
-                name: '加载中...',
+                name: 'In the load...',
                 disabled: true,
                 category_id: -1
               }]

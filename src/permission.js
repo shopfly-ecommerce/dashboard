@@ -17,7 +17,7 @@ async function routerBeforeEach(to, from, next) {
       next({ path: '/' })
       NProgress.done()
     } else {
-      // 获取店铺状态
+      // Get store status
       // const status = await API_Shop.getShopStatus()
       let status = 'OPEN'
       if (status === 'OPEN') {
@@ -28,22 +28,22 @@ async function routerBeforeEach(to, from, next) {
             router.addRoutes(store.getters.addRouters)
             next({ ...to, replace: true })
           }).catch(() => {
-            errorMsg('验证失败，请重新登录！', '登录出错')
+            errorMsg('Authentication failed, please login again！', 'Login error')
           })
         } else {
           next()
         }
       } else if (status === 'CLOSED') {
-        errorMsg('您的店铺已被关闭，请联系管理员！')
+        errorMsg('Your store has been closed, please contact the administrator！')
       } else if (status === 'APPLY' || status === 'APPLYING') {
-        errorMsg('您的店铺正在申请中，请稍后再试！')
+        errorMsg('Your shop is under application, please try again later！')
       } else if (status === 'REFUSED') {
-        errorMsg('您的开店申请被拒绝，请重新申请或联系管理员！')
+        errorMsg('Your application has been rejected, please reapply or contact the administrator！')
       } else {
         store.dispatch('fedLogoutAction')
-        MessageBox.confirm('账号尚未申请开店！', '出现错误', {
-          confirmButtonText: '去开店',
-          cancelButtonText: '取消',
+        MessageBox.confirm('The account has not applied to open a shop！', 'There is an error', {
+          confirmButtonText: 'To open a shop',
+          cancelButtonText: 'cancel',
           type: 'error'
         }).then(() => {
           location.replace(`${domain.buyer_pc}/shop/apply`)
@@ -60,7 +60,7 @@ async function routerBeforeEach(to, from, next) {
   }
 }
 
-const errorMsg = (msg, title = '权限错误') => {
+const errorMsg = (msg, title = 'Permissions error') => {
   store.dispatch('fedLogoutAction')
   MessageBox.alert(msg, title, {
     type: 'error',

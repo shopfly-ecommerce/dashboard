@@ -6,34 +6,34 @@
     :loading="loading">
     <div slot="toolbar" class="inner-toolbar">
       <div class="toolbar-search">
-        <en-table-search @search="searchEvent" placeholder="请输入商品名称" />
+        <en-table-search @search="searchEvent" placeholder="Please enter the name of the item" />
       </div>
     </div>
     <template slot="table-columns">
-      <el-table-column label="图片" width="120">
+      <el-table-column label="Image" width="120">
         <template slot-scope="scope">
           <img :src="scope.row.thumbnail" class="goods-image"/>
         </template>
       </el-table-column>
-      <el-table-column prop="goods_name" label="商品名称"/>
-      <el-table-column label="价格" width="120">
+      <el-table-column prop="goods_name" label="Name"/>
+      <el-table-column label="Price" width="120">
         <template slot-scope="scope">{{ scope.row.price | unitPrice('￥') }}</template>
       </el-table-column>
-      <el-table-column label="库存" width="120">
-        <template slot-scope="scope">{{ scope.row.quantity }}件</template>
+      <el-table-column label="Inventory" width="120">
+        <template slot-scope="scope">{{ scope.row.quantity }}a</template>
       </el-table-column>
-      <el-table-column label="创建时间" width="120">
+      <el-table-column label="Last update" width="120">
         <template slot-scope="scope">{{ scope.row.create_time | unixToDate('yyyy-MM-dd hh:mm') }}</template>
       </el-table-column>
-      <el-table-column label="操作" width="180">
+      <el-table-column label="Operation" width="180">
         <template slot-scope="scope">
           <el-button
             type="success"
-            @click="handleDraftEdit(scope.row)">编辑
+            @click="handleDraftEdit(scope.row)">edit
           </el-button>
           <el-button
             type="danger"
-            @click="handleDraftDel(scope.row)">删除
+            @click="handleDraftDel(scope.row)">delete
           </el-button>
         </template>
       </el-table-column>
@@ -63,19 +63,19 @@
     },
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
 
-        /** 列表数据 */
+        /** The list of data*/
         tableData: null,
 
-        /** 列表分页数据 */
+        /** List paging data*/
         pageData: null
       }
     },
@@ -87,19 +87,19 @@
     },
     methods: {
 
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_DraftGoodsList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_DraftGoodsList()
       },
 
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       searchEvent(data) {
         this.params = {
           ...this.params,
@@ -126,21 +126,21 @@
         })
       },
 
-      /** 草稿箱编辑 */
+      /** Draft box editor*/
       handleDraftEdit(row) {
         const _draft_goods_id = row.draft_goods_id || '0'
         this.$router.push({ name: 'goodPublish', params: { goodsid: _draft_goods_id, isdraft: 2, callback: this.GET_DraftGoodsList }})
       },
 
-      /** 草稿箱商品删除 */
+      /** Draft box goods deleted*/
       handleDraftDel(row) {
-        this.$confirm('确认删除此草稿箱商品, 是否继续?', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Confirm deletion of this draft box item, Whether or not to continue?', 'prompt', { type: 'warning' }).then(() => {
           API_goods.deleteDraftGoods(row.draft_goods_id, {}).then(() => {
             this.GET_DraftGoodsList()
-            this.$message.success('删除草稿箱商品成功！')
+            this.$message.success('Delete draft box item successfully！')
           })
         }).catch(() => {
-          this.$message.info({ message: '已取消删除' })
+          this.$message.info({ message: 'Undeleted' })
         })
       }
     }
@@ -152,7 +152,7 @@
     text-align: center;
   }
 
-  /** 工具条 */
+  /** The toolbar*/
   /deep/ div.toolbar {
     height: 70px;
     padding: 20px 0;
@@ -167,7 +167,7 @@
     }
   }
 
-  /*商品图片*/
+  /*Commodity images*/
   .goods-image {
     width: 50px;
     height: 50px;

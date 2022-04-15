@@ -4,7 +4,7 @@ import { api } from '~/ui-domain'
 import md5 from 'js-md5'
 
 /**
- * 普通登录
+ * Normal login
  * @param params
  */
 export function login(params) {
@@ -18,7 +18,7 @@ export function login(params) {
 }
 
 /**
- * 手机号登录
+ * Phone number login
  * @param mobile
  * @param sms_code
  * @param uuid
@@ -35,7 +35,7 @@ export function loginByMobile(mobile, sms_code, uuid) {
 }
 
 /**
- * 发送手机登录验证码
+ * Send the mobile login verification code
  * @param mobile
  * @param captcha
  * @param uuid
@@ -52,7 +52,7 @@ export function sendLoginSms(mobile, captcha, uuid) {
 }
 
 /**
- * 退出账户
+ * Withdraw from the account
  * @returns {*}
  */
 export function logout() {
@@ -63,7 +63,7 @@ export function logout() {
 }
 
 /**
- * 获取用户角色权限
+ * Gets user role permissions
  * @param role_id
  * @returns {*}
  */

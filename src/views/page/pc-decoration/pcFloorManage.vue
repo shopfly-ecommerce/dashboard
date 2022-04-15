@@ -8,14 +8,14 @@
             <span class="text-tpl">{{ templates[item.tpl_id].title }}</span>
           </div>
         </draggable>
-        <el-button type="primary" @click="handleSaveFloor" class="save-btn">保存发布</el-button>
+        <el-button type="primary" @click="handleSaveFloor" class="save-btn">Save the release</el-button>
         <div class="tpl-btns">
           <div class="btn-item" @click="tplBoxShow = !tplBoxShow">
             <i v-if="tplBoxShow" class="el-icon-d-arrow-left"></i>
             <i v-else class="el-icon-d-arrow-right"></i>
           </div>
           <div style="border-top: 1px dashed #ccc;margin: 2px 0"></div>
-          <el-tooltip class="item" effect="dark" content="快捷保存" placement="right">
+          <el-tooltip class="item" effect="dark" content="Quick save" placement="right">
             <div class="btn-item" @click="handleSaveFloor">
               <i class="el-icon-upload"></i>
             </div>
@@ -92,24 +92,24 @@
     components: { draggable },
     data() {
       return {
-        // 楼层模板展开
+        // Floor template expansion
         tplBoxShow: true,
-        // 获取商品列表API
+        // Get the item list API
         goodsListApi: 'seller/goods',
-        // 根据商品id，获取商品列表API
+        // Gets the item list API based on the item ID
         multipleGoodsApi: 'seller/goods/@ids/details',
         templates,
         templateArray,
-        /** 模板列表 */
+        /** The template list*/
         tplList: [],
-        /** 模板配置 */
+        /** The template configuration*/
         tplOptions: {
           group: { name: 'tplGroup', pull: 'clone', put: false },
           sort: false
         },
-        /** 楼层列表 */
+        /** Floor list*/
         floorList: [],
-        /** 楼层配置 */
+        /** Floor configuration*/
         floorOptions: {
           animation: 150,
           group: { name: 'tplGroup', put: true },
@@ -120,41 +120,41 @@
         dialogGoodsShow: false,
         dialogTitleShow: false,
         dialogTagsShow: false,
-        /** 图片默认数据 */
+        /** Image Default Data*/
         defaultImageData: '',
-        /** 商品默认数据 */
+        /** Product Default Data*/
         defaultGoodsData: [],
-        /** 楼层标题默认数据 */
+        /** Floor title default data*/
         defaultTitleData: {},
-        /** 楼层标签默认数据 */
+        /** Floor label default data*/
         defaultTagsData: [],
-        /** 图片选择器自定义参数 */
+        /** Image selector custom parameters*/
         imageOperation: [
           {
-            label: '操作类型',
+            label: 'Operation type',
             name: 'opt_type',
             type: 'select',
             options: [
-              { text: '无操作', value: 'NONE' },
-              { text: '链接地址', value: 'URL' },
-              { text: '关键字', value: 'KEYWORD' },
-              { text: '商品序号', value: 'GOODS' },
-              // { text: '店铺编号', value: 'SHOP' },
-              { text: '商品分类', value: 'CATEGORY' }
-              // { text: '专题', value: 'TOPIC' }
+              { text: 'No operation', value: 'NONE' },
+              { text: 'The link address', value: 'URL' },
+              { text: 'keyword', value: 'KEYWORD' },
+              { text: 'Product serial number', value: 'GOODS' },
+              // {text: SHOP, value: SHOP},
+              { text: 'Category', value: 'CATEGORY' }
+              // {text: TOPIC, value: TOPIC}
             ],
             value: 'NONE'
           },
           {
-            label: '操作内容',
+            label: 'Operating content',
             name: 'opt_value'
           },
           {
-            label: '附加标题',
+            label: 'Additional title',
             name: 'opt_title'
           },
           {
-            label: '附加描述',
+            label: 'Additional description',
             name: 'opt_desc'
           }
         ]
@@ -164,7 +164,7 @@
       this.GET_FloorList()
     },
     computed: {
-      // 楼层模板盒子样式
+      // Floor template box style
       tplBoxStyle() {
         const { sidebar } = this.$store.getters
         let left = (sidebar.opened ? 180 : 36)
@@ -175,7 +175,7 @@
       }
     },
     methods: {
-      /** 编辑楼层区块 */
+      /** Edit floor block*/
       handleEditBlock(index, target, columnIndex, blockIndex) {
         const block = target.columnList[columnIndex].blockList[blockIndex]
         const type = block.block_type
@@ -188,14 +188,14 @@
           }] : null
           this.dialogImageShow = true
         } else if (type === 'GOODS') {
-          // 填充默认数据
+          // Populate default data
           // this.defaultGoodsData = blockData.block_value ? [blockData.block_value.goods_id] : []
           // this.dialogGoodsShow = true
         } else if (type === 'BRAND') {
-          console.log('品牌模块')
+          console.log('Brand module')
         }
       },
-      /** 编辑楼层标题 */
+      /** Edit floor titles*/
       handleEditTitle(index, target, columnIndex) {
         this.editOptions = { index, target, columnIndex }
         const column = target.columnList[columnIndex]
@@ -207,7 +207,7 @@
         }
         this.dialogTitleShow = true
       },
-      /** 编辑楼层标签 */
+      /** Edit floor labels*/
       handleEditTags(index, target, columnIndex) {
         this.editOptions = { index, target, columnIndex }
         const column = target.columnList[columnIndex]
@@ -215,7 +215,7 @@
         this.defaultTagsData = columnData.tagList
         this.dialogTagsShow = true
       },
-      /** 图片上传组件确认 */
+      /** Picture upload component confirmation*/
       handleImagePickerConfirm(fileList) {
         const file = fileList[0]
         let opt = file ? file.operation : {}
@@ -226,13 +226,13 @@
         block.block_opt = opt
         this.$set(this.floorList, index, target)
       },
-      /** 商品选择器确认 */
+      /** Commodity selector confirmation*/
       handleGoodsPickerConfirm(list) {
         const { index, target, targetIndex } = this.editOptions
         target.blockList[targetIndex].block_value = this.MixinClone(list[0] || '')
         this.$set(this.floorList, index, target)
       },
-      /** 楼层标题编辑确认 */
+      /** Edit and confirm the floor title*/
       handleTitlePickerConfirm(data) {
         const { index, target, columnIndex } = this.editOptions
         const column = target.columnList[columnIndex]
@@ -241,19 +241,19 @@
         column.titleColors[1] = data.end_color
         this.$set(this.floorList, index, target)
       },
-      /** 楼层标签编辑确认 */
+      /** Edit and confirm floor labels*/
       handleTagsPickerConfirm(tagList) {
         const { index, target, columnIndex } = this.editOptions
         const column = target.columnList[columnIndex]
         column.tagList = tagList
         this.$set(this.floorList, index, target)
       },
-      /** 保存发布 */
+      /** Save the release*/
       handleSaveFloor() {
         API_Floor.editFloor('PC', 'INDEX', {
           page_name: 'pc_floor',
           page_data: JSON.stringify(this.floorList)
-        }).then(() => this.$message.success('保存发布成功！'))
+        }).then(() => this.$message.success('Saved publication successful！'))
       },
       GET_FloorList() {
         API_Floor.getFloor('PC', 'INDEX').then(response => {

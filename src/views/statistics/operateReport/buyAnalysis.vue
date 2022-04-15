@@ -2,14 +2,14 @@
   <div class="bg-shop-summary">
     <div class="btn-tools">
       <div class="conditions">
-        <span>日期设置:</span>
+        <span>The date set:</span>
         <en-year-month-picker size="mini" @changed="changeYearMonth"></en-year-month-picker>
       </div>
       <div class="conditions">
-        <span>设置价格区间:</span>
+        <span>Set a price range:</span>
         <en-price-range @changed="changePriceRange"></en-price-range>
       </div>
-      <el-button class="btn-opera" size="mini" type="primary" @click="handleSearch">开始搜索</el-button>
+      <el-button class="btn-opera" size="mini" type="primary" @click="handleSearch">Begin your search</el-button>
     </div>
     <div id="priceList" :style="{height: tableHeight + 'px'}"></div>
     <div id="purchaseTime" :style="{height: tableHeight + 'px'}"></div>
@@ -26,18 +26,18 @@
     },
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 图表参数*/
+        /** Chart parameters*/
         params: {
-          /** 当前选择的日期类型 */
+          /** The currently selected date type*/
           cycle_type: 'MONTH',
 
-          /** 年份 */
+          /** year*/
           year: '2018',
 
-          /** 月份*/
+          /** in*/
           month: '6',
 
           ranges: []
@@ -55,15 +55,15 @@
       })
     },
     methods: {
-      /** 窗口缩放时计算table高度 */
+      /** Calculated when the window is zoomedtablehighly*/
       countTableHeight() {
         this.tableHeight = document.body.clientHeight / 2
-        /** 图表刷新 */
+        /** The chart to refresh*/
         setTimeout(this.priceListChart.resize)
         setTimeout(this.purchaseTimeChart.resize)
       },
 
-      /** 改变日期的回调*/
+      /** A callback that changes the date*/
       changeYearMonth(obj) {
         this.params = {
           ...this.params,
@@ -85,7 +85,7 @@
         }
       },
 
-      /** 价格区间 */
+      /** A price range*/
       changePriceRange(obj) {
         this.params = {
           ...this.params,
@@ -93,7 +93,7 @@
         }
       },
 
-      /** 执行搜索 */
+      /** Perform a search*/
       handleSearch() {
         this.GET_PriceStatistics()
       },
@@ -101,9 +101,9 @@
       GET_PriceStatistics() {
         API_buyAnyalysis.getbuyAnyalysisPeriodList(this.params).then(response => {
           this.purchaseTimeChart.setOption({
-            title: { text: '购买时段分布', x: 'center', subtext: '当前时间段24小时购买总量分布' },
+            title: { text: 'Purchase time distribution', x: 'center', subtext: 'Current period24Hourly total purchase distribution' },
             tooltip: { trigger: 'axis' },
-            legend: { show: true, orient: 'vertical', data: [{ name: '下单量' }], bottom: '10px' },
+            legend: { show: true, orient: 'vertical', data: [{ name: 'Order quantity' }], bottom: '10px' },
             color: ['#7CB5EC'],
             toolbox: {
               right: 50,
@@ -114,16 +114,16 @@
               }
             },
             xAxis: {
-              name: '小时',
+              name: 'hours',
               type: 'category',
               boundaryGap: false,
               data: response.xAxis
             },
             yAxis: {
-              name: '下单量（次）',
+              name: 'Order quantity（time）',
               type: 'value',
               axisLabel: {
-                formatter: '{value} 次'
+                formatter: '{value} time'
               }
             },
             series: [
@@ -133,13 +133,13 @@
                 barWidth: 50,
                 markPoint: {
                   data: [
-                    { type: 'max', name: '最大值' },
-                    { type: 'min', name: '最小值' }
+                    { type: 'max', name: 'The maximum' },
+                    { type: 'min', name: 'The minimum value' }
                   ]
                 },
                 markLine: {
                   data: [
-                    { type: 'average', name: '平均值' }
+                    { type: 'average', name: 'The average' }
                   ]
                 }
               }
@@ -148,9 +148,9 @@
         })
         API_buyAnyalysis.getbuyAnyalysisRangesList(this.params).then(response => {
           this.priceListChart.setOption({
-            title: { text: '客价单分布', x: 'center' },
+            title: { text: 'Price list distribution', x: 'center' },
             tooltip: { trigger: 'axis' },
-            legend: { show: true, orient: 'vertical', data: [{ name: '下单量' }], bottom: '10px' },
+            legend: { show: true, orient: 'vertical', data: [{ name: 'Order quantity' }], bottom: '10px' },
             color: ['#7CB5EC'],
             toolbox: {
               right: 50,
@@ -161,16 +161,16 @@
               }
             },
             xAxis: {
-              name: '价格(元)',
+              name: 'Price(USD)',
               type: 'category',
               boundaryGap: false,
               data: response.xAxis
             },
             yAxis: {
-              name: '下单量（次）',
+              name: 'Order quantity（time）',
               type: 'value',
               axisLabel: {
-                formatter: '{value} 次'
+                formatter: '{value} time'
               }
             },
             series: [
@@ -180,13 +180,13 @@
                 barWidth: 50,
                 markPoint: {
                   data: [
-                    { type: 'max', name: '最大值' },
-                    { type: 'min', name: '最小值' }
+                    { type: 'max', name: 'The maximum' },
+                    { type: 'min', name: 'The minimum value' }
                   ]
                 },
                 markLine: {
                   data: [
-                    { type: 'average', name: '平均值' }
+                    { type: 'average', name: 'The average' }
                   ]
                 }
               }

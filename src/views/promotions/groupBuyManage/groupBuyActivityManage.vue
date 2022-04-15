@@ -6,12 +6,12 @@
       :tableData="tableData"
       :loading="loading">
       <template slot="table-columns">
-        <el-table-column label="商品图片" width="120">
+        <el-table-column label="Commodity images" width="120">
           <template slot-scope="scope">
             <img :src="scope.row.img_url" class="goods-image"/>
           </template>
         </el-table-column>
-        <el-table-column label="团购名称" >
+        <el-table-column label="Group name" >
           <template slot-scope="scope">
             <div>
               <a :href="`${MixinBuyerDomain}/goods/${scope.row.goods_id}`" target="_blank" style="color: #266fd4;">{{ scope.row.gb_name }}</a>
@@ -19,28 +19,28 @@
             <div>{{ scope.row.gb_title }}</div>
           </template>
         </el-table-column>
-        <el-table-column  label="活动信息" >
+        <el-table-column  label="Activity information" >
           <template slot-scope="scope">
-            <!--活动名称-->
+            <!--The name of the event-->
             <div>{{ scope.row.title }}</div>
-            <!--活动开始时间----活动结束时间-->
+            <!--Activity start time----End time-->
             <div>{{ scope.row.start_time| unixToDate('yyyy-MM-dd') }} - {{ scope.row.end_time| unixToDate('yyyy-MM-dd') }}
             </div>
           </template>
         </el-table-column>
-        <!--已团购数量-->
-        <el-table-column prop="buy_num" label="已团购" width="120"/>
-        <el-table-column label="操作" width="180">
+        <!--Number of Group purchases-->
+        <el-table-column prop="buy_num" label="Is a bulk" width="120"/>
+        <el-table-column label="Operation" width="180">
           <template slot-scope="scope">
             <el-button
               type="success"
               v-if="scope.row.is_enable !== 0"
-              :disabled="scope.row.gb_status_text=='已结束'"
-              @click="handleEditGroupGoods(scope.row)">编辑
+              :disabled="scope.row.gb_status_text=='Has ended'"
+              @click="handleEditGroupGoods(scope.row)">edit
             </el-button>
             <el-button
               type="danger"
-              @click="handleDeleteGroupGoods(scope.row)">删除
+              @click="handleDeleteGroupGoods(scope.row)">delete
             </el-button>
           </template>
         </el-table-column>
@@ -70,26 +70,26 @@
     },
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10,
           act_id: this.$route.params.id
         },
 
-        /** 列表数据 */
+        /** The list of data*/
         tableData: [],
 
-        /** 列表分页数据 */
+        /** List paging data*/
         pageData: [],
 
-        /** 当前团购状态*/
+        /** Current group purchase status*/
         currentGroupBuyStatus: '',
 
-        /** 团购状态*/
+        /** A bulk state*/
         groupBuyStatus: this.$route.params.status_text
       }
     },
@@ -97,19 +97,19 @@
       this.GET_GroupGoodsList()
     },
     methods: {
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_GroupGoodsList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_GroupGoodsList()
       },
 
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       searchEvent(data) {
         delete this.params.keywords
         this.params = {
@@ -119,7 +119,7 @@
         this.GET_GroupGoodsList()
       },
 
-      /** 团购状态发生改变*/
+      /** Groupon status has changed*/
       groupBuyStatusChange(val) {
         delete this.params.status
         if (val >= 0) {
@@ -131,7 +131,7 @@
         this.GET_GroupGoodsList()
       },
 
-      /** 获取团购商品列表 */
+      /** Get a list of group purchase items*/
       GET_GroupGoodsList() {
         this.loading = true
         API_groupBuy.getGroupBuyGoods(this.params).then(response => {
@@ -145,17 +145,17 @@
         })
       },
 
-      /** 编辑团购商品 */
+      /** Edit group deals*/
       handleEditGroupGoods(row) {
-        this.$router.push({ name: 'groupBuyGoods', query: { group_name: '编辑', act_id: this.params.act_id }, params: { goods_id: row.gb_id, callback: this.GET_GroupGoodsList }})
+        this.$router.push({ name: 'groupBuyGoods', query: { group_name: 'edit', act_id: this.params.act_id }, params: { goods_id: row.gb_id, callback: this.GET_GroupGoodsList }})
       },
 
-      /** 删除团购商品 */
+      /** Delete group purchase products*/
       handleDeleteGroupGoods(row) {
-        this.$confirm('确认删除此团购商品, 是否继续?', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Confirm to delete this group purchase item, Whether or not to continue?', 'prompt', { type: 'warning' }).then(() => {
           API_groupBuy.deleteGroupBuyGoods(row.gb_id, {}).then(() => {
             this.GET_GroupGoodsList()
-            this.$message.success('删除团购商品成功！')
+            this.$message.success('Delete group purchase item successfully！')
           })
         })
       }

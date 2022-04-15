@@ -1,11 +1,11 @@
 /**
- * 流量统计相关API
+ * Traffic statistical correlationAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 店铺总流量
+ * Total store traffic
  * @param params
  * @returns {Promise<any>}
  */
@@ -19,7 +19,7 @@ export function getShopTraffic(params) {
 }
 
 /**
- * 商品流量统计
+ * Commodity flow statistics
  * @param params
  * @returns {Promise<any>}
  */

@@ -1,11 +1,11 @@
 /**
- * 热门关键字相关API
+ * Popular keywords are relevantAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取热门关键字
+ * Get the hot keywords
  * @param params
  */
 export function getHotKeywords(params) {
@@ -18,7 +18,7 @@ export function getHotKeywords(params) {
 }
 
 /**
- * 添加热门关键字
+ * Add hot keywords
  * @param params
  */
 export function addHotKeywords(params) {
@@ -30,7 +30,7 @@ export function addHotKeywords(params) {
 }
 
 /**
- * 获取热门关键字详情
+ * Get hot keyword details
  * @param id
  */
 export function getHotKeywordsDetail(id) {
@@ -41,7 +41,7 @@ export function getHotKeywordsDetail(id) {
 }
 
 /**
- * 修改热门关键字
+ * Modify hot keywords
  * @param id
  * @param params
  */
@@ -54,7 +54,7 @@ export function editHotKeywords(id, params) {
 }
 
 /**
- * 删除热门关键词
+ * Delete hot keywords
  * @param id
  */
 export function deleteHotKeywords(id) {

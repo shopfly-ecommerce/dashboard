@@ -1,7 +1,7 @@
 /**
- * 表格组件
- * 包含分页
- * 搜索栏可选
+ * Form components
+ * Contains paging
+ * The search bar is optional
  */
 import Vue from 'vue'
 import Tabel from './src/main'

@@ -1,8 +1,8 @@
 /**
  * Created by Andste on 2018/5/18.
- * PC端首页楼层导出
- * common  已有的模板
- * customs 按照开发文档自定义的模板
+ * PCEnd first floor export
+ * common  Existing templates
+ * customs Customize the template according to the development documentation
  */
 
 import common from './common'

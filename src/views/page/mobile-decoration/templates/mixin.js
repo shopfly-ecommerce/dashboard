@@ -5,12 +5,12 @@
 /** mixin */
 export default {
   props: {
-    /** 数据 */
+    /** data*/
     data: {
       type: Object,
       default: () => ({})
     },
-    /** 是否为编辑模式 */
+    /** Is it in edit mode*/
     isEdit: {
       type: Boolean,
       default: false
@@ -24,7 +24,7 @@ export default {
                      <div class="mask-floor" @click="$emit('handle-edit')">
                        <div class="mask-bg-floor">
                          <button type="button" class="mask-btn-floor">
-                           <svg-icon icon-class="pen-leather"></svg-icon>编辑
+                           <svg-icon icon-class="pen-leather"></svg-icon>edit
                          </button>
                        </div>
                      </div>
@@ -42,7 +42,7 @@ export default {
     }
   },
   methods: {
-    /** 获取区块链接 */
+    /** Get a block link*/
     blockHref(block) {
       if (block.block_type === 'GOODS') {
         if (!block.block_value) return '#'
@@ -51,18 +51,18 @@ export default {
       if (!block || !block.block_opt) return '#'
       const { opt_type, opt_value } = block.block_opt
       switch (opt_type) {
-        // 链接地址
+        // The link address
         case 'URL': return opt_value
-        // 商品
+        // goods
         case 'GOODS': return `/goods/${opt_value}`
-        // 关键字
+        // keyword
         case 'KEYWORD': return `/goods?keyword=${opt_value}`
-        // 分类
+        // Categories
         case 'CATEGORY': return `/goods?category=${opt_value}`
         default: return '/'
       }
     },
-    /** 编辑区块 */
+    /** Edit block*/
     handleEditBlock(blockIndex) {
       this.$emit('edit-block', JSON.parse(JSON.stringify(this.data)), blockIndex)
     }

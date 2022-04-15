@@ -41,11 +41,11 @@ const permission = {
   }
 }
 
-// 不需要角色鉴权的白名单
+// Whitelist for role authentication is not required
 const whiteList = []
 
 /**
- * 递归筛选出有权限的路由
+ * Recursively filter out authorized routes
  * @param routers
  * @param names
  * @returns {Array}

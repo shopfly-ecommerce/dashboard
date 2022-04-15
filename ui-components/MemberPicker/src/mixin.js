@@ -7,7 +7,7 @@ import { domain } from '~/ui-domain'
 
 export default {
   props: {
-    // 显示dialog
+    // Display dialog
     show: {
       type: Boolean,
       default: false
@@ -16,22 +16,22 @@ export default {
       type: String,
       default: 'seller/members'
     },
-    // 获取多个会员API
+    // Get multiple member apis
     multipleApi: {
       type: String,
       default: 'seller/members/@ids/list'
     },
-    // 最大可选个数
+    // Maximum number of options
     limit: {
       type: Number,
       default: 0
     },
-    // 默认数据
+    // The default data
     defaultData: {
       type: Array,
       default: () => ([])
     },
-    // 排除
+    // To rule out
     excludeData: {
       type: Array,
       default: () => ([])
@@ -42,19 +42,19 @@ export default {
       params: {
         page_no: 1,
         page_size: 10,
-        // 一个或多个会员ids
+        // One or more member IDS
         member_ids: '',
-        // 性别
+        // gender
         sex: ''
       },
-      /** 加载状态 */
+      /** Loading status*/
       loading: false,
-      /** 会员列表 */
+      /** The member list*/
       memberList: [],
-      /** 已选列表 */
+      /** The selected list*/
       selectedList: [],
       dialogVisible: this.show,
-      // 前台域名
+      // The front desk of the domain name
       buyerDomain: domain.buyer_pc
     }
   },
@@ -74,25 +74,25 @@ export default {
     'defaultData': 'defaultDataChanged'
   },
   computed: {
-    /** 计算已选择个数 */
+    /** Count the number of selections*/
     selectedNum() {
       return this.selectedList.filter(item => item).length
     }
   },
   methods: {
-    /** 确认 */
+    /** confirm*/
     handleConfirm() {
       this.$emit('confirm', this.selectedList.filter(item => item))
       this.$emit('close')
       this.selectedList = []
     },
-    /** 加载更多 */
+    /** To load more*/
     handleLoadMore() {
       if (this.loading) return
       this.params.page_no += 1
       this.GET_MemberList()
     },
-    /** 点击会员【可能是选择也可能是取消】 */
+    /** Click on the member【It could be a choice or a cancellation】 */
     handleClickItem(item, index) {
       let _index = this.selectedList.findIndex(_item => _item.member_id === item.member_id)
       if (_index !== -1) {
@@ -100,36 +100,36 @@ export default {
       } else {
         let { limit } = this
         if (limit > 0 && this.selectedList.filter(item => item).length >= limit) {
-          this.$message.error('超过最大可选个数：' + this.limit)
+          this.$message.error('Exceeding the maximum number of options：' + this.limit)
           return
         }
         this.selectedList.push(item)
         this.scrollToBottom()
       }
     },
-    /** 从已选会员中移除会员 */
+    /** Removes a member from a selected member*/
     handleRemoveItem(item, index) {
       this.selectedList.splice(index, 1)
     },
-    /** 已选择列表滚动到底部 */
+    /** Scroll to the bottom of the selected list*/
     scrollToBottom() {
       this.$nextTick(() => {
         let $sel = this.$selectedList
         $sel.scrollTop = $sel.scrollHeight
       })
     },
-    /** 当默认数据发生改变 */
+    /** When the default data changes*/
     defaultDataChanged(newVal) {
       this.selectedList = []
       if (newVal && newVal.length > 0) {
         this.GET_MemberByMemberIds(newVal).then(response => this.selectedList.push(...response))
       }
     },
-    /** 计算是否已被选 */
+    /** Calculates whether it has been selected*/
     isSelected(member) {
       return this.selectedList.findIndex(item => item.member_id === member.member_id) !== -1
     },
-    /** 查找多个会员 */
+    /** Find multiple members*/
     handleSearchMultipleGoods() {
       let { member_ids } = this.params
       if (member_ids) {
@@ -138,7 +138,7 @@ export default {
         this.GET_MemberList(true)
       }
     },
-    /** 获取会员列表 */
+    /** Get membership list*/
     GET_MemberList(clean = false) {
       this.loading = true
       !!clean && (this.params.page_no = 1)
@@ -154,12 +154,12 @@ export default {
         params: _params
       }).then(response => {
         this.loading = false
-        // 如果clean为true，先清空memberList
+        // If clean is true, clean the memberList first
         !!clean && (this.memberList = [])
         this.memberList.push(...response.data)
       })
     },
-    /** 根据会员编号获取会员信息 */
+    /** Obtain membership information according to membership number*/
     GET_MemberByMemberIds(ids) {
       ids = typeof ids === 'string'
         ? ids.replace(/，/g, ',')

@@ -3,22 +3,22 @@
     <div id="add-new-group">
       <i class="add-btn" @click="addGroupForm.show = true">+</i>
       <div v-show="addGroupForm.show" class="add-div">
-        <span class="add-div-title">参数组名</span>
+        <span class="add-div-title">group name</span>
         <input v-model="addGroupForm.group_name">
-        <el-button type="text" size="mini" @click="handleSaveAddParamsGroup">保存</el-button>
-        <el-button type="text" size="mini" @click="addGroupForm.show = false">取消</el-button>
+        <el-button type="text" size="mini" @click="handleSaveAddParamsGroup">save</el-button>
+        <el-button type="text" size="mini" @click="addGroupForm.show = false">cancel</el-button>
       </div>
     </div>
     <el-card v-for="(group, index) in paramsGroup" :key="group.group_id">
       <div slot="header" class="clearfix">
-        <span>参数组名：{{ group.group_name }}</span>
+        <span>group name：{{ group.group_name }}</span>
         <el-dropdown trigger="click" @command="handleGroupCommand" style="float: right">
-          <span class="el-dropdown-link">操作<i class="el-icon-arrow-down el-icon--right"></i></span>
+          <span class="el-dropdown-link">Operation<i class="el-icon-arrow-down el-icon--right"></i></span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item :command="{type: 'edit', group}">编辑</el-dropdown-item>
-            <el-dropdown-item :command="{type: 'delete', group}">删除</el-dropdown-item>
-            <el-dropdown-item v-if="index !== 0" :command="{type: 'sort_up', group}">上移</el-dropdown-item>
-            <el-dropdown-item v-if="index !== paramsGroup.length - 1" :command="{type: 'sort_down', group}">下移</el-dropdown-item>
+            <el-dropdown-item :command="{type: 'edit', group}">edit</el-dropdown-item>
+            <el-dropdown-item :command="{type: 'delete', group}">delete</el-dropdown-item>
+            <el-dropdown-item v-if="index !== 0" :command="{type: 'sort_up', group}"> up</el-dropdown-item>
+            <el-dropdown-item v-if="index !== paramsGroup.length - 1" :command="{type: 'sort_down', group}">down</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -26,50 +26,50 @@
         <div v-for="(param, index) in group.params" :key="param.param_id" class="param-item">
           <span>{{ param.param_name }} 【{{ param.param_type | paramTypeFilter }}】</span>
           <span>
-            <el-button type="text" size="mini" @click="handleEditParam(group, param)">编辑</el-button>
-            <el-button type="text" size="mini" style="color: #F56C6C" @click="handleDeleteParam(group, param)">删除</el-button>
-            <el-button :disabled="index === 0" type="text" size="mini" @click="handleSortParam('up', group, param)">上移</el-button>
-            <el-button :disabled="index === group.params.length - 1" type="text" size="mini" @click="handleSortParam('down', group, param)">下移</el-button>
+            <el-button type="text" size="mini" @click="handleEditParam(group, param)">edit</el-button>
+            <el-button type="text" size="mini" style="color: #F56C6C" @click="handleDeleteParam(group, param)">delete</el-button>
+            <el-button :disabled="index === 0" type="text" size="mini" @click="handleSortParam('up', group, param)"> up</el-button>
+            <el-button :disabled="index === group.params.length - 1" type="text" size="mini" @click="handleSortParam('down', group, param)">down</el-button>
           </span>
         </div>
       </template>
-      <div v-else class="param-item empty">暂无数据...</div>
-      <el-button type="text" class="add-params-btn" @click="handleAddParams(group)">添加</el-button>
+      <div v-else class="param-item empty">no data...</div>
+      <el-button type="text" class="add-params-btn" @click="handleAddParams(group)">add</el-button>
     </el-card>
     <el-dialog
-      :title="paramForm.param_id ? '编辑参数' : '添加参数'"
+      :title="paramForm.param_id ? 'Edit parameters' : 'Add parameters'"
       :visible.sync="dialogParamsVisible"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
       width="500px"
     >
       <el-form :model="paramForm" :rules="paramsRules" ref="paramForm" label-width="100px">
-        <el-form-item label="参数名称" prop="param_name">
+        <el-form-item label="name" prop="param_name">
           <el-input v-model="paramForm.param_name"></el-input>
         </el-form-item>
-        <el-form-item label="参数类型" prop="param_type">
-          <el-select v-model="paramForm.param_type" placeholder="请选择">
-            <el-option label="输入项" :value="1"/>
-            <el-option label="选择项" :value="2"/>
+        <el-form-item label="type" prop="param_type">
+          <el-select v-model="paramForm.param_type" placeholder="Please select">
+            <el-option label="Input item" :value="1"/>
+            <el-option label="Select item" :value="2"/>
           </el-select>
         </el-form-item>
-        <el-form-item label="可选择值" prop="options">
+        <el-form-item label="value list" prop="options">
           <el-input
             ref="paramOptionsInput"
             type="textarea"
             :autosize="{ minRows: 2, maxRows: 4}"
-            placeholder="请输入可选择值，多个值用英文逗号隔开。(选择'选择项'时,必填!)"
+            placeholder="Please enter optional values separated by English commas.(choose'choose项'when,Mandatory!)"
             v-model="paramForm.options">
           </el-input>
         </el-form-item>
-        <el-form-item label="选项">
-          <el-checkbox v-model="paramForm.required" :true-label="1" :false-label="0">必填</el-checkbox>
-          <el-checkbox v-model="paramForm.is_index" :true-label="1" :false-label="0">可索引</el-checkbox>
+        <el-form-item label="options">
+          <el-checkbox v-model="paramForm.required" :true-label="1" :false-label="0">required</el-checkbox>
+          <el-checkbox v-model="paramForm.is_index" :true-label="1" :false-label="0">index</el-checkbox>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogParamsVisible = false">取 消</el-button>
-    <el-button type="primary" @click="submitParamForm('paramForm')">确 定</el-button>
+    <el-button @click="dialogParamsVisible = false">cancel</el-button>
+    <el-button type="primary" @click="submitParamForm('paramForm')">save</el-button>
   </span>
     </el-dialog>
   </div>
@@ -82,20 +82,20 @@
     name: 'categoryParams',
     data() {
       return {
-        /** 分类ID */
+        /** CategoriesID */
         category_id: this.$route.params.id,
-        /** 参数组 */
+        /** Parameter set*/
         paramsGroup: [],
-        /** 编辑分类参数 dialog */
+        /** Edit classification parametersdialog */
         dialogParamsVisible: false,
-        /** 添加、编辑参数 表单 */
+        /** add、Edit the parameter form*/
         paramForm: {},
-        /** 添加、编辑参数 规格 */
+        /** add、Edit parameter specifications*/
         paramsRules: {
-          param_name: [this.MixinRequired('请输入参数名称！')],
-          options: [this.MixinRequired('请输入可选值！')]
+          param_name: [this.MixinRequired('Please enter a parameter name！')],
+          options: [this.MixinRequired('Please enter an optional value！')]
         },
-        /** 添加参数组 表单 */
+        /** Add a parameter group form*/
         addGroupForm: {
           show: false,
           group_name: ''
@@ -112,15 +112,15 @@
     },
     filters: {
       paramTypeFilter(val) {
-        return val === 1 ? '输入项' : '选择项'
+        return val === 1 ? 'Input item' : 'Select item'
       }
     },
     methods: {
-      /** 新增参数组 */
+      /** New parameter group*/
       handleSaveAddParamsGroup() {
         const _name = this.addGroupForm.group_name
         if (!_name) {
-          this.$message.error('请输入参数组名！')
+          this.$message.error('Please enter a parameter group name！')
         } else {
           API_Params.addParamsGroup({
             group_name: _name,
@@ -128,12 +128,12 @@
           }).then(response => {
             this.addGroupForm.group_name = ''
             this.addGroupForm.show = false
-            this.$message.success('保存成功！')
+            this.$message.success('Save success！')
             this.GET_CategoryParamsGroup()
           })
         }
       },
-      /** 下拉触发 */
+      /** The drop-down trigger*/
       handleGroupCommand(object) {
         switch (object.type) {
           case 'edit':
@@ -150,17 +150,17 @@
             break
         }
       },
-      /** 编辑参数组名 */
+      /** Edit the parameter group name*/
       handleEditGroup(group) {
-        this.$prompt('编辑参数组名', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$prompt('Edit the parameter group name', 'prompt', {
+          confirmButtonText: 'save',
+          cancelButtonText: 'cancel',
           inputValue: group.group_name,
           inputPattern: /.+/,
-          inputErrorMessage: '名称不能为空！'
+          inputErrorMessage: 'The name cannot be empty！'
         }).then(obj => {
           if (obj.value.length > 50) {
-            this.$message.error('参数组名称不能超过50个字')
+            this.$message.error('Parameter group names cannot exceed50A word')
             return
           }
           API_Params.editParamsGroup(group.group_id, {
@@ -168,28 +168,28 @@
             category_id: this.category_id
           }).then(response => {
             group.group_name = response.group_name
-            this.$message.success('修改成功！')
+            this.$message.success('Modify the success！')
           })
         }).catch(() => {})
       },
-      /** 删除参数组 */
+      /** Delete parameter set*/
       handleDeleteGroup(group) {
-        this.$confirm('确定要删除这个参数组吗？', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Are you sure you want to delete this parameter group？', 'prompt', { type: 'warning' }).then(() => {
           const _id = group.group_id
           API_Params.deleteParamsGroup(_id).then(() => {
-            this.$message.success('删除成功！')
+            this.$message.success('Delete the success！')
             this.GET_CategoryParamsGroup()
           })
         }).catch(() => {})
       },
-      /** 参数组排序 */
+      /** Parameter group sort*/
       handleSortGroup(type, group) {
         API_Params.sortParamsGroup(group.group_id, type).then(() => {
           this.paramsGroup = this.swapaPlaces(this.paramsGroup, type, group)
-          this.$message.success('修改成功！')
+          this.$message.success('Modify the success！')
         })
       },
-      /** 添加参数 */
+      /** Add parameters*/
       handleAddParams(group) {
         this.paramForm = {
           param_name: '',
@@ -202,7 +202,7 @@
         }
         this.dialogParamsVisible = true
       },
-      /** 编辑参数 */
+      /** Edit parameters*/
       handleEditParam(group, params) {
         this.paramForm = {
           ...params,
@@ -211,23 +211,23 @@
         }
         this.dialogParamsVisible = true
       },
-      /** 删除参数 */
+      /** Delete the parameter*/
       handleDeleteParam(group, param) {
-        this.$confirm('确定要删除这个参数吗？', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Are you sure you want to delete this parameter？', 'prompt', { type: 'warning' }).then(() => {
           API_Params.deleteParams(param.param_id).then(() => {
-            this.$message.success('删除成功！')
+            this.$message.success('Delete the success！')
             group.params.splice(group.params.findIndex(item => item === param), 1)
           })
         }).catch(() => {})
       },
-      /** 参数排序 */
+      /** Parameters of the sort*/
       handleSortParam(type, group, param) {
         API_Params.sortParams(param.param_id, type).then(() => {
           group.params = this.swapaPlaces(group.params, type, param)
-          this.$message.success('修改成功！')
+          this.$message.success('Modify the success！')
         })
       },
-      /** 添加、编辑 表单提交 */
+      /** add、Edit form submission*/
       submitParamForm(formName) {
         this.$refs[formName].validate((valid) => {
           const { param_type, options, group_id, param_id } = this.paramForm
@@ -239,7 +239,7 @@
                 const index = group.params.findIndex(item => item.param_id === param_id)
                 group.params[index] = response
                 this.$refs[formName].resetFields()
-                this.$message.success('保存成功！')
+                this.$message.success('Save success！')
               })
             } else {
               API_Params.addParams(this.paramForm).then(response => {
@@ -247,16 +247,16 @@
                 const index = this.paramsGroup.findIndex(item => item.group_id === group_id)
                 this.paramsGroup[index].params.push(response)
                 this.$refs[formName].resetFields()
-                this.$message.success('保存成功！')
+                this.$message.success('Save success！')
               })
             }
           } else {
-            this.$message.error('表单填写有误，请检查！')
+            this.$message.error('The form is filled incorrectly, please check！')
             return false
           }
         })
       },
-      /** 返回交换位置后的数组 */
+      /** Returns the array after swapping positions*/
       swapaPlaces(arr, type, ele) {
         const index = arr.findIndex(item => item === ele)
         if (type === 'up') {
@@ -268,7 +268,7 @@
         }
         return arr
       },
-      /** 获取参数组 */
+      /** Get parameter set*/
       GET_CategoryParamsGroup() {
         API_Params.getCategoryParams(this.category_id).then(response => {
           this.paramsGroup = response

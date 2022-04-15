@@ -1,5 +1,5 @@
 /**
- * 百度UE
+ * baiduUE
  */
 import Vue from 'vue'
 import UE from './src/main'

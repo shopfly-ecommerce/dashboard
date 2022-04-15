@@ -1,12 +1,12 @@
 /**
- * 首页商家商城基本信息API
+ * Home business mall basic informationAPI
  */
 
 import request from '@/utils/request'
 import { api } from '~/ui-domain'
 
 /**
- * 获取首页统计信息
+ * Get home page statistics
  * @returns {Promise<any>}
  */
 export function getDashboardData() {
@@ -18,7 +18,7 @@ export function getDashboardData() {
 }
 
 /**
- * 获取商城公告
+ * Access to mall announcements
  * @param params
  * @returns {Promise<any>}
  */
@@ -32,7 +32,7 @@ export function getNotice(type, params) {
 }
 
 /**
- * 获取首页平台联系方式
+ * Get home platform contact information
  * @param params
  * @returns {Promise<any>}
  */

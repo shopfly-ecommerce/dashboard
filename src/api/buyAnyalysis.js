@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 /**
- * 获取购买分析购买时段分布列表
+ * Get the purchase analysis purchase time distribution list
  * @param params
  * @returns {Promise<any>}
  */
@@ -15,7 +15,7 @@ export function getbuyAnyalysisPeriodList(params) {
 }
 
 /**
- * 获取购买分析客价单分布列表
+ * Get the distribution list of purchase analysis customers
  * @param params
  * @returns {Promise<any>}
  */

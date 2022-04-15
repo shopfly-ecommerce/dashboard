@@ -27,7 +27,7 @@
       }
     },
     methods: {
-      /** 获取会员下单量 */
+      /** Get member orders*/
       GET_IndustryScaleGoods() {
         if (this.curTab !== 'goods' || this.loading) return
         this.loading = true
@@ -44,7 +44,7 @@
             },
             yAxisType: 'category',
             yAxisData: yAxis,
-            seriesName: '下单量'
+            seriesName: 'Order quantity'
           }))
           this.echarts.resize()
         }).catch(() => { this.loading = false })

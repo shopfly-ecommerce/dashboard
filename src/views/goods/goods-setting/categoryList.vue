@@ -2,28 +2,28 @@
   <div>
     <en-grade-editor
       ref="gradeEditor"
-      type-text="分类"
+      type-text="Categories"
       :api="categoryApi"
       :params-names="{id: 'category_id', text: 'name'}"
       :btns="itemBtns"
       :maxLevel="3"
       @add-click="handleAddCat"
     />
-    <!--添加、编辑分类dialog-->
+    <!--add、Edit categorydialog-->
     <el-dialog
-      :title="catForm.category_id ? '编辑分类' : '添加分类'"
+      :title="catForm.category_id ? 'Edit category' : 'Add the classification'"
       width="500px"
       :visible.sync="dialogCatVisible"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
       <el-form :model="catForm" :rules="catRules" ref="catForm" label-width="100px">
-        <!--分类名称-->
-        <el-form-item label="分类名称" prop="category_name">
+        <!--name-->
+        <el-form-item label="name" prop="category_name">
           <el-input v-model="catForm.category_name"></el-input>
         </el-form-item>
-        <!--分类图片-->
-        <el-form-item label="分类图片" prop="cat_img">
+        <!--Image-->
+        <el-form-item label="Image" prop="cat_img">
           <el-upload
             :action="MixinUploadApi"
             list-type="picture"
@@ -33,37 +33,37 @@
             :multiple="false"
             :limit="1"
           >
-            <el-button size="small" type="primary">点击上传</el-button>
-            <span slot="tip" class="el-upload__tip">&nbsp;建议上传jpg/png文件，且不超过1MB</span>
+            <el-button size="small" type="primary">upload</el-button>
+            <span slot="tip" class="el-upload__tip">&nbsp;Recommended to uploadjpg/pngFile, and not exceeding1MB</span>
           </el-upload>
         </el-form-item>
-        <!--上级分类-->
-        <el-form-item v-if="catForm.parent_datas" label="上级分类" prop="parent_id">
-          <el-select v-model="catForm.parent_id" placeholder="请选择上级分类">
+        <!--Parent-->
+        <el-form-item v-if="catForm.parent_datas" label="Parent" prop="parent_id">
+          <el-select v-model="catForm.parent_id" placeholder="Please select the superior category">
             <el-option v-for="item in catForm.parent_datas" :label="item.name" :value="item.category_id" :key="item.category_id"/>
           </el-select>
         </el-form-item>
-        <!--排序-->
-        <el-form-item label="排序" prop="category_order">
+        <!--sort-->
+        <el-form-item label="sort" prop="category_order">
           <el-input-number v-model="catForm.category_order" controls-position="right" :min="0" :max="99999"/>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogCatVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitCatForm('catForm')">确 定</el-button>
+        <el-button @click="dialogCatVisible = false">cancel</el-button>
+        <el-button type="primary" @click="submitCatForm('catForm')">save</el-button>
       </span>
     </el-dialog>
-    <!--编辑关联品牌dialog-->
+    <!--Edit associated brandsdialog-->
     <el-dialog
-      title="关联品牌"
+      title="Associated with the brand"
       width="500px"
       :visible.sync="dialogBrandVisible"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
       <el-form :model="brandForm" :rules="brandRules" ref="brandForm">
-        <el-form-item label="选择品牌">
-          <el-select v-model="brandForm.selectedBrandList" placeholder="请选择关联品牌" multiple filterable style="width: 350px">
+        <el-form-item label="Choose the brand">
+          <el-select v-model="brandForm.selectedBrandList" placeholder="Please select associated brand" multiple filterable style="width: 350px">
             <el-option
               v-for="item in brandForm.brandList"
               :key="item.id"
@@ -74,21 +74,21 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogBrandVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitBrandForm('brandForm')">确 定</el-button>
+        <el-button @click="dialogBrandVisible = false">cancel</el-button>
+        <el-button type="primary" @click="submitBrandForm('brandForm')">save</el-button>
       </span>
     </el-dialog>
-    <!--编辑关联规格dialog-->
+    <!--Edit associated specificationsdialog-->
     <el-dialog
-      title="关联规格"
+      title="Associated specifications"
       width="500px"
       :visible.sync="dialogSpecsVisible"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
       <el-form :model="specsForm" :rules="specsRules" ref="specsForm">
-        <el-form-item label="选择规格">
-          <el-select v-model="specsForm.selectedSpecsList" placeholder="请选择关联规格" multiple filterable style="width: 350px">
+        <el-form-item label="Choose specifications">
+          <el-select v-model="specsForm.selectedSpecsList" placeholder="Please select the associated specification" multiple filterable style="width: 350px">
             <el-option
               v-for="item in specsForm.specsList"
               :key="item.id"
@@ -99,8 +99,8 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogSpecsVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitSpecsForm('specsForm')">确 定</el-button>
+        <el-button @click="dialogSpecsVisible = false">cancel</el-button>
+        <el-button type="primary" @click="submitSpecsForm('specsForm')">save</el-button>
       </span>
     </el-dialog>
   </div>
@@ -118,45 +118,45 @@
     data() {
       return {
         itemBtns: [
-          { text: '参数', onClick: this.handleEditParams },
-          { text: '品牌', onClick: this.handleEditBrand },
-          { text: '规格', onClick: this.handleEditSpecs },
-          { text: '编辑', onClick: this.handleEditCat },
-          { text: '删除', onClick: this.handleDeleteCat, color: 'red' }
+          { text: 'parameter', onClick: this.handleEditParams },
+          { text: 'brand', onClick: this.handleEditBrand },
+          { text: 'specifications', onClick: this.handleEditSpecs },
+          { text: 'edit', onClick: this.handleEditCat },
+          { text: 'delete', onClick: this.handleDeleteCat, color: 'red' }
         ],
-        // 添加、编辑分类 dialog
+        // Add and edit category Dialogs
         dialogCatVisible: false,
-        // 编辑关联品牌 dialog
+        // Edit associated brand Dialog
         dialogBrandVisible: false,
-        // 编辑关联规格 dialog
+        // Edit the associated specification Dialog
         dialogSpecsVisible: false,
-        // 添加、编辑分类 表单
+        // Add and edit the category form
         catForm: {},
-        // 添加、编辑分类 表单规则
+        // Add and edit classification form rules
         catRules: {
           category_name: [
-            { required: true, message: '请输入分类名称', trigger: 'blur' },
-            { min: 1, max: 15, message: '长度在 1 到 15 个字符', trigger: 'blur' }
+            { required: true, message: 'Please enter the classification name', trigger: 'blur' },
+            { min: 1, max: 15, message: 'The length of1 to15 A character', trigger: 'blur' }
           ]
         },
-        // 编辑关联品牌 表单
+        // Edit the associated brand form
         brandForm: {
-          brandTitle: '关联品牌',
+          brandTitle: 'Associated with the brand',
           category_id: null,
           selectedBrandList: [],
           brandList: []
         },
-        // 编辑关联品牌 表单规则
+        // Edit the associated brand form rules
         brandRules: {},
-        // 编辑关联规格 表单
+        // Edit the associated specification form
         specsForm: {
           category_id: null,
           selectedSpecsList: [],
           specsList: []
         },
-        // 编辑关联规格 表单规则
+        // Edit the associated specification form rules
         specsRules: {},
-        /** 存储上传的图片*/
+        /** Stores uploaded images*/
         fileList: [],
         // API
         categoryApi: 'seller/goods/categories/@id/children'
@@ -166,12 +166,12 @@
       uploadSuccess(res) {
         this.$set(this.catForm, 'category_image', res.url)
       },
-      /** 图片移除之后 */
+      /** Once the image is removed*/
       delGiftImg() {
         this.fileList = []
         this.catForm.category_image = ''
       },
-      /** 添加分类 */
+      /** Add the classification*/
       handleAddCat(level, parent, parentArray) {
         this.catForm = {
           parent_id: parent ? parent.category_id : 0,
@@ -182,7 +182,7 @@
         this.dialogCatVisible = true
       },
 
-      /** 编辑分类 */
+      /** Edit category*/
       handleEditCat(cat, parent, parentArray) {
         this.catForm = {
           parent_id: parent ? parent.category_id : 0,
@@ -195,7 +195,7 @@
         this.dialogCatVisible = true
       },
 
-      /** 添加、编辑分类 表单提交 */
+      /** add、Edit the category form submission*/
       submitCatForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -203,30 +203,30 @@
             if (!category_id) {
               API_Category.addCategory(this.catForm).then(() => {
                 this.dialogCatVisible = false
-                this.$message.success('保存成功！')
+                this.$message.success('Save success！')
                 this.$refs[formName].resetFields()
                 this.$refs['gradeEditor'].refresh('add')
               })
             } else {
               API_Category.editCategory(category_id, this.catForm).then(response => {
-                this.$message.success('保存成功！')
+                this.$message.success('Save success！')
                 this.dialogCatVisible = false
                 this.$refs[formName].resetFields()
                 this.$refs['gradeEditor'].refresh('add')
               })
             }
           } else {
-            this.$message.error('表单填写有误，请检查！')
+            this.$message.error('The form is filled incorrectly, please check！')
             return false
           }
         })
       },
 
-      /** 编辑分类参数 */
+      /** Edit classification parameters*/
       handleEditParams(cat) {
         this.$router.push({ name: 'categoryParams', params: { id: cat.category_id }})
       },
-      /** 编辑关联品牌 */
+      /** Edit associated brands*/
       handleEditBrand(cat) {
         API_Category.getBrandByCategoryId(cat.category_id).then(response => {
           this.brandForm = {
@@ -239,23 +239,23 @@
         })
       },
 
-      /** 编辑关联品牌 表单提交 */
+      /** Edit the associated brand form submission*/
       submitBrandForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             API_Category.editCategoryBrand(this.brandForm.category_id, this.brandForm.selectedBrandList)
               .then(response => {
                 this.dialogBrandVisible = false
-                this.$message.success('保存成功！')
+                this.$message.success('Save success！')
               })
           } else {
-            this.$message.error('表单填写有误，请检查！')
+            this.$message.error('The form is filled incorrectly, please check！')
             return false
           }
         })
       },
 
-      /** 编辑关联规格 */
+      /** Edit associated specifications*/
       handleEditSpecs(cat) {
         API_Category.getSpecsByCategoryId(cat.category_id).then(response => {
           this.specsForm = {
@@ -267,27 +267,27 @@
           this.dialogSpecsVisible = true
         })
       },
-      /** 编辑关联规格 表单提交 */
+      /** Edit the associated specification form submission*/
       submitSpecsForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             API_Category.editCategorySpecs(this.specsForm.category_id, this.specsForm.selectedSpecsList)
               .then(response => {
                 this.dialogSpecsVisible = false
-                this.$message.success('保存成功！')
+                this.$message.success('Save success！')
               })
           } else {
-            this.$message.error('表单填写有误，请检查！')
+            this.$message.error('The form is filled incorrectly, please check！')
             return false
           }
         })
       },
 
-      /** 删除分类确认 */
+      /** Delete classification confirmation*/
       handleDeleteCat(cat) {
-        this.$confirm('确定要删除这个分类吗？', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Are you sure you want to delete this category？', 'prompt', { type: 'warning' }).then(() => {
           API_Category.deleteCategory(cat.category_id).then(() => {
-            this.$message.success('删除成功！')
+            this.$message.success('Delete the success！')
             this.$refs['gradeEditor'].refresh('delete')
           })
         }).catch(() => {})

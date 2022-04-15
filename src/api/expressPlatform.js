@@ -1,11 +1,11 @@
 /**
- * 快递相关API
+ * Express relatedAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取快递平台列表
+ * Get a list of delivery platforms
  * @param params
  */
 export function getExpressPlatformList(params) {
@@ -18,7 +18,7 @@ export function getExpressPlatformList(params) {
 }
 
 /**
- * 修改快递平台
+ * Modify the express delivery platform
  * @param bean
  * @param params
  */
@@ -32,7 +32,7 @@ export function editExpressPlatform(bean, params) {
 }
 
 /**
- * 获取快递平台详细配置
+ * Get the detailed configuration of the delivery platform
  * @param bean
  */
 export function getExpressPlatformDetail(bean) {
@@ -43,7 +43,7 @@ export function getExpressPlatformDetail(bean) {
 }
 
 /**
- * 开启快递平台
+ * Open express delivery platform
  * @param bean
  */
 export function openExpressPlatformById(bean) {

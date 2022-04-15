@@ -1,6 +1,6 @@
 <template>
   <div class="bg-shop-summary">
-    <el-select v-model="type" placeholder="请选择" @change="changeHotType">
+    <el-select v-model="type" placeholder="Please select" @change="changeHotType">
       <el-option
         v-for="item in orderOptions"
         :key="item.value"
@@ -8,7 +8,7 @@
         :value="item.value"/>
     </el-select>
     <en-year-month-picker @changed="changeYearMonth"></en-year-month-picker>
-    <el-button type="primary" @click="handleSearchHot">开始搜索</el-button>
+    <el-button type="primary" @click="handleSearchHot">Begin your search</el-button>
     <br>
     <br>
     <div class="charts-info">
@@ -24,31 +24,31 @@
     name: 'regionalAnalysis',
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
-          /** 当前选择的日期类型 */
+          /** The currently selected date type*/
           cycle_type: 'MONTH',
 
-          /** 年份 */
+          /** year*/
           year: '2018',
 
-          /** 月份*/
+          /** in*/
           month: '6',
 
-          /** 数据类型 */
+          /** The data type*/
           type: 'ORDER_MEMBER_NUM'
         },
 
         type: 'ORDER_MEMBER_NUM',
 
-        /** 选择的数据项*/
+        /** The selected data item*/
         orderOptions: [
-          { label: '下单会员数', value: 'ORDER_MEMBER_NUM' },
-          { label: '下单金额', value: 'ORDER_PRICE' },
-          { label: '下单量', value: 'ORDER_NUM' }
+          { label: 'Number of single members', value: 'ORDER_MEMBER_NUM' },
+          { label: 'Place the order amount', value: 'ORDER_PRICE' },
+          { label: 'Order quantity', value: 'ORDER_NUM' }
         ],
 
         tableHeight: document.body.clientHeight * 0.82
@@ -63,10 +63,10 @@
       })
     },
     methods: {
-      /** 窗口缩放时计算table高度 */
+      /** Calculated when the window is zoomedtablehighly*/
       countTableHeight() {
         this.tableHeight = document.body.clientHeight * 0.82
-        /** 图表刷新 */
+        /** The chart to refresh*/
         if (this.regionalAnalysisMap) {
           setTimeout(this.regionalAnalysisMap.resize)
         }
@@ -75,7 +75,7 @@
         }
       },
 
-      /** 改变日期的回调*/
+      /** A callback that changes the date*/
       changeYearMonth(obj) {
         this.params = {
           ...this.params,
@@ -97,7 +97,7 @@
         }
       },
 
-      /** 改变焦点时触发 */
+      /** Triggered when changing focus*/
       changeHotType(target) {
         this.params = {
           ...this.params,
@@ -106,29 +106,29 @@
         this.type = target
       },
 
-      /** 搜索触发*/
+      /** Search the trigger*/
       handleSearchHot() {
         this.GET_RegionalAnalysis()
       },
 
-      /** 图表数据*/
+      /** The chart data*/
       GET_RegionalAnalysis() {
         API_regionalAnalysis.getRegionalAnalysisList(this.params).then(response => {
           this.loading = false
-          /** x轴信息  此处应当为中国34个行政区划的名称*/
+          /** xAxis information here should be China34The names of administrative divisions*/
           const xData = response.map((item) => { return item.name })
           const xName = this.orderOptions.filter(key => { return this.params.type === key.value })[0].label
 
-          /** tooltip提示信息 */
+          /** tooltipPrompt information*/
           let seriesName = ''
           this.orderOptions.forEach(key => {
             if (key.value === this.type) {
               seriesName = key.label
             }
           })
-          /** 地图 */
+          /** The map*/
           this.regionalAnalysisMap.setOption({
-            title: { text: '区域分析统计', x: 'center' },
+            title: { text: 'Regional analysis statistics', x: 'center' },
             tooltip: {
               trigger: 'item',
               show: true,
@@ -142,7 +142,7 @@
               max: 2500,
               left: 'left',
               top: 'bottom',
-              text: ['高', '低'],
+              text: ['high', 'low'],
               calculable: true
             },
             toolbox: {
@@ -174,9 +174,9 @@
               }
             ]
           })
-          /** 折线图 */
+          /** The line chart*/
           this.regionalAnalysisChart.setOption({
-            title: { text: '地区排行', x: 'center' },
+            title: { text: 'Regional ranking', x: 'center' },
             tooltip: {
               trigger: 'axis',
               show: true,
@@ -199,11 +199,11 @@
             xAxis: {
               name: xName,
               type: 'value',
-              // 设置成1保证坐标轴分割刻度显示成整数。
+              // Set to 1 to ensure that the coordinate axis partition scale is displayed as an integer.
               minInterval: 1
             },
             yAxis: {
-              name: '省级行政区划',
+              name: 'Provincial administrative division',
               type: 'category',
               axisTick: { show: false },
               data: xData
@@ -220,13 +220,13 @@
                 },
                 markPoint: {
                   data: [
-                    { type: 'max', name: '最大值' },
-                    { type: 'min', name: '最小值' }
+                    { type: 'max', name: 'The maximum' },
+                    { type: 'min', name: 'The minimum value' }
                   ]
                 },
                 markLine: {
                   data: [
-                    { type: 'average', name: '平均值' }
+                    { type: 'average', name: 'The average' }
                   ]
                 }
               }

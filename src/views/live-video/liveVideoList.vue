@@ -6,57 +6,57 @@
     >
       <div slot="toolbar" class="inner-toolbar">
         <div class="toolbar-btns">
-          <el-button @click="handleAddLiveVideo" type="primary">新增</el-button>
+          <el-button @click="handleAddLiveVideo" type="primary">new</el-button>
         </div>
         <div class="toolbar-search">
-          <en-table-search @search="searchEvent" placeholder="请输入主播微信号"/>
+          <en-table-search @search="searchEvent" placeholder="Please enter anchor WeChat ID"/>
         </div>
       </div>
       <template slot="table-columns">
-        <!--直播ID-->
-        <el-table-column label="直播ID">
+        <!--liveID-->
+        <el-table-column label="liveID">
           <template slot-scope="scope">
             <span>{{ scope.row.we_chat_room_id || '-' }}</span>
           </template>
         </el-table-column>
-        <!--直播时间-->
-        <el-table-column label="直播时间" min-width="200">
+        <!--Live time-->
+        <el-table-column label="Live time" min-width="200">
           <template slot-scope="scope">
-            <span>{{ scope.row.start_time | unixToDate }}</span>至
+            <span>{{ scope.row.start_time | unixToDate }}</span>to
             <span>{{ scope.row.end_time | unixToDate }}</span>
           </template>
         </el-table-column>
-        <!--直播间名称-->
-        <el-table-column prop="room_name" label="直播间名称"/>
-        <!--主播微信号-->
-        <el-table-column prop="anchor_we_chat" label="主播微信号"/>
-        <!--直播状态-->
-        <el-table-column label="直播状态">
+        <!--Name of broadcast room-->
+        <el-table-column prop="room_name" label="Name of broadcast room"/>
+        <!--Anchor WeChat ID-->
+        <el-table-column prop="anchor_we_chat" label="Anchor WeChat ID"/>
+        <!--Broadcast live on state-->
+        <el-table-column label="Broadcast live on state">
           <template slot-scope="scope">{{ scope.row.status | filterStatus }}</template>
         </el-table-column>
-        <!--操作-->
-        <el-table-column label="操作" min-width="300">
+        <!--Operation-->
+        <el-table-column label="Operation" min-width="300">
           <template slot-scope="scope">
             <el-button
               size="mini"
               type="primary"
               :disabled="!!scope.row.we_chat_room_id || scope.row.status === '103'"
-              @click="handleSubmitAudit(scope.$index, scope.row)">提交审核</el-button>
+              @click="handleSubmitAudit(scope.$index, scope.row)">Submit audit</el-button>
             <el-button
               size="mini"
               type="primary"
               :disabled="scope.row.status === '103' || !scope.row.we_chat_room_id"
-              @click="handleEditGoods(scope.$index, scope.row)">编辑商品</el-button>
+              @click="handleEditGoods(scope.$index, scope.row)">Edit commodity</el-button>
             <el-button
               size="mini"
               type="primary"
               :disabled="!!scope.row.we_chat_room_id || scope.row.status === '103'"
-              @click="handleEditLiveVideo(scope.$index, scope.row)">修改</el-button>
+              @click="handleEditLiveVideo(scope.$index, scope.row)">edit</el-button>
             <el-button
               size="mini"
               type="primary"
               :disabled="scope.row.status === '101'"
-              @click="handleDeleteLiveVideo(scope.$index, scope.row)">删除</el-button>
+              @click="handleDeleteLiveVideo(scope.$index, scope.row)">delete</el-button>
           </template>
         </el-table-column>
       </template>
@@ -72,30 +72,30 @@
         :total="tableData.data_total">
       </el-pagination>
     </en-table-layout>
-    <el-dialog title="新增直播间" :visible.sync="liveModelShow" :close-on-click-modal="false" width="30%">
+    <el-dialog title="New broadcast room" :visible.sync="liveModelShow" :close-on-click-modal="false" width="30%">
       <el-form :model="liveVideoData" label-position="right" ref="liveVideoData" label-width="130px" :rules="rules" status-icon>
-        <el-form-item label="直播间名称：" prop="room_name">
-          <el-input v-model="liveVideoData.room_name" maxlength="50" placeholder="请输入直播间名称" style="width: 100%;"></el-input>
+        <el-form-item label="Name of broadcast room：" prop="room_name">
+          <el-input v-model="liveVideoData.room_name" maxlength="50" placeholder="Please enter the studio name" style="width: 100%;"></el-input>
         </el-form-item>
-        <el-form-item label="生效时间：" prop="live_video_time" style="text-align: left">
+        <el-form-item label="Effect of time：" prop="live_video_time" style="text-align: left">
           <el-date-picker
             v-model="liveVideoData.live_video_time"
             type="datetimerange"
             value-format="timestamp"
             range-separator="-"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+            start-placeholder="Start date"
+            end-placeholder="End date"
             :default-time="['00:00:00', '23:59:59']"
             :picker-options="{disabledDate(time) {return time.getTime()  <  (Date.now() - 8.64E7)   ||  time.getTime() > endTime }}">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="主播昵称：" prop="anchor_name">
-          <el-input v-model="liveVideoData.anchor_name" maxlength="100" placeholder="请输入主播昵称"></el-input>
+        <el-form-item label="The host nickname：" prop="anchor_name">
+          <el-input v-model="liveVideoData.anchor_name" maxlength="100" placeholder="Please enter the anchor nickname"></el-input>
         </el-form-item>
-        <el-form-item label="主播微信号：" prop="anchor_we_chat">
-          <el-input v-model="liveVideoData.anchor_we_chat" maxlength="50" placeholder="请输入主播微信号"></el-input>
+        <el-form-item label="Anchor WeChat ID：" prop="anchor_we_chat">
+          <el-input v-model="liveVideoData.anchor_we_chat" maxlength="50" placeholder="Please enter anchor WeChat ID"></el-input>
         </el-form-item>
-        <el-form-item label="直播间封面图：" prop="feeds_img_url">
+        <el-form-item label="Cover of the studio：" prop="feeds_img_url">
           <el-upload
             :action="MixinWXUploadApi"
             :data="data"
@@ -106,13 +106,13 @@
             :before-upload="handleFeedsImgBefore"
             :on-remove="() => { liveVideoData.feeds_img = ''; liveVideoData.feeds_img_url = ''; feeds_img_file = [] }"
             :on-success="(res) => { liveVideoData.feeds_img = res.media_id; liveVideoData.feeds_img_url = res.url; this.$refs['liveVideoData'].validateField('feeds_img_url') }"
-            :on-exceed="() => { $message.error('文件数量超过限制！') }">
+            :on-exceed="() => { $message.error('The number of files exceeds the limit！') }">
             <i class="el-icon-plus avatar-uploader-icon"></i>
-            <div slot="tip" class="el-upload__tip">建议像素1080*1920，大小不超过2M</div>
+            <div slot="tip" class="el-upload__tip">Suggest pixel1080*1920, the size of no more than2M</div>
           </el-upload>
         </el-form-item>
 
-        <el-form-item label="直播间背景图：" prop="background_image_url">
+        <el-form-item label="Background of the studio：" prop="background_image_url">
           <el-upload
             :action="MixinWXUploadApi"
             :data="data"
@@ -123,12 +123,12 @@
             :before-upload="handleBackgroundImgBefore"
             :on-remove="() => { liveVideoData.background_image = ''; liveVideoData.background_image_url = ''; background_image_file = [] }"
             :on-success="(res) => { liveVideoData.background_image = res.media_id; liveVideoData.background_image_url = res.url; this.$refs['liveVideoData'].validateField('background_image_url') }"
-            :on-exceed="() => { $message.error('文件数量超过限制！') }">
+            :on-exceed="() => { $message.error('The number of files exceeds the limit！') }">
             <i class="el-icon-plus avatar-uploader-icon"></i>
-            <div slot="tip" class="el-upload__tip">建议像素1080*1920，大小不超过2M</div>
+            <div slot="tip" class="el-upload__tip">Suggest pixel1080*1920, the size of no more than2M</div>
           </el-upload>
         </el-form-item>
-        <el-form-item label="直播间分享图：" prop="share_img_url">
+        <el-form-item label="Share pictures in the studio：" prop="share_img_url">
           <el-upload
             :action="MixinWXUploadApi"
             :data="data"
@@ -139,33 +139,33 @@
             :before-upload="handleShareImgBefore"
             :on-remove="() => { liveVideoData.share_img = ''; liveVideoData.share_img_url= ''; share_img_file = [] }"
             :on-success="(res) => { liveVideoData.share_img = res.media_id; liveVideoData.share_img_url = res.url; this.$refs['liveVideoData'].validateField('share_img_url') }"
-            :on-exceed="() => { $message.error('文件数量超过限制！') }">
+            :on-exceed="() => { $message.error('The number of files exceeds the limit！') }">
             <i class="el-icon-plus avatar-uploader-icon"></i>
-            <div slot="tip" class="el-upload__tip">建议像素800*640，大小不超过1M</div>
+            <div slot="tip" class="el-upload__tip">Suggest pixel800*640, the size of no more than1M</div>
           </el-upload>
         </el-form-item>
-        <el-form-item label="点赞功能：" prop="close_like">
+        <el-form-item label="Thumb up function：" prop="close_like">
           <el-radio-group v-model="liveVideoData.close_like">
-            <el-radio :label="1">关闭点赞</el-radio>
-            <el-radio :label="0">开启点赞</el-radio>
+            <el-radio :label="1">Close the thumb up</el-radio>
+            <el-radio :label="0">Open the thumb up</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="货架功能：" prop="close_goods">
+        <el-form-item label="Shelves function：" prop="close_goods">
           <el-radio-group v-model="liveVideoData.close_goods">
-            <el-radio :label="1">关闭货架</el-radio>
-            <el-radio :label="0">开启货架</el-radio>
+            <el-radio :label="1">Close the shelves</el-radio>
+            <el-radio :label="0">Open shelves</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="评论功能：" prop="close_comment">
+        <el-form-item label="The comment function：" prop="close_comment">
           <el-radio-group v-model="liveVideoData.close_comment">
-            <el-radio :label="1">关闭评论</el-radio>
-            <el-radio :label="0">开启评论</el-radio>
+            <el-radio :label="1">Closing comments</el-radio>
+            <el-radio :label="0">Open comment</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="liveModelShow = false">取 消</el-button>
-        <el-button type="primary" @click="handleReserveLiveVideo('liveVideoData')">确 定</el-button>
+        <el-button @click="liveModelShow = false">cancel</el-button>
+        <el-button type="primary" @click="handleReserveLiveVideo('liveVideoData')">save</el-button>
       </div>
     </el-dialog>
   </div>
@@ -181,24 +181,24 @@
         data: {
           type: 'image'
         },
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
-        /** 列表数据 */
+        /** The list of data*/
         tableData: '',
-        /** 新增直播间弹窗 */
+        /** Added live broadcast pop-up window*/
         liveModelShow: false,
-        /** 封面图片 */
+        /** Cover photo*/
         feeds_img_file: [],
-        /** 存储上传的背景图片*/
+        /** Store uploaded background images*/
         background_image_file: [],
-        /** 存储上传的分享图片*/
+        /** Store uploaded shared images*/
         share_img_file: [],
-        /** 新增直播间数据 */
+        /** Added live broadcast room data*/
         liveVideoData: {
           room_name: '',
           live_video_time: [],
@@ -214,38 +214,38 @@
         },
         liveVideoId: '',
         endTime: '',
-        /** 校验规则 */
+        /** Validation rules*/
         rules: {
           room_name: [
-            { required: true, message: '请输入直播间名称', trigger: 'blur' },
-            { min: 6, max: 17, message: '直播间名称长度在6-17个字符', trigger: 'blur' }
+            { required: true, message: 'Please enter the studio name', trigger: 'blur' },
+            { min: 6, max: 17, message: 'The studio name length is at6-17A character', trigger: 'blur' }
           ],
-          /** 生效时间 */
+          /** Effect of time*/
           live_video_time: [
-            { required: true, message: '请输入生效时间', trigger: 'blur' },
+            { required: true, message: 'Please enter the effective date', trigger: 'blur' },
             { type: 'array', trigger: 'blur' }
           ],
           anchor_name: [
-            { required: true, message: '请输入主播昵称', trigger: 'blur' },
-            { min: 4, max: 15, message: '主播昵称长度在4-15个字符', trigger: 'blur' }
+            { required: true, message: 'Please enter the anchor nickname', trigger: 'blur' },
+            { min: 4, max: 15, message: 'Anchor nickname length at4-15A character', trigger: 'blur' }
           ],
           anchor_we_chat: [
-            { required: true, message: '请输入主播微信号', trigger: 'blur' }
+            { required: true, message: 'Please enter anchor WeChat ID', trigger: 'blur' }
           ],
           background_image_url: [
-            { required: true, message: '请选择直播间背景图', trigger: 'blur' }
+            { required: true, message: 'Please select the studio background', trigger: 'blur' }
           ],
           share_img_url: [
-            { required: true, message: '请选择直播间分享景图', trigger: 'blur' }
+            { required: true, message: 'Please select a studio to share your view', trigger: 'blur' }
           ],
           close_like: [
-            { required: true, message: '请选择点赞功能', trigger: 'blur' }
+            { required: true, message: 'Please select the "like" function', trigger: 'blur' }
           ],
           close_goods: [
-            { required: true, message: '请选择货架功能', trigger: 'blur' }
+            { required: true, message: 'Please select shelf function', trigger: 'blur' }
           ],
           close_comment: [
-            { required: true, message: '请选择评论功能', trigger: 'blur' }
+            { required: true, message: 'Please select the comment feature', trigger: 'blur' }
           ]
         }
       }
@@ -275,33 +275,33 @@
       }
     },
     filters: {
-      /** 直播状态 */
+      /** Broadcast live on state*/
       filterStatus(val) {
         switch (val) {
-          case '101': return '直播中'
-          case '102': return '未开始'
-          case '103': return '已结束'
-          case '104': return '禁播'
-          case '105': return '暂停中'
-          case '106': return '异常'
-          case '107': return '已过期'
+          case '101': return 'Live in the'
+          case '102': return 'Not at the'
+          case '103': return 'Has ended'
+          case '104': return 'banned'
+          case '105': return 'In the pause'
+          case '106': return 'abnormal'
+          case '107': return 'expired'
         }
       }
     },
     methods: {
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_LiveVideoList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_LiveVideoList()
       },
 
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       searchEvent(keyword) {
         this.params.page_no = 1
         this.params = {
@@ -313,100 +313,100 @@
         this.GET_LiveVideoList()
       },
 
-      /** 提交审核 */
+      /** Submit audit*/
       handleSubmitAudit(index, row) {
-        this.$confirm('确定要提交审核吗？', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('Are you sure you want to submit it for review？', 'prompt', {
+          confirmButtonText: 'save',
+          cancelButtonText: 'cancel',
           type: 'warning'
         }).then(() => {
           API_Live.auditLiveVideoRooms(row.id).then(() => {
             this.GET_LiveVideoList()
-            this.$message.success('提交成功！')
+            this.$message.success('Submitted successfully！')
           })
         })
       },
 
-      /** 编辑商品 */
+      /** Edit commodity*/
       handleEditGoods(index, row) {
         this.$router.push({ name: 'editLiveVideoGoods', params: { room_id: row.we_chat_room_id }})
       },
 
-      /** 新增直播间 */
+      /** New broadcast room*/
       handleAddLiveVideo() {
         this.liveVideoId = ''
         this.share_img_file = []
         this.background_image_file = []
         this.liveModelShow = true
         setTimeout(() => { this.$refs['liveVideoData'].resetFields() })
-        // 获取某天23:59:59秒的时间戳
+        // Gets the timestamp of 23:59:59 seconds for a certain day
         this.endTime = new Date(new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 * 1000 * 30 - 1).getTime()
       },
 
-      /** 修改直播信息 */
+      /** Modifying Live Broadcast Information*/
       handleEditLiveVideo(index, row) {
         this.liveModelShow = true
         this.liveVideoId = row.id
         this.endTime = new Date(new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 * 1000 * 30 - 1).getTime()
       },
 
-      /** 删除直播间 */
+      /** Delete the studio*/
       handleDeleteLiveVideo(index, row) {
-        this.$confirm('确定要删除此直播吗？', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('Are you sure you want to delete this live stream？', 'prompt', {
+          confirmButtonText: 'save',
+          cancelButtonText: 'cancel',
           type: 'warning'
         }).then(() => {
           API_Live.deleteLiveVideo(row.id).then(() => {
             this.GET_LiveVideoList()
-            this.$message.success('删除成功！')
+            this.$message.success('Delete the success！')
           })
         })
       },
 
       //
 
-      /** 直播间封面图上传前校验 */
+      /** Check the cover image of broadcast room before uploading*/
       handleFeedsImgBefore(file) {
         const isType = file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png'
         const isLt2M = file.size / 1024 / 1024 < 2
         if (!isType) {
-          this.$message.error('上传直播间背景图片只能是 JPG、JPEG或PNG格式!')
+          this.$message.error('Upload studio background picture can only beJPG、JPEGorPNGFormat!')
           return isType
         }
         if (!isLt2M) {
-          this.$message.error('上传直播间背景图片大小不能超过2MB!')
+          this.$message.error('The size of the background picture in the broadcast room should not exceed2MB!')
         }
         return isType && isLt2M
       },
-      /** 直播间背景图上传前校验 */
+      /** Verify the background image of broadcast room before uploading*/
       handleBackgroundImgBefore(file) {
         const isType = file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png'
         const isLt2M = file.size / 1024 / 1024 < 2
         if (!isType) {
-          this.$message.error('上传直播间背景图片只能是 JPG、JPEG或PNG格式!')
+          this.$message.error('Upload studio background picture can only beJPG、JPEGorPNGFormat!')
           return isType
         }
         if (!isLt2M) {
-          this.$message.error('上传直播间背景图片大小不能超过2MB!')
+          this.$message.error('The size of the background picture in the broadcast room should not exceed2MB!')
         }
         return isType && isLt2M
       },
 
-      /** 直播间分享图上传前校验 */
+      /** Live broadcast studio shared pictures before uploading verification*/
       handleShareImgBefore(file) {
         const isType = file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png'
         const isLt1M = file.size / 1024 / 1024 < 1
         if (!isType) {
-          this.$message.error('上传直播间分享图片只能是 JPG、JPEG或PNG格式!')
+          this.$message.error('Uploading pictures to broadcast studio can only be doneJPG、JPEGorPNGFormat!')
         }
         if (!isLt1M) {
-          this.$message.error('上传直播间分享图片大小不能超过1MB!')
+          this.$message.error('The size of pictures Shared in the broadcast room should not exceed1MB!')
         }
         return isType && isLt1M
       },
 
-      /** 保存直播间数据 */
+      /** Save broadcast room data*/
       handleReserveLiveVideo() {
         this.$refs['liveVideoData'].validate((valid) => {
           if (valid) {
@@ -418,24 +418,24 @@
             delete _params.live_video_time
             if (this.liveVideoId) {
               API_Live.updateLiveVideo(this.liveVideoId, _params).then(response => {
-                this.$message.success('修改成功')
+                this.$message.success('Modify the success')
                 this.liveModelShow = false
                 this.GET_LiveVideoList()
               })
             } else {
               API_Live.addLiveVideoRooms(_params).then(response => {
-                this.$message.success('添加成功')
+                this.$message.success('Add a success')
                 this.liveModelShow = false
                 this.GET_LiveVideoList()
               })
             }
           } else {
-            this.$message.error('表单存在错误，请修改')
+            this.$message.error('There is an error in the form. Please modify it')
           }
         })
       },
 
-      /** 获取一个直播详情 */
+      /** Get a live broadcast details*/
       GET_LiveVideoDetail() {
         API_Live.getLiveVideo(this.liveVideoId).then(response => {
           this.liveVideoData = {
@@ -448,7 +448,7 @@
         })
       },
 
-      /** 获取直播列表 */
+      /** Get live list*/
       GET_LiveVideoList() {
         this.loading = true
         const { params } = this

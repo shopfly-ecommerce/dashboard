@@ -5,10 +5,10 @@
     :loading="loading"
   >
     <template slot="table-columns">
-      <el-table-column prop="time" :formatter="MixinUnixToDate" label="日期"/>
-      <el-table-column prop="operator" label="操作者"></el-table-column>
-      <el-table-column prop="reason" label="明细"></el-table-column>
-      <el-table-column label="等级积分">
+      <el-table-column prop="time" :formatter="MixinUnixToDate" label="The date of"/>
+      <el-table-column prop="operator" label="The operator"></el-table-column>
+      <el-table-column prop="reason" label="The detail"></el-table-column>
+      <el-table-column label="Level of integration">
         <template slot-scope="{ row }">
           <span v-if="row.grade_point === 0">{{ row.grade_point }}</span>
           <span v-else-if="row.grade_point_type === 0">
@@ -17,7 +17,7 @@
           <span v-else>+{{ row.grade_point }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="消费积分">
+      <el-table-column label="score">
         <template slot-scope="{ row }">
           <span v-if="row.consum_point === 0">{{ row.consum_point }}</span>
           <span v-else-if="row.consum_point_type === 0">
@@ -50,19 +50,19 @@
     props: ['member-id'],
     data() {
       return {
-        // 列表loading状态
+        // List loading status
         loading: false,
-        // 列表参数
+        // A list of parameters
         params: {
           page_no: 1,
           page_size: 10,
           member_id: this.memberId
         },
-        // 列表数据
+        // The list of data
         tableData: '',
-        // 查看咨询dialog
+        // View Consultation Dialog
         dialogReviewVisible: false,
-        // 查看的详情
+        // View details
         reviewAsk: {}
       }
     },
@@ -76,19 +76,19 @@
       }
     },
     methods: {
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_MemberListPoints()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_MemberListPoints()
       },
 
-      /** 获取会员积分列表 */
+      /** Get a list of member credits*/
       GET_MemberListPoints() {
         this.loading = true
         API_Member.getMemberPointList(this.params).then(response => {

@@ -6,8 +6,8 @@
 		>
 			<div slot="toolbar" class="inner-toolbar">
 				<div class="toolbar-btns">
-					<el-button size="mini" type="primary" @click="addDialogVisible = true">添加分词</el-button>
-					<el-button size="mini" type="primary" @click="dialogSecret = true">设置秘钥</el-button>
+					<el-button size="mini" type="primary" @click="addDialogVisible = true">Add the word</el-button>
+					<el-button size="mini" type="primary" @click="dialogSecret = true">Set the secret key</el-button>
 				</div>
 				<div class="toolbar-search">
 					<en-table-search @search="searchEvent"/>
@@ -15,18 +15,18 @@
 			</div>
 
 			<template slot="table-columns">
-				<el-table-column prop="name" label="关键词" width="120"/>
-				<el-table-column label="添加时间">
+				<el-table-column prop="name" label="keywords" width="120"/>
+				<el-table-column label="Add the time">
 					<template slot-scope="scope">
 						{{ scope.row.add_time | unixToDate }}
 					</template>
 				</el-table-column>
-				<el-table-column label="操作" width="150">
+				<el-table-column label="Operation" width="150">
 					<template slot-scope="scope">
 						<el-button
 							size="mini"
 							type="danger"
-							@click="handleDelKeyword(scope.index, scope.row)">删除</el-button>
+							@click="handleDelKeyword(scope.index, scope.row)">delete</el-button>
 					</template>
 				</el-table-column>
 			</template>
@@ -43,34 +43,34 @@
 				:total="tableData.data_total">
 			</el-pagination>
 		</en-table-layout>
-		<!--设置关键词-->
+		<!--Set keywords-->
 		<el-dialog
-			title="设置关键词"
+			title="Set keywords"
 			:visible.sync="addDialogVisible"
 			width="30%">
 			<el-form>
-				<el-form-item label="关键词" label-width="100px">
-					<el-input v-model="customName" placeholder="请输入关键词" autocomplete="off"></el-input>
+				<el-form-item label="keywords" label-width="100px">
+					<el-input v-model="customName" placeholder="Please enter keywords" autocomplete="off"></el-input>
 				</el-form-item>
 			</el-form>
 			<span slot="footer" class="dialog-footer">
-		    <el-button @click="addDialogVisible = false">取 消</el-button>
-		    <el-button type="primary" @click=handleAddKeyword>保 存</el-button>
+		    <el-button @click="addDialogVisible = false">cancel</el-button>
+		    <el-button type="primary" @click=handleAddKeyword>save</el-button>
 		  </span>
 		</el-dialog>
-		<!--设置秘钥-->
+		<!--Set the secret key-->
 		<el-dialog
-			title="设置密钥"
+			title="Set the key"
 			:visible.sync="dialogSecret"
 			width="30%">
 			<el-form>
-				<el-form-item label="密钥" label-width="100px">
+				<el-form-item label="The key" label-width="100px">
 					<el-input v-model="secretKey" autocomplete="off"></el-input>
 				</el-form-item>
 			</el-form>
 			<span slot="footer" class="dialog-footer">
-		    <el-button @click="dialogSecret = false">取 消</el-button>
-		    <el-button type="primary" @click=setSecretKey>保 存</el-button>
+		    <el-button @click="dialogSecret = false">cancel</el-button>
+		    <el-button type="primary" @click=setSecretKey>save</el-button>
 		  </span>
 		</el-dialog>
 	</div>
@@ -84,28 +84,28 @@
     name: 'searchKeyword',
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
 
-        /** 搜索列表数据 */
+        /** Search for list data*/
         tableData: '',
 
-        /** 添加关键词是否显示 */
+        /** Add whether keywords are displayed*/
         addDialogVisible: false,
 
-        /** 自定义关键词 */
+        /** Custom keywords*/
         customName: '',
 
-        /** 设置密钥 */
+        /** Set the key*/
         dialogSecret: false,
 
-        /** 密钥 */
+        /** The key*/
         secretKey: ''
       }
     },
@@ -117,19 +117,19 @@
     },
     methods: {
 
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_SearchKeywordsList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_SearchKeywordsList()
       },
 
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       searchEvent(data) {
         this.params = {
           ...this.params,
@@ -139,10 +139,10 @@
         this.GET_SearchKeywordsList()
       },
 
-      /** 添加自定义分词 */
+      /** Add custom participles*/
       handleAddKeyword() {
         if (!this.customName) {
-          this.$message.error('分词名称不能为空')
+          this.$message.error('Participle names cannot be empty')
           return
         }
         this.loading = true
@@ -151,27 +151,27 @@
           this.loading = false
           this.addDialogVisible = false
           this.customName = ''
-          this.$message.success('添加成功')
+          this.$message.success('Add a success')
           this.GET_SearchKeywordsList()
         }).catch(() => (this.loading = false))
       },
 
-      /** 删除关键词 */
+      /** Delete keywords*/
       handleDelKeyword(index, row) {
-        this.$confirm('确定要删除这个关键词么？', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Are you sure you want to delete this keyword？', 'prompt', { type: 'warning' }).then(() => {
           this.loading = true
           API_search.delSearchKeyword(row.id).then(_ => {
             this.loading = false
-            this.$message.success('删除成功！')
+            this.$message.success('Delete the success！')
             this.GET_SearchKeywordsList()
           }).catch(() => (this.loading = false))
         }).catch(() => {})
       },
 
-      /** 设置密钥 */
+      /** Set the key*/
       setSecretKey() {
         if (!this.secretKey) {
-          this.$message.error('密钥不能为空')
+          this.$message.error('The key cannot be empty')
           return
         }
         this.loading = true
@@ -180,11 +180,11 @@
           this.loading = false
           this.dialogSecret = false
           this.secretKey = ''
-          this.$message.success('设置成功')
+          this.$message.success('Set up the success')
         }).catch(() => (this.loading = false))
       },
 
-      /** 获取关键词列表 */
+      /** Get a list of keywords*/
       GET_SearchKeywordsList() {
         this.loading = true
         API_search.getSearchKeywordsList(this.params).then(response => {

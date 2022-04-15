@@ -7,8 +7,8 @@
       :tableData="tableData">
       <div slot="toolbar" class="inner-toolbar">
         <div class="toolbar-btns">
-          <span style="font-size: 14px;">订单状态：</span>
-          <el-select v-model="params.order_status" placeholder="请选择订单状态" @change="changeOrderStatus">
+          <span style="font-size: 14px;">Status：</span>
+          <el-select v-model="params.order_status" placeholder="Please select the order status" @change="changeOrderStatus">
             <el-option
               v-for="item in orderStatusList"
               :key="item.value"
@@ -16,8 +16,8 @@
               :value="item.value">
             </el-option>
           </el-select>
-          <el-button size="mini" type="primary" icon="el-icon-download" @click="handleExportOrders" style="margin-left: 5px">导出Excel</el-button>
-          <span class="exprot-tip">导出时，会按右侧高级搜索中的筛选条件导出全部数据。如果不需要，请先清空筛选条件！</span>
+          <el-button size="mini" type="primary" icon="el-icon-download" @click="handleExportOrders" style="margin-left: 5px">exportExcel</el-button>
+          <span class="exprot-tip">When you export, all the data is exported by filtering criteria in the advanced search on the right. If not, clear the filter first！</span>
         </div>
         <div class="toolbar-search">
           <en-table-search
@@ -25,19 +25,19 @@
             @advancedSearch="advancedSearchEvent"
             advanced
             advancedWidth="465"
-            placeholder="请输入订单编号或者商品名称">
+            placeholder="Please enter your order number or commodity name">
             <template slot="advanced-content">
               <el-form ref="advancedForm" :model="advancedForm" label-width="80px">
-                <el-form-item label="订单编号">
+                <el-form-item label="Order no.">
                   <el-input v-model="advancedForm.order_sn" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="商品名称">
+                <el-form-item label="Name">
                   <el-input v-model="advancedForm.goods_name" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="买家账号">
+                <el-form-item label="Buyers account">
                   <el-input v-model="advancedForm.buyer_name" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="下单日期">
+                <el-form-item label="Date of order">
                   <el-date-picker
                     v-model="advancedForm.order_time_range"
                     type="daterange"
@@ -45,8 +45,8 @@
                     :editable="false"
                     unlink-panels
                     range-separator="-"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期">
+                    start-placeholder="Start date"
+                    end-placeholder="End date">
                   </el-date-picker>
                 </el-form-item>
               </el-form>
@@ -59,32 +59,32 @@
       <table class="my-table">
         <thead>
         <tr class="bg-order">
-          <th class="shoplist-header"><span style="width: 100%;">商品名称</span> <span>单价/数量</span></th>
-          <th>买家</th>
-          <!--<th>下单时间</th>-->
-          <th>订单状态</th>
-          <!--<th>来源</th>-->
-          <th>实付金额</th>
+          <th class="shoplist-header"><span style="width: 100%;">Name</span> <span>Price/Quantity</span></th>
+          <th>buyers</th>
+          <!--<th>Create time</th>-->
+          <th>Status</th>
+          <!--<th>source</th>-->
+          <th>Amount of real pay</th>
         </tr>
         </thead>
         <tbody v-for="item in tableData">
         <tr style="width: 100%;height: 10px;"></tr>
         <tr class="bg-order">
           <td class="shoplist-content-out" colspan="3">
-            订单编号：{{item.sn}}
+            Order no.：{{item.sn}}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            下单时间: {{ item.create_time | unixToDate }}
+            Create time: {{ item.create_time | unixToDate }}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            来源: {{ item.client_type }}
+            source: {{ item.client_type }}
             <svg-icon v-if="item.client_type === 'PC'" iconClass="pc" style="width: 15px;height: 15px;" />
             <svg-icon v-if="item.client_type === 'WAP' || item.client_type === 'APP'" iconClass="mobile" style="width: 15px;height: 15px;"/>
           </td>
           <td>
-            <el-button type="text" @click="handleOperateOrder(item)">查看详情</el-button>
+            <el-button type="text" @click="handleOperateOrder(item)">Check the details</el-button>
           </td>
         </tr>
         <tr>
-          <!--商品-->
+          <!--product-->
           <td>
             <p v-for="shop in item.sku_list" class="shoplist-content">
               <span class="goods-info">
@@ -93,31 +93,31 @@
               </span>
               <span>
                 <a class="trade-record" :href="`${MixinBuyerDomain}/goods/snapshot?id=${shop.snapshot_id}&sku_id=${shop.sku_id}&orderData=${item.order_amount}`" target="_blank">
-                  <el-button type="text">交易快照</el-button>
+                  <el-button type="text">Trading snapshot</el-button>
                 </a>
                 <span>{{shop.original_price | unitPrice('￥')}}</span> × <span>{{ shop.num }}</span>
               </span>
             </p>
           </td>
-          <!--买家-->
+          <!--buyers-->
           <td> {{ item.member_name }}</td>
-          <!--订单状态-->
+          <!--Status-->
           <td>{{ item.order_status_text }}</td>
-          <!--实付金额-->
+          <!--Amount of real pay-->
           <td>
             <div class="order-money">
-              <!--订单总金额-->
+              <!--Total order amount-->
               <span class="order-amount">{{ item.order_amount | unitPrice('￥')}}</span>
-              <!--运费/邮费-->
-              <span>运费({{ item.shipping_amount | unitPrice('￥') }})</span>
-              <!--支付方式-->
+              <!--freight/The postage-->
+              <span>freight({{ item.shipping_amount | unitPrice('￥') }})</span>
+              <!--Method of payment-->
               <span>{{ item.payment_name }}</span>
             </div>
           </td>
         </tr>
         </tbody>
         <div v-if="tableData.length === 0 " class="empty-block">
-          暂无数据
+          no data
         </div>
       </table>
     </div>
@@ -147,36 +147,36 @@
     },
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10,
           ...this.$route.query
         },
 
-        /** 列表数据 */
+        /** The list of data*/
         tableData: [],
 
-        /** 列表分页数据 */
+        /** List paging data*/
         pageData: [],
 
-        /** 高级搜索数据 */
+        /** Advanced search data*/
         advancedForm: {},
 
-        /** 订单状态 列表*/
+        /** Order Status list*/
         orderStatusList: [
-          { value: 'ALL', label: '全部' },
-          { value: 'WAIT_PAY', label: '待付款' },
-          { value: 'WAIT_SHIP', label: '待发货' },
-          { value: 'WAIT_ROG', label: '待收货' },
-          { value: 'COMPLETE', label: '已完成' },
-          { value: 'CANCELLED', label: '已取消' }
+          { value: 'ALL', label: 'all' },
+          { value: 'WAIT_PAY', label: 'For the payment' },
+          { value: 'WAIT_SHIP', label: 'To send the goods' },
+          { value: 'WAIT_ROG', label: 'For the goods' },
+          { value: 'COMPLETE', label: 'Has been completed' },
+          { value: 'CANCELLED', label: 'Has been cancelled' }
         ],
 
-        /** 表格最大高度 */
+        /** Table maximum height*/
         tableMaxHeight: (document.body.clientHeight - 54 - 34 - 50 - 15)
       }
     },
@@ -202,24 +202,24 @@
       next()
     },
     methods: {
-      /** 计算高度 */
+      /** Calculate height*/
       countTableHeight() {
         this.tableHeight = (document.body.clientHeight - 54 - 35 - 50)
       },
 
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_OrderList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_OrderList()
       },
 
-      /** 订单状态改变 */
+      /** Order status change*/
       changeOrderStatus(data) {
         delete this.params.keywords
         delete this.params.order_status
@@ -235,7 +235,7 @@
         this.GET_OrderList()
       },
 
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       searchEvent(data) {
         this.params = {
           ...this.params,
@@ -246,7 +246,7 @@
         this.GET_OrderList()
       },
 
-      /** 高级搜索事件触发 */
+      /** Advanced search event triggered*/
       advancedSearchEvent() {
         this.params = {
           ...this.params,
@@ -263,29 +263,29 @@
         this.GET_OrderList()
       },
 
-      /** 查看、操作订单 */
+      /** To view、The operation order*/
       handleOperateOrder(item) {
         this.$router.push({ path: `/order/detail/${item.sn}` })
       },
 
-      /** 导出订单 */
+      /** Export orders*/
       handleExportOrders() {
         API_order.exportOrders(this.params).then(response => {
           const json = {
-            sheet_name: '订单列表',
+            sheet_name: 'The order list',
             sheet_values: response.map(item => ({
-              '订单编号': item.sn,
-              '下单时间': Foundation.unixToDate(item.create_time),
-              '订单总额': Foundation.formatPrice(item.order_amount),
-              '收货人': item.ship_name,
-              '订单状态': item.order_status_text,
-              '付款状态': item.pay_status_text,
-              '发货状态': item.ship_status_text,
-              '支付方式': item.payment_type === 'ONLINE' ? '在线支付' : '货到付款',
-              '订单来源': item.client_type
+              'Order no.': item.sn,
+              'Create time': Foundation.unixToDate(item.create_time),
+              'The total order': Foundation.formatPrice(item.order_amount),
+              'The consignee': item.ship_name,
+              'Status': item.order_status_text,
+              'Payment status': item.pay_status_text,
+              'The delivery status': item.ship_status_text,
+              'Method of payment': item.payment_type === 'ONLINE' ? 'Online payment' : 'Cash on delivery',
+              'Source of the order': item.client_type
             }))
           }
-          this.MixinExportJosnToExcel(json, '订单列表')
+          this.MixinExportJosnToExcel(json, 'The order list')
         })
       },
 
@@ -310,7 +310,7 @@
     height: 70px;
     padding: 20px 0;
   }
-  /* 工具条*/
+  /* The toolbar*/
   .inner-toolbar {
     display: flex;
     width: 100%;
@@ -318,7 +318,7 @@
     padding: 0 20px;
   }
 
-  /*暂无数据时的样式*/
+  /*A pattern in the absence of data*/
   /deep/ .el-table__empty-block {
     display: none;
   }
@@ -334,7 +334,7 @@
     color: #606266;
   }
 
-  /*表格信息*/
+  /*Form information*/
   .my-table-out{
     white-space: nowrap;
     overflow-y: scroll;
@@ -388,7 +388,7 @@
         padding-left: 20px;
       }
 
-      /*商品信息*/
+      /*Product information*/
       p.shoplist-content:not(:last-child) {
         border-bottom: 1px solid #ebeef5;
         border-collapse: collapse;
@@ -434,19 +434,19 @@
         }
       }
     }
-    /* 商品图片 */
+    /* Commodity images*/
     .goods-image {
       width: 50px;
       height: 50px;
     }
-    /** 交易快照 */
+    /** Trading snapshot*/
     .trade-record {
       display: inline-block;
       margin-right: 50px;
     }
   }
 
-  /*分页信息*/
+  /*The paging information*/
   section>div {
     position: relative;
   }

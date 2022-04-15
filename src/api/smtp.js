@@ -1,11 +1,11 @@
 /**
- * SMTP设置相关API
+ * SMTPSet up relevantAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取smtp列表
+ * To obtainsmtpThe list of
  * @param params
  */
 export function getSmtpList(params) {
@@ -18,7 +18,7 @@ export function getSmtpList(params) {
 }
 
 /**
- * 添加smtp
+ * addsmtp
  * @param params
  */
 export function addSmtp(params) {
@@ -30,7 +30,7 @@ export function addSmtp(params) {
 }
 
 /**
- * 修改smtp
+ * editsmtp
  * @param id
  * @param params
  */
@@ -43,7 +43,7 @@ export function editSmtp(id, params) {
 }
 
 /**
- * 删除smtp
+ * deletesmtp
  * @param ids
  */
 export function deleteSmtp(ids) {
@@ -55,7 +55,7 @@ export function deleteSmtp(ids) {
 }
 
 /**
- * 获取smtp详情
+ * To obtainsmtpdetails
  * @param id
  */
 export function getSmtpDetial(id) {
@@ -66,7 +66,7 @@ export function getSmtpDetial(id) {
 }
 
 /**
- * 发送测试邮件
+ * Send a test email
  * @param params
  */
 export function sendTestEmail(params) {

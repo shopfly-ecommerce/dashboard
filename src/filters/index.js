@@ -45,7 +45,7 @@ export function parseTime(time, cFormat) {
   }
   const time_str = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
     let value = formatObj[key]
-    if (key === 'a') return ['一', '二', '三', '四', '五', '六', '日'][value - 1]
+    if (key === 'a') return ['one', 'two', 'three', 'four', 'five', 'six', 'day'][value - 1]
     if (result.length > 0 && value < 10) {
       value = '0' + value
     }
@@ -62,22 +62,22 @@ export function formatTime(time, option) {
   const diff = (now - d) / 1000
 
   if (diff < 30) {
-    return '刚刚'
+    return 'just'
   } else if (diff < 3600) { // less 1 hour
-    return Math.ceil(diff / 60) + '分钟前'
+    return Math.ceil(diff / 60) + 'Minutes ago'
   } else if (diff < 3600 * 24) {
-    return Math.ceil(diff / 3600) + '小时前'
+    return Math.ceil(diff / 3600) + 'Hours before'
   } else if (diff < 3600 * 24 * 2) {
-    return '1天前'
+    return '1Days ago,'
   }
   if (option) {
     return parseTime(time, option)
   } else {
-    return d.getMonth() + 1 + '月' + d.getDate() + '日' + d.getHours() + '时' + d.getMinutes() + '分'
+    return d.getMonth() + 1 + 'month' + d.getDate() + 'day' + d.getHours() + 'when' + d.getMinutes() + 'points'
   }
 }
 
-/* 数字 格式化*/
+/* Number formatting*/
 export function nFormatter(num, digits) {
   const si = [
     { value: 1E18, symbol: 'E' },
@@ -106,7 +106,7 @@ export function toThousandslsFilter(num) {
 }
 
 /**
- * 金钱单位置换  2999 --> 2,999.00
+ * Monetary unit replacement2999 --> 2,999.00
  * @param val
  * @param unit
  * @returns {*}
@@ -116,7 +116,7 @@ export function unitPrice(val, unit) {
 }
 
 /**
- * 处理unix时间戳，转换为可阅读时间格式
+ * To deal withunixTimestamp, converted to readable time format
  * @param unix
  * @param format
  * @returns {*|string}
@@ -139,35 +139,35 @@ export function unixToDate(unix, format) {
 }
 
 /**
- * 根据订单状态码返回订单状态
+ * Returns the order status according to the order status code
  * @param status_code
  * @returns {string}
  */
 export function unixOrderStatus(status_code) {
   switch (status_code) {
     case 'NEW':
-      return '新订单'
+      return 'The new orders'
     case 'INTODB_ERROR':
-      return '入库失败'
+      return 'Storage failure'
     case 'CONFIRM':
-      return '已确认'
+      return 'Have been confirmed'
     case 'PAID_OFF':
-      return '已付款'
+      return 'Payment has been'
     case 'SHIPPED':
-      return '已发货'
+      return 'Has been shipped'
     case 'ROG':
-      return '已收货'
+      return 'Have the goods'
     case 'COMPLETE':
-      return '已完成'
+      return 'Has been completed'
     case 'CANCELLED':
-      return '已取消'
+      return 'Has been cancelled'
     case 'AFTER_SERVICE':
-      return '售后中'
+      return 'In the after-sale'
   }
 }
 
 /**
- * 格式化货品的规格
+ * The specification of the formatted item
  * @param sku
  * @returns {*}
  */

@@ -1,12 +1,12 @@
 /**
  * Created by andste.cc@gmail.com on 2018/7/20.
- * 收款单相关
+ * The receipt is relevant
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取收款单列表
+ * Get a list of receipts
  * @param params
  */
 export function getCollectionList(params) {
@@ -19,7 +19,7 @@ export function getCollectionList(params) {
 }
 
 /**
- * 导出收款单
+ * Export receipt
  * @param params
  */
 export function exportCollection(params) {

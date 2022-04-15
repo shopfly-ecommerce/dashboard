@@ -7,7 +7,7 @@
         <div class="text-message">
           <div v-if="message.type === 'ORDER' || message.type === 'GOODS'" class="order-message">
             <div v-if="message.type === 'ORDER'" class="top-order">
-              <span style="color: #5a606b">订单号：{{ message['order_sn'] }}</span>
+              <span style="color: #5a606b">The order number：{{ message['order_sn'] }}</span>
               <span style="color: #a1a6af">{{ unixToDate(message['create_time'], 'yyyy-MM-dd hh:mm') }}</span>
             </div>
             <div class="inner-order" :class="message.type" @click="clickMessage(message)">
@@ -23,7 +23,7 @@
                   <span class="price">¥{{ message['order_price'] || message['goods_price'] }}</span>
                 </div>
               </div>
-              <div class="tag-order-message">{{ message.type === 'ORDER' ? '订单' : '商品' }}</div>
+              <div class="tag-order-message">{{ message.type === 'ORDER' ? 'The order' : 'product' }}</div>
             </div>
           </div>
           <div v-else class="content-message" :class="message.type">

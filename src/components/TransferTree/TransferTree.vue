@@ -1,14 +1,14 @@
 <template>
   <div class="transfer" :style="{width,height}">
-    <!-- 左侧穿梭框 原料框 -->
+    <!-- Left side shuttle frame raw material frame-->
     <div class="transfer-left">
       <h3 class="transfer-title">
-        <!--全选按钮-->
-        <el-checkbox v-model="is_from_selected_all" @change="onChangeFromAll">全选</el-checkbox>
-        <!--源列表标题-->
+        <!--Selection button-->
+        <el-checkbox v-model="is_from_selected_all" @change="onChangeFromAll">Select all</el-checkbox>
+        <!--Source list title-->
         <span class="u-right list-title">{{ fromTitle }}</span>
       </h3>
-      <!-- 内容区 -->
+      <!-- Content area-->
       <div class="transfer-main">
         <en-tree-list
           :treeData="from_data"
@@ -21,17 +21,17 @@
           class="trees"></en-tree-list>
       </div>
     </div>
-     <!--穿梭区 按钮框-->
+     <!--Shuttle zone button box-->
     <div class="transfer-center">
       <template v-if='button_text'>
         <p class="transfer-center-item">
           <el-button type="primary" @click="addTo" :disabled="from_disabled">
-            {{ fromButton || '添加'}}
+            {{ fromButton || 'add'}}
             <i class="el-icon-arrow-right"></i>
           </el-button>
         </p>
         <p class="transfer-center-item">
-          <el-button type="primary" @click='removeTo' :disabled="to_disabled" icon="el-icon-arrow-left">{{ toButton || '移除'}}</el-button>
+          <el-button type="primary" @click='removeTo' :disabled="to_disabled" icon="el-icon-arrow-left">{{ toButton || 'remove'}}</el-button>
         </p>
       </template>
       <template v-else>
@@ -43,15 +43,15 @@
         </p>
       </template>
     </div>
-     <!--右侧穿梭框 目标框-->
+     <!--Right shuttle box target box-->
     <div class="transfer-right">
       <h3 class="transfer-title">
-        <!--全选按钮-->
-        <el-checkbox v-model="is_to_selected_all" @change="onChangeToAll">全选</el-checkbox>
-        <!--目标列表标题-->
+        <!--Selection button-->
+        <el-checkbox v-model="is_to_selected_all" @change="onChangeToAll">Select all</el-checkbox>
+        <!--Target list title-->
         <span class="u-right list-title">{{ toTitle }}</span>
       </h3>
-      <!-- 内容区 -->
+      <!-- Content area-->
       <div class="transfer-main">
         <en-tree-list
           :treeData="to_data"
@@ -72,143 +72,143 @@
     name: 'EnTransferTree',
     data() {
       return {
-        /** 添加是否禁用 */
+        /** Add Disable or Not*/
         from_disabled: false,
 
-        /** 移除是否禁用 */
+        /** Remove or disable*/
         to_disabled: false,
 
-        /** 源数据是否全选 */
+        /** Whether all source data is selected*/
         is_from_selected_all: false,
 
-        /** 目标数据是否全选 */
+        /** Whether all target data is selected*/
         is_to_selected_all: false,
 
-        /** 源数据选中项 */
+        /** Source data selected item*/
         selected_from_data: '',
 
-        /** 目标数据选中项 */
+        /** Target data selected item*/
         selected_to_data: '',
 
-        /** 是否完成左侧移动 */
+        /** Whether to complete the left move*/
         is_from_completed: false,
 
-        /** 是否完成右侧移动 */
+        /** Whether to complete the right move*/
         is_to_completed: false,
 
-        /** 全选时的源数据选中数据 */
+        /** The source data when all selected is selected*/
         selected_all_from_data: {},
 
-        /** 全选时的目标数据选中数据 */
+        /** The target data when all selected is selected data*/
         selected_all_to_data: {}
       }
     },
     components: { [TreeList.name]: TreeList },
     props: {
-      // 宽度
+      // The width of the
       width: {
         type: String,
         default: '100%'
       },
-      // 高度
+      // highly
       height: {
         type: String,
         default: '320px'
       },
-      // 标题
+      //  title
       title: {
         type: Array,
-        default: () => ['源列表', '目标列表']
+        default: () => ['Source list', 'The target list']
       },
 
-      // 穿梭按钮名字
+      // Name of shuttle button
       button_text: Array,
 
-      // 源数据
+      // The source data
       from_data: {
         type: Object,
         default: () => ({})
       },
 
-      // 目标数据
+      // The target data
       to_data: {
         type: Object,
         default: () => ({})
       }
     },
     methods: {
-      // 源数据更新
+      // Source data update
       updateSelectedFromData(data) {
         this.selected_from_data = data
         this.is_from_selected_all = Object.keys(this.from_data).length === Object.keys(this.selected_from_data).length
       },
-      // 更新目标数据
+      // Update target data
       updateSelectedToData(data) {
         this.selected_to_data = data
         this.is_to_selected_all = Object.keys(this.to_data).length === Object.keys(this.selected_to_data).length
       },
-      // 添加按钮 执行添加操作 1.源数据更新 把源数据选中项删除/添加 2.目标数据更新 把源数据选中项整合进目标数据 释放当前源数据 目标数据
+      // Add button performs add operation 1. Source data update Remove/add source data check 2. Target data update consolidates the source data selection into the target data release the current source data target data
       addToAims() {
-        // 源数据更新 第二个参数代表数据更新类型（0移除 1添加）
+        // Source data Update The second parameter represents the data update type (0 remove 1 add)
         this.$emit('from_data_change', this.selected_from_data, 0)
-        // 目标数据更新
+        // Target data update
         this.$emit('to_data_change', this.selected_from_data, 1)
-        // 释放当前选中数据
+        // Release the currently selected data
         this.selected_from_data = {}
 
         this.is_from_completed = true
       },
-      // 移除按钮 执行移除操作 1.目标数据更新 把目标数据选中项删除 2.源数据更新 把目标数据选中项整合进源数据 释放当前源数据 目标数据
+      // Remove button perform remove operation 1. Target data update Delete target data selection 2. Source data update consolidates the target data selection into the source data to release the current source data target data
       removeToSource() {
-        // 源数据更新  第二个参数代表数据更新类型（0移除 1添加）\
+        // The second parameter represents the data update type (0 remove 1 add) \
         this.$emit('from_data_change', this.selected_to_data, 1)
-        // 目标数据更新
+        // Target data update
         this.$emit('to_data_change', this.selected_to_data, 0)
-        // 释放当前选中数据
+        // Release the currently selected data
         this.selected_to_data = {}
 
         this.is_to_completed = true
       },
 
-      /** 滚动监听触发 加载更多源数据 */
+      /** The scroll listener triggers loading of more source data*/
       scorllLoadFromData() {
         // this.$emit('')
       },
 
-      /** 监听左侧穿梭完成 */
+      /** Monitor left shuttle complete*/
       listenFromCompleted(target) {
         this.is_from_completed = false
       },
 
-      /** 监听右侧穿梭完成 */
+      /** Monitor right side shuttle complete*/
       listenToCompleted(target) {
         this.is_to_completed = false
       },
 
-      /** 源数据是否全选 */
+      /** Whether all source data is selected*/
       onChangeFromAll(val) {
         this.$emit('from_selected_all', val)
         this.selected_from_data = this.selected_all_from_data = val ? JSON.parse(JSON.stringify(this.from_data)) : {}
       },
 
-      /** 目标数据是否全选 */
+      /** Whether all target data is selected*/
       onChangeToAll(val) {
         this.$emit('to_selected_all', val)
         this.selected_to_data = this.selected_all_to_data = val ? JSON.parse(JSON.stringify(this.to_data)) : {}
       }
     },
     computed: {
-      // 左侧菜单名
+      // Left menu name
       fromTitle() {
         let [text] = this.title
         return text
       },
-      // 右侧菜单名
+      // Right side menu name
       toTitle() {
         let [, text] = this.title
         return text
       },
-      // 上部按钮名
+      // Top button name
       fromButton() {
         if (this.button_text === undefined) {
           return
@@ -216,7 +216,7 @@
         let [text] = this.button_text
         return text
       },
-      // 下部按钮名
+      // Lower button name
       toButton() {
         if (this.button_text === undefined) {
           return
@@ -226,14 +226,14 @@
       }
     },
     watch: {
-      // 左侧 状态监测
+      // Left side status monitoring
       from_data(val) {
         this.from_disabled = !Object.keys(val).length
         if (this.from_disabled) {
           this.is_from_selected_all = false
         }
       },
-      // 右侧 状态监测
+      // Right side status monitoring
       to_data(val) {
         this.to_disabled = !Object.keys(val).length
         if (this.to_disabled) {

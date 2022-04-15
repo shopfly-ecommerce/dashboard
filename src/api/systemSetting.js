@@ -1,12 +1,12 @@
 /**
- * 系统设置
+ * System Settings
  */
 
 import request from '@/utils/request'
 import qs from 'qs'
 
 /**
- * 获取站点设置
+ * Get site Settings
  */
 export function getSiteSetting() {
   return request({
@@ -17,7 +17,7 @@ export function getSiteSetting() {
 }
 
 /**
- * 修改站点设置
+ * Modify site Settings
  * @param params
  */
 export function editSiteSetting(params) {
@@ -29,7 +29,7 @@ export function editSiteSetting(params) {
 }
 
 /**
- * 获取积分设置
+ * Get the integral setting
  */
 export function getPointSetting() {
   return request({
@@ -39,7 +39,7 @@ export function getPointSetting() {
 }
 
 /**
- * 修改积分设置
+ * Modify the integral Settings
  * @param params
  */
 export function editPointSetting(params) {
@@ -51,7 +51,7 @@ export function editPointSetting(params) {
 }
 
 /**
- * 获取联系方式
+ * Get Contact Information
  */
 export function getContactSettings() {
   return request({
@@ -61,7 +61,7 @@ export function getContactSettings() {
 }
 
 /**
- * 修改联系方式
+ * Modify contact information
  * @param params
  */
 export function editContactSettings(params) {

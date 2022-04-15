@@ -1,11 +1,11 @@
 /**
- * 销售统计相关API
+ * Sales statistics correlationAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取销售统计信息列表
+ * Get a list of sales statistics
  * @param params
  * @returns {Promise<any>}
  */
@@ -19,7 +19,7 @@ export function getSalesStatisticsNum(params) {
 }
 
 /**
- * 获取销售统计下单金额
+ * Obtain sales statistics of order amount
  * @param params
  * @returns {Promise<any>}
  */
@@ -33,7 +33,7 @@ export function getSalesStatisticsMoney(params) {
 }
 
 /**
- * 获取销售统计表格数据
+ * Get sales statistics form data
  * @param params
  * @returns {Promise<any>}
  */
@@ -47,7 +47,7 @@ export function getSalesStatisticsGoodsList(params) {
 }
 
 /**
- * 获取销售统计小结
+ * Obtain sales statistics summary
  * @param params
  */
 export function getSalesStatisticsSummary(params) {

@@ -5,20 +5,20 @@
     :loading="loading"
   >
     <template slot="table-columns">
-      <el-table-column prop="sn" label="订单号"/>
-      <el-table-column prop="order_status_text" label="订单状态"></el-table-column>
-      <el-table-column prop="pay_status_text" label="支付状态"></el-table-column>
-      <el-table-column prop="create_time" :formatter="MixinUnixToDate" label="下单时间"></el-table-column>
-      <!--<el-table-column label="操作" width="150">
+      <el-table-column prop="sn" label="The order number"/>
+      <el-table-column prop="order_status_text" label="Status"></el-table-column>
+      <el-table-column prop="pay_status_text" label="Payment status"></el-table-column>
+      <el-table-column prop="create_time" :formatter="MixinUnixToDate" label="Create time"></el-table-column>
+      <!--<el-table-column label="Operation" width="150">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="primary"
-            >查看</el-button>
+            >To view</el-button>
           <el-button
             size="mini"
             type="danger"
-            >删除</el-button>
+            >delete</el-button>
         </template>
       </el-table-column>-->
     </template>
@@ -45,15 +45,15 @@
     props: ['member-id'],
     data() {
       return {
-        // 列表loading状态
+        // List loading status
         loading: false,
-        // 列表参数
+        // A list of parameters
         params: {
           page_no: 1,
           page_size: 10,
           member_id: this.memberId
         },
-        // 列表数据
+        // The list of data
         tableData: ''
       }
     },
@@ -67,19 +67,19 @@
       }
     },
     methods: {
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_MemberListOrder()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_MemberListOrder()
       },
 
-      /** 获取会员订单列表 */
+      /** Get a list of member orders*/
       GET_MemberListOrder() {
         this.loading = true
         API_Order.getOrderList(this.params).then(response => {

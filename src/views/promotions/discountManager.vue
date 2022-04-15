@@ -7,7 +7,7 @@
       :loading="loading">
       <div slot="toolbar" class="inner-toolbar">
         <div class="toolbar-btns">
-          <el-button type="primary" @click="handleAddCoupon">新增</el-button>
+          <el-button type="primary" @click="handleAddCoupon">new</el-button>
         </div>
         <div class="toolbar-search">
           <en-table-search
@@ -15,18 +15,18 @@
             @advancedSearch="advancedSearchEvent"
             advancedWidth="465"
             advanced
-            placeholder="请输入关键字">
+            placeholder="Please enter the keywords">
             <template slot="advanced-content">
               <el-form ref="advancedForm" :model="advancedForm" label-width="80px">
-                <el-form-item label="有效期">
+                <el-form-item label="The period of validity">
                   <el-date-picker
                     v-model="advancedForm.coupon_time_limit"
                     type="daterange"
                     align="center"
                     range-separator="-"
                     value-format="timestamp"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期">
+                    start-placeholder="Start date"
+                    end-placeholder="End date">
                   </el-date-picker>
                 </el-form-item>
               </el-form>
@@ -35,26 +35,26 @@
         </div>
       </div>
       <template slot="table-columns">
-        <el-table-column prop="title" label="优惠券名称" />
-        <el-table-column prop="coupon_price" label="优惠券面额（元）" width="120" />
-        <el-table-column prop="coupon_threshold_price" label="使用限制(元)" width="120" />
-        <el-table-column label="使用期限" width="240">
+        <el-table-column prop="title" label="Coupon name" />
+        <el-table-column prop="coupon_price" label="Coupon face value（USD）" width="120" />
+        <el-table-column prop="coupon_threshold_price" label="Use restrictions(USD)" width="120" />
+        <el-table-column label="Use period" width="240">
           <template slot-scope="scope">
             {{ scope.row.start_time | unixToDate('yyyy-MM-dd') }}~
             {{ scope.row.end_time | unixToDate('yyyy-MM-dd') }}
           </template>
         </el-table-column>
-        <el-table-column prop="create_num" label="发行量（个）" width="120" />
-        <el-table-column prop="used_num" label="已使用量（个）" width="120"/>
-        <el-table-column label="操作" width="180">
+        <el-table-column prop="create_num" label="circulation（a）" width="120" />
+        <el-table-column prop="used_num" label="Already use（a）" width="120"/>
+        <el-table-column label="Operation" width="180">
           <template slot-scope="scope">
             <el-button
               type="success"
-              @click="handleEditCoupons(scope.row)">修改
+              @click="handleEditCoupons(scope.row)">edit
             </el-button>
             <el-button
               type="danger"
-              @click="handleDeleteGoods(scope.row)">删除
+              @click="handleDeleteGoods(scope.row)">delete
             </el-button>
           </template>
         </el-table-column>
@@ -71,7 +71,7 @@
         :total="pageData.data_total">
       </el-pagination>
     </en-table-layout>
-    <!--优惠券组件-->
+    <!--Coupon component-->
     <Coupon
       :couponModelShow="couponModelShow"
       :currentcouponId="currentcouponId"
@@ -92,50 +92,50 @@
     },
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
 
-        /** 列表数据 */
+        /** The list of data*/
         tableData: null,
 
-        /** 列表分页数据 */
+        /** List paging data*/
         pageData: null,
 
-        /** 高级搜索数据 */
+        /** Advanced search data*/
         advancedForm: {
           coupon_time_limit: []
         },
 
-        /** 优惠券弹框显示*/
+        /** The coupon pops up*/
         couponModelShow: false,
 
-        /** 当前优惠券ID*/
+        /** Current couponID*/
         currentcouponId: '',
 
-        /** 优惠券表单*/
+        /** Coupon form*/
         couponModelForm: {
-          /** 优惠券名称*/
+          /** Coupon name*/
           title: '',
 
-          /** 优惠券面额（元）*/
+          /** Coupon face value（USD）*/
           coupon_price: 2,
 
-          /** 使用限制（元）*/
+          /** Use restrictions（USD）*/
           coupon_threshold_price: 2,
 
-          /** 使用时限 */
+          /** Use time limit*/
           coupon_time_limit: '2017-02-25',
 
-          /** 发行量（个） */
+          /** circulation（a） */
           create_num: 2,
 
-          /** 已使用量（个） */
+          /** Already use（a） */
           used_num: 2
         }
       }
@@ -145,19 +145,19 @@
     },
     methods: {
 
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_CouponsList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_CouponsList()
       },
 
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       searchEvent(data) {
         this.params = {
           ...this.params,
@@ -169,7 +169,7 @@
         this.GET_CouponsList()
       },
 
-      /** 高级搜索事件触发 */
+      /** Advanced search event triggered*/
       advancedSearchEvent() {
         this.params = this.MixinClone(this.params)
         const { coupon_time_limit } = this.advancedForm
@@ -194,42 +194,42 @@
             data_total: response.data_total
           }
           this.tableData = response.data
-          /** 已经使用量 */
+          /** Used already*/
           this.tableData.forEach(key => {
             key.used_num = key.used_num || 0
           })
         })
       },
 
-      /** 删除优惠券 */
+      /** Delete coupons*/
       handleDeleteGoods(row) {
-        this.$confirm('确认删除此优惠券, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('Confirm to delete this coupon, Whether or not to continue?', 'prompt', {
+          confirmButtonText: 'save',
+          cancelButtonText: 'cancel',
           type: 'warning'
         }).then(() => {
           API_coupon.deleteCoupons(row.coupon_id, row).then(() => {
             this.GET_CouponsList()
-            this.$message.success('删除优惠券成功！')
+            this.$message.success('Coupon deletion successful！')
           })
         }).catch(() => {
-          this.$message.info({ message: '已取消删除' })
+          this.$message.info({ message: 'Undeleted' })
         })
       },
 
-      /** 修改*/
+      /** edit*/
       handleEditCoupons(row) {
         this.couponModelShow = true
         this.currentcouponId = row.coupon_id
       },
 
-      /** 新增优惠券*/
+      /** New coupons*/
       handleAddCoupon() {
         this.couponModelShow = true
         this.currentcouponId = ''
       },
 
-      /** 优惠券监听 */
+      /** Coupon monitoring*/
       saveCoupon(target) {
         this.couponModelShow = false
         this.currentcouponId = ''

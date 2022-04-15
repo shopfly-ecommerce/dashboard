@@ -1,11 +1,11 @@
 /**
- * 热卖商品相关API
+ * Hot selling goods relatedAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 下单商品数量排行Top30charts
+ * Number of items orderedTop30charts
  * @param params
  * @returns {Promise<any>}
  */
@@ -19,7 +19,7 @@ export function getHotGoodsNum(params) {
 }
 
 /**
- * 下单商品数量排行Top30table
+ * Number of items orderedTop30table
  * @param params
  * @returns {Promise<any>}
  */
@@ -33,7 +33,7 @@ export function getHotGoodsNumPage(params) {
 }
 
 /**
- * 下单金额数量Top30charts
+ * Order amount and quantityTop30charts
  * @param params
  * @returns {Promise<any>}
  */
@@ -47,7 +47,7 @@ export function getHotGoodsPrice(params) {
 }
 
 /**
- * 下单金额数量Top30table
+ * Order amount and quantityTop30table
  * @param params
  * @returns {Promise<any>}
  */

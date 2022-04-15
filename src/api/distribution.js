@@ -1,11 +1,11 @@
 /**
- * 分销相关API
+ * Distribution relatedAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取个人提成模板列表
+ * Gets a list of personal commission templates
  * @param params
  */
 export function getPerAccomplishmentTpl(params) {
@@ -18,7 +18,7 @@ export function getPerAccomplishmentTpl(params) {
 }
 
 /**
- * 添加提成模板
+ * Add commission templates
  * @param params
  */
 export function addPerTpl(params) {
@@ -31,7 +31,7 @@ export function addPerTpl(params) {
 }
 
 /**
- * 修改提成模板
+ * Modify the commission template
  * @param params
  */
 export function editPerTpl(params) {
@@ -44,7 +44,7 @@ export function editPerTpl(params) {
 }
 
 /**
- * 删除提成模板
+ * Delete the commission template
  * @param id
  */
 export function delPerTpl(id) {
@@ -56,7 +56,7 @@ export function delPerTpl(id) {
 }
 
 /**
- * 获取提成模板
+ * Gets the commission template
  * @param id
  */
 export function getPerTpl(id) {
@@ -68,7 +68,7 @@ export function getPerTpl(id) {
 }
 
 /**
- * 获取分销模板升级日志
+ * Get the distribution template upgrade log
  */
 export function getUpgradeLogs(params) {
   return request({
@@ -80,7 +80,7 @@ export function getUpgradeLogs(params) {
 }
 
 /**
- * 获取个人分销商列表
+ * Get a list of individual distributors
  * @param params
  */
 export function getDistributorList(params) {
@@ -93,7 +93,7 @@ export function getDistributorList(params) {
 }
 
 /**
- * 修改分销商模板
+ * Modify distributor template
  * @param params
  */
 export function modifyTpl(params) {
@@ -106,7 +106,7 @@ export function modifyTpl(params) {
 }
 
 /**
- * 获取订单数量图 = 订单数
+ * Get the order quantity diagram= orders
  * @param params
  */
 export function getOrderCountChart(params) {
@@ -119,7 +119,7 @@ export function getOrderCountChart(params) {
 }
 
 /**
- * 获取订单金额图 = 营业额
+ * Get the order amount diagram= turnover
  * @param params
  */
 export function getOrderAmountChart(params) {
@@ -132,7 +132,7 @@ export function getOrderAmountChart(params) {
 }
 
 /**
- * 获取订单返现图 = 利润额
+ * Get the order cashback diagram= Profit margin
  * @param params
  */
 export function getProfitChart(params) {
@@ -145,7 +145,7 @@ export function getProfitChart(params) {
 }
 
 /**
- * 业绩列表
+ * Results list
  * @param params
  */
 export function getAchievementList(params) {
@@ -158,7 +158,7 @@ export function getAchievementList(params) {
 }
 
 /**
- * 账单列表
+ * The bill list
  * @param params
  */
 export function getBillList(params) {
@@ -171,7 +171,7 @@ export function getBillList(params) {
 }
 
 /**
- * 获取某个账单详情
+ * Get details of a bill
  * @param id
  */
 export function getDisBillDetails(id) {
@@ -183,7 +183,7 @@ export function getDisBillDetails(id) {
 }
 
 /**
- * 分销订单列表
+ * Distribution order list
  * @param params
  */
 export function getDisOrderList(params) {
@@ -196,7 +196,7 @@ export function getDisOrderList(params) {
 }
 
 /**
- * 分销退款单查询
+ * Distribution refund Form enquiry
  * @param params
  */
 export function getDisRefundOrderList(params) {
@@ -209,7 +209,7 @@ export function getDisRefundOrderList(params) {
 }
 
 /**
- * 获取某个分销商下级业绩
+ * Obtain the performance of a sub-distributor
  * @param params
  */
 export function getDisBillDown(params) {
@@ -222,7 +222,7 @@ export function getDisBillDown(params) {
 }
 
 /**
- * 提现申请/提现记录列表
+ * Withdrawal application/Withdrawal record list
  * @param params
  */
 export function getWithdrawApplyList(params) {
@@ -235,7 +235,7 @@ export function getWithdrawApplyList(params) {
 }
 
 /**
- * 审核提现申请
+ * Review withdrawal request
  * @param params
  */
 export function authWithdrawApply(params) {
@@ -248,7 +248,7 @@ export function authWithdrawApply(params) {
 }
 
 /**
- * 设为已转账
+ * Set as transferred
  * @param params
  */
 export function setTransferAccounts(params) {
@@ -261,7 +261,7 @@ export function setTransferAccounts(params) {
 }
 
 /**
- * 获取提现设置
+ * Gets the withdrawal Settings
  * @param params
  */
 export function getWithDrawSettings() {
@@ -273,7 +273,7 @@ export function getWithDrawSettings() {
 }
 
 /**
- * 保存提现设置
+ * Save the withdrawal Settings
  * @param params
  */
 export function reserveWithDrawSettings(params) {

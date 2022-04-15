@@ -7,20 +7,20 @@
       <div slot="toolbar" class="inner-toolbar">
         <div class="toolbar-btns"></div>
         <div class="toolbar-search">
-          <en-table-search @search="searchEvent" placeholder="请输入会员姓名"/>
+          <en-table-search @search="searchEvent" placeholder="Please enter the members name"/>
         </div>
       </div>
       <template slot="table-columns">
-        <!--升级时间-->
-        <el-table-column prop="create_time" :formatter="MixinUnixToDate" label="升级时间"/>
-        <!--姓名-->
-        <el-table-column prop="member_name" label="姓名"/>
-        <!--方式-->
-        <el-table-column prop="type" label="方式"/>
-        <!--原提成模板-->
-        <el-table-column prop="old_tpl_name" label="原提成模板"/>
-        <!--升级后模板-->
-        <el-table-column prop="new_tpl_name" label="升级后模板"/>
+        <!--Update time-->
+        <el-table-column prop="create_time" :formatter="MixinUnixToDate" label="Update time"/>
+        <!--The name-->
+        <el-table-column prop="member_name" label="The name"/>
+        <!--way-->
+        <el-table-column prop="type" label="way"/>
+        <!--Original commission template-->
+        <el-table-column prop="old_tpl_name" label="Original commission template"/>
+        <!--Upgraded template-->
+        <el-table-column prop="new_tpl_name" label="Upgraded template"/>
       </template>
       <el-pagination
         v-if="tableData"
@@ -44,14 +44,14 @@
     name: 'upgradeLogs',
     data() {
       return {
-        // 列表loading状态
+        // List loading status
         loading: false,
-        // 列表参数
+        // A list of parameters
         params: {
           page_no: 1,
           page_size: 10
         },
-        // 列表数据
+        // The list of data
         tableData: [],
 
         pageData: []
@@ -61,19 +61,19 @@
       this.GET_UpGradeLogList()
     },
     methods: {
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_UpGradeLogList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_UpGradeLogList()
       },
 
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       searchEvent(data) {
         this.params = {
           ...this.params,
@@ -82,7 +82,7 @@
         this.GET_UpGradeLogList()
       },
 
-      /** 获取升级日志列表 */
+      /** Gets the list of upgrade logs*/
       GET_UpGradeLogList() {
         this.loading = true
         API_distribution.getUpgradeLogs(this.params).then(response => {

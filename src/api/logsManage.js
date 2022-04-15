@@ -1,11 +1,11 @@
 /**
- * 日志相关API
+ * Logs relatedAPI
  */
 
 import request from '@/utils/request'
 
 /**
- * 获取日志列表
+ * Get log list
  * @param params
  * @returns {Promise<any>}
  */

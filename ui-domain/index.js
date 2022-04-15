@@ -1,20 +1,20 @@
 import * as _api from './api'
 import * as _domain from './domain'
 
-// 当前前台是否为开发模式
+// Whether the current foreground is in development mode
 let is_dev = process.env.NODE_ENV === 'development'
 
-// 后台提供的API模式【dev|pro】
+// Background providedAPImodel【dev|pro】
 export const api_model = 'dev'
-// API根据前台环境自动适配
+// APIAutomatic adaptation according to the foreground environment
 export const api = is_dev ? _api.dev : _api.pro
-// 域名根据前台环境自动适配
+// The domain name automatically ADAPTS to the foreground environment
 export const domain = is_dev ? _domain.dev : _domain.pro
-// 开发环境下的API
+// In the development environmentAPI
 export const api_dev = _api.dev
-// 生产环境下的API
+// In the production environmentAPI
 export const api_pro = _api.pro
-// 开发环境下的域名
+// Domain name in the development environment
 export const domain_dev = _domain.dev
-// 生产环境下的域名
+// Domain name in the production environment
 export const domain_pro = _domain.pro

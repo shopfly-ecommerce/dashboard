@@ -38,7 +38,7 @@ Vue.use(UIComponents)
 Vue.use(VueAwesomeSwiper)
 Vue.use(Viewer)
 
-// 全局注册echarts、jsonp
+// Global registrationecharts、jsonp
 import echarts from 'echarts'
 import china from 'echarts/map/js/china'
 import axios from 'axios'

@@ -3,7 +3,7 @@
     <el-card>
       <div slot="header" class="chart-header">
         <div class="chart-header-item">
-          <span>查询周期：</span>
+          <span>Query cycle：</span>
           <en-year-month-picker @changed="handleYearMonthChanged"/>
         </div>
       </div>
@@ -14,12 +14,12 @@
         :tableData="tableData.data"
       >
         <template slot="table-columns">
-          <el-table-column prop="membertime" label="日期/月份">
-            <template slot-scope="scope">{{ scope.row.time + (params.cycle_type === 'MONTH' ? '日' : '月') }}</template>
+          <el-table-column prop="membertime" label="The date of/in">
+            <template slot-scope="scope">{{ scope.row.time + (params.cycle_type === 'MONTH' ? 'day' : 'month') }}</template>
           </el-table-column>
-          <el-table-column prop="num" label="本月/本年（个）"/>
-          <el-table-column prop="last_num" label="上月/上年（个）"/>
-          <el-table-column label="同比">
+          <el-table-column prop="num" label="This month,/This year,（a）"/>
+          <el-table-column prop="last_num" label="Last month,/From the previous year（a）"/>
+          <el-table-column label="Compared with the same">
             <template slot-scope="scope">{{ parseFloat(scope.row.growth).toFixed(2) }}% </template>
           </el-table-column>
         </template>
@@ -51,7 +51,7 @@
       })
     },
     methods: {
-      /** 年月份发生变化 */
+      /** The months of the year change*/
       handleYearMonthChanged(object) {
         this.params.year = object.year
         this.params.month = object.month
@@ -69,10 +69,10 @@
           const { data, name, localName } = responses[0].series
           const { xAxis } = responses[0]
           this.echarts.setOption(echartsOptions({
-            titleText: `新增会员数量（${this.params.cycle_type === 'MONTH' ? '月' : '年'}）`,
+            titleText: `Number of new members（${this.params.cycle_type === 'MONTH' ? 'month' : 'years'}）`,
             tooltipFormatter: (params) => {
               params = params[0]
-              return `日期：${xAxis[params.dataIndex]}${this.params.cycle_type === 'MONTH' ? '日' : '月'}<br/>${params.marker}${params.seriesName}：${params.value}`
+              return `The date of：${xAxis[params.dataIndex]}${this.params.cycle_type === 'MONTH' ? 'day' : 'month'}<br/>${params.marker}${params.seriesName}：${params.value}`
             },
             seriesName: name,
             seriesData: data,

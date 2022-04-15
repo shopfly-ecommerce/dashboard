@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     /**
-     * 通过emoji图片路径获取emojiId
+     * throughemojiImage path acquisitionemojiId
      * @param path
      * @returns {*}
      */
@@ -28,7 +28,7 @@ export default {
       return temp.split('/')[1]
     },
     /**
-     * 通过emojiId获取emoji图片路径
+     * throughemojiIdTo obtainemojiImage path
      * @param id
      * @returns {*}
      */

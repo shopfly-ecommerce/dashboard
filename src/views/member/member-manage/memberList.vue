@@ -6,40 +6,40 @@
     >
       <div slot="toolbar" class="inner-toolbar">
         <div class="toolbar-btns">
-          <el-button size="mini" type="primary" icon="el-icon-circle-plus-outline" @click="handleAddMember">添加</el-button>
+          <el-button size="mini" type="primary" icon="el-icon-circle-plus-outline" @click="handleAddMember">add</el-button>
         </div>
         <div class="toolbar-search">
           <en-table-search
             @search="searchEvent"
             @advancedSearch="advancedSearchEvent"
             advanced
-            placeholder="请输入会员名或手机号"
+            placeholder="Please enter your member name or mobile phone number"
             :advancedWidth="450"
           >
             <template slot="advanced-content">
               <el-form ref="advancedForm" :model="advancedForm" label-width="100px">
-                <el-form-item label="用户名">
+                <el-form-item label="username">
                   <el-input size="medium" v-model="advancedForm.uname" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="手机号">
+                <el-form-item label="Mobile phone no.">
                   <el-input size="medium" v-model="advancedForm.mobile" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="电子邮箱">
+                <el-form-item label="email">
                   <el-input size="medium" v-model="advancedForm.email" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="会员性别">
+                <el-form-item label="Member of the gender">
                   <el-radio-group v-model="advancedForm.sex">
-                    <el-radio :label="1">男</el-radio>
-                    <el-radio :label="0">女</el-radio>
+                    <el-radio :label="1">male</el-radio>
+                    <el-radio :label="0">female</el-radio>
                   </el-radio-group>
                 </el-form-item>
-                <el-form-item label="注册时间区间">
+                <el-form-item label="Registration time interval">
                   <el-date-picker
                     v-model="advancedForm.register_time_range"
                     type="daterange"
                     range-separator="-"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期"
+                    start-placeholder="Start date"
+                    end-placeholder="End date"
                     value-format="timestamp"
                     style="width: 324px"
                     :picker-options="{ shortcuts: MixinPickerShortcuts }"
@@ -53,31 +53,31 @@
       </div>
 
       <template slot="table-columns">
-        <el-table-column prop="uname" label="用户名"/>
-        <el-table-column prop="mobile" label="手机号"/>
-        <el-table-column prop="email" label="电子邮箱"/>
-        <el-table-column label="注册时间">
+        <el-table-column prop="uname" label="username"/>
+        <el-table-column prop="mobile" label="Mobile phone no."/>
+        <el-table-column prop="email" label="email"/>
+        <el-table-column label="Registration time">
           <template slot-scope="scope">{{ scope.row.create_time | unixToDate }}</template>
         </el-table-column>
-        <el-table-column label="上次登录时间">
+        <el-table-column label="Last login time">
           <template slot-scope="scope">
 	          <span v-if="scope.row.last_login">
 		          {{ scope.row.last_login | unixToDate }}
 	          </span>
           </template>
         </el-table-column>
-        <el-table-column prop="login_count" label="登录次数"/>
-        <el-table-column prop="sex" label="性别" :formatter="formatterSex"/>
-        <el-table-column label="操作" width="150">
+        <el-table-column prop="login_count" label="The login number"/>
+        <el-table-column prop="sex" label="gender" :formatter="formatterSex"/>
+        <el-table-column label="Operation" width="150">
           <template slot-scope="scope">
             <el-button
               size="mini"
               type="primary"
-              @click="() => { $router.push({ path: `/member/memberManage/edit/${scope.row.member_id}` }) }">操作</el-button>
+              @click="() => { $router.push({ path: `/member/memberManage/edit/${scope.row.member_id}` }) }">Operation</el-button>
             <el-button
               size="mini"
               type="danger"
-              @click="handleDeleteMember(scope.$index, scope.row)">禁用</el-button>
+              @click="handleDeleteMember(scope.$index, scope.row)">disable</el-button>
           </template>
         </el-table-column>
       </template>
@@ -94,74 +94,74 @@
         :total="tableData.data_total">
       </el-pagination>
     </en-table-layout>
-    <!--添加会员 dialog-->
+    <!--Add memberdialog-->
     <el-dialog
-      title="添加会员"
+      title="Add member"
       :visible.sync="dialogAddMemberVisible"
       width="650px"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
       <el-form :model="addMemberForm" :rules="addMemberRules" ref="addMemberForm" label-width="100px" inline>
-        <!--用户名-->
-        <el-form-item label="用户名" prop="uname">
+        <!--username-->
+        <el-form-item label="username" prop="uname">
           <el-input v-model="addMemberForm.uname" :maxlength="20"></el-input>
         </el-form-item>
-        <!--密码-->
-        <el-form-item label="密码" prop="password">
+        <!--password-->
+        <el-form-item label="password" prop="password">
           <el-input v-model="addMemberForm.password" :type="pwdType" :maxlength="20"></el-input>
           <span class="show-pwd" @click="pwdType = pwdType === 'password' ? 'text' : 'password'">
             <svg-icon :icon-class="pwdType === 'password' ? 'eye' : 'eye-open'" />
           </span>
         </el-form-item>
-        <!--昵称-->
-        <el-form-item label="昵称" prop="nickname">
+        <!--nickname-->
+        <el-form-item label="nickname" prop="nickname">
           <el-input v-model="addMemberForm.nickname" :maxlength="20"></el-input>
         </el-form-item>
-        <!--性别-->
-        <el-form-item label="性别" class="form-item-sex">
-          <el-radio v-model="addMemberForm.sex" :label="1">男</el-radio>
-          <el-radio v-model="addMemberForm.sex" :label="0">女</el-radio>
+        <!--gender-->
+        <el-form-item label="gender" class="form-item-sex">
+          <el-radio v-model="addMemberForm.sex" :label="1">male</el-radio>
+          <el-radio v-model="addMemberForm.sex" :label="0">female</el-radio>
         </el-form-item>
-        <!--生日-->
-        <el-form-item label="生日" prop="birthday">
+        <!--birthday-->
+        <el-form-item label="birthday" prop="birthday">
           <el-date-picker
             v-model="addMemberForm.birthday"
             type="date"
             :editable="false"
             value-format="timestamp"
-            placeholder="选择生日"
+            placeholder="Choose a birthday"
             :picker-options="{disabledDate(time) { return time.getTime() > Date.now() }}">
           </el-date-picker>
         </el-form-item>
-        <!--邮箱-->
-        <el-form-item label="邮箱" prop="email">
+        <!--email-->
+        <el-form-item label="email" prop="email">
           <el-input v-model="addMemberForm.email"></el-input>
         </el-form-item>
-        <!--地区-->
-        <el-form-item label="地区" prop="region" class="form-item-region">
+        <!--region-->
+        <el-form-item label="region" prop="region" class="form-item-region">
           <en-region-picker :api="MixinRegionApi" :default="defaultRegion" @changed="(object) => { addMemberForm.region = object.last_id }"/>
         </el-form-item>
-        <!--手机号码-->
-        <el-form-item label="手机号码" prop="mobile">
+        <!--Mobile phone number-->
+        <el-form-item label="Mobile phone number" prop="mobile">
           <el-input v-model.number="addMemberForm.mobile" :maxlength="11"></el-input>
         </el-form-item>
-        <!--详细地址-->
-        <el-form-item label="详细地址" prop="address">
+        <!--Detailed address-->
+        <el-form-item label="Detailed address" prop="address">
           <el-input v-model="addMemberForm.address" :maxlength="50"></el-input>
         </el-form-item>
-        <!--固定电话-->
-        <el-form-item label="固定电话">
+        <!--Fixed telephone-->
+        <el-form-item label="Fixed telephone">
           <el-input v-model.number="addMemberForm.tel" :maxlength="20"></el-input>
         </el-form-item>
-        <!--邮编-->
-        <el-form-item label="邮编">
+        <!--Zip code-->
+        <el-form-item label="Zip code">
           <el-input v-model.number="addMemberForm.zip" :maxlength="6"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogAddMemberVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitAddMemberForm('addMemberForm')">确 定</el-button>
+        <el-button @click="dialogAddMemberVisible = false">cancel</el-button>
+        <el-button type="primary" @click="submitAddMemberForm('addMemberForm')">save</el-button>
       </div>
     </el-dialog>
   </div>
@@ -182,39 +182,39 @@
     },
     data() {
       return {
-        /** 列表loading状态 */
+        /** The list ofloadingStatus*/
         loading: false,
 
-        /** 列表参数 */
+        /** A list of parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
 
-        /** 列表数据 */
+        /** The list of data*/
         tableData: '',
 
-        // 地区id数组
+        // Locale ID array
         defaultRegion: null,
 
-        /** 高级搜索数据 */
+        /** Advanced search data*/
         advancedForm: {},
 
-        /** 添加会员 dialog */
+        /** Add memberdialog */
         dialogAddMemberVisible: false,
 
-        /** 添加会员 表单数据 */
+        /** Add membership form data*/
         addMemberForm: {},
 
-        /** 添加会员 表单规则 */
+        /** Add membership form rules*/
         addMemberRules: {
           uname: [
-            this.MixinRequired('请输入用户名！'),
-            { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' },
+            this.MixinRequired('Please enter the user name！'),
+            { min: 2, max: 20, message: 'The length of2 to20 A character', trigger: 'blur' },
             {
               validator: (rule, value, callback) => {
                 if (!RegExp.userName.test(value)) {
-                  callback(new Error('请输入汉字、字母、数字、“-”、“_”的组合！'))
+                  callback(new Error('Please enter Chinese characters、The letter、digital、“-”、“_The combination of"！'))
                 } else {
                   callback()
                 }
@@ -223,11 +223,11 @@
             }
           ],
           password: [
-            this.MixinRequired('请输入密码！'),
+            this.MixinRequired('Please enter your password.！'),
             {
               validator: (rule, value, callback) => {
                 if (!RegExp.password.test(value)) {
-                  callback(new Error('密码格式有误！'))
+                  callback(new Error('Incorrect password format！'))
                 } else {
                   callback()
                 }
@@ -236,16 +236,16 @@
             }
           ],
           nickname: [
-            this.MixinRequired('请输入昵称！'),
-            { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
+            this.MixinRequired('Please enter a nickname！'),
+            { min: 2, max: 20, message: 'The length of2 to20 A character', trigger: 'blur' }
           ],
-          birthday: [this.MixinRequired('请选择生日！')],
+          birthday: [this.MixinRequired('Please choose your birthday！')],
           email: [
-            this.MixinRequired('请输入电子邮箱！'),
+            this.MixinRequired('Please enter your email address！'),
             {
               validator: (rule, value, callback) => {
                 if (!RegExp.email.test(value)) {
-                  callback(new Error('电子邮箱格式有误！'))
+                  callback(new Error('The e - mail box is incorrectly formatted！'))
                 } else {
                   callback()
                 }
@@ -254,11 +254,11 @@
             }
           ],
           mobile: [
-            this.MixinRequired('请输入手机号码！'),
+            this.MixinRequired('Please enter your mobile phone number！'),
             {
               validator: (rule, value, callback) => {
                 if (!RegExp.mobile.test(value)) {
-                  callback(new Error('手机格式格式有误！'))
+                  callback(new Error('The phone is not in the right format！'))
                 } else {
                   callback()
                 }
@@ -267,11 +267,11 @@
             }
           ],
           address: [
-            this.MixinRequired('请输入详细地址！'),
-            { max: 50, message: '最长50个字符', trigger: 'blur' }
+            this.MixinRequired('Please enter the detailed address！'),
+            { max: 50, message: 'The longest50A character', trigger: 'blur' }
           ],
           region: [
-            { required: true, message: '请选择地址！', trigger: 'change' }
+            { required: true, message: 'Please select address！', trigger: 'change' }
           ]
         },
         pwdType: 'password'
@@ -281,39 +281,39 @@
       this.GET_MemberList()
     },
     methods: {
-      /** 分页大小发生改变 */
+      /** The page size has changed*/
       handlePageSizeChange(size) {
         this.params.page_size = size
         this.GET_MemberList()
       },
 
-      /** 分页页数发生改变 */
+      /** The number of pages changed*/
       handlePageCurrentChange(page) {
         this.params.page_no = page
         this.GET_MemberList()
       },
 
       handleDeleteMember(index, row) {
-        this.$confirm('确定要禁用这个会员吗？', '提示', { type: 'warning' }).then(() => {
+        this.$confirm('Are you sure you want to disable this member？', 'prompt', { type: 'warning' }).then(() => {
           API_Member.deleteMember(row.member_id).then(() => {
-            this.$message.success('禁用成功！')
+            this.$message.success('Disable the success！')
             this.GET_MemberList()
           })
         }).catch(() => {})
       },
 
-      /** 性别格式化 */
+      /** Gender formatting*/
       formatterSex(row, column, cellValue) {
-        return row.sex === 1 ? '男' : '女'
+        return row.sex === 1 ? 'male' : 'female'
       },
 
-      /** 添加会员 */
+      /** Add member*/
       handleAddMember() {
         this.addMemberForm = { sex: 1, region: '' }
         this.dialogAddMemberVisible = true
       },
 
-      /** 搜索事件触发 */
+      /** Search Event Trigger*/
       searchEvent(keyword) {
         this.params.keyword = keyword
         Object.keys(this.advancedForm).forEach(key => delete this.params[key])
@@ -321,7 +321,7 @@
         this.GET_MemberList()
       },
 
-      /** 高级搜索事件触发 */
+      /** Advanced search event triggered*/
       advancedSearchEvent() {
         const { advancedForm } = this
         const { register_time_range, sex } = advancedForm
@@ -344,7 +344,7 @@
         this.GET_MemberList()
       },
 
-      /** 提交添加会员表单 */
+      /** Submit the add membership form*/
       submitAddMemberForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -352,19 +352,19 @@
             params.birthday = parseInt(params.birthday / 1000)
             API_Member.addMember(params).then(response => {
               this.dialogAddMemberVisible = false
-              this.$message.success('添加成功！')
+              this.$message.success('Add a success！')
               this.GET_MemberList()
               this.addMemberForm = {}
               this.defaultRegion = []
             })
           } else {
-            this.$message.error('表单填写有误，请检查！')
+            this.$message.error('The form is filled incorrectly, please check！')
             return false
           }
         })
       },
 
-      /** 获取会员列表 */
+      /** Get membership list*/
       GET_MemberList() {
         this.loading = true
         const { params } = this
