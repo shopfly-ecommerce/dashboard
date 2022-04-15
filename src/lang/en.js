@@ -41,7 +41,7 @@ export default {
     pointsGoods: 'Products',
     giftManager: 'Gift',
 
-    page: 'Pages',
+    page: 'Appearance',
     pcDecoration: 'PC',
     themeManage: 'PC Theme Manage',
     pcThemeManage: 'Theme Manage',
@@ -119,7 +119,7 @@ export default {
 
     messageSettings: 'Messages',
     shopMessage: 'Shop',
-    memberMessage: 'Customer',
+    memberMessage: 'Message',
 
     smtpSettings: 'SMTP',
     SMSGatewaySettings: 'SMS',
@@ -134,8 +134,8 @@ export default {
     regionalManagement: 'Region',
 
     authSettings: 'Auth Settings',
-    administratorManage: 'Administrator Manage',
-    roleManage: 'Role Manage',
+    administratorManage: 'Administrator',
+    roleManage: 'Roles',
     rolePermission: 'Role Permission',
 
     searchSettings: 'search Settings',
@@ -160,10 +160,10 @@ export default {
     development: 'Development',
     toolManage: 'Tool',
     URLMapping: 'URL Mapping',
-    menuManage: 'Menu Manage',
-    articleManage: 'Article Manage',
-    articleCategory: 'Article Category',
-    articleList: 'Article List',
+    menuManage: 'Menu',
+    articleManage: 'Article',
+    articleCategory: 'Category',
+    articleList: 'Articles',
     addArticle: 'Add Article'
 
   },

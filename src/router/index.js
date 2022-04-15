@@ -63,7 +63,9 @@ export const asyncRouterMap = [
           { path: 'categoryList', component: () => import('@/views/goods/goods-setting/categoryList'), name: 'categoryList', meta: { title: 'categoryList' }},
           { path: 'category-params/:id', component: () => import('@/views/goods/goods-setting/categoryParams'), name: 'categoryParams', hidden: true, meta: { title: 'categoryParams', noCache: true }},
           { path: 'brandList', component: () => import('@/views/goods/goods-setting/brandList'), name: 'brandList', meta: { title: 'brandList' }},
-          { path: 'specList', component: () => import('@/views/goods/goods-setting/specList'), name: 'specList', meta: { title: 'specList' }}
+          { path: 'specList', component: () => import('@/views/goods/goods-setting/specList'), name: 'specList', meta: { title: 'specList' }},
+          { path: 'goodsIndex', component: () => import('@/views/setting/shop-settings/goodsIndex'), name: 'goodsIndex', meta: { title: 'goodsIndex' }},
+
         ]
       },
       { path: 'good-publish/:goodsid?/:isdraft?', component: () => import('@/views/goods/goodsPublish'), name: 'goodPublish', meta: { title: 'goodPublish', noCache: true }, hidden: true }
@@ -282,15 +284,7 @@ export const asyncRouterMap = [
       { path: 'logManage', component: () => import('@/views/statistics/logManage'), name: 'logManage', meta: { title: 'logManage' }, hidden: true }
     ]
   },
-  // 客服管理
-  {
-    path: '/customer',
-    component: Layout,
-    redirect: '/customer/message',
-    children: [
-      { path: 'message', component: () => import('@/views/customer-service/message'), name: 'message', meta: { title: 'message', icon: 'message' }}
-    ]
-  },
+
   // 设置
   {
     path: '/setting',
@@ -299,59 +293,15 @@ export const asyncRouterMap = [
     name: 'setting',
     meta: { title: 'setting', icon: 'setting-manage' },
     children: [
-      {
-        path: '/setting/shopSettings',
-        component: () => import('@/views/setting/shop-settings/index'),
-        redirect: '/setting/shop-settings/system',
-        name: 'shopSettings',
-        meta: { title: 'shopSettings', noCache: true },
-        children: [
-          { path: 'systemSettings', component: () => import('@/views/setting/shop-settings/systemSettings'), name: 'systemSettings', meta: { title: 'systemSettings' }},
-          { path: 'smtpSettings', component: () => import('@/views/setting/shop-settings/SMTPSettings'), name: 'smtpSettings', meta: { title: 'smtpSettings' }},
-          { path: 'smsGatewaySettings', component: () => import('@/views/setting/shop-settings/SMSGatewaySettings'), name: 'smsGatewaySettings', meta: { title: 'SMSGatewaySettings' }},
-          { path: 'expressPlatformSettings', component: () => import('@/views/setting/shop-settings/expressPlatformSettings'), name: 'expressPlatformSettings', meta: { title: 'expressPlatformSettings' }},
-          { path: 'electronicReceipt', component: () => import('@/views/setting/shop-settings/electronicReceipt'), name: 'electronicrEceipt', meta: { title: 'electronicReceipt' }},
-          { path: 'storageSolution', component: () => import('@/views/setting/shop-settings/storageSolution'), name: 'storageSolution', meta: { title: 'storageSolution' }},
-          { path: 'staticPage', component: () => import('@/views/setting/shop-settings/staticPage'), name: 'staticPage', meta: { title: 'staticPage' }},
-          { path: 'goodsIndex', component: () => import('@/views/setting/shop-settings/goodsIndex'), name: 'goodsIndex', meta: { title: 'goodsIndex' }},
-          { path: 'trustLogin', component: () => import('@/views/setting/shop-settings/trustLogin'), name: 'trustLogin', meta: { title: 'trustLogin' }}
-        ]
-      },
-      {
-        path: '/setting/messageSettings',
-        component: () => import('@/views/setting/message-settings/index'),
-        redirect: '/setting/message-settings/member',
-        name: 'messageSettings',
-        meta: { title: 'messageSettings' },
-        children: [
-          { path: 'shop', component: () => import('@/views/setting/message-settings/shopMessage'), name: 'shopMessageSettings', meta: { title: 'shopMessage' }},
-          { path: 'member', component: () => import('@/views/setting/message-settings/memberMessage'), name: 'memberMessageSettings', meta: { title: 'memberMessage' }}
-        ]
-      },
-      {
-        path: '/setting/paymentAndDelivery',
-        component: () => import('@/views/setting/payment-and-delivery/index'),
-        redirect: '/setting/payment-and-delivery/payment',
-        name: 'paymentAndDelivery',
-        meta: { title: 'paymentAndDelivery' },
-        children: [
-          { path: 'payment', component: () => import('@/views/setting/payment-and-delivery/payment'), name: 'paymentSettings', meta: { title: 'payment' }},
-          { path: 'express', component: () => import('@/views/setting/payment-and-delivery/express'), name: 'expressSettings', meta: { title: 'express' }},
-          { path: 'regionalManagementSettings', component: () => import('@/views/setting/payment-and-delivery/regionalManagement'), name: 'regionalManagementSettings', meta: { title: 'regionalManagement' }}
-        ]
-      },
-      {
-        path: '/setting/authSettings',
-        component: () => import('@/views/setting/auth-settings/index'),
-        redirect: '/setting/auth-settings/administrator-manage',
-        name: 'authSettings',
-        meta: { title: 'authSettings' },
-        children: [
-          { path: 'administratorManage', component: () => import('@/views/setting/auth-settings/administratorManage'), name: 'administratorManage', meta: { title: 'administratorManage' }},
-          { path: 'roleManage', component: () => import('@/views/setting/auth-settings/roleManage'), name: 'roleManage', meta: { title: 'roleManage' }},
-          { path: 'role-permission/:id(\\d+)', component: () => import('@/views/setting/auth-settings/rolePermission'), name: 'rolePermission', hidden: true, meta: { title: 'rolePermission', noCache: true }}
-        ]
-      }
+
+      { path: 'systemSettings', component: () => import('@/views/setting/shop-settings/systemSettings'), name: 'systemSettings', meta: { title: 'systemSettings' }},
+      { path: 'smtpSettings', component: () => import('@/views/setting/shop-settings/SMTPSettings'), name: 'smtpSettings', meta: { title: 'smtpSettings' }},
+      { path: 'payment', component: () => import('@/views/setting/payment-and-delivery/payment'), name: 'paymentSettings', meta: { title: 'payment' }},
+      { path: 'express', component: () => import('@/views/setting/payment-and-delivery/express'), name: 'expressSettings', meta: { title: 'express' }},
+      { path: 'storageSolution', component: () => import('@/views/setting/shop-settings/storageSolution'), name: 'storageSolution', meta: { title: 'storageSolution' }},
+      { path: 'member', component: () => import('@/views/setting/message-settings/memberMessage'), name: 'memberMessageSettings', meta: { title: 'memberMessage' }},
+      { path: 'administratorManage', component: () => import('@/views/setting/auth-settings/administratorManage'), name: 'administratorManage', meta: { title: 'administratorManage' }},
+      { path: 'roleManage', component: () => import('@/views/setting/auth-settings/roleManage'), name: 'roleManage', meta: { title: 'roleManage' }},
     ]
   },
   // 开发
@@ -369,7 +319,10 @@ export const asyncRouterMap = [
         name: 'toolManage',
         meta: { title: 'toolManage' },
         children: [
-          { path: 'menuManage', component: () => import('@/views/development/tool-manage/menuManage'), name: 'menuManage', meta: { title: 'menuManage' }}
+          { path: 'menuManage', component: () => import('@/views/development/tool-manage/menuManage'), name: 'menuManage', meta: { title: 'menuManage' }},
+          { path: 'expressPlatformSettings', component: () => import('@/views/setting/shop-settings/expressPlatformSettings'), name: 'expressPlatformSettings', meta: { title: 'expressPlatformSettings' }},
+          { path: 'regionalManagementSettings', component: () => import('@/views/setting/payment-and-delivery/regionalManagement'), name: 'regionalManagementSettings', meta: { title: 'regionalManagement' }}
+
         ]
       },
       {
