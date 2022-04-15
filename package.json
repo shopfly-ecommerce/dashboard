@@ -1,7 +1,7 @@
 {
-  "name": "javashop-seller",
+  "name": "Dashboard",
   "version": "0.0.1",
-  "description": "javashop 的商家中心",
+  "description": "Dashboard-shopflix",
   "author": "Pan <panfree23@gmail.com>, javashop",
   "private": true,
   "scripts": {
