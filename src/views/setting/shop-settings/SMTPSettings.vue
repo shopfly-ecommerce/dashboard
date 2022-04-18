@@ -41,14 +41,14 @@
       </el-pagination>
     </en-table-layout>
     <el-dialog
-      :title="smtpForm.id ? '编辑SMTP' : '添加SMTP'"
+      :title="smtpForm.id ? 'SMTP Server' : 'SMTP Server'"
       :visible.sync="dialogSmtpVisible"
       @close="handleDialogClosed"
-      width="500px"
+      width="550px"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
-      <el-form :model="smtpForm" :rules="smtpRules" ref="smtpForm" size="small" label-width="120px">
+      <el-form :model="smtpForm" :rules="smtpRules" ref="smtpForm" size="small" label-width="200px">
         <el-form-item label="HOST" prop="host">
           <el-input v-model="smtpForm.host"/>
         </el-form-item>
