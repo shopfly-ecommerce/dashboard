@@ -55,10 +55,10 @@
         <el-form-item label="PORT" prop="port">
           <el-input v-model="smtpForm.port"/>
         </el-form-item>
-        <el-form-item label="启用SSL" prop="open_ssl">
+        <el-form-item label="启用 SSL" prop="open_ssl">
           <el-radio-group v-model="smtpForm.open_ssl">
-            <el-radio :label="1">是</el-radio>
-            <el-radio :label="0">否</el-radio>
+            <el-radio :label="1">开启</el-radio>
+            <el-radio :label="0">关闭</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="用户名" prop="username">
