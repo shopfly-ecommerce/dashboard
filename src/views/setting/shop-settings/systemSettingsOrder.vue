@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="orderForm" ref="orderForm" label-width="130px" style="width: 500px;min-height: 500px;">
+  <el-form :model="orderForm" ref="orderForm" label-width="200px" style="width: 500px;min-height: 500px;">
     <el-form-item label="自动取消订单天数">
       <el-input-number size="small" v-model="orderForm.cancel_order_day" :min="1"></el-input-number>
     </el-form-item>
