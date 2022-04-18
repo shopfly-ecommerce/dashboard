@@ -75,7 +75,7 @@
     <!--购买商品（1元等于多少积分）-->
     <el-form-item prop="cancel_order_day">
       <template slot="label">
-        <el-checkbox v-model="pointForm.buy_goods">购买商品（1元等于多少积分）</el-checkbox>
+        <el-checkbox v-model="pointForm.buy_goods">购买商品</el-checkbox>
       </template>
       <el-input placeholder="10" size="small" v-model="pointForm.buy_goods_grade_point">
         <template slot="append">等级积分</template>
@@ -99,7 +99,7 @@
     <!--人民币与积分兑换比例-->
     <el-form-item prop="cancel_order_day">
       <template slot="label">
-        <el-checkbox v-model="pointForm.parities">人民币与积分兑换比例</el-checkbox>
+        <el-checkbox v-model="pointForm.parities">货币与积分兑换比例</el-checkbox>
       </template>
       <el-input placeholder="10" size="small" v-model="pointForm.parities_point">
         <template slot="append">消费积分</template>
