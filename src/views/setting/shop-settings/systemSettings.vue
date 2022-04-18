@@ -1,16 +1,16 @@
 <template>
   <div class="container">
     <el-tabs type="border-card">
-      <el-tab-pane label="Site set up">
+      <el-tab-pane label="General">
         <system-settings-site/>
       </el-tab-pane>
-      <el-tab-pane label="Goods set">
+      <el-tab-pane label="Product">
         <system-settings-goods/>
       </el-tab-pane>
-      <el-tab-pane label="The order is set">
+      <el-tab-pane label="Order">
         <system-settings-order/>
       </el-tab-pane>
-      <el-tab-pane label="Integral set" class="point-pane">
+      <el-tab-pane label="Integral" class="point-pane">
         <system-settings-point/>
       </el-tab-pane>
       <el-tab-pane label="contact">

@@ -52,7 +52,7 @@
     name: 'systemSettingsGoods',
     data() {
       return {
-        // Goods set
+        // Goods
         goodsForm: {
           marcket_auth: 1,
           update_auth: 1,

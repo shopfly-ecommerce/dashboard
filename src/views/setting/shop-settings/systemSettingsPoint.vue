@@ -118,7 +118,7 @@
     name: 'systemSettingsPoint',
     data() {
       return {
-        /** Integral set*/
+        /** Integral*/
         pointForm: {},
         pointRules: {},
         checkboxs: ['buy_goods', 'comment', 'comment_img', 'first_comment', 'login', 'online_pay', 'parities', 'perfect', 'perfect', 'register']

@@ -1,6 +1,6 @@
 <template>
   <el-form :model="siteForm" :rules="siteRules" ref="siteForm" label-width="130px" v-loading="loading" style="width: 500px">
-    <el-form-item label="Web site name" prop="site_name">
+    <el-form-item label="Site name" prop="site_name">
       <el-input v-model="siteForm.site_name"></el-input>
     </el-form-item>
     <el-form-item label="Site title" prop="title">
@@ -27,7 +27,7 @@
       ></el-input>
       <el-button v-else class="button-new-tag" size="small" @click="showSiteTagInput">+ add</el-button>
     </el-form-item>
-    <el-form-item label="Website description" prop="descript">
+    <el-form-item label="Description" prop="descript">
       <el-input
         type="textarea"
         :autosize="{ minRows: 2, maxRows: 4}"
@@ -37,9 +37,14 @@
       >
       </el-input>
     </el-form-item>
-    <el-form-item label="Whether the site is open" prop="siteon">
+    <el-form-item label="Site status" prop="siteon">
       <el-radio v-model="siteForm.siteon" :label="1">open</el-radio>
       <el-radio v-model="siteForm.siteon" :label="0">close</el-radio>
+      <el-alert
+        title="If closed, the stroefront cannot be accessed"
+        type="info"
+        :closable="false">
+      </el-alert>
     </el-form-item>
     <el-form-item v-if="siteForm.siteon === 0" label="Close the reason" prop="close_reson">
       <el-input
@@ -51,16 +56,7 @@
       >
       </el-input>
     </el-form-item>
-    <el-form-item label="Encryption key" prop="global_auth_key">
-      <el-input
-        type="textarea"
-        :autosize="{ minRows: 2, maxRows: 4}"
-        placeholder="Please enter the encryption key"
-        v-model="siteForm.global_auth_key"
-      >
-      </el-input>
-    </el-form-item>
-    <el-form-item label="Web siteLOGO" prop="logo">
+    <el-form-item label="SiteLOGO" prop="logo">
       <el-upload
         class="site-logo"
         :action="MixinUploadApi"
@@ -71,7 +67,7 @@
         <i v-else class="el-icon-plus logo-uploader-icon"></i>
       </el-upload>
     </el-form-item>
-    <el-form-item label="The default image" prop="default_img">
+    <el-form-item label="Default image" prop="default_img">
       <el-upload
         class="site-logo"
         :action="MixinUploadApi"
@@ -85,6 +81,11 @@
     <el-form-item label="Test mode" prop="test_mode">
       <el-radio v-model="siteForm.test_mode" :label="1">open</el-radio>
       <el-radio v-model="siteForm.test_mode" :label="0">close</el-radio>
+      <el-alert
+        title="The verification code is no longer generated randomly when the test mode is turned on"
+        type="info"
+        :closable="false">
+      </el-alert>
     </el-form-item>
     <el-form-item label="">
       <el-button type="primary" @click="submitForm">Save Settings</el-button>
@@ -100,7 +101,7 @@
     data() {
       return {
         loading: true,
-        /** Site set up*/
+        /** General*/
         siteForm: {},
         siteRules: {
           site_name: [this.MixinRequired('The site name cannot be empty！')],

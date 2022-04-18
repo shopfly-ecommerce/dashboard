@@ -32,7 +32,7 @@
     name: 'systemSettingsOrder',
     data() {
       return {
-        /** The order is set*/
+        /** Order*/
         orderForm: {
           cancel_order_day: 1,
           rog_order_day: 10,
