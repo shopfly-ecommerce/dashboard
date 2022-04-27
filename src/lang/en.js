@@ -14,6 +14,9 @@ export default {
     refundList: 'Refunds',
     collectionList: 'Receipts',
     receiptHistory: 'Invoices',
+    rateArea: 'Rate Area',
+    addRateArea: 'Add Rate Area',
+    editRateArea: 'Edit Rate Area',
 
     member: 'Customers',
     memberManage: 'Customers',

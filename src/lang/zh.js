@@ -27,6 +27,9 @@ export default {
     settlementDetail: '结算详情',
     receiptHistory: '发票历史',
     orderDetail: '订单详情',
+    rateArea: '费率区域',
+    addRateArea: '添加费率区域',
+    editRateArea: '编辑费率区域',
 
     member: '会员管理',
     memberManage: '管理会员',
