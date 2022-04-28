@@ -12,11 +12,11 @@ export default {
   data() {
     return {
       // 图片上传API
-      MixinUploadApi: api.base + '/uploaders',
+      MixinUploadApi: api.address + '/uploaders',
       // 微信图片上传
-      MixinWXUploadApi: api.live + '/seller/live-video/media/upload',
+      MixinWXUploadApi: api.address + '/seller/live-video/media/upload',
       // 地区API
-      MixinRegionApi: api.base + '/regions/@id/children',
+      MixinRegionApi: api.address + '/regions/@id/children',
       // 买家端PC域名
       MixinBuyerDomain: domain.buyer_pc,
       // 买家端WAP域名
@@ -93,7 +93,7 @@ export default {
     },
     /** 用于判断表单是否为空 */
     MixinRequired(message, trigger) {
-      return { required: true, pattern: /^\S.*$/gi, message: message, trigger: trigger || 'blur' }
+      return { required: true, message: message, trigger: trigger || 'blur' }
     },
     /** 格式化金钱 */
     MixinFormatPrice(row, column, cellValue, index) {
