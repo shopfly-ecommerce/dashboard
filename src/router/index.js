@@ -82,11 +82,13 @@ export const asyncRouterMap = [
       { path: 'detail/:sn', component: () => import('@/views/order/orderDetail'), name: 'orderDetail', hidden: true, meta: { title: 'orderDetail' }},
       { path: 'refundList', component: () => import('@/views/order/refundList'), name: 'refundList', meta: { title: 'refundList' }},
       { path: 'collectionList', component: () => import('@/views/order/collectionList'), name: 'collectionList', meta: { title: 'collectionList' }},
-      { path: 'logisticsManage', component: () => import('@/views/order/logisticsManage'), name: 'logisticsManage', meta: { title: 'logisticsManage' }},
       { path: 'receiptHistory', component: () => import('@/views/order/receiptHistory'), name: 'receiptHistory', meta: { title: 'receiptHistory' }},
       { path: 'rateArea', component: () => import('@/views/order/rateArea'), name: 'rateArea', meta: { title: 'rateArea' }},
       { path: 'rateArea/add', component: () => import('@/views/order/rateAreaDetail'), name: 'addRateArea', hidden: true, meta: { title: 'addRateArea' }},
-      { path: 'rateArea/:id', component: () => import('@/views/order/rateAreaDetail'), name: 'editRateArea', hidden: true, meta: { title: 'editRateArea' }}
+      { path: 'rateArea/:id', component: () => import('@/views/order/rateAreaDetail'), name: 'editRateArea', hidden: true, meta: { title: 'editRateArea' }},
+      { path: 'shipTemplate', component: () => import('@/views/order/shipTemplate'), name: 'shipTemplate', meta: { title: 'shipTemplate' }},
+      { path: 'shipTemplate/add', component: () => import('@/views/order/shipTemplateDetail'), name: 'addShipTemplate', hidden: true, meta: { title: 'addShipTemplate' }},
+      { path: 'shipTemplate/:id', component: () => import('@/views/order/shipTemplateDetail'), name: 'editShipTemplate', hidden: true, meta: { title: 'editShipTemplate' }}
     ]
   },
   // Member management

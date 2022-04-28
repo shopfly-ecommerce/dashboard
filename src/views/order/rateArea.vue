@@ -83,18 +83,13 @@ export default {
     handleAddRateArea() {
       this.$router.push({ name: 'addRateArea' })
     },
-
-    // Region selector callback
-    handleAreaPickerChange(areas) {
-      this.rateAreaForm.areaList = JSON.parse(JSON.stringify(areas))
-    },
     // Edit area
     handleEditArea(row) {
       this.$router.push({ name: 'editRateArea', params: { id: row.id }})
     },
     // Delete area
     handleDeleteArea(row) {
-      this.$confirm('Are you sure you want to delete this area ?', '提示', { type: 'warning' }).then(() => {
+      this.$confirm('Are you sure you want to delete this area ?', 'Tips', { type: 'warning' }).then(() => {
         API_RateArea.deleteRateArea(row.id).then(() => {
           this.$message.success('Delete successful')
           this.GET_RateAreas()

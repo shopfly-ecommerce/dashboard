@@ -30,6 +30,9 @@ export default {
     rateArea: '费率区域',
     addRateArea: '添加费率区域',
     editRateArea: '编辑费率区域',
+    shipTemplate: '运费模板',
+    addShipTemplate: '添加运费模板',
+    editShipTemplate: '编辑运费模板',
 
     member: '会员管理',
     memberManage: '管理会员',

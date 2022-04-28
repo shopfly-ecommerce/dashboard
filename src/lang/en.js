@@ -17,6 +17,9 @@ export default {
     rateArea: 'Rate Area',
     addRateArea: 'Add Rate Area',
     editRateArea: 'Edit Rate Area',
+    shipTemplate: 'Ship Template',
+    addShipTemplate: 'Add Ship Template',
+    editShipTemplate: 'Edit Ship Template',
 
     member: 'Customers',
     memberManage: 'Customers',
