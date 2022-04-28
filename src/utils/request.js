@@ -11,7 +11,7 @@ const qs = require('qs')
 // 创建axios实例
 const service = axios.create({
   baseURL: api.address, // 基础api
-  timeout: 5000, // 请求超时时间
+  timeout: 50000, // 请求超时时间
   httpsAgent: new https.Agent({
     rejectUnauthorized: false
   }),
@@ -62,7 +62,7 @@ service.interceptors.request.use(config => {
 
   // 获取访问Token
   let accessToken = Storage.getItem('seller_access_token')
-  if (accessToken) {
+  if (config.needToken !== false && accessToken) {
     config.headers['Authorization'] = accessToken
   }
 
