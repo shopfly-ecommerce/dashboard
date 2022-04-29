@@ -38,9 +38,9 @@
                   <i class="el-icon-setting"></i><i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item command="price">{{ item.items['price'] ? 'Remove' : 'Add' }} price conditions</el-dropdown-item>
-                  <el-dropdown-item command="weight">{{ item.items['weight'] ? 'Remove' : 'Add' }} weight conditions</el-dropdown-item>
-                  <el-dropdown-item command="items">{{ item.items['items'] ? 'Remove' : 'Add' }} items conditions</el-dropdown-item>
+                  <el-dropdown-item command="PRICE">{{ item.items['PRICE'] ? 'Remove' : 'Add' }} price conditions</el-dropdown-item>
+                  <el-dropdown-item command="WEIGHT">{{ item.items['WEIGHT'] ? 'Remove' : 'Add' }} weight conditions</el-dropdown-item>
+                  <el-dropdown-item command="ITEMS">{{ item.items['ITEMS'] ? 'Remove' : 'Add' }} items conditions</el-dropdown-item>
                   <el-dropdown-item command="remove" divided>Remove rate area from shipping</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
@@ -58,10 +58,10 @@
                   <el-table-column label="Surcharge / Discount" width="200">
                     <template slot-scope="{ row }">
                       <el-input v-model="row.amt" class="input-with-select">
-                        <span slot="prepend">{{ row.amt_type === 'absolute' ? '$' : '%' }}</span>
+                        <span slot="prepend">{{ row.amt_type === 'ABSOLUTE' ? '$' : '%' }}</span>
                         <el-select v-model="row.amt_type" slot="append">
-                          <el-option label="Absolute ($)" value="absolute"></el-option>
-                          <el-option label="Cart Percentage (%)" value="percentage"></el-option>
+                          <el-option label="Absolute ($)" value="ABSOLUTE"></el-option>
+                          <el-option label="Cart Percentage (%)" value="PERCENTAGE"></el-option>
                         </el-select>
                       </el-input>
                     </template>
@@ -179,9 +179,9 @@ export default {
       }
       this.templateForm.items.push(item)
       const index = this.templateForm.items.length - 1
-      this.handleAddCondition(index, 'price')
-      this.handleAddCondition(index, 'weight')
-      this.handleAddCondition(index, 'items')
+      this.handleAddCondition(index, 'PRICE')
+      this.handleAddCondition(index, 'WEIGHT')
+      this.handleAddCondition(index, 'ITEMS')
       this.addArea = ''
     },
     // Handle command
@@ -198,7 +198,7 @@ export default {
       if (item.items[type]) {
         delete item.items[type]
       } else {
-        item.items[type] = [{ amt_type: 'percentage', amt: 5, region_start: '', region_end: '' }]
+        item.items[type] = [{ amt_type: 'PERCENTAGE', amt: 5, region_start: '', region_end: '' }]
       }
       this.$set(this.templateForm.items, index, item)
     },
@@ -206,7 +206,7 @@ export default {
     handleAddCondition(index, type) {
       const item = JSON.parse(JSON.stringify(this.templateForm.items[index]))
       if (!item.items[type]) item.items[type] = []
-      const initData = { amt_type: 'percentage', amt: '', region_start: '', region_end: '' }
+      const initData = { amt_type: 'PERCENTAGE', amt: '', region_start: '', region_end: '' }
       item.items[type].push(initData)
       this.$set(this.templateForm.items, index, item)
     },
