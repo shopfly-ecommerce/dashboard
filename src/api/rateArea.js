@@ -70,11 +70,11 @@ export function deleteRateArea(id) {
  * Get all countries or regions
  * @returns {*|Promise<unknown>}
  */
-export function getAllCountries() {
+export function getAllCountries(loading = false) {
   return request({
     url: `/countries`,
     method: 'get',
-    loading: false,
+    loading,
     needToken: false
   })
 }
