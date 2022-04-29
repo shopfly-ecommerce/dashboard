@@ -186,11 +186,11 @@ export default {
           this.$message.success('Added successfully')
           this.rateAreaForm.name = ''
           this.rateAreaForm.areaList = []
-          this.$router.push({ name: 'rateArea' })
-          await this.$store.dispatch('delCurrentViews', {
+          this.$store.dispatch('delCurrentViews', {
             view: this.$route,
             $router: this.$router
           })
+          this.$router.push({ name: 'rateArea' })
         }
         this.$refs['rateAreaForm'].resetFields()
       })

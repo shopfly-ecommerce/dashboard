@@ -239,11 +239,11 @@ export default {
           this.templateForm.name = ''
           this.templateForm.items = []
           this.$message.success('Add successful')
-          this.$router.push({ name: 'shipTemplate' })
-          await this.$store.dispatch('delCurrentViews', {
+          this.$store.dispatch('delCurrentViews', {
             view: this.$route,
             $router: this.$router
           })
+          this.$router.push({ name: 'shipTemplate' })
         }
         this.$refs['templateForm'].resetFields()
       })
