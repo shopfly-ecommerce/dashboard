@@ -711,23 +711,9 @@ export default {
       this.dialogTitle = 'Modify consignee information'
       this.dialogWidth = '25%'
       this.triggerStatus = 2
-      /** 为收货人信息赋予数据信息 */
-      this.ConsigneeForm = {
-        /** 收货人 */
-        ship_name: this.orderDetail.ship_name,
-
-        /** 手机号码 */
-        ship_mobile: this.orderDetail.ship_mobile,
-
-        /** 详细地址 */
-        ship_addr: this.orderDetail.ship_addr,
-
-        /** 送货时间 */
-        receive_time: this.orderDetail.receive_time,
-
-        /** 备注 */
-        remark: this.orderDetail.remark
-      }
+      Object.keys(this.ConsigneeForm).forEach(key => {
+        this.ConsigneeForm[key] = this.orderDetail[key]
+      })
       this.orderDetailShow = true
     },
 
