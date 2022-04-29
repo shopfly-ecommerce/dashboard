@@ -48,8 +48,8 @@
       :close-on-press-escape="false"
     >
       <el-form :model="menuForm" :rules="menuRules" ref="menuForm" label-width="100px">
-        <el-form-item label="menu title" prop="title">
-          <el-input v-model="menuForm.title" :maxlength="60"></el-input>
+        <el-form-item label="The menu title" prop="title">
+          <el-input v-model="menuForm.title" :maxlength="6"></el-input>
         </el-form-item>
         <el-form-item label="Menu identifier" prop="identifier">
           <el-input v-model="menuForm.identifier" :maxlength="50"></el-input>

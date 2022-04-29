@@ -99,7 +99,6 @@ export function getLogisticsInfo(params) {
   return request({
     url: `seller/express`,
     method: 'get',
-    loading: false,
     params
   })
 }

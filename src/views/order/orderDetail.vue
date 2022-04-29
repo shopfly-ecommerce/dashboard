@@ -8,11 +8,10 @@
           <div class="order-item">
             <span class="item-name">Shipping address：</span>
             <span class="item-value">
-              {{ orderDetail.ship_province }}
-              {{ orderDetail.ship_city }}
-              {{ orderDetail.ship_county }}
-              {{ orderDetail.ship_town }}
-              {{ orderDetail.ship_addr }}
+              {{ orderDetail.ship_country }}
+               - {{ orderDetail.ship_state }}
+               - {{ orderDetail.ship_city }}
+               - {{ orderDetail.ship_addr }}
             </span>
           </div>
           <div class="order-item">
@@ -145,7 +144,7 @@
           <div class="order-item" v-if="isLooklogistics">
             <span class="item-name">Logistics information：</span>
             <span class="item-value">
-            <el-button type="text" @click="looklogistics">Click to view</el-button>
+            <el-button type="text" @click="lookLogistics">Click to view</el-button>
           </span>
           </div>
         </div>
@@ -189,8 +188,8 @@
           </en-table-layout>
         </div>
         <div class="opera-btn">
-          <el-button v-if="isShowEditShipName" plain type="info" @click="adjustConsignee" >Modify consignee information</el-button>
-          <el-button v-if="isShowEditOrderPrice" plain type="info" @click="adjustPrice" >Adjust the price</el-button>
+          <el-button v-if="isShowEditShipName" plain type="info" @click="adjustConsignee">Modify consignee information</el-button>
+          <el-button v-if="isShowEditOrderPrice" plain type="info" @click="adjustPrice">Adjust the price</el-button>
           <el-button
             plain
             type="info"
@@ -287,64 +286,103 @@
           v-show="triggerStatus === 2"
           label-position="right"
           label-width="120px">
-          <el-form-item label="The consignee：" prop="ship_name" >
+          <el-form-item label="Ship Name：" prop="ship_name" >
             <el-input  v-model="ConsigneeForm.ship_name" @change="() => { ConsigneeForm.ship_name = ConsigneeForm.ship_name.trim() }" maxlength="20" placeholder="limit20word"></el-input>
           </el-form-item>
-          <el-form-item label="Mobile phone：" prop="ship_mobile" >
+          <el-form-item label="Contact：" prop="ship_mobile" >
             <el-input  v-model.number="ConsigneeForm.ship_mobile" maxlength="11" ></el-input>
           </el-form-item>
-          <el-form-item label=" ：" prop="region" class="area-select">
-            <en-region-picker :api="MixinRegionApi" :default="areas" @changed="handleChangeArea"></en-region-picker>
+          <el-form-item label="Country" prop="country_code">
+            <el-select
+              v-model="ConsigneeForm.ship_country_code"
+              size="small"
+              filterable
+              clearable
+              placeholder="Select country"
+              style="width: 100%"
+              @change="handleCountryChange"
+            >
+              <el-option
+                v-for="item in countries"
+                :key="item.code"
+                :value="item.code"
+                :label="item.name"
+              />
+            </el-select>
           </el-form-item>
-          <el-form-item label="Detailed address：" prop="ship_addr" >
+          <el-form-item label="State / Province / Region" prop="state_code">
+            <el-select
+              v-model="ConsigneeForm.ship_state_code"
+              v-loading="stateLoading"
+              size="small"
+              filterable
+              clearable
+              placeholder="Select state"
+              style="width: 100%"
+              @change="handleStateChange"
+            >
+              <el-option
+                v-for="item in states"
+                :key="item.code"
+                :value="item.code"
+                :label="item.name"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="Ship Address：" prop="ship_addr">
             <el-input  v-model="ConsigneeForm.ship_addr" @change="() => { ConsigneeForm.ship_addr = ConsigneeForm.ship_addr.trim() }" placeholder="limit20word" maxlength="20"></el-input>
           </el-form-item>
-          <el-form-item label="Delivery time：" prop="receive_time" style="text-align: left;">
-            <el-select v-model="ConsigneeForm.receive_time" placeholder="Please select">
+          <el-form-item label="Receive Time：" prop="receive_time" style="text-align: left;">
+            <el-select v-model="ConsigneeForm.receive_time" placeholder="Please select receive time">
               <el-option label="At any time" value="At any time"></el-option>
               <el-option label="Only working days" value="Only working days"></el-option>
               <el-option label="Only holiday" value="Only holiday"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="The order note：" prop="remark">
+          <el-form-item label="Order remark：" prop="remark">
             <el-input  type="textarea" rows="4" v-model="ConsigneeForm.remark" placeholder="limit200word" maxlength="200"></el-input>
           </el-form-item>
         </el-form>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="cancelOrderDetail">cancel</el-button>
-        <el-button type="primary" @click="reserveOrderDetail">save</el-button>
+        <el-button @click="cancelOrderDetail">Cancel</el-button>
+        <el-button type="primary" @click="reserveOrderDetail">Save</el-button>
       </div>
     </el-dialog>
     <!--View logistics information-->
-    <el-dialog :visible.sync="logisticsShow" width="400px" align="center">
+    <el-dialog :visible.sync="logisticsShow" width="600px" align="center">
       <div slot="title">
         <h3 style="margin: 10px 0;">Logistics information</h3>
         <div class="logistics-base">
           <span>Logistics company：{{ logisticsName }}</span>
-          <span>Courier number：{{ logisticsNo }}</span>
+          <span>Express number：{{ logisticsNo }}</span>
         </div>
       </div>
       <div class="logistics-info">
         <div v-if="logisticsInfoList">
-          <el-steps direction="vertical" :active="1" align-center space="100px">
+          <el-steps
+            direction="vertical"
+            align-center
+            space="100px"
+          >
             <el-step
               v-for="(row, index) in logisticsInfoList"
-              :title="row.time"
+              :title="formatterDateTime(row.datetime)"
               :key="index"
-              :status="index === 0 ? 'success' : 'wait'"
-              :description="row.context"/>
+              :status="index === logisticsInfoList.length - 1 ? 'finish' : 'process'"
+              :description="row.message"
+            />
           </el-steps>
         </div>
-        <div v-else>There is no logistics information, please wait patiently！</div>
+        <div v-else>There is no logistics information for the time being, please wait patiently.</div>
       </div>
     </el-dialog>
     <!--Electronic surface single-->
-    <el-dialog title="Electronic surface single" :visible.sync="electronicSurfaceShow" width="30%" align="center">
+    <el-dialog title="Electronic surface sheet" :visible.sync="electronicSurfaceShow" width="30%" align="center">
       <!--The main body-->
       <div class="electronic-surface" ref="electronicSurface" id="electronicSurface"></div>
       <div slot="footer" align="right">
-        <el-button type="primary" @click="handlePrint">print</el-button>
+        <el-button type="primary" @click="handlePrint">Print</el-button>
       </div>
     </el-dialog>
   </div>
@@ -353,10 +391,12 @@
 <script>
 import * as API_order from '@/api/order'
 import * as API_logistics from '@/api/expressCompany'
+import * as API_RateArea from '@/api/rateArea'
 import { CategoryPicker } from '@/components'
 import { LogisticsCompany } from './components'
-import { RegExp } from '~/ui-utils'
+import { RegExp, Foundation } from '~/ui-utils'
 import Print from 'print-js'
+
 export default {
   name: 'orderDetail',
   components: {
@@ -367,7 +407,7 @@ export default {
     /** The amount of*/
     const checkMoney = (rule, value, callback) => {
       if (!this.adjustedPrice && this.adjustedPrice !== 0) {
-        return callback(new Error('The total price of the order cannot be empty'))
+        return callback(new Error('The total order price cannot be empty.'))
       }
       setTimeout(() => {
         if (!RegExp.money.test(this.adjustedPrice)) {
@@ -380,15 +420,9 @@ export default {
     /** Mobile phone no.*/
     const checkPhone = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error('The cell phone number cannot be empty'))
+        return callback(new Error('Mobile phone number cannot be empty'))
       }
-      setTimeout(() => {
-        if (!RegExp.mobile.test(value)) {
-          callback(new Error('Please fill in the correct cell phone number'))
-        } else {
-          callback()
-        }
-      }, 1000)
+      callback()
     }
     return {
       /** The list ofloadingStatus*/
@@ -437,7 +471,7 @@ export default {
       logisticsNo: '',
 
       /** Bounced title*/
-      dialogTitle: 'Adjust the total price of order',
+      dialogTitle: 'Adjust the total order price',
 
       /** Bounced width*/
       dialogWidth: '25%',
@@ -466,11 +500,13 @@ export default {
         receive_time: '',
 
         /** note*/
-        remark: ''
+        remark: '',
+        ship_country: '',
+        ship_country_code: '',
+        ship_state: '',
+        ship_state_code: '',
+        ship_city: ''
       },
-
-      /** Regional information*/
-      areas: [],
 
       /** stepslist*/
       stepList: [],
@@ -501,7 +537,10 @@ export default {
           { required: true, message: 'Please fill in the detailed address', trigger: 'blur' },
           { mix: 5, max: 100, message: 'The detailed address is5～100A character', trigger: 'blur' }
         ]
-      }
+      },
+      countries: [],
+      states: [],
+      stateLoading: false
     }
   },
   filters: {
@@ -509,18 +548,17 @@ export default {
       return val === 'ONLINE' ? 'Online payment' : 'Cash on delivery'
     }
   },
-  beforeRouteUpdate(to, from, next) {
-    this.sn = to.params.sn
-    this.GET_OrderDetail()
-    next()
-  },
-  mounted() {
-    this.sn = this.$route.params.sn
-    this.GET_OrderDetail()
-  },
-  activated() {
-    this.sn = this.$route.params.sn
-    this.GET_OrderDetail()
+  watch: {
+    $route: {
+      immediate: true,
+      handler(newVal) {
+        if (newVal.name !== 'orderDetail') return
+        const { sn } = newVal.params
+        if (!sn) return
+        this.sn = sn
+        this.GET_OrderDetail()
+      }
+    }
   },
   methods: {
     /** Get order details*/
@@ -535,9 +573,6 @@ export default {
         // Logistics information express tracking No. Express company
         this.logisticsNo = this.orderDetail.ship_no
         this.logisticsName = this.orderDetail.logi_name
-        // Modify consignee information area selector information
-        this.areas = [this.orderDetail.ship_province_id, this.orderDetail.ship_city_id,
-          this.orderDetail.ship_county_id || -1, this.orderDetail.ship_town_id || -1]
         // Step bar information
         this.getStepList()
         // Can you deliver the goods?
@@ -596,23 +631,20 @@ export default {
     },
 
     /** View logistics information*/
-    looklogistics() {
-      this.logisticsShow = false
-      const _params = {
+    lookLogistics() {
+      const params = {
         id: this.orderDetail.logi_id,
         num: this.orderDetail.ship_no
       }
-      this.loading = true
-      API_order.getLogisticsInfo(_params).then(response => {
-        this.logisticsShow = true
-        this.loading = false
+      API_order.getLogisticsInfo(params).then(response => {
         this.logisticsInfoList = response.data
+        this.logisticsShow = true
       })
     },
 
     /** Adjust the price*/
     adjustPrice() {
-      this.dialogTitle = 'Adjust the total price of order'
+      this.dialogTitle = 'Adjust the total order price'
       this.dialogWidth = '15%'
       this.orderDetailShow = true
       this.triggerStatus = 1
@@ -626,7 +658,7 @@ export default {
         logistics_id: row.id,
         logistics_name: row.name
       }
-      this.$confirm('Verify that the electronic plane sheet is generated?', 'prompt', { type: 'warning' }).then(() => {
+      this.$confirm('Confirm the generation of electronic face sheets?', 'Tips', { type: 'warning' }).then(() => {
         API_order.generateElectronicSurface(_params).then((response) => {
           this.electronicSurfaceShow = true
           // this.logisticsData.forEach(key => {
@@ -655,10 +687,10 @@ export default {
     /** The delivery*/
     deliverGoods(row) {
       if (!row.ship_no) {
-        this.$message.error('Please fill in the tracking number')
+        this.$message.error('Please fill in the express number')
         return
       } else if (!/^[A-Za-z0-9]+$/.test(row.ship_no)) {
-        this.$message.error('The tracking number does not conform to the rules, please enter letters or Numbers')
+        this.$message.error('Express number does not conform to the rules, please enter letters or numbers.')
         return
       }
       const _params = {
@@ -669,42 +701,24 @@ export default {
         /** Name of logistics Company*/
         logi_name: row.name
       }
-      this.$confirm('Confirm the delivery?', 'prompt', { type: 'warning' }).then(() => {
+      this.$confirm('Confirm shipment?', 'Tips', { type: 'warning' }).then(() => {
         API_order.deliveryGoods(this.sn, _params).then(() => {
-          this.$message.success('Successful delivery')
+          this.$message.success('Delivery successful')
           this.GET_OrderDetail()
         })
       })
     },
 
-    /** Triggered when the operation locale selector changes*/
-    handleChangeArea(val) {
-      this.ConsigneeForm.region = val.last_id
-    },
-
     /** Modify consignee information*/
-    adjustConsignee() {
+    async adjustConsignee() {
+      await this.getAllCountries()
       this.dialogTitle = 'Modify consignee information'
       this.dialogWidth = '25%'
-      this.orderDetailShow = true
       this.triggerStatus = 2
-      /** Assign data information to consignee information*/
-      this.ConsigneeForm = {
-        /** The consignee*/
-        ship_name: this.orderDetail.ship_name,
-
-        /** Mobile phone number*/
-        ship_mobile: this.orderDetail.ship_mobile,
-
-        /** Detailed address*/
-        ship_addr: this.orderDetail.ship_addr,
-
-        /** Delivery time*/
-        receive_time: this.orderDetail.receive_time,
-
-        /** note*/
-        remark: this.orderDetail.remark
-      }
+      Object.keys(this.ConsigneeForm).forEach(key => {
+        this.ConsigneeForm[key] = this.orderDetail[key]
+      })
+      this.orderDetailShow = true
     },
 
     /** Cancel the save*/
@@ -715,9 +729,9 @@ export default {
 
     /** Confirm receipt*/
     confirmPay() {
-      this.$confirm('Are you sure you want to confirm the receipt？', 'prompt', { type: 'warning' }).then(() => {
+      this.$confirm('Are you sure you want to confirm the collection?', 'Tips', { type: 'warning' }).then(() => {
         API_order.confirmPay(this.sn, this.orderDetail.order_price).then(response => {
-          this.$message.success('Order confirmation and payment received successfully！')
+          this.$message.success('Order confirmation receipt successful')
           this.GET_OrderDetail()
         })
       }).catch(() => {})
@@ -725,9 +739,9 @@ export default {
 
     /** Cancel the order*/
     cancelOrder() {
-      this.$confirm('Are you sure to cancel this order？', 'prompt', { type: 'warning' }).then(() => {
+      this.$confirm('Are you sure you want to cancel this order?', 'Tips', { type: 'warning' }).then(() => {
         API_order.cancleOrder(this.sn).then(() => {
-          this.$message.success('Order cancelled successfully！')
+          this.$message.success('Order cancellation successful')
           this.GET_OrderDetail()
         })
       }).catch(() => {})
@@ -738,7 +752,7 @@ export default {
       this.orderDetailShow = false
       if (this.triggerStatus === 2) { // Modify consignee information
         API_order.updateConsigneeInfo(this.sn, this.ConsigneeForm).then(() => {
-          this.$message.success('The consignees information has been modified successfully')
+          this.$message.success('Consignee information modified successfully')
           this.GET_OrderDetail()
         })
       } else if (this.triggerStatus === 1) { // Adjust the price
@@ -755,12 +769,77 @@ export default {
 
     /** Confirm receipt*/
     confirmReceive() {
-      this.$confirm('Verify that you do this?', 'prompt', { type: 'warning' }).then(() => {
+      this.$confirm('Confirm that this operation is performed?', 'Tips', { type: 'warning' }).then(() => {
         API_order.confirmGetAmount(this.sn, { pay_price: this.orderDetail.order_price }).then(() => {
-          this.$message.success('Payment success！')
+          this.$message.success('Collection successful')
           this.GET_OrderDetail()
         })
       })
+    },
+
+    /** Get all countries */
+    getAllCountries() {
+      return new Promise((resolve, reject) => {
+        if (this.countries.length) return resolve()
+        API_RateArea.getAllCountries(true).then(res => {
+          this.countries = res
+          resolve()
+        }).catch(reject)
+      })
+    },
+
+    /** Handle country changed */
+    handleCountryChange(code) {
+      const country = this.countries.find(item => item.code === code)
+      if (!country) return
+      this.ConsigneeForm.ship_country = country.name
+      this.ConsigneeForm.ship_state = ''
+      this.ConsigneeForm.ship_state_code = ''
+      this.getCountryState(code)
+    },
+    /** Handle state changed */
+    handleStateChange(code) {
+      const state = this.states.find(item => item.code === code)
+      if (!state) return
+      this.ConsigneeForm.ship_state = state.name
+    },
+    /** Get country state */
+    getCountryState(code) {
+      this.stateLoading = true
+      this.states = []
+      API_RateArea.getAreaState(code).then(res => {
+        if (res && res.length) {
+          // this.ConsigneeForm.state_code[0].required = true
+          this.states = res
+        } else {
+          // this.profileRules.state_code[0].required = false
+        }
+      }).finally(() => {
+        this.stateLoading = false
+      })
+    },
+    // Get logistics status
+    getLogisticsStatus(status) {
+      switch (status) {
+        case 'pre_transit':
+          return 'wait'
+        case 'in_transit':
+        case 'out_for_delivery':
+        case 'return_to_sender':
+          return 'process'
+        case 'delivered':
+          return 'success'
+        case 'failure':
+        case 'unknown':
+          return 'error'
+      }
+    },
+    // Formatter date and time
+    formatterDateTime(dateTime) {
+      let time = new Date(dateTime).getTime()
+      time = parseInt(String(time / 1000))
+      time = Foundation.unixToDate(time, 'MM/dd/yy hh:mm:ss')
+      return String(time)
     }
   }
 }
