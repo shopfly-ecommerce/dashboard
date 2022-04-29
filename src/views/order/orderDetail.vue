@@ -360,12 +360,16 @@
       </div>
       <div class="logistics-info">
         <div v-if="logisticsInfoList">
-          <el-steps direction="vertical" :active="1" align-center space="100px">
+          <el-steps
+            direction="vertical"
+            align-center
+            space="100px"
+          >
             <el-step
               v-for="(row, index) in logisticsInfoList"
               :title="formatterDateTime(row.datetime)"
               :key="index"
-              :status="getLogisticsStatus(row.status)"
+              :status="index === logisticsInfoList.length - 1 ? 'finish' : 'process'"
               :description="row.message"
             />
           </el-steps>
@@ -835,7 +839,7 @@ export default {
       let time = new Date(dateTime).getTime()
       time = parseInt(String(time / 1000))
       time = Foundation.unixToDate(time, 'MM/dd/yy hh:mm:ss')
-      return time
+      return String(time)
     }
   }
 }
