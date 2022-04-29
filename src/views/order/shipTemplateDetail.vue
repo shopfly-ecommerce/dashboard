@@ -232,12 +232,18 @@ export default {
         })
         if (this.templateId) {
           await API_Shop.updateShipTemplate(this.templateId, params)
+          this.$message.success('Update successful')
+          this.getShipTemplateDetail()
+        } else {
+          await API_Shop.addShipTemplates(params)
           this.templateForm.name = ''
           this.templateForm.items = []
           this.$message.success('Add successful')
-        } else {
-          await API_Shop.addShipTemplates(params)
-          this.$message.success('Update successful')
+          this.$router.push({ name: 'shipTemplate' })
+          await this.$store.dispatch('delCurrentViews', {
+            view: this.$route,
+            $router: this.$router
+          })
         }
         this.$refs['templateForm'].resetFields()
       })

@@ -159,7 +159,7 @@ export default {
     },
     // Submit rate area form
     handleSubmitRateArea() {
-      this.$refs['rateAreaForm'].validate(valid => {
+      this.$refs['rateAreaForm'].validate(async valid => {
         if (!valid) return this.$message.error('The form is incorrectly filled in, please check it')
         const params = {}
         const { name, areaList } = JSON.parse(JSON.stringify(this.rateAreaForm))
@@ -178,17 +178,21 @@ export default {
           }
         })
         if (this.rateAreaId) {
-          API_RateArea.updateRateArea(this.rateAreaId, params).then(() => {
-            this.$message.success('Update successfully')
-            this.getRateAreaDetail()
-          })
+          await API_RateArea.updateRateArea(this.rateAreaId, params)
+          this.$message.success('Update successfully')
+          this.getRateAreaDetail()
         } else {
-          API_RateArea.addRateArea(params).then(() => {
-            this.$message.success('Added successfully')
-            this.rateAreaForm.name = ''
-            this.rateAreaForm.areaList = []
+          await API_RateArea.addRateArea(params)
+          this.$message.success('Added successfully')
+          this.rateAreaForm.name = ''
+          this.rateAreaForm.areaList = []
+          this.$router.push({ name: 'rateArea' })
+          await this.$store.dispatch('delCurrentViews', {
+            view: this.$route,
+            $router: this.$router
           })
         }
+        this.$refs['rateAreaForm'].resetFields()
       })
     },
     // Get all countries or regions
@@ -240,7 +244,6 @@ export default {
     // Get state options
     stateOptions(countryCode) {
       const country = this.countries.find(item => item.code === countryCode)
-      console.log('country.children: ', country.children)
       if (!country || !Array.isArray(country.children)) return []
       return country.children
     }
