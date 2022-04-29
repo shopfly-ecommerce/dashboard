@@ -250,7 +250,6 @@ export default {
     },
     // Get unit
     getUnit(type) {
-      console.log(type)
       if (type === 'PRICE') return '$'
       if (type === 'WEIGHT') return 'kg'
       if (type === 'ITEMS') return 'item'
