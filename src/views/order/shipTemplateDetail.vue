@@ -50,9 +50,9 @@
                 <el-table :data="item.items[type]" :key="type">
                   <el-table-column :label="`${type.replace(/^\S/, s => s.toUpperCase())} condition`">
                     <template slot-scope="{ row }">
-                      <el-input v-model="row.region_start" plceholder="From"><span slot="prepend">$</span></el-input>
+                      <el-input v-model="row.region_start" plceholder="From"><span slot="prepend">{{ getUnit(type) }}</span></el-input>
                       <span class="interval">-</span>
-                      <el-input v-model="row.region_end" plceholder="To"><span slot="prepend">$</span></el-input>
+                      <el-input v-model="row.region_end" plceholder="To"><span slot="prepend">{{ getUnit(type) }}</span></el-input>
                     </template>
                   </el-table-column>
                   <el-table-column label="Surcharge / Discount" width="200">
@@ -247,6 +247,13 @@ export default {
         }
         this.$refs['templateForm'].resetFields()
       })
+    },
+    // Get unit
+    getUnit(type) {
+      console.log(type)
+      if (type === 'PRICE') return '$'
+      if (type === 'WEIGHT') return 'kg'
+      if (type === 'ITEMS') return 'item'
     }
   }
 }
