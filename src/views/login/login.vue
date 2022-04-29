@@ -45,8 +45,8 @@ export default {
       loading: false,
       // Login form Form
       loginForm: {
-        username: '',
-        password: '',
+        username: 'superadmin',
+        password: '111111',
         captcha: ''
       },
       // Login form rules
