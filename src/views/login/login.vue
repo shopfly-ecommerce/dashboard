@@ -45,8 +45,8 @@ export default {
       loading: false,
       // 登录表单 表单
       loginForm: {
-        username: '',
-        password: '',
+        username: 'superadmin',
+        password: '111111',
         captcha: ''
       },
       // 登陆表单 规则
