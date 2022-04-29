@@ -12,10 +12,10 @@ let env = process.server
 
 // The development environment
 export const dev = {
-  address: 'http://52.53.155.58'
+  address: 'http://api.shopfly.cloud'
 }
 
 // The production environment
 export const pro = {
-  address: env.API_ADDRESS || 'http://52.53.155.58'
+  address: env.API_ADDRESS || 'http://api.shopfly.cloud'
 }

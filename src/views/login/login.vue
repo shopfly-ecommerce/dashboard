@@ -7,7 +7,7 @@
         <div class="lf-form" @keyup.enter="submitLoginForm">
           <el-form :model="loginForm" :rules="loginRules" ref="loginForm" size="large" label-width="80px">
             <el-form-item label="Username" prop="username">
-              <el-input v-model="loginForm.username" clearable placeholder="username/email/Mobile phone no."></el-input>
+              <el-input v-model="loginForm.username" clearable placeholder="Username/email/Mobile phone no."></el-input>
             </el-form-item>
             <el-form-item label="Password" prop="password">
               <el-input v-model="loginForm.password" type="password" clearable placeholder="Please enter your password." maxlength="20"></el-input>

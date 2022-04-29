@@ -2,7 +2,7 @@
  * Various regular expressions
  * mobile   Mobile phone no.
  * email    email
- * password password【6-20position】
+ * password Password【6-20position】
  * integer  Positive integer【Does not contain0】
  * money    money
  * TINumber Tax identification number
@@ -18,7 +18,7 @@ export const mobile = /^0?(13[0-9]|14[0-9]|15[0-9]|16[0-9]|17[0-9]|18[0-9]|19[0-
 // email
 export const email = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
 
-// password【6-20Bits include special characters】
+// Password【6-20Bits include special characters】
 export const password = /^[A-Za-z0-9!#$%^&*.~,]{6,20}$/
 
 // Positive integer【Does not contain0】

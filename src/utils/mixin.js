@@ -12,11 +12,11 @@ export default {
   data() {
     return {
       // Image upload API
-      MixinUploadApi: api.base + '/uploaders',
+      MixinUploadApi: api.address + '/uploaders',
       // WeChat image upload
-      MixinWXUploadApi: api.live + '/seller/live-video/media/upload',
+      MixinWXUploadApi: api.address + '/seller/live-video/media/upload',
       // In the API
-      MixinRegionApi: api.base + '/regions/@id/children',
+      MixinRegionApi: api.address + '/regions/@id/children',
       // Buyer side PC domain name
       MixinBuyerDomain: domain.buyer_pc,
       // Buyer side WAP domain name
@@ -93,7 +93,7 @@ export default {
     },
     /** Used to determine if the form is empty*/
     MixinRequired(message, trigger) {
-      return { required: true, pattern: /^\S.*$/gi, message: message, trigger: trigger || 'blur' }
+      return { required: true, message: message, trigger: trigger || 'blur' }
     },
     /** Formatted money*/
     MixinFormatPrice(row, column, cellValue, index) {

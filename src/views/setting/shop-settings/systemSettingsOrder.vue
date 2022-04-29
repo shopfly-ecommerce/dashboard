@@ -1,6 +1,6 @@
 <template>
-  <el-form :model="orderForm" ref="orderForm" label-width="130px" style="width: 500px;min-height: 500px;">
-    <el-form-item label="Number of days of automatic cancellation">
+  <el-form :model="orderForm" ref="orderForm" label-width="200px" style="width: 500px;min-height: 500px;">
+    <el-form-item label="Days of automatic cancellation">
       <el-input-number size="small" v-model="orderForm.cancel_order_day" :min="1"></el-input-number>
     </el-form-item>
     <el-form-item label="Automatic confirmation of receiving days">

@@ -11,7 +11,7 @@
       </div>
       <template slot="table-columns">
         <el-table-column prop="host" label="HOST"/>
-        <el-table-column prop="username" label="username"/>
+        <el-table-column prop="username" label="Username"/>
         <el-table-column prop="send_count" label="Number of letters sent today"/>
         <el-table-column prop="max_count" label="Maximum number of messages sent"/>
         <el-table-column prop="mail_from" label="Form"/>
@@ -41,33 +41,33 @@
       </el-pagination>
     </en-table-layout>
     <el-dialog
-      :title="smtpForm.id ? 'editSMTP' : 'addSMTP'"
+      :title="smtpForm.id ? 'SMTP Server' : 'SMTP Server'"
       :visible.sync="dialogSmtpVisible"
       @close="handleDialogClosed"
-      width="500px"
+      width="550px"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
-      <el-form :model="smtpForm" :rules="smtpRules" ref="smtpForm" size="small" label-width="120px">
+      <el-form :model="smtpForm" :rules="smtpRules" ref="smtpForm" size="small" label-width="200px">
         <el-form-item label="HOST" prop="host">
           <el-input v-model="smtpForm.host"/>
         </el-form-item>
         <el-form-item label="PORT" prop="port">
           <el-input v-model="smtpForm.port"/>
         </el-form-item>
-        <el-form-item label="To enable theSSL" prop="open_ssl">
+        <el-form-item label="EnableSSL" prop="open_ssl">
           <el-radio-group v-model="smtpForm.open_ssl">
-            <el-radio :label="1">is</el-radio>
-            <el-radio :label="0">no</el-radio>
+            <el-radio :label="1">open</el-radio>
+            <el-radio :label="0">close</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="username" prop="username">
+        <el-form-item label="Username" prop="username">
           <el-input v-model="smtpForm.username"/>
         </el-form-item>
-        <el-form-item label="password" prop="password">
+        <el-form-item label="Password" prop="password">
           <el-input type="password" v-model="smtpForm.password"/>
         </el-form-item>
-        <el-form-item label="Maximum number of messages per day" prop="max_count">
+        <el-form-item label="Maximum per day" prop="max_count">
           <el-input v-model="smtpForm.max_count"/>
         </el-form-item>
         <el-form-item label="Sender email" prop="mail_from">
@@ -76,7 +76,7 @@
         <el-form-item label="test" :error="test_email_error">
           <el-input v-model="test_email">
             <el-button slot="append" @click="handleSendTestEmail">
-              <svg-icon icon-class="send" style="margin-right: 2px" />Test the
+              <svg-icon icon-class="send" style="margin-right: 2px" />Test
             </el-button>
           </el-input>
         </el-form-item>

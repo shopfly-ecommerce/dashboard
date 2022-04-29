@@ -40,6 +40,7 @@
         <div class="list">
           <div
             v-for="(goods, index) in goodsList"
+            :key="goods.sku_id"
             :class="['goods-item', isSelected(goods) && 'selected']"
           >
             <span class="icon-selected"></span>
@@ -69,7 +70,7 @@
             <div
               v-for="(goods, index) in selectedList"
               v-if="goods"
-              :key="index"
+              :key="goods.sku_id"
               class="goods-item slide-fade-item selected"
             >
               <span class="icon-selected"></span>

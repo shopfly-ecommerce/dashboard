@@ -5,7 +5,7 @@
     :loading="loading"
   >
     <template slot="table-columns">
-      <el-table-column prop="uname" label="username"/>
+      <el-table-column prop="uname" label="Username"/>
       <el-table-column prop="mobile" label="Mobile phone no."/>
       <el-table-column prop="email" label="email"/>
       <el-table-column label="Registration time">

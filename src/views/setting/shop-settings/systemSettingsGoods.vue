@@ -19,7 +19,7 @@
         <template slot="append">px</template>
       </el-input>
     </el-form-item>
-    <el-form-item label="Large size" prop="cancel_order_day">
+    <el-form-item label="Small size" prop="cancel_order_day">
       <el-input placeholder="400" size="small" v-model="goodsForm.small_width">
         <template slot="prepend">wide</template>
         <template slot="append">px</template>
@@ -29,7 +29,7 @@
         <template slot="append">px</template>
       </el-input>
     </el-form-item>
-    <el-form-item label="A larger size" prop="cancel_order_day">
+    <el-form-item label="Larger size" prop="cancel_order_day">
       <el-input placeholder="800" size="small" v-model="goodsForm.big_width">
         <template slot="prepend">wide</template>
         <template slot="append">px</template>

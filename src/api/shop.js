@@ -3,11 +3,9 @@
  */
 
 import request from '@/utils/request'
-import cache from '@/utils/cache'
 
 /**
  * Access to store information
- * @param params
  * @returns {Promise<any>}
  */
 export function getShopData() {
@@ -84,3 +82,71 @@ export function getShopStatus() {
     loading: 0.2
   })
 }
+
+/**
+ * Get shop ship templates
+ * @param params
+ * @returns {*|Promise<unknown>}
+ */
+export function getShipTemplates(params) {
+  return request({
+    url: `/seller/shops/ship-templates`,
+    method: 'get',
+    loading: false,
+    params
+  })
+}
+
+/**
+ * Add ship template
+ * @param data
+ * @returns {*|Promise<unknown>}
+ */
+export function addShipTemplates(data) {
+  return request({
+    url: `/seller/shops/ship-templates`,
+    method: 'post',
+    headers: { 'Content-Type': 'application/json' },
+    data
+  })
+}
+
+/**
+ * Get ship template detail
+ * @param id
+ * @returns {*|Promise<unknown>}
+ */
+export function getShipTemplateDetail(id) {
+  return request({
+    url: `/seller/shops/ship-templates/${id}`,
+    method: 'get'
+  })
+}
+
+/**
+ * Update ship template
+ * @param id
+ * @param data
+ * @returns {*|Promise<unknown>}
+ */
+export function updateShipTemplate(id, data) {
+  return request({
+    url: `/seller/shops/ship-templates/${id}`,
+    method: 'put',
+    headers: { 'Content-Type': 'application/json' },
+    data
+  })
+}
+
+/**
+ * Delete ship template
+ * @param id
+ * @returns {*|Promise<unknown>}
+ */
+export function deleteShipTemplate(id) {
+  return request({
+    url: `/seller/shops/ship-templates/${id}`,
+    method: 'delete'
+  })
+}
+

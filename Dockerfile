@@ -1,10 +1,10 @@
 FROM nginx:alpine
-MAINTAINER Javashop
+MAINTAINER Shopfly.cloud
 
 RUN mkdir -p /app/
-COPY ./manager-seller/dist /app/
-COPY ./manager-seller/nginx.conf /etc/nginx/nginx.conf
-COPY ./manager-seller/set-envs.sh /app/set-envs.sh
+COPY ./dist /app/
+COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ./set-envs.sh /app/set-envs.sh
 
 RUN ["chmod", "+x", "/app/set-envs.sh"]
 

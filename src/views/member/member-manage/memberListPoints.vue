@@ -8,7 +8,7 @@
       <el-table-column prop="time" :formatter="MixinUnixToDate" label="The date of"/>
       <el-table-column prop="operator" label="The operator"></el-table-column>
       <el-table-column prop="reason" label="The detail"></el-table-column>
-      <el-table-column label="Level of integration">
+      <el-table-column label="Level score">
         <template slot-scope="{ row }">
           <span v-if="row.grade_point === 0">{{ row.grade_point }}</span>
           <span v-else-if="row.grade_point_type === 0">
@@ -17,7 +17,7 @@
           <span v-else>+{{ row.grade_point }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="score">
+      <el-table-column label="consumption score">
         <template slot-scope="{ row }">
           <span v-if="row.consum_point === 0">{{ row.consum_point }}</span>
           <span v-else-if="row.consum_point_type === 0">

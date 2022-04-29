@@ -18,7 +18,7 @@
           >
             <template slot="advanced-content">
               <el-form ref="advancedForm" :model="advancedForm" label-width="100px">
-                <el-form-item label="username">
+                <el-form-item label="Username">
                   <el-input size="medium" v-model="advancedForm.uname" clearable></el-input>
                 </el-form-item>
                 <el-form-item label="Mobile phone no.">
@@ -53,7 +53,7 @@
       </div>
 
       <template slot="table-columns">
-        <el-table-column prop="uname" label="username"/>
+        <el-table-column prop="uname" label="Username"/>
         <el-table-column prop="mobile" label="Mobile phone no."/>
         <el-table-column prop="email" label="email"/>
         <el-table-column label="Registration time">
@@ -103,12 +103,12 @@
       :close-on-press-escape="false"
     >
       <el-form :model="addMemberForm" :rules="addMemberRules" ref="addMemberForm" label-width="100px" inline>
-        <!--username-->
-        <el-form-item label="username" prop="uname">
+        <!--Username-->
+        <el-form-item label="Username" prop="uname">
           <el-input v-model="addMemberForm.uname" :maxlength="20"></el-input>
         </el-form-item>
-        <!--password-->
-        <el-form-item label="password" prop="password">
+        <!--Password-->
+        <el-form-item label="Password" prop="password">
           <el-input v-model="addMemberForm.password" :type="pwdType" :maxlength="20"></el-input>
           <span class="show-pwd" @click="pwdType = pwdType === 'password' ? 'text' : 'password'">
             <svg-icon :icon-class="pwdType === 'password' ? 'eye' : 'eye-open'" />

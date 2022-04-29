@@ -6,7 +6,7 @@
           <el-form-item label="nickname" prop="nickname">
             <el-input v-model="editMemberForm.nickname" :maxlength="20"></el-input>
           </el-form-item>
-          <el-form-item label="password" prop="password">
+          <el-form-item label="Password" prop="password">
             <el-input v-model="editMemberForm.password" placeholder="Do not fill, do not change" :maxlength="20"></el-input>
           </el-form-item>
           <el-form-item label="region" class="form-item-region">
@@ -50,7 +50,7 @@
       <el-tab-pane label="TAThe order of">
         <member-list-order :member-id="member_id"/>
       </el-tab-pane>
-      <el-tab-pane label="score">
+      <el-tab-pane label="consumption score">
         <el-form :model="editPointForm" ref="editPointForm" label-width="100px">
           <el-form-item label="Current consumption score">
             {{ editPointForm.currentPoint }}

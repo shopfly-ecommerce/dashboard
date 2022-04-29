@@ -11,7 +11,7 @@ const qs = require('qs')
 // createaxiosThe instance
 const service = axios.create({
   baseURL: api.address, // basisapi
-  timeout: 5000, // Request timeout
+  timeout: 50000, // Request timeout
   httpsAgent: new https.Agent({
     rejectUnauthorized: false
   }),
@@ -62,7 +62,7 @@ service.interceptors.request.use(config => {
 
   // Get access Token
   let accessToken = Storage.getItem('seller_access_token')
-  if (accessToken) {
+  if (config.needToken !== false && accessToken) {
     config.headers['Authorization'] = accessToken
   }
 

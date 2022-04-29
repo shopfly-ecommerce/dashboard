@@ -3,13 +3,13 @@
     <!--Successful registration-->
     <el-form-item prop="cancel_order_day">
       <template slot="label">
-        <el-checkbox v-model="pointForm.register">To complete the registration</el-checkbox>
+        <el-checkbox v-model="pointForm.register">Register</el-checkbox>
       </template>
       <el-input placeholder="10" size="small" v-model="pointForm.register_grade_point">
-        <template slot="append">Level of integration</template>
+        <template slot="append">Level score</template>
       </el-input>
       <el-input placeholder="10" size="small" v-model="pointForm.register_consumer_point">
-        <template slot="append">score</template>
+        <template slot="append">consumption score</template>
       </el-input>
     </el-form-item>
     <!--Improve personal data-->
@@ -18,10 +18,10 @@
         <el-checkbox v-model="pointForm.perfect">Improve personal data</el-checkbox>
       </template>
       <el-input placeholder="10" size="small" v-model="pointForm.perfect_consumer_point">
-        <template slot="append">Level of integration</template>
+        <template slot="append">Level score</template>
       </el-input>
       <el-input placeholder="10" size="small" v-model="pointForm.perfect_grade_point">
-        <template slot="append">score</template>
+        <template slot="append">consumption score</template>
       </el-input>
     </el-form-item>-->
     <!--Sign in（Once a day）-->
@@ -30,10 +30,10 @@
         <el-checkbox v-model="pointForm.login">Sign in（Once a day）</el-checkbox>
       </template>
       <el-input placeholder="10" size="small" v-model="pointForm.login_grade_point">
-        <template slot="append">Level of integration</template>
+        <template slot="append">Level score</template>
       </el-input>
       <el-input placeholder="10" size="small" v-model="pointForm.login_consumer_point">
-        <template slot="append">score</template>
+        <template slot="append">consumption score</template>
       </el-input>
     </el-form-item>
     <!--Text comments-->
@@ -42,10 +42,10 @@
         <el-checkbox v-model="pointForm.comment">Text comments</el-checkbox>
       </template>
       <el-input placeholder="10" size="small" v-model="pointForm.comment_grade_point">
-        <template slot="append">Level of integration</template>
+        <template slot="append">Level score</template>
       </el-input>
       <el-input placeholder="10" size="small" v-model="pointForm.comment_consumer_point">
-        <template slot="append">score</template>
+        <template slot="append">consumption score</template>
       </el-input>
     </el-form-item>
     <!--Upload photo comments-->
@@ -54,34 +54,34 @@
         <el-checkbox v-model="pointForm.comment_img">Upload photo comments</el-checkbox>
       </template>
       <el-input placeholder="10" size="small" v-model="pointForm.comment_img_grade_point">
-        <template slot="append">Level of integration</template>
+        <template slot="append">Level score</template>
       </el-input>
       <el-input placeholder="10" size="small" v-model="pointForm.comment_img_consumer_point">
-        <template slot="append">score</template>
+        <template slot="append">consumption score</template>
       </el-input>
     </el-form-item>
-    <!--First review of each item-->
+    <!--First comments-->
     <el-form-item prop="cancel_order_day">
       <template slot="label">
-        <el-checkbox v-model="pointForm.first_comment">First review of each item</el-checkbox>
+        <el-checkbox v-model="pointForm.first_comment">First comments</el-checkbox>
       </template>
       <el-input placeholder="10" size="small" v-model="pointForm.first_comment_grade_point">
-        <template slot="append">Level of integration</template>
+        <template slot="append">Level score</template>
       </el-input>
       <el-input placeholder="10" size="small" v-model="pointForm.first_comment_consumer_point">
-        <template slot="append">score</template>
+        <template slot="append">consumption score</template>
       </el-input>
     </el-form-item>
     <!--The purchase of goods（1How many integrals are you going to get）-->
     <el-form-item prop="cancel_order_day">
       <template slot="label">
-        <el-checkbox v-model="pointForm.buy_goods">The purchase of goods（1How many integrals are you going to get）</el-checkbox>
+        <el-checkbox v-model="pointForm.buy_goods">The purchase of goods</el-checkbox>
       </template>
       <el-input placeholder="10" size="small" v-model="pointForm.buy_goods_grade_point">
-        <template slot="append">Level of integration</template>
+        <template slot="append">Level score</template>
       </el-input>
       <el-input placeholder="10" size="small" v-model="pointForm.buy_goods_consumer_point">
-        <template slot="append">score</template>
+        <template slot="append">consumption score</template>
       </el-input>
     </el-form-item>
     <!--Choose Online Payment-->
@@ -90,19 +90,19 @@
         <el-checkbox v-model="pointForm.online_pay">Choose Online Payment</el-checkbox>
       </template>
       <el-input placeholder="10" size="small" v-model="pointForm.online_pay_grade_point">
-        <template slot="append">Level of integration</template>
+        <template slot="append">Level score</template>
       </el-input>
       <el-input placeholder="10" size="small" v-model="pointForm.online_pay_consumer_point">
-        <template slot="append">score</template>
+        <template slot="append">consumption score</template>
       </el-input>
     </el-form-item>
     <!--RMB to points exchange ratio-->
     <el-form-item prop="cancel_order_day">
       <template slot="label">
-        <el-checkbox v-model="pointForm.parities">RMB to points exchange ratio</el-checkbox>
+        <el-checkbox v-model="pointForm.parities">Conversion ratio</el-checkbox>
       </template>
       <el-input placeholder="10" size="small" v-model="pointForm.parities_point">
-        <template slot="append">score</template>
+        <template slot="append">consumption score</template>
       </el-input>
     </el-form-item>
     <el-form-item>
